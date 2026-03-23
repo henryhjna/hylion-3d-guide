@@ -2,7 +2,7 @@ export const TEAM = {
   delta1: {
     id: 'delta1',
     name: 'δ1',
-    role: '하드웨어 오너',
+    role: '하드웨어·외장 오너',
     trackLead: 'Track A 리드',
     color: '#00f0ff',
     colorBright: '#66f7ff',
@@ -64,7 +64,7 @@ export const TEAM = {
   epsilon2: {
     id: 'epsilon2',
     name: 'ε2',
-    role: '캐릭터·검증 오너',
+    role: '캐릭터·검증·외장 오너',
     trackLead: 'A+B',
     color: '#00ff88',
     colorBright: '#66ffaa',
