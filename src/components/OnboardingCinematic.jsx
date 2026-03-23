@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { startDrone, playWhoosh, playPing, playStartupChime, playReady, closeAudio } from '../hooks/useCinematicAudio';
 
 /* ------------------------------------------------------------------ */
 /*  Section definitions                                                */
@@ -104,12 +105,37 @@ export default function OnboardingCinematic({ isActive, onComplete, onCameraPres
     }
   }, [isActive]);
 
-  /* ---- send camera preset when section changes ---- */
+  /* ---- audio: start drone on mount, play sounds on section change ---- */
+  const droneRef = useRef(null);
+  useEffect(() => {
+    if (!isActive) return;
+    // Start background drone + startup chime
+    try {
+      droneRef.current = startDrone();
+      playStartupChime();
+    } catch {}
+    return () => {
+      droneRef.current?.stop(1);
+      closeAudio();
+    };
+  }, [isActive]);
+
+  /* ---- send camera preset + audio when section changes ---- */
   useEffect(() => {
     if (!isActive) return;
     const section = SECTIONS[currentSection];
     if (section) {
       onCameraPreset?.(section.cameraPreset);
+      // Audio feedback per section
+      try {
+        if (currentSection > 0 && currentSection < SECTIONS.length - 1) {
+          playWhoosh();
+          setTimeout(() => playPing(800 + currentSection * 100), 200);
+        }
+        if (currentSection === SECTIONS.length - 1) {
+          playReady();
+        }
+      } catch {}
     }
   }, [currentSection, isActive, onCameraPreset]);
 
@@ -176,6 +202,7 @@ export default function OnboardingCinematic({ isActive, onComplete, onCameraPres
     localStorage.setItem('hylion_intro_seen', 'true');
     clearInterval(intervalRef.current);
     clearTimeout(sectionTimerRef.current);
+    droneRef.current?.stop(0.5);
     onComplete?.();
   }, [onComplete]);
 
