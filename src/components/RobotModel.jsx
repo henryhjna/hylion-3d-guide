@@ -2,7 +2,7 @@ import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { PARTS } from '../data/parts';
 import { TEAM } from '../data/team';
 import { TIMELINE } from '../data/timeline';
@@ -176,142 +176,158 @@ export default function RobotModel({
   xrayMode, selectedWeek, teamFilter, trackFilter,
 }) {
   const groupRef = useRef();
-  const [loadState, setLoadState] = useState('loading'); // loading | fbx | glb | placeholder
-  const [fbxModel, setFbxModel] = useState(null);
+  const [loadState, setLoadState] = useState('loading'); // loading | glb | placeholder
+  const [partMeshes, setPartMeshes] = useState({});
   const [modelHeight, setModelHeight] = useState(1.0);
-  const regionMaterialRef = useRef(null);
   const hologramMaterials = useRef([]);
+  const materialsRef = useRef({});
 
-  // ── Load FBX model ──
+  const PART_IDS = ['head', 'torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg'];
+  const BASE = import.meta.env.BASE_URL;
+
+  // ── Load GLB parts ──
   useEffect(() => {
-    const loader = new FBXLoader();
+    const loader = new GLTFLoader();
+    const meshes = {};
+    let loaded = 0;
+
+    // Try combined GLB first, then individual parts
     loader.load(
-      `${import.meta.env.BASE_URL}assets/models/model.fbx`,
-      (fbx) => {
-        // Normalize scale: target height = 1.0 (use Y dimension, not maxDim)
-        const box = new THREE.Box3().setFromObject(fbx);
+      `${BASE}assets/models/hylion-robot.glb`,
+      (gltf) => {
+        const model = gltf.scene;
+        // Normalize scale
+        const box = new THREE.Box3().setFromObject(model);
         const size = box.getSize(new THREE.Vector3());
         const scale = 1.0 / (size.y || 1);
-        fbx.scale.setScalar(scale);
+        model.scale.setScalar(scale);
+        // Floor at y=0, center x/z
+        const sBox = new THREE.Box3().setFromObject(model);
+        const center = sBox.getCenter(new THREE.Vector3());
+        model.position.y = -sBox.min.y;
+        model.position.x = -center.x;
+        model.position.z = -center.z;
 
-        // Re-center + floor at y=0
-        const scaledBox = new THREE.Box3().setFromObject(fbx);
-        const center = scaledBox.getCenter(new THREE.Vector3());
-        fbx.position.y = -scaledBox.min.y;
-        fbx.position.x = -center.x;
-        fbx.position.z = -center.z;
-
-        // Apply region-based shader material
-        const mat = createRegionShaderMaterial();
-        regionMaterialRef.current = mat;
-        fbx.traverse((child) => {
+        // Assign per-part materials and collect meshes
+        model.traverse((child) => {
           if (child.isMesh) {
-            child.material = mat;
+            // Match by object name to part ID
+            const partId = PART_IDS.find(pid => child.name.toLowerCase().includes(pid.replace('_', ''))) ||
+                           PART_IDS.find(pid => child.name.toLowerCase() === pid) ||
+                           findPartByName(child.name);
+            if (partId) {
+              child.userData.partId = partId;
+              const mat = createPartMaterial(partId);
+              materialsRef.current[partId] = mat;
+              child.material = mat;
+              meshes[partId] = child;
+            }
           }
         });
 
-        const finalBox = new THREE.Box3().setFromObject(fbx);
-        const h = finalBox.getSize(new THREE.Vector3()).y;
+        const h = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3()).y;
         setModelHeight(h);
-        setFbxModel(fbx);
-        setLoadState('fbx');
-        console.log('✅ FBX loaded, height:', h);
+        setPartMeshes({ _model: model, ...meshes });
+        setLoadState('glb');
+        console.log('✅ GLB loaded, parts:', Object.keys(meshes).join(', '), 'height:', h.toFixed(3));
       },
       undefined,
       (err) => {
-        console.warn('FBX load failed, using placeholder:', err);
+        console.warn('GLB load failed, using placeholder:', err);
         setLoadState('placeholder');
       }
     );
 
-    // Cleanup on unmount
     return () => {
-      if (regionMaterialRef.current) {
-        regionMaterialRef.current.dispose();
-        regionMaterialRef.current = null;
-      }
+      Object.values(materialsRef.current).forEach(m => m.dispose?.());
     };
   }, []);
 
-  // ── Highlight logic ──
+  function findPartByName(name) {
+    const n = name.toLowerCase();
+    if (n.includes('head') || n.includes('neck')) return 'head';
+    if (n.includes('torso') || n.includes('pelvis') || n.includes('spine')) return 'torso';
+    if (n.includes('arm') && n.includes('l')) return 'left_arm';
+    if (n.includes('arm') && n.includes('r')) return 'right_arm';
+    if ((n.includes('leg') || n.includes('thigh') || n.includes('shin') || n.includes('foot')) && n.includes('l')) return 'left_leg';
+    if ((n.includes('leg') || n.includes('thigh') || n.includes('shin') || n.includes('foot')) && n.includes('r')) return 'right_leg';
+    return null;
+  }
+
+  function createPartMaterial(partId) {
+    const isUpper = ['head', 'torso', 'left_arm', 'right_arm'].includes(partId);
+    const baseHue = isUpper ? 0x4488cc : 0xaa4488;
+    return new THREE.MeshStandardMaterial({
+      color: baseHue,
+      emissive: isUpper ? 0x002233 : 0x220022,
+      emissiveIntensity: 0.15,
+      metalness: 0.3,
+      roughness: 0.6,
+      transparent: false,
+    });
+  }
+
+  // ── Per-part highlight logic (GLB parts) ──
   const activePart = hoveredPart || selectedPart;
   useEffect(() => {
-    const mat = regionMaterialRef.current;
-    if (!mat) return;
+    if (loadState !== 'glb') return;
+    const memberParts = teamFilter && TEAM[teamFilter] ? TEAM[teamFilter].parts : null;
 
-    if (activePart && PART_REGIONS[activePart]) {
-      const r = PART_REGIONS[activePart];
-      const part = PARTS[activePart];
-      const color = (teamFilter && TEAM[teamFilter]?.parts?.includes(activePart))
-        ? TEAM[teamFilter].color : part?.color || '#00f0ff';
-      mat.uniforms.highlightColor.value.set(color);
-      mat.uniforms.highlightYMin.value = r.yMin;
-      mat.uniforms.highlightYMax.value = r.yMax;
-      mat.uniforms.highlightXMin.value = r.xMin;
-      mat.uniforms.highlightXMax.value = r.xMax;
-      mat.uniforms.highlightIntensity.value = hoveredPart ? 0.7 : 1.0;
-    } else {
-      mat.uniforms.highlightIntensity.value = 0;
+    for (const [pid, mesh] of Object.entries(partMeshes)) {
+      if (pid === '_model') continue;
+      const mat = materialsRef.current[pid];
+      if (!mat) continue;
+
+      const isActive = pid === activePart;
+      const isHovered = pid === hoveredPart;
+      const isMemberPart = memberParts ? memberParts.includes(pid) : true;
+      const partData = PARTS[pid];
+      const accentColor = partData?.color || '#00f0ff';
+
+      if (isActive) {
+        mat.emissive.set(accentColor);
+        mat.emissiveIntensity = isHovered ? 0.4 : 0.6;
+      } else if (isMemberPart) {
+        const isUpper = ['head', 'torso', 'left_arm', 'right_arm'].includes(pid);
+        mat.emissive.set(isUpper ? 0x002233 : 0x220022);
+        mat.emissiveIntensity = 0.15;
+        mat.opacity = 1;
+        mat.transparent = false;
+      } else {
+        // Dimmed (not member's part)
+        mat.emissive.set(0x111111);
+        mat.emissiveIntensity = 0.05;
+        mat.opacity = 0.35;
+        mat.transparent = true;
+      }
     }
-
-    // Per-region member ownership for dimming
-    if (teamFilter && TEAM[teamFilter]) {
-      const memberParts = TEAM[teamFilter].parts || [];
-      mat.uniforms.memberActive.value = 1.0;
-      mat.uniforms.rHead.value = memberParts.includes('head') ? 1.0 : 0.0;
-      mat.uniforms.rTorso.value = memberParts.includes('torso') ? 1.0 : 0.0;
-      mat.uniforms.rArmL.value = memberParts.includes('left_arm') ? 1.0 : 0.0;
-      mat.uniforms.rArmR.value = memberParts.includes('right_arm') ? 1.0 : 0.0;
-      mat.uniforms.rLegL.value = memberParts.includes('left_leg') ? 1.0 : 0.0;
-      mat.uniforms.rLegR.value = memberParts.includes('right_leg') ? 1.0 : 0.0;
-    } else {
-      mat.uniforms.memberActive.value = 0.0;
-    }
-
-    mat.uniforms.modelHeight.value = modelHeight;
-  }, [activePart, hoveredPart, teamFilter, modelHeight]);
+  }, [activePart, hoveredPart, teamFilter, loadState, partMeshes]);
 
   // ── Animation ──
-  useFrame((state, delta) => {
-    // Slow rotation when no part selected
+  useFrame((state) => {
     if (groupRef.current && !selectedPart) {
       groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.15) * 0.3;
     }
-    // Update shader time
-    const mat = regionMaterialRef.current;
-    if (mat) mat.uniforms.time.value = state.clock.elapsedTime;
-    // Update hologram times
     hologramMaterials.current.forEach(m => { m.uniforms.time.value = state.clock.elapsedTime; });
   });
 
-  // ── Transform world point to group-local space for accurate region detection ──
-  const toLocalPoint = useCallback((worldPoint) => {
-    if (!groupRef.current) return worldPoint;
-    const local = worldPoint.clone();
-    groupRef.current.worldToLocal(local);
-    return local;
-  }, []);
-
-  // ── Click handler ──
-  const handleClick = useCallback((e) => {
+  // ── GLB Click handler — find partId from hit mesh ──
+  const handleGLBClick = useCallback((e) => {
     e.stopPropagation();
-    if (loadState === 'fbx' && fbxModel) {
-      const local = toLocalPoint(e.point);
-      const partId = detectPartFromPoint(local, modelHeight);
-      if (partId) onPartClick(partId, e);
-    }
-  }, [loadState, fbxModel, modelHeight, onPartClick, toLocalPoint]);
+    let obj = e.object;
+    while (obj && !obj.userData.partId) obj = obj.parent;
+    const partId = obj?.userData?.partId;
+    if (partId) onPartClick(partId, e);
+  }, [onPartClick]);
 
-  // ── Hover handler ──
-  const handlePointerMove = useCallback((e) => {
+  const handleGLBHover = useCallback((e) => {
     e.stopPropagation();
-    if (loadState === 'fbx') {
-      const local = toLocalPoint(e.point);
-      const partId = detectPartFromPoint(local, modelHeight);
-      onPartHover(partId);
-      document.body.style.cursor = partId ? 'pointer' : 'default';
-    }
-  }, [loadState, modelHeight, onPartHover, toLocalPoint]);
+    let obj = e.object;
+    while (obj && !obj.userData.partId) obj = obj.parent;
+    const partId = obj?.userData?.partId || null;
+    onPartHover(partId);
+    document.body.style.cursor = partId ? 'pointer' : 'default';
+  }, [onPartHover]);
 
   const handlePointerOut = useCallback(() => {
     onPartHover(null);
@@ -330,12 +346,12 @@ export default function RobotModel({
 
   return (
     <group ref={groupRef}>
-      {/* FBX model (Track 1) */}
-      {loadState === 'fbx' && fbxModel && (
+      {/* GLB model (per-part meshes with individual click targets) */}
+      {loadState === 'glb' && partMeshes._model && (
         <primitive
-          object={fbxModel}
-          onClick={handleClick}
-          onPointerMove={handlePointerMove}
+          object={partMeshes._model}
+          onClick={handleGLBClick}
+          onPointerMove={handleGLBHover}
           onPointerOut={handlePointerOut}
         />
       )}
