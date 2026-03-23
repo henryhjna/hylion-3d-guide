@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-dark: #0a0a0f;
+  --surface: #12121a;
+  --surface-light: #1a1a2e;
+  --border: rgba(255, 255, 255, 0.063);
+  --neon-cyan: #00f0ff;
+  --neon-magenta: #ff00aa;
+  --neon-yellow: #c8ff00;
+  --neon-blue: #4466ff;
+  --neon-green: #00ff88;
+  --neon-orange: #ff8800;
+  --text-bright: #e0e8ff;
+  --text-dim: #6a7090;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-bright);
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+}
+
+/* Neon glow utilities */
+.glow-cyan {
+  text-shadow: 0 0 7px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px rgba(0, 240, 255, 0.3);
+}
+
+.glow-magenta {
+  text-shadow: 0 0 7px var(--neon-magenta), 0 0 20px var(--neon-magenta), 0 0 40px rgba(255, 0, 170, 0.3);
+}
+
+.glow-yellow {
+  text-shadow: 0 0 7px var(--neon-yellow), 0 0 20px var(--neon-yellow), 0 0 40px rgba(200, 255, 0, 0.3);
+}
+
+.glow-blue {
+  text-shadow: 0 0 7px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px rgba(68, 102, 255, 0.3);
+}
+
+.glow-green {
+  text-shadow: 0 0 7px var(--neon-green), 0 0 20px var(--neon-green), 0 0 40px rgba(0, 255, 136, 0.3);
+}
+
+.glow-orange {
+  text-shadow: 0 0 7px var(--neon-orange), 0 0 20px var(--neon-orange), 0 0 40px rgba(255, 136, 0, 0.3);
+}
+
+/* Box glow */
+.box-glow-cyan {
+  box-shadow: 0 0 5px rgba(0, 240, 255, 0.3), 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 5px rgba(0, 240, 255, 0.05);
+}
+
+.box-glow-magenta {
+  box-shadow: 0 0 5px rgba(255, 0, 170, 0.3), 0 0 15px rgba(255, 0, 170, 0.15), inset 0 0 5px rgba(255, 0, 170, 0.05);
+}
+
+/* Glass panel */
+.glass-panel {
+  background: rgba(18, 18, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Scanline overlay */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* Grid background */
+.grid-bg {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-dim);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+}
+
+/* Pulse animation */
+@keyframes pulse-neon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+  50% { box-shadow: 0 0 10px currentColor, 0 0 25px currentColor, 0 0 40px currentColor; }
+}
+
+.glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Slide in animation */
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.slide-in-right {
+  animation: slide-in-right 0.4s ease-out;
+}
+
+@keyframes slide-in-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.slide-in-up {
+  animation: slide-in-up 0.3s ease-out;
+}
+
+/* Tag styles */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
