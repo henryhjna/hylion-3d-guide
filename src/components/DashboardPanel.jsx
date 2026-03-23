@@ -92,14 +92,14 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           style={{ accentColor: memberColor }}
         />
         <span
-          className={`text-sm leading-relaxed flex-1 transition-[color,text-decoration] duration-200 ${isChecked ? 'text-[#6a7090] line-through' : 'text-[#e0e8ff]'}`}
+          className={`text-sm leading-relaxed flex-1 transition-[color,text-decoration] duration-200 ${isChecked ? 'text-[#9aa0b8] line-through' : 'text-[#e0e8ff]'}`}
         >
           {task}
         </span>
         {hint && (
           <button
             onClick={(e) => { e.preventDefault(); setExpanded(!expanded); }}
-            className="text-sm text-[#6a7090] hover:text-[#e0e8ff] shrink-0 ml-1"
+            className="text-sm text-[#9aa0b8] hover:text-[#e0e8ff] shrink-0 ml-1"
           >
             {expanded ? '\u25B4' : '\u25BE'}
           </button>
@@ -124,7 +124,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
             </div>
           )}
           {hint.estimatedHours && (
-            <div className="text-[#6a7090]">{'\u23F1'} 예상 소요: ~{hint.estimatedHours}시간</div>
+            <div className="text-[#9aa0b8]">{'\u23F1'} 예상 소요: ~{hint.estimatedHours}시간</div>
           )}
           {hint.components?.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1">
@@ -154,18 +154,18 @@ function ExpandableDep({ dep, memberId }) {
       >
         <span>{'\u2022'} {dep}</span>
         {handoff && (
-          <span className="text-sm text-[#6a7090] shrink-0 mt-1.5">
+          <span className="text-sm text-[#9aa0b8] shrink-0 mt-1.5">
             {expanded ? '\u25B4' : '\u25BE'}
           </span>
         )}
       </div>
       {expanded && handoff && (
         <div className="ml-7 mt-1 mb-6.5 p-5 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
-          <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
-          {handoff.format && <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
-          {handoff.location && <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
-          {handoff.deadline && <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">기한:</span> {handoff.deadline}</div>}
-          {handoff.verification && <div className="text-[#aab0cc]"><span className="text-[#6a7090]">검증:</span> {handoff.verification}</div>}
+          <div className="text-[#aab0cc] mb-6"><span className="text-[#9aa0b8]">전달물:</span> {handoff.what}</div>
+          {handoff.format && <div className="text-[#aab0cc] mb-6"><span className="text-[#9aa0b8]">포맷:</span> {handoff.format}</div>}
+          {handoff.location && <div className="text-[#aab0cc] mb-6"><span className="text-[#9aa0b8]">위치:</span> {handoff.location}</div>}
+          {handoff.deadline && <div className="text-[#aab0cc] mb-6"><span className="text-[#9aa0b8]">기한:</span> {handoff.deadline}</div>}
+          {handoff.verification && <div className="text-[#aab0cc]"><span className="text-[#9aa0b8]">검증:</span> {handoff.verification}</div>}
         </div>
       )}
     </div>
@@ -256,7 +256,7 @@ export default function DashboardPanel({
         {/* Collapse toggle */}
         <button
           onClick={onToggleCollapse}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-sm"
+          className="w-8 h-8 rounded-lg flex items-center justify-center text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-sm"
           title="패널 펼치기"
         >
           {'\u25B6'}
@@ -275,7 +275,7 @@ export default function DashboardPanel({
             {member.name}
           </div>
         ) : (
-          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-[#ffffff08] text-[#6a7090] border border-[#ffffff10]">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-[#ffffff08] text-[#9aa0b8] border border-[#ffffff10]">
             ALL
           </div>
         )}
@@ -321,7 +321,7 @@ export default function DashboardPanel({
       <div className="flex items-center justify-end px-3 pt-3 pb-1">
         <button
           onClick={onToggleCollapse}
-          className="w-7 h-7 rounded-md flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-sm"
+          className="w-7 h-7 rounded-md flex items-center justify-center text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-sm"
           title="패널 접기"
         >
           {'\u25C0'}
@@ -406,7 +406,7 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
         >
           {gate.name}
         </span>
-        <span className="text-sm text-[#6a7090] ml-auto">
+        <span className="text-sm text-[#9aa0b8] ml-auto">
           Week {weekNum} 말
         </span>
       </div>
@@ -422,13 +422,13 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
               >
                 {checked ? '\u2713' : ''}
               </span>
-              <span className={`${checked ? 'line-through text-[#6a7090]' : 'text-[#e0e8ff]'}`}>{item}</span>
+              <span className={`${checked ? 'line-through text-[#9aa0b8]' : 'text-[#e0e8ff]'}`}>{item}</span>
             </label>
           );
         })}
       </div>
       {/* Progress text */}
-      <div className="mt-3 text-sm text-[#6a7090]">
+      <div className="mt-3 text-sm text-[#9aa0b8]">
         체크리스트 진행: {completedGateItems}/{gate.items.length}
       </div>
     </div>
@@ -491,7 +491,7 @@ function MemberView({
 
             {/* Focus card (질감: 글래스 카드 + 글로우 보더) */}
             <div className="rounded-xl p-5" style={{ background: `linear-gradient(135deg, ${accentColor}0c, ${accentColor}04)`, border: `1px solid ${accentColor}30`, boxShadow: `0 0 30px ${accentColor}08` }}>
-              <div className="text-xs text-[#6a7090] uppercase tracking-widest mb-6 font-mono">핵심 목표</div>
+              <div className="text-xs text-[#9aa0b8] uppercase tracking-widest mb-6 font-mono">핵심 목표</div>
               <div className="text-lg font-bold leading-snug" style={{ color: accentColor, textShadow: `0 0 12px ${accentColor}30` }}>
                 {weekData.focus}
               </div>
@@ -513,7 +513,7 @@ function MemberView({
           </div>
 
           {/* ── Checklist (여유: 넉넉한 간격) ── */}
-          <div className="text-xs text-[#6a7090] uppercase tracking-[0.2em] font-mono mb-5 pb-2 border-b border-[#ffffff08]">할 일</div>
+          <div className="text-xs text-[#9aa0b8] uppercase tracking-[0.2em] font-mono mb-5 pb-2 border-b border-[#ffffff08]">할 일</div>
           <div className="space-y-1.5">
             {weekData.tasks.map((task, i) => (
               <ExpandableTask
@@ -544,7 +544,7 @@ function MemberView({
         <div
           className="p-5 rounded-lg bg-white/[0.02] border border-white/[0.05]"
         >
-          <div className="text-sm text-[#6a7090] mb-6">
+          <div className="text-sm text-[#9aa0b8] mb-6">
             다음 주 미리보기 (Week {weekNum + 1})
           </div>
           <div className="text-sm" style={{ color: accentColor }}>
@@ -584,7 +584,7 @@ function OverallView({
         <h2 className="text-2xl font-bold tracking-wider text-[#e0e8ff]" style={{ marginBottom: 4, textShadow: '0 0 20px rgba(224,232,255,0.15)' }}>
           전체 프로젝트
         </h2>
-        <div className="text-base text-[#6a7090]">HYlion Physical AI</div>
+        <div className="text-base text-[#9aa0b8]">HYlion Physical AI</div>
       </div>
 
       {/* Week title — 위계: 높음 */}
@@ -633,7 +633,7 @@ function OverallView({
                     }}
                   />
                 </div>
-                <span className="text-sm w-8 text-right text-[#6a7090]">
+                <span className="text-sm w-8 text-right text-[#9aa0b8]">
                   {val}%
                 </span>
               </button>
@@ -646,7 +646,7 @@ function OverallView({
       {trackHighlights && (
         <div className="space-y-3">
           <h4
-            className="text-sm uppercase tracking-widest text-[#6a7090]"
+            className="text-sm uppercase tracking-widest text-[#9aa0b8]"
           >
             이번 주 하이라이트
           </h4>
@@ -696,7 +696,7 @@ function DependenciesSection({ receives, gives, memberId }) {
   return (
     <div>
       <h4
-        className="text-sm uppercase tracking-widest mb-5 text-[#6a7090]"
+        className="text-sm uppercase tracking-widest mb-5 text-[#9aa0b8]"
       >
         작업 의존성
       </h4>
@@ -737,12 +737,12 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
         onClick={() => setFlowOpen((o) => !o)}
       >
         <span
-          className="text-sm uppercase tracking-widest text-[#6a7090]"
+          className="text-sm uppercase tracking-widest text-[#9aa0b8]"
         >
           의존성 흐름
         </span>
         <span
-          className={`text-sm text-[#6a7090] transition-transform duration-200 ${flowOpen ? 'rotate-90' : 'rotate-0'}`}
+          className={`text-sm text-[#9aa0b8] transition-transform duration-200 ${flowOpen ? 'rotate-90' : 'rotate-0'}`}
         >
           {'\u25B6'}
         </span>

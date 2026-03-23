@@ -30,7 +30,7 @@ export default function Navigation({
             className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               mode === 'work'
                 ? 'bg-[#00f0ff12] text-[#00f0ff] shadow-sm'
-                : 'text-[#6a7090] hover:text-[#e0e8ff]'
+                : 'text-[#9aa0b8] hover:text-[#e0e8ff]'
             }`}
            
           >
@@ -41,7 +41,7 @@ export default function Navigation({
             className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               mode === 'explore'
                 ? 'bg-[#00f0ff12] text-[#00f0ff] shadow-sm'
-                : 'text-[#6a7090] hover:text-[#e0e8ff]'
+                : 'text-[#9aa0b8] hover:text-[#e0e8ff]'
             }`}
            
           >
@@ -95,7 +95,7 @@ export default function Navigation({
         {/* Search */}
         <button
           onClick={onOpenSearch}
-          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-sm text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all"
+          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-sm text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all"
           title="문서 검색 (Ctrl+K)"
         >
           🔍
@@ -105,7 +105,7 @@ export default function Navigation({
         {/* Docs */}
         <button
           onClick={onOpenDocs}
-          className="w-7 h-7 rounded-full flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-sm"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-sm"
           title="문서 리더 (Ctrl+B)"
         >
           📖
@@ -114,7 +114,7 @@ export default function Navigation({
         {/* Settings */}
         <button
           onClick={onOpenSettings}
-          className="w-7 h-7 rounded-full flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-sm"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-sm"
           title="설정"
         >
           ⚙️

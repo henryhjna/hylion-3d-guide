@@ -38,7 +38,7 @@ export default function SettingsModal({ isOpen, onClose }) {
           </h2>
           <button
             onClick={onClose}
-            className="w-7 h-7 rounded-lg bg-[#ffffff08] hover:bg-[#ffffff15] flex items-center justify-center text-[#6a7090] text-xs"
+            className="w-7 h-7 rounded-lg bg-[#ffffff08] hover:bg-[#ffffff15] flex items-center justify-center text-[#9aa0b8] text-xs"
           >
             ✕
           </button>
@@ -46,7 +46,7 @@ export default function SettingsModal({ isOpen, onClose }) {
 
         {/* API Key */}
         <div className="mb-4">
-          <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
+          <label className="text-xs text-[#9aa0b8] uppercase tracking-wider mb-2 block">
             Anthropic API Key
           </label>
           <div className="relative">
@@ -55,24 +55,24 @@ export default function SettingsModal({ isOpen, onClose }) {
               value={apiKey}
               onChange={e => setApiKey(e.target.value)}
               placeholder="sk-ant-..."
-              className="w-full px-3 py-2 rounded-lg bg-[#0a0a0f] border border-[#ffffff15] text-xs text-[#e0e8ff] placeholder-[#6a7090] focus:border-[#4466ff40] focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg bg-[#0a0a0f] border border-[#ffffff15] text-xs text-[#e0e8ff] placeholder-[#9aa0b8] focus:border-[#4466ff40] focus:outline-none"
              
             />
             <button
               onClick={() => setShowKey(!showKey)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#6a7090] hover:text-[#e0e8ff]"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#9aa0b8] hover:text-[#e0e8ff]"
             >
               {showKey ? '숨기기' : '보기'}
             </button>
           </div>
-          <p className="text-xs text-[#6a7090] mt-2">
+          <p className="text-xs text-[#9aa0b8] mt-2">
             키는 브라우저에만 저장됩니다. 서버로 전송되지 않습니다.
           </p>
         </div>
 
         {/* Help */}
         <div className="mb-5 p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
-          <p className="text-xs text-[#6a7090]">
+          <p className="text-xs text-[#9aa0b8]">
             API 키가 없으면?
           </p>
           <a
@@ -89,7 +89,7 @@ export default function SettingsModal({ isOpen, onClose }) {
         <div className="flex gap-2 justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg text-xs text-[#6a7090] hover:text-[#e0e8ff] bg-[#ffffff08] hover:bg-[#ffffff15]"
+            className="px-4 py-1.5 rounded-lg text-xs text-[#9aa0b8] hover:text-[#e0e8ff] bg-[#ffffff08] hover:bg-[#ffffff15]"
           >
             취소
           </button>

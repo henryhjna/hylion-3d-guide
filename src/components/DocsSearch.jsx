@@ -67,10 +67,10 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
             value={query}
             onChange={e => { setQuery(e.target.value); setViewingEntry(null); }}
             placeholder="문서 검색... (기획서, 실행가이드)"
-            className="flex-1 bg-transparent text-sm text-[#e0e8ff] placeholder-[#6a7090] focus:outline-none"
+            className="flex-1 bg-transparent text-sm text-[#e0e8ff] placeholder-[#9aa0b8] focus:outline-none"
            
           />
-          <kbd className="text-sm text-[#6a7090] bg-[#ffffff08] px-2.5 py-1.5 rounded border border-[#ffffff10]">
+          <kbd className="text-sm text-[#9aa0b8] bg-[#ffffff08] px-2.5 py-1.5 rounded border border-[#ffffff10]">
             ESC
           </kbd>
         </div>
@@ -86,7 +86,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
               >
                 ← 검색 결과
               </button>
-              <div className="text-sm text-[#6a7090] mb-2">{viewingEntry.fileName}</div>
+              <div className="text-sm text-[#9aa0b8] mb-2">{viewingEntry.fileName}</div>
               <h3 className="text-sm font-bold text-[#e0e8ff] mb-3">
                 {viewingEntry.sectionTitle}
               </h3>
@@ -121,27 +121,27 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-[#6a7090]">{entry.icon || '📄'}</span>
-                    <span className="text-sm text-[#6a7090]">{entry.fileName}</span>
+                    <span className="text-sm text-[#9aa0b8]">{entry.icon || '📄'}</span>
+                    <span className="text-sm text-[#9aa0b8]">{entry.fileName}</span>
                     <span className="text-sm text-[#e0e8ff] font-medium">{entry.sectionTitle}</span>
                   </div>
-                  <div className="text-sm text-[#6a7090] ml-5 truncate">
+                  <div className="text-sm text-[#9aa0b8] ml-5 truncate">
                     {entry.preview}
                   </div>
                 </button>
               ))}
               {results.length > 10 && (
-                <div className="px-4 py-2 text-sm text-[#6a7090] text-center">
+                <div className="px-4 py-2 text-sm text-[#9aa0b8] text-center">
                   {results.length}개 결과 중 10개 표시
                 </div>
               )}
             </div>
           ) : query.trim() ? (
-            <div className="p-8 text-center text-sm text-[#6a7090]">
+            <div className="p-8 text-center text-sm text-[#9aa0b8]">
               검색 결과 없음
             </div>
           ) : (
-            <div className="p-8 text-center text-sm text-[#6a7090]">
+            <div className="p-8 text-center text-sm text-[#9aa0b8]">
               키워드를 입력하세요<br />
               예: SmolVLA, 배터리, FETCH, 직립
             </div>
@@ -149,7 +149,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
         </div>
 
         {/* Footer hints */}
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-[#ffffff10] text-sm text-[#6a7090]">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-[#ffffff10] text-sm text-[#9aa0b8]">
           <span>↑↓ 탐색</span>
           <span>Enter 열기</span>
           <span>Esc 닫기</span>

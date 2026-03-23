@@ -21,7 +21,7 @@ const COLORS = {
   bg: '#0a0a0f',
   grid: '#1a1a2e',
   text: '#e0e0f0',
-  dimText: '#6a7090',
+  dimText: '#9aa0b8',
 };
 
 // ── SVG shape helpers ─────────────────────────────────────────────────────────
@@ -93,8 +93,8 @@ function CheckmarkIcon({ x, y }) {
 function LockIcon({ x, y }) {
   return (
     <g transform={`translate(${x - 5}, ${y - 7})`} opacity={0.5}>
-      <rect x={1} y={6} width={8} height={6} rx={1} fill="#6a7090" />
-      <path d="M3,6 V4 a2,2 0 0 1 4,0 V6" fill="none" stroke="#6a7090" strokeWidth={1.2} />
+      <rect x={1} y={6} width={8} height={6} rx={1} fill="#9aa0b8" />
+      <path d="M3,6 V4 a2,2 0 0 1 4,0 V6" fill="none" stroke="#9aa0b8" strokeWidth={1.2} />
     </g>
   );
 }
@@ -102,7 +102,7 @@ function LockIcon({ x, y }) {
 function SpinnerIcon({ x, y }) {
   return (
     <g transform={`translate(${x}, ${y})`}>
-      <circle r={5} fill="none" stroke="#6a7090" strokeWidth={1.5} strokeDasharray="6 8" strokeLinecap="round">
+      <circle r={5} fill="none" stroke="#9aa0b8" strokeWidth={1.5} strokeDasharray="6 8" strokeLinecap="round">
         <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" repeatCount="indefinite" />
       </circle>
     </g>

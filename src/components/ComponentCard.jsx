@@ -55,11 +55,11 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
           <div className="text-sm font-bold text-[#00f0ff]">
             {component.name}
           </div>
-          <div className="text-xs text-[#6a7090]">{component.category}</div>
+          <div className="text-xs text-[#9aa0b8]">{component.category}</div>
         </div>
         <button
           onClick={onClose}
-          className="w-6 h-6 rounded flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10] text-xs"
+          className="w-6 h-6 rounded flex items-center justify-center text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff10] text-xs"
         >
           ✕
         </button>
@@ -70,7 +70,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
         <Section title="스펙">
           {Object.entries(component.specs).map(([k, v]) => (
             <div key={k} className="flex items-baseline gap-2 text-sm">
-              <span className="text-[#6a7090] min-w-[60px] shrink-0">{k}</span>
+              <span className="text-[#9aa0b8] min-w-[60px] shrink-0">{k}</span>
               <span className="text-[#e0e8ff]">{v}</span>
             </div>
           ))}
@@ -81,7 +81,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
       {component.usage && (
         <Section title="프로젝트 내 용도">
           <p className="text-sm text-[#e0e8ff] mb-2">{component.usage.description}</p>
-          <div className="flex gap-2 text-xs text-[#6a7090]">
+          <div className="flex gap-2 text-xs text-[#9aa0b8]">
             {component.usage.quantity && <span>수량: {component.usage.quantity}개</span>}
             {component.usage.spares > 0 && <span>(+예비 {component.usage.spares})</span>}
             {component.usage.owner && <span>담당: {component.usage.owner}</span>}
@@ -108,7 +108,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
             >
               {status.label}
             </span>
-            <span className="text-[#6a7090]">{component.procurement.channel}</span>
+            <span className="text-[#9aa0b8]">{component.procurement.channel}</span>
             {component.procurement.estimatedArrival && (
               <span className="text-[#ff8800]">{component.procurement.estimatedArrival}</span>
             )}
@@ -149,7 +149,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
 function Section({ title, children }) {
   return (
     <div className="mb-3">
-      <div className="text-xs text-[#6a7090] uppercase tracking-wider mb-2">
+      <div className="text-xs text-[#9aa0b8] uppercase tracking-wider mb-2">
         {title}
       </div>
       {children}

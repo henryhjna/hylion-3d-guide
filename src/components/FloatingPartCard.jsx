@@ -70,7 +70,7 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
 
         {/* Subtitle */}
         {part.subtitle && (
-          <div className="text-sm text-[#6a7090] mb-3">{part.subtitle}</div>
+          <div className="text-sm text-[#9aa0b8] mb-3">{part.subtitle}</div>
         )}
 
         {/* Owners */}
@@ -78,7 +78,7 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
           <div className="text-sm text-[#aab0cc] mb-3">
             {part.owners.join(' + ')}
             {part.ownerRoles && Object.values(part.ownerRoles).length > 0 && (
-              <span className="text-[#6a7090] ml-1.5">
+              <span className="text-[#9aa0b8] ml-1.5">
                 ({Object.values(part.ownerRoles).join(', ')})
               </span>
             )}
@@ -90,7 +90,7 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
           <div className="border-t border-[#ffffff08] pt-3 mb-4 space-y-2.5.5">
             {specs.map((spec, i) => (
               <div key={i} className="text-sm text-[#ccd0e4]">
-                <span className="text-[#6a7090]">{spec.label}: </span>
+                <span className="text-[#9aa0b8]">{spec.label}: </span>
                 {spec.value}
               </div>
             ))}

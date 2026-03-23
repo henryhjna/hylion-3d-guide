@@ -26,11 +26,11 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
           >
             {part.label}
           </h2>
-          <p className="text-sm text-[#6a7090]">{part.subtitle}</p>
+          <p className="text-sm text-[#9aa0b8]">{part.subtitle}</p>
         </div>
         <button
           onClick={onClose}
-          className="w-8 h-8 rounded-lg bg-[#ffffff08] hover:bg-[#ffffff15] flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] transition-colors text-sm cursor-pointer"
+          className="w-8 h-8 rounded-lg bg-[#ffffff08] hover:bg-[#ffffff15] flex items-center justify-center text-[#9aa0b8] hover:text-[#e0e8ff] transition-colors text-sm cursor-pointer"
         >
           ✕
         </button>
@@ -52,7 +52,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
           <span
             key={w}
             onClick={() => onWeekSelect?.(w)}
-            className="tag bg-[#ffffff08] text-[#6a7090] border border-[#ffffff10] cursor-pointer hover:bg-[#00f0ff15] hover:text-[#00f0ff] hover:border-[#00f0ff30] transition-colors"
+            className="tag bg-[#ffffff08] text-[#9aa0b8] border border-[#ffffff10] cursor-pointer hover:bg-[#00f0ff15] hover:text-[#00f0ff] hover:border-[#00f0ff30] transition-colors"
           >
             W{w}
           </span>
@@ -75,7 +75,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
                   {ownerId}
                 </span>
                 {part.ownerRoles[ownerId] && (
-                  <span className="text-sm text-[#6a7090]">{part.ownerRoles[ownerId]}</span>
+                  <span className="text-sm text-[#9aa0b8]">{part.ownerRoles[ownerId]}</span>
                 )}
               </div>
             );
@@ -88,7 +88,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
         <div className="space-y-2.5.5">
           {part.specs.map((spec, i) => (
             <div key={i} className="flex items-baseline gap-2">
-              <span className="text-sm text-[#6a7090] min-w-[80px] shrink-0">{spec.label}</span>
+              <span className="text-sm text-[#9aa0b8] min-w-[80px] shrink-0">{spec.label}</span>
               <span className="text-sm text-[#e0e8ff]">{spec.value}</span>
             </div>
           ))}
@@ -101,7 +101,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
           <div className="space-y-2.5">
             {part.internalLayout.map((item, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded bg-[#ffffff08] flex items-center justify-center text-sm text-[#6a7090]">
+                <span className="w-5 h-5 rounded bg-[#ffffff08] flex items-center justify-center text-sm text-[#9aa0b8]">
                   {i + 1}
                 </span>
                 <span className="text-sm text-[#e0e8ff]">{item}</span>
@@ -137,7 +137,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
             {part.manufacturingPaths.map((path, i) => (
               <div key={i} className="p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
                 <span className="text-sm font-bold text-[#e0e8ff]">{path.label}</span>
-                <p className="text-sm text-[#6a7090] mt-1.5">{path.desc}</p>
+                <p className="text-sm text-[#9aa0b8] mt-1.5">{path.desc}</p>
               </div>
             ))}
           </div>
@@ -152,15 +152,15 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
               {part.smolvla.objects.map((obj, i) => (
                 <div key={i} className="px-2 py-1 rounded bg-[#c8ff0010] border border-[#c8ff0020]">
                   <span className="text-sm text-[#c8ff00]">{obj.name}</span>
-                  <span className="text-sm text-[#6a7090] ml-1">×{obj.episodes}</span>
+                  <span className="text-sm text-[#9aa0b8] ml-1">×{obj.episodes}</span>
                 </div>
               ))}
             </div>
-            <div className="text-sm text-[#6a7090]">
+            <div className="text-sm text-[#9aa0b8]">
               총 {part.smolvla.totalEpisodes} 에피소드
             </div>
             <div className="text-sm text-[#e0e8ff]">{part.smolvla.training}</div>
-            <div className="text-sm text-[#6a7090]">{part.smolvla.pipeline}</div>
+            <div className="text-sm text-[#9aa0b8]">{part.smolvla.pipeline}</div>
           </div>
         </Section>
       )}
@@ -211,7 +211,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
 function Section({ title, children }) {
   return (
     <div className="mb-7">
-      <h3 className="text-sm font-bold text-[#6a7090] uppercase tracking-wider mb-2.5">
+      <h3 className="text-sm font-bold text-[#9aa0b8] uppercase tracking-wider mb-2.5">
         {title}
       </h3>
       {children}
@@ -222,7 +222,7 @@ function Section({ title, children }) {
 function Row({ label, value }) {
   return (
     <div className="flex items-baseline gap-3">
-      <span className="text-sm text-[#6a7090] min-w-[70px] shrink-0">{label}</span>
+      <span className="text-sm text-[#9aa0b8] min-w-[70px] shrink-0">{label}</span>
       <span className="text-sm text-[#e0e8ff]"><GlossaryText text={value} /></span>
     </div>
   );
@@ -244,8 +244,8 @@ function PartComponents({ partId }) {
             >
               <span className="text-sm">📦</span>
               <span className="text-sm text-[#e0e8ff] flex-1">{comp.name}</span>
-              <span className="text-sm text-[#6a7090]">×{comp.usage?.quantity || '?'}</span>
-              <span className="text-sm text-[#6a7090]">{expanded === comp.id ? '▴' : '▾'}</span>
+              <span className="text-sm text-[#9aa0b8]">×{comp.usage?.quantity || '?'}</span>
+              <span className="text-sm text-[#9aa0b8]">{expanded === comp.id ? '▴' : '▾'}</span>
             </button>
             {expanded === comp.id && (
               <div className="ml-6 mb-2 p-3 rounded bg-[#ffffff04] border border-[#ffffff08] text-sm">
@@ -254,7 +254,7 @@ function PartComponents({ partId }) {
                   <div className="space-y-2 mb-2">
                     {Object.entries(comp.specs).map(([k, v]) => (
                       <div key={k} className="flex gap-2">
-                        <span className="text-[#6a7090] min-w-[50px]">{k}</span>
+                        <span className="text-[#9aa0b8] min-w-[50px]">{k}</span>
                         <span className="text-[#e0e8ff]">{v}</span>
                       </div>
                     ))}

@@ -110,11 +110,11 @@ function GlossaryTooltip({ data, term, position, onMouseEnter, onMouseLeave }) {
     >
       <div className="text-xs font-bold mb-2 text-[#4466ff]">
         {term}
-        {data.full && <span className="text-xs text-[#6a7090] font-normal ml-1.5">({data.full})</span>}
+        {data.full && <span className="text-xs text-[#9aa0b8] font-normal ml-1.5">({data.full})</span>}
       </div>
       <p className="text-sm text-[#e0e8ff] leading-relaxed mb-2.5">{data.definition}</p>
       {data.related?.length > 0 && (
-        <div className="text-xs text-[#6a7090] mb-2">
+        <div className="text-xs text-[#9aa0b8] mb-2">
           관련: {data.related.join(', ')}
         </div>
       )}

@@ -61,14 +61,14 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
         <div className="flex items-center gap-1">
           <button
             onClick={onClear}
-            className="w-6 h-6 rounded flex items-center justify-center text-sm text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
+            className="w-6 h-6 rounded flex items-center justify-center text-sm text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
             title="대화 초기화"
           >
             🗑
           </button>
           <button
             onClick={() => setIsOpen(false)}
-            className="w-6 h-6 rounded flex items-center justify-center text-sm text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
+            className="w-6 h-6 rounded flex items-center justify-center text-sm text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
           >
             ✕
           </button>
@@ -80,7 +80,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
         {messages.length === 0 && (
           <div className="text-center py-8">
             <div className="text-2xl mb-2">🤖</div>
-            <p className="text-sm text-[#6a7090] mb-3">
+            <p className="text-sm text-[#9aa0b8] mb-3">
               프로젝트에 대해 무엇이든 질문하세요
             </p>
             <div className="space-y-2.5">
@@ -158,7 +158,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
             placeholder={hasApiKey ? '질문을 입력하세요...' : 'API 키를 먼저 설정하세요'}
-            className="flex-1 px-3 py-2 rounded-lg bg-[#0a0a0f] border border-[#ffffff15] text-sm text-[#e0e8ff] placeholder-[#6a7090] focus:border-[#4466ff40] focus:outline-none"
+            className="flex-1 px-3 py-2 rounded-lg bg-[#0a0a0f] border border-[#ffffff15] text-sm text-[#e0e8ff] placeholder-[#9aa0b8] focus:border-[#4466ff40] focus:outline-none"
           />
           <button
             onClick={handleSend}

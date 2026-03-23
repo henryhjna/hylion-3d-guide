@@ -49,7 +49,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
         <div className="w-[240px] border-r border-[#ffffff10] p-3 overflow-y-auto shrink-0">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-bold text-[#4466ff]">📖 문서</span>
-            <button onClick={onClose} className="text-sm text-[#6a7090] hover:text-[#e0e8ff]">✕</button>
+            <button onClick={onClose} className="text-sm text-[#9aa0b8] hover:text-[#e0e8ff]">✕</button>
           </div>
 
           {/* Doc selector */}
@@ -61,7 +61,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                 className={`flex-1 text-sm py-1.5 rounded transition-all ${
                   selectedDoc === doc.id
                     ? 'bg-[#4466ff15] text-[#4466ff] border border-[#4466ff30]'
-                    : 'text-[#6a7090] hover:text-[#e0e8ff] bg-[#ffffff05]'
+                    : 'text-[#9aa0b8] hover:text-[#e0e8ff] bg-[#ffffff05]'
                 }`}
               >
                 {doc.name}
@@ -85,7 +85,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
               className="w-full px-2 py-1 rounded bg-[#0a0a0f] border border-[#ffffff10] text-sm text-[#e0e8ff] focus:outline-none focus:border-[#4466ff30]"
             />
             {searchQuery.trim() && (
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-[#6a7090]">
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-[#9aa0b8]">
                 {(content.toLowerCase().match(new RegExp(searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi')) || []).length}건
               </span>
             )}
@@ -99,7 +99,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                 onClick={() => {
                   document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="block w-full text-left text-sm text-[#6a7090] hover:text-[#e0e8ff] py-1.5 transition-colors truncate"
+                className="block w-full text-left text-sm text-[#9aa0b8] hover:text-[#e0e8ff] py-1.5 transition-colors truncate"
                 style={{ paddingLeft: `${(item.level - 1) * 12}px` }}
               >
                 {item.title}
@@ -111,7 +111,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
         {/* Content area */}
         <div className="flex-1 overflow-y-auto p-6">
           {isLoading ? (
-            <div className="flex items-center justify-center h-full text-[#6a7090]">로딩 중...</div>
+            <div className="flex items-center justify-center h-full text-[#9aa0b8]">로딩 중...</div>
           ) : (
             <div className="docs-content">
               <Markdown
@@ -130,12 +130,12 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                     <code className="bg-[#ffffff10] px-1 py-1.5 rounded text-sm text-[#ff8800]">{children}</code>
                   ),
                   table: ({ children }) => <div className="overflow-x-auto mb-3"><table className="w-full text-sm border-collapse">{children}</table></div>,
-                  th: ({ children }) => <th className="text-left px-2 py-1 border-b border-[#ffffff15] text-[#6a7090] font-bold">{children}</th>,
+                  th: ({ children }) => <th className="text-left px-2 py-1 border-b border-[#ffffff15] text-[#9aa0b8] font-bold">{children}</th>,
                   td: ({ children }) => <td className="px-2 py-1 border-b border-[#ffffff08] text-[#e0e8ff]">{children}</td>,
                   strong: ({ children }) => <strong className="text-[#e0e8ff] font-bold">{children}</strong>,
                   a: ({ children, href }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#4466ff] hover:text-[#6688ff] underline">{children}</a>,
                   hr: () => <hr className="border-[#ffffff10] my-4" />,
-                  blockquote: ({ children }) => <blockquote className="border-l-2 border-[#4466ff] pl-3 my-2 text-[#6a7090]">{children}</blockquote>,
+                  blockquote: ({ children }) => <blockquote className="border-l-2 border-[#4466ff] pl-3 my-2 text-[#9aa0b8]">{children}</blockquote>,
                 }}
               >
                 {content}

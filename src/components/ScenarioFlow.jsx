@@ -125,12 +125,12 @@ export default function ScenarioFlow() {
               <div className="w-12 h-12 rounded-lg bg-[#4466ff15] border border-[#4466ff30] flex items-center justify-center text-xl mx-auto">
                 👤
               </div>
-              <div className="text-sm text-[#6a7090] mt-1">관객</div>
+              <div className="text-sm text-[#9aa0b8] mt-1">관객</div>
             </div>
 
             {/* Distance markers */}
-            <div className="absolute left-[20%] bottom-2 text-sm text-[#6a7090]">←~1.5m→</div>
-            <div className="absolute left-[65%] bottom-2 text-sm text-[#6a7090]">←~1.5m→</div>
+            <div className="absolute left-[20%] bottom-2 text-sm text-[#9aa0b8]">←~1.5m→</div>
+            <div className="absolute left-[65%] bottom-2 text-sm text-[#9aa0b8]">←~1.5m→</div>
 
             {/* Robot */}
             <div
@@ -158,7 +158,7 @@ export default function ScenarioFlow() {
             </div>
 
             {/* Home marker */}
-            <div className="absolute left-[50%] -translate-x-1/2 bottom-0 text-sm text-[#6a7090]">
+            <div className="absolute left-[50%] -translate-x-1/2 bottom-0 text-sm text-[#9aa0b8]">
               ▲ 홈
             </div>
 
@@ -169,13 +169,13 @@ export default function ScenarioFlow() {
                 <span className="text-sm">🥤</span>
                 <span className="text-sm">🧸</span>
               </div>
-              <div className="text-sm text-[#6a7090] mt-1">물체 테이블</div>
+              <div className="text-sm text-[#9aa0b8] mt-1">물체 테이블</div>
             </div>
           </div>
 
           {/* Active parts indicator */}
           <div className="flex items-center justify-center gap-2 mt-4">
-            <span className="text-sm text-[#6a7090]">활성 파트:</span>
+            <span className="text-sm text-[#9aa0b8]">활성 파트:</span>
             {currentStep?.activeParts?.map(p => (
               <span
                 key={p}
@@ -263,7 +263,7 @@ export default function ScenarioFlow() {
                   <p className="text-sm text-[#e0e8ff] ml-5 mb-2">{step.description}</p>
                   <div className="flex flex-wrap gap-1.5 ml-5">
                     {step.systems.map((sys, j) => (
-                      <span key={j} className="text-sm px-1 py-1.5 rounded bg-[#ffffff08] text-[#6a7090]">
+                      <span key={j} className="text-sm px-1 py-1.5 rounded bg-[#ffffff08] text-[#9aa0b8]">
                         {sys}
                       </span>
                     ))}
