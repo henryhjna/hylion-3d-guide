@@ -14,7 +14,7 @@ export default function ArchitectureView() {
 
       {/* State selector */}
       <div className="mb-4">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
+        <label className="text-sm text-[#6a7090] uppercase tracking-wider mb-2 block">
           상태별 리소스
         </label>
         <div className="flex flex-wrap gap-1">
@@ -22,7 +22,7 @@ export default function ArchitectureView() {
             <button
               key={state}
               onClick={() => setSelectedState(state)}
-              className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+              className={`px-2 py-1 rounded text-sm font-bold transition-all ${
                 selectedState === state ? 'border' : 'opacity-50 hover:opacity-80'
               }`}
               style={{
@@ -40,10 +40,10 @@ export default function ArchitectureView() {
       {/* Resource mapping for selected state */}
       {resources && (
         <div className="mb-4 p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
-          <div className="text-xs font-bold mb-2" style={{ color: resources.color,  }}>
+          <div className="text-sm font-bold mb-2" style={{ color: resources.color,  }}>
             {resources.label}
           </div>
-          <div className="space-y-2.5.5 text-xs">
+          <div className="space-y-2.5.5 text-sm">
             <ResourceRow label="Orin GPU" value={resources.orin_gpu} active={resources.orin_gpu !== '없음' && resources.orin_gpu !== '비어있음'} />
             <ResourceRow label="Orin CPU" value={resources.orin_cpu} active={resources.orin_cpu !== '로그 유지'} />
             <ResourceRow label="NUC" value={resources.nuc} active={resources.nuc !== '대기' && resources.nuc !== '정지' && resources.nuc !== '전원 차단'} />
@@ -55,7 +55,7 @@ export default function ArchitectureView() {
 
       {/* Computing Nodes */}
       <div className="mb-4">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
+        <label className="text-sm text-[#6a7090] uppercase tracking-wider mb-2 block">
           컴퓨팅 노드
         </label>
         <div className="space-y-2">
@@ -70,21 +70,21 @@ export default function ArchitectureView() {
               }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold" style={{ color: node.color,  }}>
+                <span className="text-sm font-bold" style={{ color: node.color,  }}>
                   {node.label}
                 </span>
-                <span className="text-xs text-[#6a7090]">{node.subtitle}</span>
+                <span className="text-sm text-[#6a7090]">{node.subtitle}</span>
               </div>
               {selectedNode === node.id && (
                 <div className="mt-2 space-y-2">
                   {node.tasks.map((task, i) => (
-                    <div key={i} className="text-xs text-[#e0e8ff] flex items-start gap-2.5">
+                    <div key={i} className="text-sm text-[#e0e8ff] flex items-start gap-2.5">
                       <span style={{ color: node.color }}>▸</span>
                       {task}
                     </div>
                   ))}
                   {node.connections.length > 0 && (
-                    <div className="text-xs text-[#6a7090] mt-1 pt-1 border-t border-[#ffffff08]">
+                    <div className="text-sm text-[#6a7090] mt-1 pt-1 border-t border-[#ffffff08]">
                       연결: {node.connections.map(c => {
                         const target = COMPUTING_NODES.find(n => n.id === c);
                         return target?.label;
@@ -100,26 +100,26 @@ export default function ArchitectureView() {
 
       {/* Power System */}
       <div className="mb-4">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
+        <label className="text-sm text-[#6a7090] uppercase tracking-wider mb-2 block">
           전원 시스템
         </label>
         <div className="space-y-2.5.5">
           {POWER_SYSTEM.map(bat => (
             <div key={bat.id} className="p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold" style={{ color: bat.color }}>{bat.label}</span>
-                <span className="text-xs text-[#6a7090]">{bat.spec}</span>
+                <span className="text-sm font-bold" style={{ color: bat.color }}>{bat.label}</span>
+                <span className="text-sm text-[#6a7090]">{bat.spec}</span>
               </div>
-              <div className="text-xs text-[#e0e8ff] mt-1.5">{bat.targets}</div>
-              <div className="text-xs text-[#6a7090]">{bat.location}</div>
+              <div className="text-sm text-[#e0e8ff] mt-1.5">{bat.targets}</div>
+              <div className="text-sm text-[#6a7090]">{bat.location}</div>
             </div>
           ))}
         </div>
-        <div className="mt-2 p-3 rounded bg-[#ff880010] border border-[#ff880020] text-xs">
+        <div className="mt-2 p-3 rounded bg-[#ff880010] border border-[#ff880020] text-sm">
           <span className="text-[#ff8800] font-bold">투입:</span>
           <span className="text-[#e0e8ff] ml-1">A ON → Orin/NUC 부팅 → B ON → Dynamixel → C ON → BHL 캘</span>
         </div>
-        <div className="mt-1 p-3 rounded bg-[#ff004410] border border-[#ff004420] text-xs">
+        <div className="mt-1 p-3 rounded bg-[#ff004410] border border-[#ff004420] text-sm">
           <span className="text-[#ff0044] font-bold">비상정지:</span>
           <span className="text-[#e0e8ff] ml-1">B+C 양극 NC 차단 + ESP32 MOSFET C (A 유지)</span>
         </div>
@@ -127,12 +127,12 @@ export default function ArchitectureView() {
 
       {/* Network */}
       <div className="mb-2">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
+        <label className="text-sm text-[#6a7090] uppercase tracking-wider mb-2 block">
           네트워크
         </label>
         <div className="space-y-2.5">
           {Object.values(NETWORK).map((net, i) => (
-            <div key={i} className="flex items-baseline gap-2 text-xs">
+            <div key={i} className="flex items-baseline gap-2 text-sm">
               <span className="text-[#6a7090] min-w-[100px]">{net.label}</span>
               <span className="text-[#e0e8ff]">{net.target}</span>
             </div>

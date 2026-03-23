@@ -125,7 +125,7 @@ export default function ScenarioFlow() {
               <div className="w-12 h-12 rounded-lg bg-[#4466ff15] border border-[#4466ff30] flex items-center justify-center text-xl mx-auto">
                 👤
               </div>
-              <div className="text-xs text-[#6a7090] mt-1">관객</div>
+              <div className="text-sm text-[#6a7090] mt-1">관객</div>
             </div>
 
             {/* Distance markers */}
@@ -147,7 +147,7 @@ export default function ScenarioFlow() {
               >
                 🤖
               </div>
-              <div className="text-xs mt-1 font-bold" style={{ color: currentStep?.color,  }}>
+              <div className="text-sm mt-1 font-bold" style={{ color: currentStep?.color,  }}>
                 {currentStep?.state}
               </div>
               {selectedLevel === 'C' && (
@@ -165,17 +165,17 @@ export default function ScenarioFlow() {
             {/* Table */}
             <div className="absolute right-[5%] bottom-4 text-center">
               <div className="w-16 h-10 rounded-lg bg-[#c8ff0015] border border-[#c8ff0030] flex items-center justify-center gap-1 mx-auto">
-                <span className="text-xs">☕</span>
-                <span className="text-xs">🥤</span>
-                <span className="text-xs">🧸</span>
+                <span className="text-sm">☕</span>
+                <span className="text-sm">🥤</span>
+                <span className="text-sm">🧸</span>
               </div>
-              <div className="text-xs text-[#6a7090] mt-1">물체 테이블</div>
+              <div className="text-sm text-[#6a7090] mt-1">물체 테이블</div>
             </div>
           </div>
 
           {/* Active parts indicator */}
           <div className="flex items-center justify-center gap-2 mt-4">
-            <span className="text-xs text-[#6a7090]">활성 파트:</span>
+            <span className="text-sm text-[#6a7090]">활성 파트:</span>
             {currentStep?.activeParts?.map(p => (
               <span
                 key={p}
@@ -198,7 +198,7 @@ export default function ScenarioFlow() {
         {/* Level selector */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold" style={{ color: '#ff8800' }}>
+            <span className="text-sm font-bold" style={{ color: '#ff8800' }}>
               시나리오 레벨
             </span>
             <div className="flex gap-1">
@@ -206,7 +206,7 @@ export default function ScenarioFlow() {
                 <button
                   key={lvl.level}
                   onClick={() => setSelectedLevel(lvl.level)}
-                  className={`px-3 py-1 rounded text-xs font-bold transition-all border ${
+                  className={`px-3 py-1 rounded text-sm font-bold transition-all border ${
                     selectedLevel === lvl.level ? '' : 'opacity-40 hover:opacity-70'
                   }`}
                   style={{
@@ -222,7 +222,7 @@ export default function ScenarioFlow() {
           </div>
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="px-4 py-1.5 rounded-lg text-xs font-bold transition-all border"
+            className="px-4 py-1.5 rounded-lg text-sm font-bold transition-all border"
             style={{
               color: isPlaying ? '#ff0044' : '#00ff88',
               borderColor: isPlaying ? '#ff004440' : '#00ff8840',
@@ -254,16 +254,16 @@ export default function ScenarioFlow() {
                 >
                   {i + 1}
                 </span>
-                <span className="text-xs font-bold truncate" style={{ color: step.color }}>
+                <span className="text-sm font-bold truncate" style={{ color: step.color }}>
                   {step.title}
                 </span>
               </div>
               {activeStep === i && (
                 <>
-                  <p className="text-xs text-[#e0e8ff] ml-5 mb-2">{step.description}</p>
+                  <p className="text-sm text-[#e0e8ff] ml-5 mb-2">{step.description}</p>
                   <div className="flex flex-wrap gap-1.5 ml-5">
                     {step.systems.map((sys, j) => (
-                      <span key={j} className="text-xs px-1 py-1.5 rounded bg-[#ffffff08] text-[#6a7090]">
+                      <span key={j} className="text-sm px-1 py-1.5 rounded bg-[#ffffff08] text-[#6a7090]">
                         {sys}
                       </span>
                     ))}

@@ -111,7 +111,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
         )}
       </label>
       {expanded && hint && (
-        <div className="ml-7 mt-1 mb-2 p-3 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="ml-7 mt-1 mb-2 p-3 rounded-lg text-sm" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
           <p className="text-[#aab0cc] mb-2.5">{hint.summary}</p>
           {hint.steps?.length > 0 && (
             <ol className="list-decimal ml-4 mb-2.5 space-y-2 text-[#e0e8ff]">
@@ -134,7 +134,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           {hint.components?.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1">
               {hint.components.map((c, i) => (
-                <span key={i} className="text-xs px-2.5 py-1.5 rounded" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
+                <span key={i} className="text-sm px-2.5 py-1.5 rounded" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
                   {'\uD83D\uDCE6'} {c}
                 </span>
               ))}
@@ -154,18 +154,18 @@ function ExpandableDep({ dep, memberId }) {
   return (
     <div className="mb-2">
       <div
-        className={`text-xs text-[#e0e8ff] ml-4 leading-relaxed flex items-start gap-1 ${handoff ? 'cursor-pointer hover:text-[#ffffff]' : ''}`}
+        className={`text-sm text-[#e0e8ff] ml-4 leading-relaxed flex items-start gap-1 ${handoff ? 'cursor-pointer hover:text-[#ffffff]' : ''}`}
         onClick={() => handoff && setExpanded(!expanded)}
       >
         <span>{'\u2022'} {dep}</span>
         {handoff && (
-          <span className="text-xs text-[#6a7090] shrink-0 mt-1.5">
+          <span className="text-sm text-[#6a7090] shrink-0 mt-1.5">
             {expanded ? '\u25B4' : '\u25BE'}
           </span>
         )}
       </div>
       {expanded && handoff && (
-        <div className="ml-7 mt-1 mb-2.5 p-3 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="ml-7 mt-1 mb-2.5 p-3 rounded-lg text-sm" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
           <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
           {handoff.format && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
           {handoff.location && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
@@ -270,7 +270,7 @@ export default function DashboardPanel({
         {/* Collapse toggle */}
         <button
           onClick={onToggleCollapse}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-xs"
+          className="w-8 h-8 rounded-lg flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-sm"
           title="패널 펼치기"
         >
           {'\u25B6'}
@@ -279,7 +279,7 @@ export default function DashboardPanel({
         {/* Member avatar or project icon */}
         {member ? (
           <div
-            className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+            className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
             style={{
               backgroundColor: member.color + '20',
               color: member.color,
@@ -289,7 +289,7 @@ export default function DashboardPanel({
             {member.name}
           </div>
         ) : (
-          <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold bg-[#ffffff08] text-[#6a7090] border border-[#ffffff10]">
+          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold bg-[#ffffff08] text-[#6a7090] border border-[#ffffff10]">
             ALL
           </div>
         )}
@@ -344,7 +344,7 @@ export default function DashboardPanel({
       <div className="flex items-center justify-end px-3 pt-3 pb-1">
         <button
           onClick={onToggleCollapse}
-          className="w-7 h-7 rounded-md flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-xs"
+          className="w-7 h-7 rounded-md flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10] transition-colors text-sm"
           title="패널 접기"
         >
           {'\u25C0'}
@@ -352,7 +352,7 @@ export default function DashboardPanel({
       </div>
 
       {/* ── Scrollable content ───────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4" style={{ scrollbarGutter: 'stable' }}>
+      <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5" style={{ scrollbarGutter: 'stable' }}>
         {/* ── Gate card ───────────────────────────────────────────── */}
         {gate && <GateCard gate={gate} weekNum={weekNum} checkedTasks={checkedTasks} memberId={memberId} onToggleGateItem={toggleKey} />}
 
@@ -390,7 +390,7 @@ export default function DashboardPanel({
         {/* ── Tech tree button ───────────────────────────────────── */}
         <button
           onClick={onOpenTechTree}
-          className="w-full py-2.5 rounded-lg text-xs font-bold tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full py-2.5 rounded-lg text-sm font-bold tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
           style={{
             color: '#c8ff00',
             background: 'rgba(200, 255, 0, 0.06)',
@@ -442,7 +442,7 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
       />
       <div className="flex items-center gap-2 mb-3">
         <span
-          className="text-xs font-bold uppercase tracking-widest"
+          className="text-sm font-bold uppercase tracking-widest"
           style={{ color: '#c8ff00' }}
         >
           GATE
@@ -453,7 +453,7 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
         >
           {gate.name}
         </span>
-        <span className="text-xs text-[#6a7090] ml-auto">
+        <span className="text-sm text-[#6a7090] ml-auto">
           Week {weekNum} 말
         </span>
       </div>
@@ -465,7 +465,7 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
             <label key={i} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-[#c8ff0008] rounded px-1 -mx-1">
               <span
                 onClick={() => onToggleGateItem?.(key)}
-                className="w-3.5 h-3.5 rounded-sm border flex items-center justify-center text-xs flex-shrink-0 cursor-pointer"
+                className="w-3.5 h-3.5 rounded-sm border flex items-center justify-center text-sm flex-shrink-0 cursor-pointer"
                 style={{
                   borderColor: checked ? '#c8ff00' : 'rgba(200, 255, 0, 0.3)',
                   backgroundColor: checked ? 'rgba(200, 255, 0, 0.15)' : 'transparent',
@@ -480,7 +480,7 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
         })}
       </div>
       {/* Progress text */}
-      <div className="mt-3 text-xs text-[#6a7090]">
+      <div className="mt-3 text-sm text-[#6a7090]">
         체크리스트 진행: {completedGateItems}/{gate.items.length}
       </div>
     </div>
@@ -509,7 +509,7 @@ function MemberView({
       {/* Member info (single line) */}
       <div className="flex items-center gap-2.5">
         <div
-          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
           style={{
             backgroundColor: member.color + '18',
             color: member.color,
@@ -519,11 +519,11 @@ function MemberView({
           {member.name}
         </div>
         <div className="flex-1 min-w-0">
-          <span className="text-xs font-bold" style={{ color: member.color,  }}>
+          <span className="text-sm font-bold" style={{ color: member.color,  }}>
             {member.name}
           </span>
-          <span className="text-xs text-[#6a7090] mx-1.5">{memberData.identity}</span>
-          <span className="text-xs text-[#6a7090]">{memberData.track}</span>
+          <span className="text-sm text-[#6a7090] mx-1.5">{memberData.identity}</span>
+          <span className="text-sm text-[#6a7090]">{memberData.track}</span>
         </div>
       </div>
 
@@ -532,12 +532,12 @@ function MemberView({
         <div>
           <div className="flex items-center justify-between mb-2.5">
             <h3
-              className="text-xs font-bold tracking-wide"
+              className="text-sm font-bold tracking-wide"
               style={{ color: accentColor }}
             >
               Week {weekNum} — {weekTitle}
             </h3>
-            <span className="text-xs text-[#6a7090]">
+            <span className="text-sm text-[#6a7090]">
               {completedCount}/{totalCount}
             </span>
           </div>
@@ -550,7 +550,7 @@ function MemberView({
               border: `1px solid ${accentColor}25`,
             }}
           >
-            <div className="text-xs text-[#6a7090] mb-2">
+            <div className="text-sm text-[#6a7090] mb-2">
               핵심 목표
             </div>
             <div className="text-sm font-bold" style={{ color: accentColor }}>
@@ -606,7 +606,7 @@ function MemberView({
             border: '1px solid rgba(255,255,255,0.05)',
           }}
         >
-          <div className="text-xs text-[#6a7090] mb-2">
+          <div className="text-sm text-[#6a7090] mb-2">
             다음 주 미리보기 (Week {weekNum + 1})
           </div>
           <div className="text-sm" style={{ color: accentColor }}>
@@ -648,13 +648,13 @@ function OverallView({
         >
           전체 프로젝트
         </h2>
-        <div className="text-xs text-[#6a7090]">HYlion Physical AI</div>
+        <div className="text-sm text-[#6a7090]">HYlion Physical AI</div>
       </div>
 
       {/* Current week title */}
       <div>
         <h3
-          className="text-xs font-bold tracking-wide mb-4"
+          className="text-sm font-bold tracking-wide mb-4"
           style={{ color: '#00ff88' }}
         >
           Week {weekNum} — {weekTitle}
@@ -674,7 +674,7 @@ function OverallView({
             />
           </div>
           <span
-            className="text-xs font-bold w-10 text-right"
+            className="text-sm font-bold w-10 text-right"
             style={{ color: '#00ff88' }}
           >
             {progress.total}%
@@ -691,7 +691,7 @@ function OverallView({
                 className="w-full flex items-center gap-2 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-1 py-1.5 transition-colors"
                 onClick={() => onPartClick?.(key)}
               >
-                <span className="text-xs w-12 text-left" style={{ color: '#6a7090' }}>
+                <span className="text-sm w-12 text-left" style={{ color: '#6a7090' }}>
                   {meta.label}
                 </span>
                 <div className="flex-1 h-1.5 rounded-full bg-[#ffffff08] overflow-hidden">
@@ -705,7 +705,7 @@ function OverallView({
                     }}
                   />
                 </div>
-                <span className="text-xs w-8 text-right" style={{ color: '#6a7090' }}>
+                <span className="text-sm w-8 text-right" style={{ color: '#6a7090' }}>
                   {val}%
                 </span>
               </button>
@@ -718,7 +718,7 @@ function OverallView({
       {trackHighlights && (
         <div className="space-y-2">
           <h4
-            className="text-xs uppercase tracking-widest"
+            className="text-sm uppercase tracking-widest"
             style={{ color: '#6a7090' }}
           >
             이번 주 하이라이트
@@ -726,7 +726,7 @@ function OverallView({
 
           {trackHighlights.trackA && (
             <div className="p-3 rounded-lg" style={{ background: 'rgba(0, 240, 255, 0.04)', border: '1px solid rgba(0, 240, 255, 0.12)' }}>
-              <div className="text-xs font-bold mb-2" style={{ color: '#00f0ff',  }}>
+              <div className="text-sm font-bold mb-2" style={{ color: '#00f0ff',  }}>
                 Track A (상체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -737,7 +737,7 @@ function OverallView({
 
           {trackHighlights.trackB && (
             <div className="p-3 rounded-lg" style={{ background: 'rgba(255, 0, 170, 0.04)', border: '1px solid rgba(255, 0, 170, 0.12)' }}>
-              <div className="text-xs font-bold mb-2" style={{ color: '#ff00aa',  }}>
+              <div className="text-sm font-bold mb-2" style={{ color: '#ff00aa',  }}>
                 Track B (하체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -769,7 +769,7 @@ function DependenciesSection({ receives, gives, memberId }) {
   return (
     <div>
       <h4
-        className="text-xs uppercase tracking-widest mb-3"
+        className="text-sm uppercase tracking-widest mb-3"
         style={{ color: '#6a7090' }}
       >
         작업 의존성
@@ -777,7 +777,7 @@ function DependenciesSection({ receives, gives, memberId }) {
 
       {hasReceives && (
         <div className="mb-3">
-          <div className="text-xs mb-2" style={{ color: '#ff8800' }}>
+          <div className="text-sm mb-2" style={{ color: '#ff8800' }}>
             {'\u2190'} 받는 것
           </div>
           {receives.map((dep, i) => (
@@ -788,7 +788,7 @@ function DependenciesSection({ receives, gives, memberId }) {
 
       {hasGives && (
         <div>
-          <div className="text-xs mb-2" style={{ color: '#00ff88' }}>
+          <div className="text-sm mb-2" style={{ color: '#00ff88' }}>
             {'\u2192'} 주는 것
           </div>
           {gives.map((dep, i) => (
@@ -815,13 +815,13 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
         onClick={() => setFlowOpen((o) => !o)}
       >
         <span
-          className="text-xs uppercase tracking-widest"
+          className="text-sm uppercase tracking-widest"
           style={{ color: '#6a7090' }}
         >
           의존성 흐름
         </span>
         <span
-          className="text-xs text-[#6a7090] transition-transform duration-200"
+          className="text-sm text-[#6a7090] transition-transform duration-200"
           style={{ transform: flowOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}
         >
           {'\u25B6'}
@@ -848,7 +848,7 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
               >
                 {item.label}
               </span>
-              <span className="text-xs text-[#e0e8ff] leading-relaxed">
+              <span className="text-sm text-[#e0e8ff] leading-relaxed">
                 {item.text}
               </span>
             </div>

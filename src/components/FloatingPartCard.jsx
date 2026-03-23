@@ -73,7 +73,7 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
 
         {/* Subtitle */}
         {part.subtitle && (
-          <div className="text-xs text-[#6a7090] mb-3">{part.subtitle}</div>
+          <div className="text-sm text-[#6a7090] mb-3">{part.subtitle}</div>
         )}
 
         {/* Owners */}
@@ -103,7 +103,7 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
         {/* Explore button */}
         <button
           onClick={() => onExplore(partId)}
-          className="w-full py-1.5 rounded-md text-xs font-bold transition-all border hover:bg-opacity-100"
+          className="w-full py-1.5 rounded-md text-sm font-bold transition-all border hover:bg-opacity-100"
           style={{
             color,
             borderColor: color + '60',

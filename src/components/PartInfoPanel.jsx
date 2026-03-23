@@ -66,11 +66,11 @@ export default function PartInfoPanel({ partId, onClose }) {
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
                 style={{ backgroundColor: (member?.color || '#ffffff') + '10', border: `1px solid ${(member?.color || '#ffffff')}20` }}
               >
-                <span className="text-xs font-bold" style={{ color: member?.color || '#e0e8ff' }}>
+                <span className="text-sm font-bold" style={{ color: member?.color || '#e0e8ff' }}>
                   {ownerId}
                 </span>
                 {part.ownerRoles[ownerId] && (
-                  <span className="text-xs text-[#6a7090]">{part.ownerRoles[ownerId]}</span>
+                  <span className="text-sm text-[#6a7090]">{part.ownerRoles[ownerId]}</span>
                 )}
               </div>
             );
@@ -83,8 +83,8 @@ export default function PartInfoPanel({ partId, onClose }) {
         <div className="space-y-2.5.5">
           {part.specs.map((spec, i) => (
             <div key={i} className="flex items-baseline gap-2">
-              <span className="text-xs text-[#6a7090] min-w-[80px] shrink-0">{spec.label}</span>
-              <span className="text-xs text-[#e0e8ff]">{spec.value}</span>
+              <span className="text-sm text-[#6a7090] min-w-[80px] shrink-0">{spec.label}</span>
+              <span className="text-sm text-[#e0e8ff]">{spec.value}</span>
             </div>
           ))}
         </div>
@@ -96,10 +96,10 @@ export default function PartInfoPanel({ partId, onClose }) {
           <div className="space-y-2.5">
             {part.internalLayout.map((item, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded bg-[#ffffff08] flex items-center justify-center text-xs text-[#6a7090]">
+                <span className="w-5 h-5 rounded bg-[#ffffff08] flex items-center justify-center text-sm text-[#6a7090]">
                   {i + 1}
                 </span>
-                <span className="text-xs text-[#e0e8ff]">{item}</span>
+                <span className="text-sm text-[#e0e8ff]">{item}</span>
               </div>
             ))}
           </div>
@@ -113,12 +113,12 @@ export default function PartInfoPanel({ partId, onClose }) {
             {part.assemblySteps.map((step, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span
-                  className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
+                  className="w-5 h-5 rounded-full flex items-center justify-center text-sm font-bold"
                   style={{ backgroundColor: part.color + '15', color: part.color }}
                 >
                   {i + 1}
                 </span>
-                <span className="text-xs text-[#e0e8ff]">{step}</span>
+                <span className="text-sm text-[#e0e8ff]">{step}</span>
               </div>
             ))}
           </div>
@@ -131,8 +131,8 @@ export default function PartInfoPanel({ partId, onClose }) {
           <div className="space-y-2">
             {part.manufacturingPaths.map((path, i) => (
               <div key={i} className="p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
-                <span className="text-xs font-bold text-[#e0e8ff]">{path.label}</span>
-                <p className="text-xs text-[#6a7090] mt-1.5">{path.desc}</p>
+                <span className="text-sm font-bold text-[#e0e8ff]">{path.label}</span>
+                <p className="text-sm text-[#6a7090] mt-1.5">{path.desc}</p>
               </div>
             ))}
           </div>
@@ -146,16 +146,16 @@ export default function PartInfoPanel({ partId, onClose }) {
             <div className="flex flex-wrap gap-2">
               {part.smolvla.objects.map((obj, i) => (
                 <div key={i} className="px-2 py-1 rounded bg-[#c8ff0010] border border-[#c8ff0020]">
-                  <span className="text-xs text-[#c8ff00]">{obj.name}</span>
-                  <span className="text-xs text-[#6a7090] ml-1">×{obj.episodes}</span>
+                  <span className="text-sm text-[#c8ff00]">{obj.name}</span>
+                  <span className="text-sm text-[#6a7090] ml-1">×{obj.episodes}</span>
                 </div>
               ))}
             </div>
-            <div className="text-xs text-[#6a7090]">
+            <div className="text-sm text-[#6a7090]">
               총 {part.smolvla.totalEpisodes} 에피소드
             </div>
-            <div className="text-xs text-[#e0e8ff]">{part.smolvla.training}</div>
-            <div className="text-xs text-[#6a7090]">{part.smolvla.pipeline}</div>
+            <div className="text-sm text-[#e0e8ff]">{part.smolvla.training}</div>
+            <div className="text-sm text-[#6a7090]">{part.smolvla.pipeline}</div>
           </div>
         </Section>
       )}
@@ -174,7 +174,7 @@ export default function PartInfoPanel({ partId, onClose }) {
       {/* Safety */}
       {part.safety && (
         <Section title="안전">
-          <span className="text-xs text-[#ff8800]">{part.safety}</span>
+          <span className="text-sm text-[#ff8800]">{part.safety}</span>
         </Section>
       )}
 
@@ -183,7 +183,7 @@ export default function PartInfoPanel({ partId, onClose }) {
 
       {/* Timeline */}
       <Section title="타임라인">
-        <p className="text-xs text-[#e0e8ff] leading-relaxed"><GlossaryText text={part.timeline} /></p>
+        <p className="text-sm text-[#e0e8ff] leading-relaxed"><GlossaryText text={part.timeline} /></p>
       </Section>
 
       {/* Risks */}
@@ -191,7 +191,7 @@ export default function PartInfoPanel({ partId, onClose }) {
         <Section title="리스크">
           <div className="space-y-2.5">
             {part.risks.map((risk, i) => (
-              <div key={i} className="flex items-center gap-2 text-xs">
+              <div key={i} className="flex items-center gap-2 text-sm">
                 <span className="text-[#ff8800]">⚡</span>
                 <span className="text-[#ff8800]">{risk}</span>
               </div>
@@ -206,7 +206,7 @@ export default function PartInfoPanel({ partId, onClose }) {
 function Section({ title, children }) {
   return (
     <div className="mb-5">
-      <h3 className="text-xs font-bold text-[#6a7090] uppercase tracking-wider mb-2.5">
+      <h3 className="text-sm font-bold text-[#6a7090] uppercase tracking-wider mb-2.5">
         {title}
       </h3>
       {children}
@@ -217,7 +217,7 @@ function Section({ title, children }) {
 function Row({ label, value }) {
   return (
     <div className="flex items-baseline gap-3">
-      <span className="text-xs text-[#6a7090] min-w-[70px] shrink-0">{label}</span>
+      <span className="text-sm text-[#6a7090] min-w-[70px] shrink-0">{label}</span>
       <span className="text-sm text-[#e0e8ff]"><GlossaryText text={value} /></span>
     </div>
   );
@@ -237,13 +237,13 @@ function PartComponents({ partId }) {
               onClick={() => setExpanded(expanded === comp.id ? null : comp.id)}
               className="w-full text-left flex items-center gap-2 p-3.5 rounded hover:bg-[#ffffff05] transition-colors"
             >
-              <span className="text-xs">📦</span>
+              <span className="text-sm">📦</span>
               <span className="text-sm text-[#e0e8ff] flex-1">{comp.name}</span>
-              <span className="text-xs text-[#6a7090]">×{comp.usage?.quantity || '?'}</span>
-              <span className="text-xs text-[#6a7090]">{expanded === comp.id ? '▴' : '▾'}</span>
+              <span className="text-sm text-[#6a7090]">×{comp.usage?.quantity || '?'}</span>
+              <span className="text-sm text-[#6a7090]">{expanded === comp.id ? '▴' : '▾'}</span>
             </button>
             {expanded === comp.id && (
-              <div className="ml-6 mb-2 p-3 rounded bg-[#ffffff04] border border-[#ffffff08] text-xs">
+              <div className="ml-6 mb-2 p-3 rounded bg-[#ffffff04] border border-[#ffffff08] text-sm">
                 <p className="text-[#aab0cc] mb-2"><GlossaryText text={comp.usage?.description || ''} /></p>
                 {comp.specs && (
                   <div className="space-y-2 mb-2">

@@ -97,7 +97,7 @@ export default function Navigation({
         {/* Search */}
         <button
           onClick={onOpenSearch}
-          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-xs text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all"
+          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-sm text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all"
           title="문서 검색 (Ctrl+K)"
         >
           🔍
@@ -107,7 +107,7 @@ export default function Navigation({
         {/* Docs */}
         <button
           onClick={onOpenDocs}
-          className="w-7 h-7 rounded-full flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-xs"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-sm"
           title="문서 리더 (Ctrl+B)"
         >
           📖
@@ -116,7 +116,7 @@ export default function Navigation({
         {/* Settings */}
         <button
           onClick={onOpenSettings}
-          className="w-7 h-7 rounded-full flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-xs"
+          className="w-7 h-7 rounded-full flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-sm"
           title="설정"
         >
           ⚙️

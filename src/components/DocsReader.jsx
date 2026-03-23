@@ -48,8 +48,8 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
         {/* TOC sidebar */}
         <div className="w-[240px] border-r border-[#ffffff10] p-3 overflow-y-auto shrink-0">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold" style={{ color: '#4466ff' }}>📖 문서</span>
-            <button onClick={onClose} className="text-xs text-[#6a7090] hover:text-[#e0e8ff]">✕</button>
+            <span className="text-sm font-bold" style={{ color: '#4466ff' }}>📖 문서</span>
+            <button onClick={onClose} className="text-sm text-[#6a7090] hover:text-[#e0e8ff]">✕</button>
           </div>
 
           {/* Doc selector */}
@@ -58,7 +58,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
               <button
                 key={doc.id}
                 onClick={() => setSelectedDoc(doc.id)}
-                className={`flex-1 text-xs py-1.5 rounded transition-all ${
+                className={`flex-1 text-sm py-1.5 rounded transition-all ${
                   selectedDoc === doc.id
                     ? 'bg-[#4466ff15] text-[#4466ff] border border-[#4466ff30]'
                     : 'text-[#6a7090] hover:text-[#e0e8ff] bg-[#ffffff05]'
@@ -82,7 +82,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                 }
               }}
               placeholder="검색... (Enter로 이동)"
-              className="w-full px-2 py-1 rounded bg-[#0a0a0f] border border-[#ffffff10] text-xs text-[#e0e8ff] focus:outline-none focus:border-[#4466ff30]"
+              className="w-full px-2 py-1 rounded bg-[#0a0a0f] border border-[#ffffff10] text-sm text-[#e0e8ff] focus:outline-none focus:border-[#4466ff30]"
             />
             {searchQuery.trim() && (
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-[#6a7090]">
@@ -99,7 +99,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                 onClick={() => {
                   document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="block w-full text-left text-xs text-[#6a7090] hover:text-[#e0e8ff] py-1.5 transition-colors truncate"
+                className="block w-full text-left text-sm text-[#6a7090] hover:text-[#e0e8ff] py-1.5 transition-colors truncate"
                 style={{ paddingLeft: `${(item.level - 1) * 12}px` }}
               >
                 {item.title}
@@ -119,17 +119,17 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                 components={{
                   h1: ({ children, ...props }) => <h1 id={findTocId(children, toc, 1)} className="text-lg font-bold mt-6 mb-3" style={{ color: '#00f0ff' }} {...props}>{children}</h1>,
                   h2: ({ children, ...props }) => <h2 id={findTocId(children, toc, 2)} className="text-sm font-bold mt-5 mb-2" style={{ color: '#4466ff' }} {...props}>{children}</h2>,
-                  h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-xs font-bold mt-4 mb-2.5" style={{ color: '#c8ff00' }} {...props}>{children}</h3>,
+                  h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-sm font-bold mt-4 mb-2.5" style={{ color: '#c8ff00' }} {...props}>{children}</h3>,
                   p: ({ children }) => <p className="text-sm text-[#e0e8ff] leading-relaxed mb-2">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</p>,
                   li: ({ children }) => <li className="text-sm text-[#e0e8ff] ml-4 mb-2 list-disc">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</li>,
                   code: ({ children, className }) => className ? (
                     <pre className="bg-[#0a0a0f] border border-[#ffffff10] rounded-lg p-3 mb-3 overflow-x-auto">
-                      <code className="text-xs text-[#00ff88]">{children}</code>
+                      <code className="text-sm text-[#00ff88]">{children}</code>
                     </pre>
                   ) : (
-                    <code className="bg-[#ffffff10] px-1 py-1.5 rounded text-xs text-[#ff8800]">{children}</code>
+                    <code className="bg-[#ffffff10] px-1 py-1.5 rounded text-sm text-[#ff8800]">{children}</code>
                   ),
-                  table: ({ children }) => <div className="overflow-x-auto mb-3"><table className="w-full text-xs border-collapse">{children}</table></div>,
+                  table: ({ children }) => <div className="overflow-x-auto mb-3"><table className="w-full text-sm border-collapse">{children}</table></div>,
                   th: ({ children }) => <th className="text-left px-2 py-1 border-b border-[#ffffff15] text-[#6a7090] font-bold">{children}</th>,
                   td: ({ children }) => <td className="px-2 py-1 border-b border-[#ffffff08] text-[#e0e8ff]">{children}</td>,
                   strong: ({ children }) => <strong className="text-[#e0e8ff] font-bold">{children}</strong>,
