@@ -11,8 +11,10 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  const prevPrefill = useRef('');
   useEffect(() => {
-    if (prefill) {
+    if (prefill && prefill !== prevPrefill.current) {
+      prevPrefill.current = prefill;
       setInput(prefill);
       setIsOpen(true);
       setTimeout(() => inputRef.current?.focus(), 100);

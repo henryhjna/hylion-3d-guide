@@ -6,13 +6,14 @@ const TOGGLE_DEFS = [
     propToggle: 'onToggleXray',
     colorOn: '#00f0ff',
   },
-  {
-    key: 'scenario',
-    label: '\uD83C\uDFAC \uC2DC\uB098',
-    propActive: 'scenarioMode',
-    propToggle: 'onToggleScenario',
-    colorOn: '#ff00ff',
-  },
+  // 시나리오 모드 — 추후 다듬은 후 복원
+  // {
+  //   key: 'scenario',
+  //   label: '\uD83C\uDFAC \uC2DC\uB098',
+  //   propActive: 'scenarioMode',
+  //   propToggle: 'onToggleScenario',
+  //   colorOn: '#ff00ff',
+  // },
 ];
 
 export default function ExploreToggles({

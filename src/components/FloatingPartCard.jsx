@@ -87,7 +87,7 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
 
         {/* Specs */}
         {specs.length > 0 && (
-          <div className="border-t border-[#ffffff08] pt-3 mb-4 space-y-2.5.5">
+          <div className="border-t border-[#ffffff08] pt-3 mb-4 space-y-2.5">
             {specs.map((spec, i) => (
               <div key={i} className="text-sm text-[#ccd0e4]">
                 <span className="text-[#9aa0b8]">{spec.label}: </span>

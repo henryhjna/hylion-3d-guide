@@ -43,7 +43,7 @@ export default function ArchitectureView() {
           <div className="text-sm font-bold mb-2" style={{ color: resources.color,  }}>
             {resources.label}
           </div>
-          <div className="space-y-2.5.5 text-sm">
+          <div className="space-y-2.5 text-sm">
             <ResourceRow label="Orin GPU" value={resources.orin_gpu} active={resources.orin_gpu !== '없음' && resources.orin_gpu !== '비어있음'} />
             <ResourceRow label="Orin CPU" value={resources.orin_cpu} active={resources.orin_cpu !== '로그 유지'} />
             <ResourceRow label="NUC" value={resources.nuc} active={resources.nuc !== '대기' && resources.nuc !== '정지' && resources.nuc !== '전원 차단'} />
@@ -103,7 +103,7 @@ export default function ArchitectureView() {
         <label className="text-sm text-[#9aa0b8] uppercase tracking-wider mb-2 block">
           전원 시스템
         </label>
-        <div className="space-y-2.5.5">
+        <div className="space-y-2.5">
           {POWER_SYSTEM.map(bat => (
             <div key={bat.id} className="p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
               <div className="flex items-center justify-between">

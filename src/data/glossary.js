@@ -456,7 +456,7 @@ export const GLOSSARY = {
     full: "SO-ARM101",
     definition: "TheRobotStudio의 오픈소스 6DOF 로봇 팔. 하이리온은 SO-ARM101 2개(좌우)를 상체에 장착하여 물체 집기(pick-place)와 제스처를 수행한다.",
     related: ["Dynamixel", "그리퍼"],
-    links: [{ label: "SO-ARM GitHub", url: "https://github.com/TheRobotStudio/SO-ARM100" }],
+    links: [{ label: "SO-ARM101 GitHub", url: "https://github.com/TheRobotStudio/SO-ARM100" }],
   },
   "BHL": {
     full: "Berkeley Humanoid Lite",

@@ -280,8 +280,10 @@ function collectDependencyChain(nodeId, nodes) {
 
 // ── Main layout calculation ──────────────────────────────────────────────────
 function computeLayout(nodes) {
+  const SLOT = NODE_H + 16; // vertical spacing per node
+
   // Group by week and track
-  const weekBuckets = new Map(); // week -> { A: [], B: [], both: [] }
+  const weekBuckets = new Map();
   nodes.forEach((node) => {
     if (!weekBuckets.has(node.week)) weekBuckets.set(node.week, { A: [], B: [], both: [] });
     const bucket = weekBuckets.get(node.week);
@@ -289,38 +291,46 @@ function computeLayout(nodes) {
     bucket[track].push(node.id);
   });
 
+  // Calculate dynamic midY based on max track height
+  let maxAbove = 0;
+  let maxBelow = 0;
+  weekBuckets.forEach((tracks) => {
+    const aboveH = tracks.A.length * SLOT + (tracks.both.length * SLOT) / 2;
+    const belowH = tracks.B.length * SLOT + (tracks.both.length * SLOT) / 2;
+    maxAbove = Math.max(maxAbove, aboveH);
+    maxBelow = Math.max(maxBelow, belowH);
+  });
+  const midY = TOP_PADDING + maxAbove + TRACK_GAP;
+
   const positions = new Map();
   const maxWeek = Math.max(...nodes.map((n) => n.week));
-  const midY = 420; // vertical center
 
   weekBuckets.forEach((tracks, week) => {
     const x = LEFT_PADDING + week * WEEK_WIDTH + WEEK_WIDTH / 2;
 
-    // Track A: above midY
+    // Track A: above midY (bottom-aligned to midY - gap)
     tracks.A.forEach((id, i) => {
-      const slotCount = tracks.A.length;
-      const totalHeight = slotCount * (NODE_H + 12);
+      const totalHeight = tracks.A.length * SLOT;
       const startY = midY - TRACK_GAP - totalHeight;
-      positions.set(id, { x, y: startY + i * (NODE_H + 12) + NODE_H / 2 });
+      positions.set(id, { x, y: startY + i * SLOT + NODE_H / 2 });
     });
 
     // Track B: below midY
     tracks.B.forEach((id, i) => {
-      const slotCount = tracks.B.length;
       const startY = midY + TRACK_GAP;
-      positions.set(id, { x, y: startY + i * (NODE_H + 12) + NODE_H / 2 });
+      positions.set(id, { x, y: startY + i * SLOT + NODE_H / 2 });
     });
 
-    // Both: centered around midY
+    // Both: centered on midY
     tracks.both.forEach((id, i) => {
-      const slotCount = tracks.both.length;
-      const totalHeight = slotCount * (NODE_H + 12);
+      const totalHeight = tracks.both.length * SLOT;
       const startY = midY - totalHeight / 2;
-      positions.set(id, { x, y: startY + i * (NODE_H + 12) + NODE_H / 2 });
+      positions.set(id, { x, y: startY + i * SLOT + NODE_H / 2 });
     });
   });
 
-  return { positions, maxWeek };
+  const svgHeight = midY + TRACK_GAP + maxBelow + TOP_PADDING;
+  return { positions, maxWeek, svgHeight, midY };
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -338,7 +348,7 @@ export default function TechTree({ teamFilter, trackFilter, selectedWeek, onNode
   const [selectedNodeId, setSelectedNodeId] = useState(null);
 
   // Layout
-  const { positions, maxWeek } = useMemo(() => computeLayout(nodes), [nodes]);
+  const { positions, maxWeek, svgHeight, midY } = useMemo(() => computeLayout(nodes), [nodes]);
 
   // Critical path
   const criticalPath = useMemo(() => computeCriticalPath(nodes), [nodes]);
@@ -358,7 +368,20 @@ export default function TechTree({ teamFilter, trackFilter, selectedWeek, onNode
 
   // SVG dimensions
   const svgWidth = LEFT_PADDING + (maxWeek + 1) * WEEK_WIDTH + LEFT_PADDING;
-  const svgHeight = 900;
+
+  // Auto-fit initial transform
+  useEffect(() => {
+    const el = svgRef.current?.parentElement;
+    if (!el) return;
+    const containerW = el.clientWidth;
+    const containerH = el.clientHeight;
+    const scaleX = containerW / svgWidth;
+    const scaleY = containerH / svgHeight;
+    const fitScale = Math.min(scaleX, scaleY, 1) * 0.92;
+    const offsetX = (containerW - svgWidth * fitScale) / 2;
+    const offsetY = (containerH - svgHeight * fitScale) / 2;
+    setTransform({ x: offsetX, y: offsetY, scale: fitScale });
+  }, [svgWidth, svgHeight]);
 
   // ── Determine dimming ─────────────────────────────────────────────────────
   const isNodeDimmed = useCallback(
@@ -538,12 +561,12 @@ export default function TechTree({ teamFilter, trackFilter, selectedWeek, onNode
           />
 
           {/* ── Track labels ─────────────────────────────────────────── */}
-          <text x={16} y={200} fill={COLORS.A} fontSize={11} fontFamily="Orbitron, sans-serif" fontWeight={700}
-            transform="rotate(-90, 16, 200)" textAnchor="middle">
+          <text x={16} y={midY - TRACK_GAP - 40} fill={COLORS.A} fontSize={11} fontFamily="Orbitron, sans-serif" fontWeight={700}
+            transform={`rotate(-90, 16, ${midY - TRACK_GAP - 40})`} textAnchor="middle">
             TRACK A
           </text>
-          <text x={16} y={640} fill={COLORS.B} fontSize={11} fontFamily="Orbitron, sans-serif" fontWeight={700}
-            transform="rotate(-90, 16, 640)" textAnchor="middle">
+          <text x={16} y={midY + TRACK_GAP + 40} fill={COLORS.B} fontSize={11} fontFamily="Orbitron, sans-serif" fontWeight={700}
+            transform={`rotate(-90, 16, ${midY + TRACK_GAP + 40})`} textAnchor="middle">
             TRACK B
           </text>
 

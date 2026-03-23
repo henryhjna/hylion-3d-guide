@@ -25,7 +25,7 @@ export const RESOURCES = {
   // 상체 (SO-ARM101 STS3215 + 목 XL430)
   // ──────────────────────────────────────────────
   "so_arm_github": {
-    label: "SO-ARM100 GitHub 리포지토리",
+    label: "SO-ARM101 GitHub 리포지토리",
     url: "https://github.com/TheRobotStudio/SO-ARM100",
     category: "상체",
     tags: ["SO-ARM", "로봇 팔", "오픈소스", "6DOF", "조립"],

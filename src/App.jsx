@@ -11,7 +11,6 @@ import DocsSearch from './components/DocsSearch';
 import DocsReader from './components/DocsReader';
 import AICopilot from './components/AICopilot';
 import SettingsModal from './components/SettingsModal';
-import DataBackup from './components/DataBackup';
 import Loading3D from './components/Loading3D';
 import { useDocsSearch } from './hooks/useDocsSearch';
 import { useAICopilot } from './hooks/useAICopilot';
@@ -58,7 +57,7 @@ export default function App() {
   // Docs + copilot hooks
   const { rawDocs, search: docsSearch, getRelatedParts } = useDocsSearch();
   const copilot = useAICopilot({
-    rawDocs,
+    searchDocs: docsSearch,
     currentWeek: selectedWeek,
     currentView: mode,
     selectedPart: mode === MODES.EXPLORE ? selectedPart : null,
@@ -267,15 +266,7 @@ export default function App() {
         {/* ── EXPLORE MODE: Architecture overlay (when xray ON) ── */}
         {isExploreMode && xrayMode && !selectedPart && <ArchitectureView />}
 
-        {/* ── EXPLORE MODE: Scenario overlay (when scenario ON) ── */}
-        {isExploreMode && scenarioMode && (
-          <div
-            className="absolute bottom-0 left-0 h-[40%] z-10 pb-2"
-            style={{ right: selectedPart ? '380px' : '0' }}
-          >
-            <ScenarioFlow />
-          </div>
-        )}
+        {/* ── EXPLORE MODE: Scenario overlay — 숨김 (추후 복원) ── */}
       </div>
 
       {/* ── Overlays — mode independent ── */}

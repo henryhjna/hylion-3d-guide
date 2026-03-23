@@ -8,13 +8,14 @@ import { TEAM } from '../data/team';
 import { TIMELINE } from '../data/timeline';
 
 // ── Part region definitions (for single-mesh FBX fallback) ─────────────────
+// Based on hyurion_rig.blend: pelvis≈0.27, torso≈0.33, neck≈0.37, head≈0.41~1.0
 const PART_REGIONS = {
-  head:      { yMin: 0.75, yMax: 1.0,  xMin: -999, xMax: 999 },
-  torso:     { yMin: 0.45, yMax: 0.75, xMin: -0.15, xMax: 0.15 },
-  left_arm:  { yMin: 0.40, yMax: 0.78, xMin: -999, xMax: -0.12 },
-  right_arm: { yMin: 0.40, yMax: 0.78, xMin: 0.12,  xMax: 999 },
-  left_leg:  { yMin: 0.0,  yMax: 0.45, xMin: -999, xMax: -0.02 },
-  right_leg: { yMin: 0.0,  yMax: 0.45, xMin: 0.02,  xMax: 999 },
+  head:      { yMin: 0.41, yMax: 1.0,  xMin: -999, xMax: 999 },
+  torso:     { yMin: 0.27, yMax: 0.41, xMin: -0.15, xMax: 0.15 },
+  left_arm:  { yMin: 0.27, yMax: 0.41, xMin: -999, xMax: -0.10 },
+  right_arm: { yMin: 0.27, yMax: 0.41, xMin: 0.10,  xMax: 999 },
+  left_leg:  { yMin: 0.0,  yMax: 0.27, xMin: -999, xMax: -0.02 },
+  right_leg: { yMin: 0.0,  yMax: 0.27, xMin: 0.02,  xMax: 999 },
 };
 
 function detectPartFromPoint(point, modelHeight) {
@@ -33,15 +34,18 @@ export function calculateCameraPresets(bbox) {
   const center = bbox.getCenter(new THREE.Vector3());
   const h = size.y;
   const d = h * 2.5;
+  // Character proportions: head=0.41~1.0, torso=0.27~0.41, legs=0~0.27
+  const torsoY = bbox.min.y + h * 0.34;  // center of torso region
+  const headY = bbox.min.y + h * 0.70;   // center of head
   return {
     overview:  { position: [0, center.y + h * 0.2, d], target: [0, center.y, 0] },
-    head:      { position: [0, bbox.max.y - h * 0.1, h * 0.8], target: [0, bbox.max.y - h * 0.15, 0] },
-    torso:     { position: [h * 0.6, center.y, h * 0.9], target: [0, center.y, 0] },
-    left_arm:  { position: [-h * 0.8, center.y + h * 0.1, h * 0.7], target: [-h * 0.2, center.y + h * 0.1, 0] },
-    right_arm: { position: [h * 0.8, center.y + h * 0.1, h * 0.7], target: [h * 0.2, center.y + h * 0.1, 0] },
-    left_leg:  { position: [-h * 0.4, bbox.min.y + h * 0.15, h * 1.2], target: [-h * 0.1, bbox.min.y + h * 0.2, 0] },
-    right_leg: { position: [h * 0.4, bbox.min.y + h * 0.15, h * 1.2], target: [h * 0.1, bbox.min.y + h * 0.2, 0] },
-    legs:      { position: [0, bbox.min.y + h * 0.15, h * 1.5], target: [0, bbox.min.y + h * 0.2, 0] },
+    head:      { position: [0, headY, h * 0.8], target: [0, headY, 0] },
+    torso:     { position: [h * 0.5, torsoY, h * 0.6], target: [0, torsoY, 0] },
+    left_arm:  { position: [-h * 0.5, torsoY, h * 0.5], target: [-h * 0.15, torsoY, 0] },
+    right_arm: { position: [h * 0.5, torsoY, h * 0.5], target: [h * 0.15, torsoY, 0] },
+    left_leg:  { position: [-h * 0.4, bbox.min.y + h * 0.13, h * 0.8], target: [-h * 0.06, bbox.min.y + h * 0.13, 0] },
+    right_leg: { position: [h * 0.4, bbox.min.y + h * 0.13, h * 0.8], target: [h * 0.06, bbox.min.y + h * 0.13, 0] },
+    legs:      { position: [0, bbox.min.y + h * 0.13, h * 1.2], target: [0, bbox.min.y + h * 0.13, 0] },
     xray:      { position: [0, center.y, h * 1.5], target: [0, center.y, 0] },
   };
 }
@@ -393,12 +397,13 @@ export default function RobotModel({
 // ── Placeholder robot (hologram primitives) ────────────────────────────────
 function PlaceholderRobot({ selectedPart, hoveredPart, onPartClick, onPartHover, xrayMode, highlightedParts, teamFilter, hologramMaterials }) {
   const PART_DEFS = useMemo(() => ({
-    head:      { geo: new THREE.SphereGeometry(0.12, 16, 16), pos: [0, 0.88, 0], color: 0x00f0ff },
-    torso:     { geo: new THREE.BoxGeometry(0.24, 0.25, 0.14, 4, 4, 4), pos: [0, 0.62, 0], color: 0x00f0ff },
-    left_arm:  { geo: new THREE.CylinderGeometry(0.03, 0.025, 0.3, 8), pos: [-0.18, 0.60, 0], color: 0x00f0ff },
-    right_arm: { geo: new THREE.CylinderGeometry(0.03, 0.025, 0.3, 8), pos: [0.18, 0.60, 0], color: 0x00f0ff },
-    left_leg:  { geo: new THREE.CylinderGeometry(0.04, 0.035, 0.48, 8), pos: [-0.08, 0.24, 0], color: 0xff00aa },
-    right_leg: { geo: new THREE.CylinderGeometry(0.04, 0.035, 0.48, 8), pos: [0.08, 0.24, 0], color: 0xff00aa },
+    // Proportions from hyurion_rig.blend: head=0.41~1.0, torso=0.27~0.41, legs=0~0.27
+    head:      { geo: new THREE.SphereGeometry(0.29, 16, 16), pos: [0, 0.70, 0], color: 0x00f0ff },
+    torso:     { geo: new THREE.BoxGeometry(0.20, 0.14, 0.12, 4, 4, 4), pos: [0, 0.34, 0], color: 0x00f0ff },
+    left_arm:  { geo: new THREE.CylinderGeometry(0.025, 0.02, 0.14, 8), pos: [-0.14, 0.34, 0], color: 0x00f0ff },
+    right_arm: { geo: new THREE.CylinderGeometry(0.025, 0.02, 0.14, 8), pos: [0.14, 0.34, 0], color: 0x00f0ff },
+    left_leg:  { geo: new THREE.CylinderGeometry(0.035, 0.03, 0.27, 8), pos: [-0.06, 0.135, 0], color: 0xff00aa },
+    right_leg: { geo: new THREE.CylinderGeometry(0.035, 0.03, 0.27, 8), pos: [0.06, 0.135, 0], color: 0xff00aa },
   }), []);
 
   // Create materials ONCE and update uniforms reactively
@@ -449,45 +454,150 @@ function PlaceholderRobot({ selectedPart, hoveredPart, onPartClick, onPartHover,
 // ── Internal components (X-ray mode) ───────────────────────────────────────
 // Positions based on hyurion_rig.blend bone structure:
 // pelvis=0.27, torso=0.33, neck=0.37, head=0.41~1.0
-// Internal components are in the torso region (0.27~0.37)
 function InternalComponents({ modelHeight }) {
   const s = modelHeight || 1.0;
+  const label = (text, color) => (
+    <div className={`text-xs font-bold whitespace-nowrap pointer-events-none ${color}`}
+      style={{ textShadow: '0 0 6px rgba(0,0,0,0.8)' }}>{text}</div>
+  );
+
   return (
     <group>
-      {/* Orin — torso upper area */}
-      <mesh position={[0.03 * s, 0.35 * s, 0]}>
-        <boxGeometry args={[0.06 * s, 0.015 * s, 0.06 * s]} />
-        <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.5} />
+      {/* ── HEAD INTERNALS (y=0.41~1.0, head center≈0.70) ── */}
+
+      {/* Camera — forehead area */}
+      <mesh position={[0, 0.73 * s, 0.11 * s]}>
+        <boxGeometry args={[0.025 * s, 0.02 * s, 0.012 * s]} />
+        <meshStandardMaterial color="#ff4488" emissive="#ff4488" emissiveIntensity={0.5} />
       </mesh>
-      <Html position={[0.03 * s, 0.38 * s, 0]} center distanceFactor={3}>
-        <div className="text-sm text-green-400 font-bold whitespace-nowrap pointer-events-none">Orin</div>
+      <Html position={[0, 0.76 * s, 0.13 * s]} center distanceFactor={3}>
+        {label('카메라', 'text-pink-400')}
       </Html>
 
-      {/* NUC — torso middle */}
-      <mesh position={[-0.03 * s, 0.32 * s, 0]}>
-        <boxGeometry args={[0.05 * s, 0.015 * s, 0.05 * s]} />
+      {/* LED Eyes ×2 — eye level */}
+      <mesh position={[-0.05 * s, 0.65 * s, 0.10 * s]}>
+        <sphereGeometry args={[0.012 * s, 8, 8]} />
+        <meshStandardMaterial color="#00f0ff" emissive="#00f0ff" emissiveIntensity={0.8} />
+      </mesh>
+      <mesh position={[0.05 * s, 0.65 * s, 0.10 * s]}>
+        <sphereGeometry args={[0.012 * s, 8, 8]} />
+        <meshStandardMaterial color="#00f0ff" emissive="#00f0ff" emissiveIntensity={0.8} />
+      </mesh>
+      <Html position={[0, 0.68 * s, 0.10 * s]} center distanceFactor={3}>
+        {label('LED 눈 ×2', 'text-cyan-400')}
+      </Html>
+
+      {/* MG90S lip servo — mouth area */}
+      <mesh position={[0, 0.53 * s, 0.08 * s]}>
+        <boxGeometry args={[0.02 * s, 0.012 * s, 0.012 * s]} />
+        <meshStandardMaterial color="#ff8800" emissive="#ff8800" emissiveIntensity={0.5} />
+      </mesh>
+      <Html position={[0, 0.55 * s, 0.10 * s]} center distanceFactor={3}>
+        {label('입 서보', 'text-orange-400')}
+      </Html>
+
+      {/* ── TORSO TOP: Neck servos (y≈0.37) ── */}
+      <mesh position={[-0.015 * s, 0.38 * s, 0]}>
+        <cylinderGeometry args={[0.008 * s, 0.008 * s, 0.02 * s, 8]} />
+        <meshStandardMaterial color="#aa44ff" emissive="#aa44ff" emissiveIntensity={0.5} />
+      </mesh>
+      <mesh position={[0.015 * s, 0.38 * s, 0]}>
+        <cylinderGeometry args={[0.008 * s, 0.008 * s, 0.02 * s, 8]} />
+        <meshStandardMaterial color="#aa44ff" emissive="#aa44ff" emissiveIntensity={0.5} />
+      </mesh>
+      <Html position={[0, 0.40 * s, 0]} center distanceFactor={3}>
+        {label('목 XL430 ×2', 'text-purple-400')}
+      </Html>
+
+      {/* ── TORSO INTERNALS (y=0.27~0.37) ── */}
+
+      {/* Orin Nano Super */}
+      <mesh position={[0.03 * s, 0.35 * s, 0]}>
+        <boxGeometry args={[0.05 * s, 0.012 * s, 0.05 * s]} />
+        <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.5} />
+      </mesh>
+      <Html position={[0.03 * s, 0.37 * s, 0]} center distanceFactor={3}>
+        {label('Orin', 'text-green-400')}
+      </Html>
+
+      {/* NUC */}
+      <mesh position={[-0.03 * s, 0.33 * s, 0]}>
+        <boxGeometry args={[0.04 * s, 0.012 * s, 0.04 * s]} />
         <meshStandardMaterial color="#4466ff" emissive="#4466ff" emissiveIntensity={0.5} />
       </mesh>
       <Html position={[-0.03 * s, 0.35 * s, 0]} center distanceFactor={3}>
-        <div className="text-sm text-blue-400 font-bold whitespace-nowrap pointer-events-none">NUC</div>
+        {label('NUC', 'text-blue-400')}
       </Html>
 
-      {/* Batteries — torso bottom (near pelvis) */}
-      <mesh position={[0, 0.28 * s, 0]}>
-        <boxGeometry args={[0.12 * s, 0.03 * s, 0.08 * s]} />
+      {/* 40mm Fan */}
+      <mesh position={[0, 0.36 * s, 0.04 * s]}>
+        <cylinderGeometry args={[0.015 * s, 0.015 * s, 0.005 * s, 12]} />
+        <meshStandardMaterial color="#88aacc" emissive="#88aacc" emissiveIntensity={0.3} />
+      </mesh>
+
+      {/* PDB + DC-DC */}
+      <mesh position={[0, 0.30 * s, 0]}>
+        <boxGeometry args={[0.06 * s, 0.008 * s, 0.04 * s]} />
+        <meshStandardMaterial color="#ff4444" emissive="#ff4444" emissiveIntensity={0.3} />
+      </mesh>
+      <Html position={[0, 0.31 * s, 0]} center distanceFactor={3}>
+        {label('PDB+DC-DC', 'text-red-400')}
+      </Html>
+
+      {/* Battery A */}
+      <mesh position={[0.03 * s, 0.28 * s, 0]}>
+        <boxGeometry args={[0.05 * s, 0.02 * s, 0.04 * s]} />
         <meshStandardMaterial color="#c8ff00" emissive="#c8ff00" emissiveIntensity={0.3} />
       </mesh>
-      <Html position={[0, 0.30 * s, 0]} center distanceFactor={3}>
-        <div className="text-sm text-yellow-400 font-bold whitespace-nowrap pointer-events-none">BAT A+B</div>
+      <Html position={[0.03 * s, 0.29 * s, 0]} center distanceFactor={3}>
+        {label('BAT A', 'text-yellow-400')}
       </Html>
 
-      {/* ESP32 — leg area (near pelvis, independent safety) */}
-      <mesh position={[0.04 * s, 0.22 * s, 0.03 * s]}>
-        <boxGeometry args={[0.02 * s, 0.01 * s, 0.015 * s]} />
+      {/* Battery B */}
+      <mesh position={[-0.03 * s, 0.28 * s, 0]}>
+        <boxGeometry args={[0.05 * s, 0.02 * s, 0.04 * s]} />
+        <meshStandardMaterial color="#aacc00" emissive="#aacc00" emissiveIntensity={0.3} />
+      </mesh>
+      <Html position={[-0.03 * s, 0.29 * s, 0]} center distanceFactor={3}>
+        {label('BAT B', 'text-lime-400')}
+      </Html>
+
+      {/* Speaker + Mic */}
+      <mesh position={[0.04 * s, 0.34 * s, 0.03 * s]}>
+        <sphereGeometry args={[0.006 * s, 8, 8]} />
+        <meshStandardMaterial color="#ff66aa" emissive="#ff66aa" emissiveIntensity={0.4} />
+      </mesh>
+      <Html position={[0.05 * s, 0.35 * s, 0.03 * s]} center distanceFactor={3}>
+        {label('스피커/마이크', 'text-pink-300')}
+      </Html>
+
+      {/* ── LEG AREA (y<0.27) ── */}
+
+      {/* Battery C (BHL) */}
+      <mesh position={[0, 0.20 * s, 0]}>
+        <boxGeometry args={[0.08 * s, 0.02 * s, 0.04 * s]} />
+        <meshStandardMaterial color="#ff00aa" emissive="#ff00aa" emissiveIntensity={0.3} />
+      </mesh>
+      <Html position={[0, 0.22 * s, 0]} center distanceFactor={3}>
+        {label('BAT C (BHL)', 'text-fuchsia-400')}
+      </Html>
+
+      {/* ESP32 */}
+      <mesh position={[0.04 * s, 0.18 * s, 0.03 * s]}>
+        <boxGeometry args={[0.015 * s, 0.008 * s, 0.012 * s]} />
         <meshStandardMaterial color="#ff8800" emissive="#ff8800" emissiveIntensity={0.6} />
       </mesh>
-      <Html position={[0.04 * s, 0.24 * s, 0.03 * s]} center distanceFactor={3}>
-        <div className="text-sm text-orange-400 font-bold whitespace-nowrap pointer-events-none">ESP32</div>
+      <Html position={[0.04 * s, 0.19 * s, 0.03 * s]} center distanceFactor={3}>
+        {label('ESP32', 'text-orange-400')}
+      </Html>
+
+      {/* CAN-USB ×2 */}
+      <mesh position={[-0.03 * s, 0.19 * s, 0.02 * s]}>
+        <boxGeometry args={[0.01 * s, 0.006 * s, 0.02 * s]} />
+        <meshStandardMaterial color="#44aaff" emissive="#44aaff" emissiveIntensity={0.4} />
+      </mesh>
+      <Html position={[-0.03 * s, 0.20 * s, 0.02 * s]} center distanceFactor={3}>
+        {label('CAN-USB ×2', 'text-sky-400')}
       </Html>
     </group>
   );

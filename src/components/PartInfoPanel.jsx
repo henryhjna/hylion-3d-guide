@@ -85,7 +85,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
 
       {/* Specs */}
       <Section title="스펙">
-        <div className="space-y-2.5.5">
+        <div className="space-y-2.5">
           {part.specs.map((spec, i) => (
             <div key={i} className="flex items-baseline gap-2">
               <span className="text-sm text-[#9aa0b8] min-w-[80px] shrink-0">{spec.label}</span>
