@@ -62,11 +62,11 @@ export const TASK_HINTS = {
   },
 
   w0_soarm_sim: {
-    summary: "SO-ARM URDF 정의 후 RViz + Gazebo에서 시뮬레이션 확인",
+    summary: "SO-ARM URDF 검증 (LeRobot 커리큘럼). 프로젝트 시뮬레이션은 IsaacLab 사용.",
     steps: [
       "SO-ARM URDF 파일 작성/수정",
-      "RViz에서 joint 구동 확인",
-      "Gazebo에서 물리 시뮬레이션 실행",
+      "URDF 시각화 확인 (커리큘럼 단계)",
+      "URDF joint 구동 확인 (커리큘럼 단계)",
     ],
     resources: [
       { label: "ROS2 URDF 튜토리얼", url: "https://docs.ros.org/en/humble/Tutorials.html" },

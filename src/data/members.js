@@ -15,7 +15,7 @@ export const MEMBERS = {
           '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
           '조립하면서 조립 기준서 초안 작성 (나사 토크, 그리스, 주의사항)',
           '머리 외주 사양 논의 (전자부품 치수 제공, ε2와 공동)',
-          '[공통] SO-ARM URDF 정의 + RViz + Gazebo',
+          '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           '텔레옵 경험을 프로젝트 설계에 반영 (화각·작업 공간 체감)',
           '머리 외주 사양서 마무리 (ε2와 공동, 외형+내부 치수+개구부+≤300g)',
@@ -192,7 +192,7 @@ export const MEMBERS = {
         focus: 'SO-ARM 커리큘럼 + 킥오프',
         tasks: [
           '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
-          '[공통] SO-ARM URDF 정의 + RViz + Gazebo',
+          '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           '배터리 소비 전류 계산 (Orin 25W + NUC 15W + SO-ARM + BHL BLDC → 30분 가능 확인)',
           '스펙시트 기반 상체 무게 적산 (Week 2 직립 테스트 결과와 대조 예정)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
@@ -364,7 +364,7 @@ export const MEMBERS = {
         focus: 'SO-ARM 커리큘럼 + IsaacLab 환경 로드',
         tasks: [
           '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
-          '[공통] SO-ARM URDF 정의 + RViz + Gazebo',
+          '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'BHL 리포지토리 클론 → IsaacLab 환경 로드 (체크포인트)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           'BHL 액추에이터 파라미터 문서화 + ROS2 토픽 리스트 초안',
@@ -534,7 +534,7 @@ export const MEMBERS = {
 
   epsilon1: {
     name: 'ε1',
-    identity: '데이터·대화·통합 오너',
+    identity: '배포·통합 오너',
     track: 'A (리드)',
     color: '#4466ff',
     parts: ['torso'],
@@ -543,7 +543,7 @@ export const MEMBERS = {
         focus: 'SO-ARM 커리큘럼 + LLM 파이프라인 테스트',
         tasks: [
           '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
-          '[공통] SO-ARM URDF 정의 + RViz + Gazebo',
+          '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'LLM JSON 안정성 테스트 (Groq 100회) + Groq 전체 파이프라인 latency 측정 (STT→LLM→TTS 라운드트립)',
           'JSON 액션 스키마 초안',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
@@ -711,7 +711,7 @@ export const MEMBERS = {
 
   epsilon2: {
     name: 'ε2',
-    identity: '검증·캐릭터·데이터 오너',
+    identity: '캐릭터·검증·외장 오너',
     track: 'A+B',
     color: '#00ff88',
     parts: ['head'],
@@ -722,7 +722,7 @@ export const MEMBERS = {
           '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
           '한국 부품 온라인 주문 (Orin, NUC, XL430×2, U2D2×2, 카메라, ESC×12, 알루미늄 프로파일)',
           '머리 외주 사양 논의 (레퍼런스+스케치 준비, δ1과 공동)',
-          '[공통] SO-ARM URDF 정의 + RViz + Gazebo',
+          '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'BHL URDF 파일 구조 파악 (문서 수준, Week 1에서 본격 셋업)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           '텔레옵 직접 해보며 수집 감각 사전 체험',

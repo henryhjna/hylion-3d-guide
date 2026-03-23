@@ -74,7 +74,7 @@ export const TECH_TREE = {
     // Day 2
     {
       id: 'w0_soarm_sim',
-      label: 'SO-ARM URDF + RViz + Gazebo',
+      label: 'SO-ARM URDF 검증 (커리큘럼)',
       week: 0,
       track: 'A',
       members: ['delta1', 'delta2', 'delta3', 'epsilon1', 'epsilon2'],
@@ -83,7 +83,7 @@ export const TECH_TREE = {
       dependencies: ['w0_soarm_assembly'],
       isGate: false,
       isCheckpoint: false,
-      description: '전원 공통: SO-ARM URDF 정의 + RViz + Gazebo (5-4~5-5)',
+      description: '전원 공통: SO-ARM URDF 검증 (LeRobot 커리큘럼) (5-4~5-5)',
     },
     {
       id: 'w0_isaaclab_load',
