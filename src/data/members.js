@@ -3,7 +3,7 @@
 
 export const MEMBERS = {
   delta1: {
-    name: 'δ1',
+    name: '인혁',
     identity: '하드웨어·외장 오너',
     track: 'A (리드)',
     color: '#00f0ff',
@@ -182,7 +182,7 @@ export const MEMBERS = {
   },
 
   delta2: {
-    name: 'δ2',
+    name: '승민',
     identity: '보행 시스템 오너',
     track: 'B (리드)',
     color: '#ff00aa',
@@ -354,7 +354,7 @@ export const MEMBERS = {
   },
 
   delta3: {
-    name: 'δ3',
+    name: '희승',
     identity: 'AI 인프라 오너',
     track: 'A+B',
     color: '#c8ff00',
@@ -533,7 +533,7 @@ export const MEMBERS = {
   },
 
   epsilon1: {
-    name: 'ε1',
+    name: '성래',
     identity: '배포·통합 오너',
     track: 'A (리드)',
     color: '#4466ff',
@@ -710,7 +710,7 @@ export const MEMBERS = {
   },
 
   epsilon2: {
-    name: 'ε2',
+    name: '상윤',
     identity: '캐릭터·검증·외장 오너',
     track: 'A+B',
     color: '#00ff88',

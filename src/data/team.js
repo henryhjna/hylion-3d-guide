@@ -1,7 +1,7 @@
 export const TEAM = {
   delta1: {
     id: 'delta1',
-    name: 'δ1',
+    name: '인혁',
     role: '하드웨어·외장 오너',
     trackLead: 'Track A 리드',
     color: '#00f0ff',
@@ -17,7 +17,7 @@ export const TEAM = {
   },
   delta2: {
     id: 'delta2',
-    name: 'δ2',
+    name: '승민',
     role: '보행 시스템 오너',
     trackLead: 'Track B 리드',
     color: '#ff00aa',
@@ -32,7 +32,7 @@ export const TEAM = {
   },
   delta3: {
     id: 'delta3',
-    name: 'δ3',
+    name: '희승',
     role: 'AI 인프라 오너',
     trackLead: 'A+B',
     color: '#c8ff00',
@@ -47,7 +47,7 @@ export const TEAM = {
   },
   epsilon1: {
     id: 'epsilon1',
-    name: 'ε1',
+    name: '성래',
     role: '배포·통합 오너',
     trackLead: 'Track A 리드',
     color: '#4466ff',
@@ -63,7 +63,7 @@ export const TEAM = {
   },
   epsilon2: {
     id: 'epsilon2',
-    name: 'ε2',
+    name: '상윤',
     role: '캐릭터·검증·외장 오너',
     trackLead: 'A+B',
     color: '#00ff88',
