@@ -14,9 +14,9 @@ export default function Navigation({
   onOpenSettings,
 }) {
   return (
-    <nav className="absolute top-0 left-0 right-0 h-16 z-50 glass-panel rounded-none border-t-0 border-x-0 flex items-center justify-between px-6">
+    <nav className="absolute top-0 left-0 right-0 h-16 z-50 glass-panel rounded-none border-t-0 border-x-0 flex items-center justify-between px-8">
       {/* Left: Logo + Mode tabs */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <h1
           onClick={() => onModeChange('work')}
           className="text-base font-bold tracking-widest glow-cyan cursor-pointer hover:opacity-80 transition-opacity text-[#00f0ff]"
@@ -58,9 +58,9 @@ export default function Navigation({
       />
 
       {/* Right: Member select + Tools */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {/* Member buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {/* "All" button */}
           <button
             onClick={() => onMemberChange(null)}

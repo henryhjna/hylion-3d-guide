@@ -16,9 +16,9 @@ export default function PartInfoPanel({ partId, onClose }) {
   if (!part) return null;
 
   return (
-    <div className="h-full glass-panel rounded-l-2xl border-r-0 rounded-r-none p-6 overflow-y-auto">
+    <div className="h-full glass-panel rounded-l-2xl border-r-0 rounded-r-none p-8 overflow-y-auto">
       {/* Header */}
-      <div className="flex items-start justify-between mb-5">
+      <div className="flex items-start justify-between mb-7">
         <div>
           <h2
             className="text-xl font-bold tracking-wide mb-2.5"
@@ -205,7 +205,7 @@ export default function PartInfoPanel({ partId, onClose }) {
 
 function Section({ title, children }) {
   return (
-    <div className="mb-5">
+    <div className="mb-7">
       <h3 className="text-sm font-bold text-[#6a7090] uppercase tracking-wider mb-2.5">
         {title}
       </h3>

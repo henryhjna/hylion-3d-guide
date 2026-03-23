@@ -82,8 +82,8 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
   const hint = useMemo(() => findHintForTask(task, weekNum), [task, weekNum]);
 
   return (
-    <div className="mb-2">
-      <label className={`flex items-start gap-2 px-2 py-2 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
+    <div className="mb-6">
+      <label className={`flex items-start gap-4 px-2 py-2 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
         <input
           type="checkbox"
           checked={isChecked}
@@ -106,15 +106,15 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
         )}
       </label>
       {expanded && hint && (
-        <div className="ml-7 mt-1 mb-2 p-3 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
-          <p className="text-[#aab0cc] mb-2.5">{hint.summary}</p>
+        <div className="ml-7 mt-1 mb-6 p-5 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
+          <p className="text-[#aab0cc] mb-6.5">{hint.summary}</p>
           {hint.steps?.length > 0 && (
-            <ol className="list-decimal ml-4 mb-2.5 space-y-2 text-[#e0e8ff]">
+            <ol className="list-decimal ml-4 mb-6.5 space-y-3 text-[#e0e8ff]">
               {hint.steps.map((s, i) => <li key={i}>{s}</li>)}
             </ol>
           )}
           {hint.resources?.length > 0 && (
-            <div className="mb-2 space-y-2">
+            <div className="mb-6 space-y-3">
               {hint.resources.map((r, i) => (
                 <a key={i} href={r.url || '#'} target={r.type === 'internal' ? undefined : '_blank'} rel="noopener noreferrer"
                   className="block text-[#4466ff] hover:text-[#6688ff]">
@@ -147,7 +147,7 @@ function ExpandableDep({ dep, memberId }) {
   const handoff = useMemo(() => findHandoff(dep, memberId), [dep, memberId]);
 
   return (
-    <div className="mb-2">
+    <div className="mb-6">
       <div
         className={`text-sm text-[#e0e8ff] ml-4 leading-relaxed flex items-start gap-1 ${handoff ? 'cursor-pointer hover:text-[#ffffff]' : ''}`}
         onClick={() => handoff && setExpanded(!expanded)}
@@ -160,11 +160,11 @@ function ExpandableDep({ dep, memberId }) {
         )}
       </div>
       {expanded && handoff && (
-        <div className="ml-7 mt-1 mb-2.5 p-3 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
-          <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
-          {handoff.format && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
-          {handoff.location && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
-          {handoff.deadline && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">기한:</span> {handoff.deadline}</div>}
+        <div className="ml-7 mt-1 mb-6.5 p-5 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
+          <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
+          {handoff.format && <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
+          {handoff.location && <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
+          {handoff.deadline && <div className="text-[#aab0cc] mb-6"><span className="text-[#6a7090]">기한:</span> {handoff.deadline}</div>}
           {handoff.verification && <div className="text-[#aab0cc]"><span className="text-[#6a7090]">검증:</span> {handoff.verification}</div>}
         </div>
       )}
@@ -329,7 +329,7 @@ export default function DashboardPanel({
       </div>
 
       {/* ── Scrollable content ───────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5" style={{ scrollbarGutter: 'stable' }}>
+      <div className="flex-1 overflow-y-auto px-7 pb-8 space-y-7" style={{ scrollbarGutter: 'stable' }}>
         {/* ── Gate card ───────────────────────────────────────────── */}
         {gate && <GateCard gate={gate} weekNum={weekNum} checkedTasks={checkedTasks} memberId={memberId} onToggleGateItem={toggleKey} />}
 
@@ -389,13 +389,13 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
 
   return (
     <div
-      className="rounded-xl p-4 relative overflow-hidden bg-[rgba(200,255,0,0.03)] border border-[rgba(200,255,0,0.25)] shadow-[0_0_20px_rgba(200,255,0,0.06),inset_0_0_20px_rgba(200,255,0,0.02)]"
+      className="rounded-xl p-6 relative overflow-hidden bg-[rgba(200,255,0,0.03)] border border-[rgba(200,255,0,0.25)] shadow-[0_0_20px_rgba(200,255,0,0.06),inset_0_0_20px_rgba(200,255,0,0.02)]"
     >
       {/* Pulse accent line */}
       <div
         className="absolute top-0 left-0 right-0 h-[2px] bg-[linear-gradient(90deg,transparent,#c8ff00,transparent)] animate-[pulse-neon_2s_ease-in-out_infinite]"
       />
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-4 mb-5">
         <span
           className="text-sm font-bold uppercase tracking-widest text-[#c8ff00]"
         >
@@ -410,12 +410,12 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
           Week {weekNum} 말
         </span>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {gate.items.map((item, i) => {
           const key = memberId ? `gate_${weekNum}_${i}` : `gate_all_${weekNum}_${i}`;
           const checked = !!checkedTasks[key];
           return (
-            <label key={i} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-[#c8ff0008] rounded px-1 -mx-1">
+            <label key={i} className="flex items-center gap-4 text-sm cursor-pointer hover:bg-[#c8ff0008] rounded px-1 -mx-1">
               <span
                 onClick={() => onToggleGateItem?.(key)}
                 className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center text-sm flex-shrink-0 cursor-pointer text-[#c8ff00] ${checked ? 'border-[#c8ff00] bg-[rgba(200,255,0,0.15)]' : 'border-[rgba(200,255,0,0.3)] bg-transparent'}`}
@@ -455,7 +455,7 @@ function MemberView({
   return (
     <>
       {/* ── Member header card ── */}
-      <div className="rounded-xl p-4 mb-2" style={{ background: member.color + '08', border: `1px solid ${member.color}20` }}>
+      <div className="rounded-xl p-6 mb-6" style={{ background: member.color + '08', border: `1px solid ${member.color}20` }}>
         <div className="flex items-center gap-3">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold shrink-0"
@@ -479,7 +479,7 @@ function MemberView({
         <div>
           {/* ── Week header (큰 제목 — 위계: 가장 높음) ── */}
           <div className="mb-6">
-            <div className="flex items-baseline justify-between mb-3">
+            <div className="flex items-baseline justify-between mb-5">
               <h3 className="text-xl font-bold tracking-wide" style={{ color: accentColor, textShadow: `0 0 20px ${accentColor}40` }}>
                 Week {weekNum}
               </h3>
@@ -487,11 +487,11 @@ function MemberView({
                 {completedCount}/{totalCount}
               </span>
             </div>
-            <p className="text-base text-[#c0c8e0] mb-4">{weekTitle}</p>
+            <p className="text-base text-[#c0c8e0] mb-6">{weekTitle}</p>
 
             {/* Focus card (질감: 글래스 카드 + 글로우 보더) */}
             <div className="rounded-xl p-5" style={{ background: `linear-gradient(135deg, ${accentColor}0c, ${accentColor}04)`, border: `1px solid ${accentColor}30`, boxShadow: `0 0 30px ${accentColor}08` }}>
-              <div className="text-xs text-[#6a7090] uppercase tracking-widest mb-2 font-mono">핵심 목표</div>
+              <div className="text-xs text-[#6a7090] uppercase tracking-widest mb-6 font-mono">핵심 목표</div>
               <div className="text-lg font-bold leading-snug" style={{ color: accentColor, textShadow: `0 0 12px ${accentColor}30` }}>
                 {weekData.focus}
               </div>
@@ -513,7 +513,7 @@ function MemberView({
           </div>
 
           {/* ── Checklist (여유: 넉넉한 간격) ── */}
-          <div className="text-xs text-[#6a7090] uppercase tracking-[0.2em] font-mono mb-3 pb-2 border-b border-[#ffffff08]">할 일</div>
+          <div className="text-xs text-[#6a7090] uppercase tracking-[0.2em] font-mono mb-5 pb-2 border-b border-[#ffffff08]">할 일</div>
           <div className="space-y-1.5">
             {weekData.tasks.map((task, i) => (
               <ExpandableTask
@@ -542,9 +542,9 @@ function MemberView({
       {/* Next week preview */}
       {nextWeekData && (
         <div
-          className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]"
+          className="p-5 rounded-lg bg-white/[0.02] border border-white/[0.05]"
         >
-          <div className="text-sm text-[#6a7090] mb-2">
+          <div className="text-sm text-[#6a7090] mb-6">
             다음 주 미리보기 (Week {weekNum + 1})
           </div>
           <div className="text-sm" style={{ color: accentColor }}>
@@ -581,7 +581,7 @@ function OverallView({
       {/* Header */}
       <div>
         <h2
-          className="text-sm font-bold tracking-wide mb-2 text-[#e0e8ff]"
+          className="text-sm font-bold tracking-wide mb-6 text-[#e0e8ff]"
         >
           전체 프로젝트
         </h2>
@@ -591,13 +591,13 @@ function OverallView({
       {/* Current week title */}
       <div>
         <h3
-          className="text-sm font-bold tracking-wide mb-4 text-[#00ff88]"
+          className="text-sm font-bold tracking-wide mb-6 text-[#00ff88]"
         >
           Week {weekNum} — {weekTitle}
         </h3>
 
         {/* Overall progress */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-4 mb-6">
           <div className="flex-1 h-2 rounded-full bg-[#ffffff08] overflow-hidden">
             <div
               className="h-full rounded-full bg-[linear-gradient(90deg,#00ff88,#00f0ff)] shadow-[0_0_10px_rgba(0,255,136,0.3)] transition-[width] duration-700"
@@ -614,13 +614,13 @@ function OverallView({
         </div>
 
         {/* Per-part progress bars */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           {Object.entries(PART_META).map(([key, meta]) => {
             const val = progress[key];
             return (
               <button
                 key={key}
-                className="w-full flex items-center gap-2 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-1 py-1.5 transition-colors"
+                className="w-full flex items-center gap-4 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-1 py-1.5 transition-colors"
                 onClick={() => onPartClick?.(key)}
               >
                 <span className="text-sm w-12 text-left text-[#6a7090]">
@@ -647,7 +647,7 @@ function OverallView({
 
       {/* This week highlights by track */}
       {trackHighlights && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           <h4
             className="text-sm uppercase tracking-widest text-[#6a7090]"
           >
@@ -655,8 +655,8 @@ function OverallView({
           </h4>
 
           {trackHighlights.trackA && (
-            <div className="p-3 rounded-lg bg-[rgba(0,240,255,0.04)] border border-[rgba(0,240,255,0.12)]">
-              <div className="text-sm font-bold mb-2 text-[#00f0ff]">
+            <div className="p-5 rounded-lg bg-[rgba(0,240,255,0.04)] border border-[rgba(0,240,255,0.12)]">
+              <div className="text-sm font-bold mb-6 text-[#00f0ff]">
                 Track A (상체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -666,8 +666,8 @@ function OverallView({
           )}
 
           {trackHighlights.trackB && (
-            <div className="p-3 rounded-lg bg-[rgba(255,0,170,0.04)] border border-[rgba(255,0,170,0.12)]">
-              <div className="text-sm font-bold mb-2 text-[#ff00aa]">
+            <div className="p-5 rounded-lg bg-[rgba(255,0,170,0.04)] border border-[rgba(255,0,170,0.12)]">
+              <div className="text-sm font-bold mb-6 text-[#ff00aa]">
                 Track B (하체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -699,14 +699,14 @@ function DependenciesSection({ receives, gives, memberId }) {
   return (
     <div>
       <h4
-        className="text-sm uppercase tracking-widest mb-3 text-[#6a7090]"
+        className="text-sm uppercase tracking-widest mb-5 text-[#6a7090]"
       >
         작업 의존성
       </h4>
 
       {hasReceives && (
-        <div className="mb-3">
-          <div className="text-sm mb-2 text-[#ff8800]">
+        <div className="mb-5">
+          <div className="text-sm mb-6 text-[#ff8800]">
             {'\u2190'} 받는 것
           </div>
           {receives.map((dep, i) => (
@@ -717,7 +717,7 @@ function DependenciesSection({ receives, gives, memberId }) {
 
       {hasGives && (
         <div>
-          <div className="text-sm mb-2 text-[#00ff88]">
+          <div className="text-sm mb-6 text-[#00ff88]">
             {'\u2192'} 주는 것
           </div>
           {gives.map((dep, i) => (
@@ -736,7 +736,7 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
       className="rounded-lg overflow-hidden border border-white/[0.06] bg-white/[0.02]"
     >
       <button
-        className="w-full flex items-center justify-between p-3 text-left transition-colors hover:bg-[#ffffff04]"
+        className="w-full flex items-center justify-between p-5 text-left transition-colors hover:bg-[#ffffff04]"
         onClick={() => setFlowOpen((o) => !o)}
       >
         <span
@@ -758,9 +758,9 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
           opacity: flowOpen ? 1 : 0,
         }}
       >
-        <div className="px-3 pb-2.5 space-y-2.5.5">
+        <div className="px-3 pb-2.5 space-y-3.5.5">
           {items.map((item, i) => (
-            <div key={i} className="flex items-start gap-2">
+            <div key={i} className="flex items-start gap-4">
               <span
                 className="text-sm uppercase tracking-wider flex-shrink-0 mt-1.5 px-2.5 py-1.5 rounded text-[#c8ff00] bg-[rgba(200,255,0,0.08)]"
               >
