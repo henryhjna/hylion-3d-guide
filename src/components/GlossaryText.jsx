@@ -60,12 +60,7 @@ function GlossaryTerm({ term, data }) {
     <>
       <span
         ref={termRef}
-        className="glossary-term"
-        style={{
-          borderBottom: '1px dashed #6a709060',
-          cursor: 'help',
-          transition: 'border-color 0.2s',
-        }}
+        className="glossary-term cursor-help transition-[border-color] duration-200"
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
@@ -105,22 +100,15 @@ function GlossaryTooltip({ data, term, position, onMouseEnter, onMouseLeave }) {
   return (
     <div
       ref={tooltipRef}
-      className="glass-panel p-3 slide-in-up"
+      className="glass-panel p-3 slide-in-up fixed z-[60] w-[280px] max-h-[200px] overflow-auto border-[#4466ff40] pointer-events-auto"
       style={{
-        position: 'fixed',
         left: adjustedPos.x,
         top: adjustedPos.y,
-        zIndex: 60,
-        width: 280,
-        maxHeight: 200,
-        overflow: 'auto',
-        borderColor: '#4466ff40',
-        pointerEvents: 'auto',
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="text-xs font-bold mb-2" style={{ color: '#4466ff',  }}>
+      <div className="text-xs font-bold mb-2 text-[#4466ff]">
         {term}
         {data.full && <span className="text-xs text-[#6a7090] font-normal ml-1.5">({data.full})</span>}
       </div>

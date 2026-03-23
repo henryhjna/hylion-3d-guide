@@ -48,7 +48,7 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
         {/* TOC sidebar */}
         <div className="w-[240px] border-r border-[#ffffff10] p-3 overflow-y-auto shrink-0">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-bold" style={{ color: '#4466ff' }}>📖 문서</span>
+            <span className="text-sm font-bold text-[#4466ff]">📖 문서</span>
             <button onClick={onClose} className="text-sm text-[#6a7090] hover:text-[#e0e8ff]">✕</button>
           </div>
 
@@ -117,9 +117,9 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
               <Markdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  h1: ({ children, ...props }) => <h1 id={findTocId(children, toc, 1)} className="text-lg font-bold mt-6 mb-3" style={{ color: '#00f0ff' }} {...props}>{children}</h1>,
-                  h2: ({ children, ...props }) => <h2 id={findTocId(children, toc, 2)} className="text-sm font-bold mt-5 mb-2" style={{ color: '#4466ff' }} {...props}>{children}</h2>,
-                  h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-sm font-bold mt-4 mb-2.5" style={{ color: '#c8ff00' }} {...props}>{children}</h3>,
+                  h1: ({ children, ...props }) => <h1 id={findTocId(children, toc, 1)} className="text-lg font-bold mt-6 mb-3 text-[#00f0ff]" {...props}>{children}</h1>,
+                  h2: ({ children, ...props }) => <h2 id={findTocId(children, toc, 2)} className="text-sm font-bold mt-5 mb-2 text-[#4466ff]" {...props}>{children}</h2>,
+                  h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-sm font-bold mt-4 mb-2.5 text-[#c8ff00]" {...props}>{children}</h3>,
                   p: ({ children }) => <p className="text-sm text-[#e0e8ff] leading-relaxed mb-2">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</p>,
                   li: ({ children }) => <li className="text-sm text-[#e0e8ff] ml-4 mb-2 list-disc">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</li>,
                   code: ({ children, className }) => className ? (

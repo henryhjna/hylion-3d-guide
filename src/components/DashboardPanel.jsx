@@ -92,12 +92,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           style={{ accentColor: memberColor }}
         />
         <span
-          className="text-sm leading-relaxed flex-1"
-          style={{
-            color: isChecked ? '#6a7090' : '#e0e8ff',
-            textDecoration: isChecked ? 'line-through' : 'none',
-            transition: 'color 0.2s, text-decoration 0.2s',
-          }}
+          className={`text-sm leading-relaxed flex-1 transition-[color,text-decoration] duration-200 ${isChecked ? 'text-[#6a7090] line-through' : 'text-[#e0e8ff]'}`}
         >
           {task}
         </span>
@@ -111,7 +106,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
         )}
       </label>
       {expanded && hint && (
-        <div className="ml-7 mt-1 mb-2 p-3 rounded-lg text-sm" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="ml-7 mt-1 mb-2 p-3 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
           <p className="text-[#aab0cc] mb-2.5">{hint.summary}</p>
           {hint.steps?.length > 0 && (
             <ol className="list-decimal ml-4 mb-2.5 space-y-2 text-[#e0e8ff]">
@@ -134,7 +129,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           {hint.components?.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1">
               {hint.components.map((c, i) => (
-                <span key={i} className="text-sm px-2.5 py-1.5 rounded" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
+                <span key={i} className="text-sm px-2.5 py-1.5 rounded bg-[#00f0ff10] text-[#00f0ff] border border-[#00f0ff20]">
                   {'\uD83D\uDCE6'} {c}
                 </span>
               ))}
@@ -165,7 +160,7 @@ function ExpandableDep({ dep, memberId }) {
         )}
       </div>
       {expanded && handoff && (
-        <div className="ml-7 mt-1 mb-2.5 p-3 rounded-lg text-sm" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="ml-7 mt-1 mb-2.5 p-3 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
           <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
           {handoff.format && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
           {handoff.location && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
@@ -256,16 +251,7 @@ export default function DashboardPanel({
   if (isCollapsed) {
     return (
       <div
-        className="fixed top-0 left-0 h-full flex flex-col items-center pt-16 pb-4 gap-3"
-        style={{
-          width: 48,
-          background: 'rgba(18, 18, 26, 0.92)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          borderRight: '1px solid rgba(255,255,255,0.06)',
-          zIndex: 10,
-          transition: 'width 0.3s cubic-bezier(.4,0,.2,1)',
-        }}
+        className="fixed top-0 left-0 h-full flex flex-col items-center pt-16 pb-4 gap-3 w-12 bg-[rgba(18,18,26,0.92)] backdrop-blur-[12px] border-r border-r-white/[0.06] z-10 transition-all duration-300"
       >
         {/* Collapse toggle */}
         <button
@@ -304,7 +290,7 @@ export default function DashboardPanel({
             strokeDasharray={`${(2 * Math.PI * 15 * progress.total) / 100} ${2 * Math.PI * 15}`}
             strokeLinecap="round"
             transform="rotate(-90 18 18)"
-            style={{ transition: 'stroke-dasharray 0.7s ease' }}
+            className="transition-[stroke-dasharray] duration-700 ease-in-out"
           />
           <text
             x="18" y="19.5"
@@ -329,16 +315,7 @@ export default function DashboardPanel({
 
   return (
     <div
-      className="fixed top-0 left-0 h-full flex flex-col"
-      style={{
-        width: 420,
-        background: 'rgba(18, 18, 26, 0.88)',
-        backdropFilter: 'blur(14px)',
-        WebkitBackdropFilter: 'blur(14px)',
-        borderRight: '1px solid rgba(255,255,255,0.06)',
-        zIndex: 10,
-        transition: 'width 0.3s cubic-bezier(.4,0,.2,1)',
-      }}
+      className="fixed top-0 left-0 h-full flex flex-col w-[420px] bg-[rgba(18,18,26,0.88)] backdrop-blur-[14px] border-r border-r-white/[0.06] z-10 transition-all duration-300"
     >
       {/* ── Top bar: collapse toggle ─────────────────────────────── */}
       <div className="flex items-center justify-end px-3 pt-3 pb-1">
@@ -390,20 +367,7 @@ export default function DashboardPanel({
         {/* ── Tech tree button ───────────────────────────────────── */}
         <button
           onClick={onOpenTechTree}
-          className="w-full py-2.5 rounded-lg text-sm font-bold tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-          style={{
-            color: '#c8ff00',
-            background: 'rgba(200, 255, 0, 0.06)',
-            border: '1px solid rgba(200, 255, 0, 0.2)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(200, 255, 0, 0.12)';
-            e.currentTarget.style.boxShadow = '0 0 12px rgba(200, 255, 0, 0.15)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(200, 255, 0, 0.06)';
-            e.currentTarget.style.boxShadow = 'none';
-          }}
+          className="w-full py-2.5 rounded-lg text-sm font-bold tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-[#c8ff00] bg-[rgba(200,255,0,0.06)] border border-[rgba(200,255,0,0.2)] hover:bg-[rgba(200,255,0,0.12)] hover:shadow-[0_0_12px_rgba(200,255,0,0.15)]"
         >
           {'\u25B8'} {'\u00A0'}전체 테크트리 보기
         </button>
@@ -425,31 +389,20 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
 
   return (
     <div
-      className="rounded-xl p-4 relative overflow-hidden"
-      style={{
-        background: 'rgba(200, 255, 0, 0.03)',
-        border: '1px solid rgba(200, 255, 0, 0.25)',
-        boxShadow: '0 0 20px rgba(200, 255, 0, 0.06), inset 0 0 20px rgba(200, 255, 0, 0.02)',
-      }}
+      className="rounded-xl p-4 relative overflow-hidden bg-[rgba(200,255,0,0.03)] border border-[rgba(200,255,0,0.25)] shadow-[0_0_20px_rgba(200,255,0,0.06),inset_0_0_20px_rgba(200,255,0,0.02)]"
     >
       {/* Pulse accent line */}
       <div
-        className="absolute top-0 left-0 right-0 h-[2px]"
-        style={{
-          background: 'linear-gradient(90deg, transparent, #c8ff00, transparent)',
-          animation: 'pulse-neon 2s ease-in-out infinite',
-        }}
+        className="absolute top-0 left-0 right-0 h-[2px] bg-[linear-gradient(90deg,transparent,#c8ff00,transparent)] animate-[pulse-neon_2s_ease-in-out_infinite]"
       />
       <div className="flex items-center gap-2 mb-3">
         <span
-          className="text-sm font-bold uppercase tracking-widest"
-          style={{ color: '#c8ff00' }}
+          className="text-sm font-bold uppercase tracking-widest text-[#c8ff00]"
         >
           GATE
         </span>
         <span
-          className="text-sm font-bold"
-          style={{ color: '#c8ff00' }}
+          className="text-sm font-bold text-[#c8ff00]"
         >
           {gate.name}
         </span>
@@ -465,12 +418,7 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
             <label key={i} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-[#c8ff0008] rounded px-1 -mx-1">
               <span
                 onClick={() => onToggleGateItem?.(key)}
-                className="w-3.5 h-3.5 rounded-sm border flex items-center justify-center text-sm flex-shrink-0 cursor-pointer"
-                style={{
-                  borderColor: checked ? '#c8ff00' : 'rgba(200, 255, 0, 0.3)',
-                  backgroundColor: checked ? 'rgba(200, 255, 0, 0.15)' : 'transparent',
-                  color: '#c8ff00',
-                }}
+                className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center text-sm flex-shrink-0 cursor-pointer text-[#c8ff00] ${checked ? 'border-[#c8ff00] bg-[rgba(200,255,0,0.15)]' : 'border-[rgba(200,255,0,0.3)] bg-transparent'}`}
               >
                 {checked ? '\u2713' : ''}
               </span>
@@ -561,12 +509,11 @@ function MemberView({
           {/* Progress bar */}
           <div className="h-1.5 rounded-full bg-[#ffffff08] mb-4 overflow-hidden">
             <div
-              className="h-full rounded-full"
+              className="h-full rounded-full transition-[width] duration-500"
               style={{
                 width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
                 backgroundColor: accentColor,
                 boxShadow: `0 0 8px ${accentColor}60`,
-                transition: 'width 0.5s cubic-bezier(.4,0,.2,1)',
               }}
             />
           </div>
@@ -600,11 +547,7 @@ function MemberView({
       {/* Next week preview */}
       {nextWeekData && (
         <div
-          className="p-3 rounded-lg"
-          style={{
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.05)',
-          }}
+          className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]"
         >
           <div className="text-sm text-[#6a7090] mb-2">
             다음 주 미리보기 (Week {weekNum + 1})
@@ -643,8 +586,7 @@ function OverallView({
       {/* Header */}
       <div>
         <h2
-          className="text-sm font-bold tracking-wide mb-2"
-          style={{ color: '#e0e8ff' }}
+          className="text-sm font-bold tracking-wide mb-2 text-[#e0e8ff]"
         >
           전체 프로젝트
         </h2>
@@ -654,8 +596,7 @@ function OverallView({
       {/* Current week title */}
       <div>
         <h3
-          className="text-sm font-bold tracking-wide mb-4"
-          style={{ color: '#00ff88' }}
+          className="text-sm font-bold tracking-wide mb-4 text-[#00ff88]"
         >
           Week {weekNum} — {weekTitle}
         </h3>
@@ -664,18 +605,14 @@ function OverallView({
         <div className="flex items-center gap-2 mb-4">
           <div className="flex-1 h-2 rounded-full bg-[#ffffff08] overflow-hidden">
             <div
-              className="h-full rounded-full"
+              className="h-full rounded-full bg-[linear-gradient(90deg,#00ff88,#00f0ff)] shadow-[0_0_10px_rgba(0,255,136,0.3)] transition-[width] duration-700"
               style={{
                 width: `${progress.total}%`,
-                background: 'linear-gradient(90deg, #00ff88, #00f0ff)',
-                boxShadow: '0 0 10px rgba(0, 255, 136, 0.3)',
-                transition: 'width 0.7s cubic-bezier(.4,0,.2,1)',
               }}
             />
           </div>
           <span
-            className="text-sm font-bold w-10 text-right"
-            style={{ color: '#00ff88' }}
+            className="text-sm font-bold w-10 text-right text-[#00ff88]"
           >
             {progress.total}%
           </span>
@@ -691,21 +628,20 @@ function OverallView({
                 className="w-full flex items-center gap-2 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-1 py-1.5 transition-colors"
                 onClick={() => onPartClick?.(key)}
               >
-                <span className="text-sm w-12 text-left" style={{ color: '#6a7090' }}>
+                <span className="text-sm w-12 text-left text-[#6a7090]">
                   {meta.label}
                 </span>
                 <div className="flex-1 h-1.5 rounded-full bg-[#ffffff08] overflow-hidden">
                   <div
-                    className="h-full rounded-full"
+                    className="h-full rounded-full transition-[width] duration-700"
                     style={{
                       width: `${val}%`,
                       backgroundColor: meta.color,
                       boxShadow: `0 0 6px ${meta.color}40`,
-                      transition: 'width 0.7s cubic-bezier(.4,0,.2,1)',
                     }}
                   />
                 </div>
-                <span className="text-sm w-8 text-right" style={{ color: '#6a7090' }}>
+                <span className="text-sm w-8 text-right text-[#6a7090]">
                   {val}%
                 </span>
               </button>
@@ -718,15 +654,14 @@ function OverallView({
       {trackHighlights && (
         <div className="space-y-2">
           <h4
-            className="text-sm uppercase tracking-widest"
-            style={{ color: '#6a7090' }}
+            className="text-sm uppercase tracking-widest text-[#6a7090]"
           >
             이번 주 하이라이트
           </h4>
 
           {trackHighlights.trackA && (
-            <div className="p-3 rounded-lg" style={{ background: 'rgba(0, 240, 255, 0.04)', border: '1px solid rgba(0, 240, 255, 0.12)' }}>
-              <div className="text-sm font-bold mb-2" style={{ color: '#00f0ff',  }}>
+            <div className="p-3 rounded-lg bg-[rgba(0,240,255,0.04)] border border-[rgba(0,240,255,0.12)]">
+              <div className="text-sm font-bold mb-2 text-[#00f0ff]">
                 Track A (상체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -736,8 +671,8 @@ function OverallView({
           )}
 
           {trackHighlights.trackB && (
-            <div className="p-3 rounded-lg" style={{ background: 'rgba(255, 0, 170, 0.04)', border: '1px solid rgba(255, 0, 170, 0.12)' }}>
-              <div className="text-sm font-bold mb-2" style={{ color: '#ff00aa',  }}>
+            <div className="p-3 rounded-lg bg-[rgba(255,0,170,0.04)] border border-[rgba(255,0,170,0.12)]">
+              <div className="text-sm font-bold mb-2 text-[#ff00aa]">
                 Track B (하체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -769,15 +704,14 @@ function DependenciesSection({ receives, gives, memberId }) {
   return (
     <div>
       <h4
-        className="text-sm uppercase tracking-widest mb-3"
-        style={{ color: '#6a7090' }}
+        className="text-sm uppercase tracking-widest mb-3 text-[#6a7090]"
       >
         작업 의존성
       </h4>
 
       {hasReceives && (
         <div className="mb-3">
-          <div className="text-sm mb-2" style={{ color: '#ff8800' }}>
+          <div className="text-sm mb-2 text-[#ff8800]">
             {'\u2190'} 받는 것
           </div>
           {receives.map((dep, i) => (
@@ -788,7 +722,7 @@ function DependenciesSection({ receives, gives, memberId }) {
 
       {hasGives && (
         <div>
-          <div className="text-sm mb-2" style={{ color: '#00ff88' }}>
+          <div className="text-sm mb-2 text-[#00ff88]">
             {'\u2192'} 주는 것
           </div>
           {gives.map((dep, i) => (
@@ -804,47 +738,36 @@ function DependenciesSection({ receives, gives, memberId }) {
 function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
   return (
     <div
-      className="rounded-lg overflow-hidden"
-      style={{
-        border: '1px solid rgba(255,255,255,0.06)',
-        background: 'rgba(255,255,255,0.02)',
-      }}
+      className="rounded-lg overflow-hidden border border-white/[0.06] bg-white/[0.02]"
     >
       <button
         className="w-full flex items-center justify-between p-3 text-left transition-colors hover:bg-[#ffffff04]"
         onClick={() => setFlowOpen((o) => !o)}
       >
         <span
-          className="text-sm uppercase tracking-widest"
-          style={{ color: '#6a7090' }}
+          className="text-sm uppercase tracking-widest text-[#6a7090]"
         >
           의존성 흐름
         </span>
         <span
-          className="text-sm text-[#6a7090] transition-transform duration-200"
-          style={{ transform: flowOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          className={`text-sm text-[#6a7090] transition-transform duration-200 ${flowOpen ? 'rotate-90' : 'rotate-0'}`}
         >
           {'\u25B6'}
         </span>
       </button>
 
       <div
+        className="overflow-hidden transition-[max-height,opacity] duration-300"
         style={{
           maxHeight: flowOpen ? 300 : 0,
           opacity: flowOpen ? 1 : 0,
-          overflow: 'hidden',
-          transition: 'max-height 0.3s cubic-bezier(.4,0,.2,1), opacity 0.2s ease',
         }}
       >
         <div className="px-3 pb-2.5 space-y-2.5.5">
           {items.map((item, i) => (
             <div key={i} className="flex items-start gap-2">
               <span
-                className="text-sm uppercase tracking-wider flex-shrink-0 mt-1.5 px-2.5 py-1.5 rounded"
-                style={{
-                  color: '#c8ff00',
-                  background: 'rgba(200, 255, 0, 0.08)',
-                }}
+                className="text-sm uppercase tracking-wider flex-shrink-0 mt-1.5 px-2.5 py-1.5 rounded text-[#c8ff00] bg-[rgba(200,255,0,0.08)]"
               >
                 {item.label}
               </span>
@@ -858,13 +781,11 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
               {items.map((_, i) => (
                 <span key={i} className="flex items-center">
                   <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ backgroundColor: '#c8ff00' }}
+                    className="w-1.5 h-1.5 rounded-full bg-[#c8ff00]"
                   />
                   {i < items.length - 1 && (
                     <span
-                      className="w-6 h-[1px]"
-                      style={{ backgroundColor: 'rgba(200, 255, 0, 0.2)' }}
+                      className="w-6 h-[1px] bg-[rgba(200,255,0,0.2)]"
                     />
                   )}
                 </span>

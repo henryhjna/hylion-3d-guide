@@ -29,12 +29,11 @@ export default function SettingsModal({ isOpen, onClose }) {
     <div className="fixed inset-0 z-[100] flex items-center justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       <div
-        className="relative glass-panel p-6 w-[400px] slide-in-up"
-        style={{ borderColor: '#4466ff30' }}
+        className="relative glass-panel p-6 w-[400px] slide-in-up border-[#4466ff30]"
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-sm font-bold tracking-wide" style={{ color: '#4466ff' }}>
+          <h2 className="text-sm font-bold tracking-wide text-[#4466ff]">
             설정
           </h2>
           <button

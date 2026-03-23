@@ -89,7 +89,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
           {component.usage.parts?.length > 0 && (
             <div className="flex gap-1 mt-1">
               {component.usage.parts.map(p => (
-                <span key={p} className="tag text-sm" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
+                <span key={p} className="tag text-sm bg-[#00f0ff10] text-[#00f0ff] border border-[#00f0ff20]">
                   {p.replaceAll('_', ' ')}
                 </span>
               ))}

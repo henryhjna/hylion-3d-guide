@@ -33,12 +33,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-28 right-4 z-50 w-12 h-12 rounded-full flex items-center justify-center text-lg transition-all hover:scale-110"
-        style={{
-          background: 'linear-gradient(135deg, #4466ff20, #00f0ff20)',
-          border: '1px solid #4466ff40',
-          boxShadow: '0 0 20px #4466ff20',
-        }}
+        className="fixed bottom-28 right-4 z-50 w-12 h-12 rounded-full flex items-center justify-center text-lg transition-all hover:scale-110 bg-[linear-gradient(135deg,#4466ff20,#00f0ff20)] border border-[#4466ff40] shadow-[0_0_20px_#4466ff20]"
         title="AI 코파일럿"
       >
         🤖
@@ -48,14 +43,13 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
 
   return (
     <div
-      className="fixed bottom-28 right-4 z-50 w-[380px] h-[500px] glass-panel flex flex-col slide-in-up"
-      style={{ borderColor: '#4466ff30' }}
+      className="fixed bottom-28 right-4 z-50 w-[380px] h-[500px] glass-panel flex flex-col slide-in-up border-[#4466ff30]"
     >
       {/* Header */}
       <div className="flex items-center justify-between p-3 border-b border-[#ffffff10]">
         <div className="flex items-center gap-2">
           <span className="text-sm">🤖</span>
-          <span className="text-sm font-bold" style={{ color: '#4466ff' }}>
+          <span className="text-sm font-bold text-[#4466ff]">
             AI 코파일럿
           </span>
           {!hasApiKey && (
@@ -133,8 +127,8 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
             <div className="px-3 py-2 rounded-lg bg-[#ffffff08] border border-[#ffffff08]">
               <div className="flex items-center gap-2.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse" />
-                <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse" style={{ animationDelay: '0.2s' }} />
-                <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse" style={{ animationDelay: '0.4s' }} />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse [animation-delay:0.2s]" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse [animation-delay:0.4s]" />
               </div>
             </div>
           </div>

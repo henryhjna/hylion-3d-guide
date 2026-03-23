@@ -8,7 +8,7 @@ export default function ArchitectureView() {
 
   return (
     <div className="absolute top-2 right-2 w-[380px] max-h-[calc(100%-16px)] overflow-y-auto glass-panel p-4 slide-in-right z-30">
-      <h2 className="text-sm font-bold tracking-wide mb-3 glow-cyan" style={{ color: '#00f0ff' }}>
+      <h2 className="text-sm font-bold tracking-wide mb-3 glow-cyan text-[#00f0ff]">
         시스템 아키텍처
       </h2>
 

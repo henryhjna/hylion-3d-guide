@@ -19,8 +19,7 @@ export default function Navigation({
       <div className="flex items-center gap-4">
         <h1
           onClick={() => onModeChange('work')}
-          className="text-base font-bold tracking-widest glow-cyan cursor-pointer hover:opacity-80 transition-opacity"
-          style={{ color: '#00f0ff' }}
+          className="text-base font-bold tracking-widest glow-cyan cursor-pointer hover:opacity-80 transition-opacity text-[#00f0ff]"
         >
           HYlion
         </h1>
@@ -65,10 +64,9 @@ export default function Navigation({
           {/* "All" button */}
           <button
             onClick={() => onMemberChange(null)}
-            className={`w-8 h-8 rounded-full text-sm font-bold transition-all flex items-center justify-center ${
+            className={`w-8 h-8 rounded-full text-sm font-bold transition-all flex items-center justify-center bg-[#ffffff10] text-[#e0e8ff] ${
               !selectedMember ? 'outline outline-2 outline-[#e0e8ff]' : 'opacity-40 hover:opacity-70'
             }`}
-            style={{ backgroundColor: '#ffffff10', color: '#e0e8ff' }}
             title="전체 보기"
           >
             All

@@ -51,13 +51,10 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
   return (
     <div
       ref={cardRef}
-      className="slide-in-up"
+      className="slide-in-up fixed w-[280px] z-[15]"
       style={{
-        position: 'fixed',
         left: clamped.left,
         top: clamped.top,
-        width: CARD_WIDTH,
-        zIndex: 15,
       }}
     >
       <div
@@ -103,11 +100,10 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
         {/* Explore button */}
         <button
           onClick={() => onExplore(partId)}
-          className="w-full py-1.5 rounded-md text-sm font-bold transition-all border hover:bg-opacity-100"
+          className="w-full py-1.5 rounded-md text-sm font-bold transition-all border bg-transparent hover:bg-opacity-100"
           style={{
             color,
             borderColor: color + '60',
-            backgroundColor: 'transparent',
           }}
           onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = color; e.currentTarget.style.color = '#0a0a0f'; }}
           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = color; }}

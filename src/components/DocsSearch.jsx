@@ -54,8 +54,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
     <div className="fixed inset-0 z-[90] flex items-start justify-center pt-[10vh]" onClick={onClose}>
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
       <div
-        className="relative glass-panel w-[600px] max-h-[70vh] overflow-hidden flex flex-col"
-        style={{ borderColor: '#4466ff30' }}
+        className="relative glass-panel w-[600px] max-h-[70vh] overflow-hidden flex flex-col border-[#4466ff30]"
         onClick={e => e.stopPropagation()}
         onKeyDown={handleKeyDown}
       >

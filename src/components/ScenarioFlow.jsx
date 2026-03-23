@@ -121,7 +121,7 @@ export default function ScenarioFlow() {
             <div className="absolute left-0 right-0 bottom-8 h-px bg-[#ffffff15]" />
 
             {/* Audience */}
-            <div className="absolute left-[5%] bottom-4 text-center" style={{ transition: 'all 0.8s ease' }}>
+            <div className="absolute left-[5%] bottom-4 text-center transition-all duration-700 ease-in-out">
               <div className="w-12 h-12 rounded-lg bg-[#4466ff15] border border-[#4466ff30] flex items-center justify-center text-xl mx-auto">
                 👤
               </div>
@@ -134,8 +134,8 @@ export default function ScenarioFlow() {
 
             {/* Robot */}
             <div
-              className="absolute bottom-4 text-center transition-all duration-1000 ease-in-out"
-              style={{ left: `${currentStep?.robotPos || 50}%`, transform: 'translateX(-50%)' }}
+              className="absolute bottom-4 text-center transition-all duration-1000 ease-in-out -translate-x-1/2"
+              style={{ left: `${currentStep?.robotPos || 50}%` }}
             >
               <div
                 className="w-14 h-14 rounded-lg flex items-center justify-center text-2xl mx-auto border-2 transition-all duration-500"
@@ -198,7 +198,7 @@ export default function ScenarioFlow() {
         {/* Level selector */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold" style={{ color: '#ff8800' }}>
+            <span className="text-sm font-bold text-[#ff8800]">
               시나리오 레벨
             </span>
             <div className="flex gap-1">
