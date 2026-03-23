@@ -12,7 +12,7 @@ export const MEMBERS = {
       0: {
         focus: 'SO-ARM 커리큘럼 + 킥오프',
         tasks: [
-          '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
+          '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '조립하면서 조립 기준서 초안 작성 (나사 토크, 그리스, 주의사항)',
           '머리 외주 사양 논의 (전자부품 치수 제공, ε2와 공동)',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
@@ -191,7 +191,7 @@ export const MEMBERS = {
       0: {
         focus: 'SO-ARM 커리큘럼 + 킥오프',
         tasks: [
-          '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
+          '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           '배터리 소비 전류 계산 (Orin 25W + NUC 15W + SO-ARM + BHL BLDC → 30분 가능 확인)',
           '스펙시트 기반 상체 무게 적산 (Week 2 직립 테스트 결과와 대조 예정)',
@@ -363,7 +363,7 @@ export const MEMBERS = {
       0: {
         focus: 'SO-ARM 커리큘럼 + IsaacLab 환경 로드',
         tasks: [
-          '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
+          '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'BHL 리포지토리 클론 → IsaacLab 환경 로드 (체크포인트)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
@@ -542,7 +542,7 @@ export const MEMBERS = {
       0: {
         focus: 'SO-ARM 커리큘럼 + LLM 파이프라인 테스트',
         tasks: [
-          '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
+          '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'LLM JSON 안정성 테스트 (Groq 100회) + Groq 전체 파이프라인 latency 측정 (STT→LLM→TTS 라운드트립)',
           'JSON 액션 스키마 초안',
@@ -719,7 +719,7 @@ export const MEMBERS = {
       0: {
         focus: 'SO-ARM 커리큘럼 + 부품 주문 + 사전 조사',
         tasks: [
-          '[공통] SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션',
+          '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '한국 부품 온라인 주문 (Orin, NUC, XL430×2, U2D2×2, 카메라, ESC×12, 알루미늄 프로파일)',
           '머리 외주 사양 논의 (레퍼런스+스케치 준비, δ1과 공동)',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',

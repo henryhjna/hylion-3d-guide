@@ -16,7 +16,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: '전원 공통: SO-ARM 조립 + 서보모터 장착 + Dynamixel ID 설정 + 캘리브레이션 (5-1~5-3)',
+      description: '전원 공통: SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션 (5-1~5-3)',
     },
     {
       id: 'w0_assembly_doc_draft',
