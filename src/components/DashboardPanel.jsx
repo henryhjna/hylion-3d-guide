@@ -454,72 +454,67 @@ function MemberView({
 }) {
   return (
     <>
-      {/* Member info (single line) */}
-      <div className="flex items-center gap-2.5">
-        <div
-          className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
-          style={{
-            backgroundColor: member.color + '18',
-            color: member.color,
-            border: `2px solid ${member.color}40`,
-          }}
-        >
-          {member.name}
-        </div>
-        <div className="flex-1 min-w-0">
-          <span className="text-sm font-bold" style={{ color: member.color,  }}>
+      {/* ── Member header card ── */}
+      <div className="rounded-xl p-4 mb-2" style={{ background: member.color + '08', border: `1px solid ${member.color}20` }}>
+        <div className="flex items-center gap-3">
+          <div
+            className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold shrink-0"
+            style={{ backgroundColor: member.color + '20', color: member.color, border: `2px solid ${member.color}50` }}
+          >
             {member.name}
-          </span>
-          <span className="text-sm text-[#6a7090] mx-1.5">{memberData.identity}</span>
-          <span className="text-sm text-[#6a7090]">{memberData.track}</span>
+          </div>
+          <div>
+            <div className="text-lg font-bold tracking-wide" style={{ color: member.color }}>
+              {member.name}
+            </div>
+            <div className="text-sm text-[#8890aa]">
+              {memberData.identity} · {memberData.track}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Current week title + focus */}
       {weekData && (
         <div>
-          <div className="flex items-center justify-between mb-2.5">
-            <h3
-              className="text-sm font-bold tracking-wide"
-              style={{ color: accentColor }}
-            >
-              Week {weekNum} — {weekTitle}
-            </h3>
-            <span className="text-sm text-[#6a7090]">
-              {completedCount}/{totalCount}
-            </span>
-          </div>
-
-          {/* Focus box */}
-          <div
-            className="p-3 rounded-lg mb-4"
-            style={{
-              background: `linear-gradient(135deg, ${accentColor}10, ${accentColor}06)`,
-              border: `1px solid ${accentColor}25`,
-            }}
-          >
-            <div className="text-sm text-[#6a7090] mb-2">
-              핵심 목표
+          {/* ── Week header (큰 제목 — 위계: 가장 높음) ── */}
+          <div className="mb-6">
+            <div className="flex items-baseline justify-between mb-3">
+              <h3 className="text-xl font-bold tracking-wide" style={{ color: accentColor, textShadow: `0 0 20px ${accentColor}40` }}>
+                Week {weekNum}
+              </h3>
+              <span className="text-sm text-[#8890aa] font-mono">
+                {completedCount}/{totalCount}
+              </span>
             </div>
-            <div className="text-sm font-bold" style={{ color: accentColor }}>
-              {weekData.focus}
+            <p className="text-base text-[#c0c8e0] mb-4">{weekTitle}</p>
+
+            {/* Focus card (질감: 글래스 카드 + 글로우 보더) */}
+            <div className="rounded-xl p-5" style={{ background: `linear-gradient(135deg, ${accentColor}0c, ${accentColor}04)`, border: `1px solid ${accentColor}30`, boxShadow: `0 0 30px ${accentColor}08` }}>
+              <div className="text-xs text-[#6a7090] uppercase tracking-widest mb-2 font-mono">핵심 목표</div>
+              <div className="text-lg font-bold leading-snug" style={{ color: accentColor, textShadow: `0 0 12px ${accentColor}30` }}>
+                {weekData.focus}
+              </div>
             </div>
           </div>
 
-          {/* Progress bar */}
-          <div className="h-1.5 rounded-full bg-[#ffffff08] mb-4 overflow-hidden">
-            <div
-              className="h-full rounded-full transition-[width] duration-500"
-              style={{
-                width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
-                backgroundColor: accentColor,
-                boxShadow: `0 0 8px ${accentColor}60`,
-              }}
-            />
+          {/* ── Progress bar (질감: 네온 글로우) ── */}
+          <div className="mb-6">
+            <div className="h-2 rounded-full bg-[#ffffff08] overflow-hidden border border-[#ffffff06]">
+              <div
+                className="h-full rounded-full transition-[width] duration-700 ease-out"
+                style={{
+                  width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
+                  background: `linear-gradient(90deg, ${accentColor}, ${accentColor}80)`,
+                  boxShadow: `0 0 12px ${accentColor}60, 0 0 4px ${accentColor}`,
+                }}
+              />
+            </div>
           </div>
 
-          {/* Checklist */}
-          <div className="space-y-2">
+          {/* ── Checklist (여유: 넉넉한 간격) ── */}
+          <div className="text-xs text-[#6a7090] uppercase tracking-[0.2em] font-mono mb-3 pb-2 border-b border-[#ffffff08]">할 일</div>
+          <div className="space-y-1.5">
             {weekData.tasks.map((task, i) => (
               <ExpandableTask
                 key={i}
