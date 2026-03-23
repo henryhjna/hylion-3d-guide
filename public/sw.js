@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hylion-guide-v1';
+const CACHE_NAME = 'hylion-guide-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -29,18 +29,31 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   if (url.hostname === 'api.anthropic.com') return;
 
+  // Large binary files (GLB/FBX) — network-first to avoid stale cache issues
+  const isBinaryModel = url.pathname.endsWith('.glb') || url.pathname.endsWith('.fbx');
+  if (isBinaryModel) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        }
+        return response;
+      }).catch(() => caches.match(event.request).then(c => c || new Response('Offline', { status: 503 })))
+    );
+    return;
+  }
+
+  // Everything else — cache-first
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(response => {
-        // Cache successful responses for static assets
         if (response.ok && (
           url.pathname.endsWith('.js') ||
           url.pathname.endsWith('.css') ||
           url.pathname.endsWith('.html') ||
           url.pathname.endsWith('.md') ||
-          url.pathname.endsWith('.fbx') ||
-          url.pathname.endsWith('.glb') ||
           url.pathname.endsWith('.json') ||
           url.pathname === '/'
         )) {
@@ -49,7 +62,6 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       }).catch(() => {
-        // Offline fallback
         if (event.request.mode === 'navigate') {
           return caches.match('/index.html');
         }
