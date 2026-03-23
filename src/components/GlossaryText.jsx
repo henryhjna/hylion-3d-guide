@@ -122,11 +122,11 @@ function GlossaryTooltip({ data, term, position, onMouseEnter, onMouseLeave }) {
     >
       <div className="text-xs font-bold mb-1" style={{ color: '#4466ff', fontFamily: 'Orbitron' }}>
         {term}
-        {data.full && <span className="text-[10px] text-[#6a7090] font-normal ml-1.5">({data.full})</span>}
+        {data.full && <span className="text-xs text-[#6a7090] font-normal ml-1.5">({data.full})</span>}
       </div>
-      <p className="text-[11px] text-[#e0e8ff] leading-relaxed mb-1.5">{data.definition}</p>
+      <p className="text-sm text-[#e0e8ff] leading-relaxed mb-1.5">{data.definition}</p>
       {data.related?.length > 0 && (
-        <div className="text-[9px] text-[#6a7090] mb-1">
+        <div className="text-xs text-[#6a7090] mb-1">
           관련: {data.related.join(', ')}
         </div>
       )}
@@ -138,7 +138,7 @@ function GlossaryTooltip({ data, term, position, onMouseEnter, onMouseLeave }) {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[10px] text-[#4466ff] hover:text-[#6688ff]"
+              className="block text-xs text-[#4466ff] hover:text-[#6688ff]"
             >
               🔗 {link.label}
             </a>

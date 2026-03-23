@@ -71,7 +71,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
             className="flex-1 bg-transparent text-sm text-[#e0e8ff] placeholder-[#6a7090] focus:outline-none"
             style={{ fontFamily: 'JetBrains Mono' }}
           />
-          <kbd className="text-[9px] text-[#6a7090] bg-[#ffffff08] px-1.5 py-0.5 rounded border border-[#ffffff10]">
+          <kbd className="text-xs text-[#6a7090] bg-[#ffffff08] px-1.5 py-0.5 rounded border border-[#ffffff10]">
             ESC
           </kbd>
         </div>
@@ -83,11 +83,11 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
             <div className="p-4">
               <button
                 onClick={() => setViewingEntry(null)}
-                className="text-[10px] text-[#4466ff] hover:text-[#6688ff] mb-3 flex items-center gap-1"
+                className="text-xs text-[#4466ff] hover:text-[#6688ff] mb-3 flex items-center gap-1"
               >
                 ← 검색 결과
               </button>
-              <div className="text-[10px] text-[#6a7090] mb-1">{viewingEntry.fileName}</div>
+              <div className="text-xs text-[#6a7090] mb-1">{viewingEntry.fileName}</div>
               <h3 className="text-sm font-bold text-[#e0e8ff] mb-3" style={{ fontFamily: 'Orbitron' }}>
                 {viewingEntry.sectionTitle}
               </h3>
@@ -97,7 +97,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
               {onAskCopilot && (
                 <button
                   onClick={() => onAskCopilot(viewingEntry)}
-                  className="mt-4 px-3 py-1.5 rounded-lg text-[10px] font-bold bg-[#4466ff15] text-[#4466ff] border border-[#4466ff30] hover:bg-[#4466ff25]"
+                  className="mt-4 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#4466ff15] text-[#4466ff] border border-[#4466ff30] hover:bg-[#4466ff25]"
                 >
                   🤖 이 내용에 대해 코파일럿에게 질문하기
                 </button>
@@ -122,27 +122,27 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-[#6a7090]">{entry.icon || '📄'}</span>
-                    <span className="text-[10px] text-[#6a7090]">{entry.fileName}</span>
+                    <span className="text-xs text-[#6a7090]">{entry.icon || '📄'}</span>
+                    <span className="text-xs text-[#6a7090]">{entry.fileName}</span>
                     <span className="text-xs text-[#e0e8ff] font-medium">{entry.sectionTitle}</span>
                   </div>
-                  <div className="text-[10px] text-[#6a7090] ml-5 truncate">
+                  <div className="text-xs text-[#6a7090] ml-5 truncate">
                     {entry.preview}
                   </div>
                 </button>
               ))}
               {results.length > 10 && (
-                <div className="px-4 py-2 text-[10px] text-[#6a7090] text-center">
+                <div className="px-4 py-2 text-xs text-[#6a7090] text-center">
                   {results.length}개 결과 중 10개 표시
                 </div>
               )}
             </div>
           ) : query.trim() ? (
-            <div className="p-8 text-center text-[10px] text-[#6a7090]">
+            <div className="p-8 text-center text-xs text-[#6a7090]">
               검색 결과 없음
             </div>
           ) : (
-            <div className="p-8 text-center text-[10px] text-[#6a7090]">
+            <div className="p-8 text-center text-xs text-[#6a7090]">
               키워드를 입력하세요<br />
               예: SmolVLA, 배터리, FETCH, 직립
             </div>
@@ -150,7 +150,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
         </div>
 
         {/* Footer hints */}
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-[#ffffff10] text-[9px] text-[#6a7090]">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-[#ffffff10] text-xs text-[#6a7090]">
           <span>↑↓ 탐색</span>
           <span>Enter 열기</span>
           <span>Esc 닫기</span>

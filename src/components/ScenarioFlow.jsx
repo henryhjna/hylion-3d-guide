@@ -125,12 +125,12 @@ export default function ScenarioFlow() {
               <div className="w-12 h-12 rounded-lg bg-[#4466ff15] border border-[#4466ff30] flex items-center justify-center text-xl mx-auto">
                 👤
               </div>
-              <div className="text-[9px] text-[#6a7090] mt-1">관객</div>
+              <div className="text-xs text-[#6a7090] mt-1">관객</div>
             </div>
 
             {/* Distance markers */}
-            <div className="absolute left-[20%] bottom-2 text-[8px] text-[#6a7090]">←~1.5m→</div>
-            <div className="absolute left-[65%] bottom-2 text-[8px] text-[#6a7090]">←~1.5m→</div>
+            <div className="absolute left-[20%] bottom-2 text-sm text-[#6a7090]">←~1.5m→</div>
+            <div className="absolute left-[65%] bottom-2 text-sm text-[#6a7090]">←~1.5m→</div>
 
             {/* Robot */}
             <div
@@ -147,39 +147,39 @@ export default function ScenarioFlow() {
               >
                 🤖
               </div>
-              <div className="text-[9px] mt-1 font-bold" style={{ color: currentStep?.color, fontFamily: 'Orbitron' }}>
+              <div className="text-xs mt-1 font-bold" style={{ color: currentStep?.color, fontFamily: 'Orbitron' }}>
                 {currentStep?.state}
               </div>
               {selectedLevel === 'C' && (
-                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[8px] text-[#ff8800]">
+                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-sm text-[#ff8800]">
                   [받침대]
                 </div>
               )}
             </div>
 
             {/* Home marker */}
-            <div className="absolute left-[50%] -translate-x-1/2 bottom-0 text-[8px] text-[#6a7090]">
+            <div className="absolute left-[50%] -translate-x-1/2 bottom-0 text-sm text-[#6a7090]">
               ▲ 홈
             </div>
 
             {/* Table */}
             <div className="absolute right-[5%] bottom-4 text-center">
               <div className="w-16 h-10 rounded-lg bg-[#c8ff0015] border border-[#c8ff0030] flex items-center justify-center gap-1 mx-auto">
-                <span className="text-[10px]">☕</span>
-                <span className="text-[10px]">🥤</span>
-                <span className="text-[10px]">🧸</span>
+                <span className="text-xs">☕</span>
+                <span className="text-xs">🥤</span>
+                <span className="text-xs">🧸</span>
               </div>
-              <div className="text-[9px] text-[#6a7090] mt-1">물체 테이블</div>
+              <div className="text-xs text-[#6a7090] mt-1">물체 테이블</div>
             </div>
           </div>
 
           {/* Active parts indicator */}
           <div className="flex items-center justify-center gap-2 mt-4">
-            <span className="text-[9px] text-[#6a7090]">활성 파트:</span>
+            <span className="text-xs text-[#6a7090]">활성 파트:</span>
             {currentStep?.activeParts?.map(p => (
               <span
                 key={p}
-                className="tag text-[8px]"
+                className="tag text-sm"
                 style={{
                   backgroundColor: (p.includes('leg') ? '#ff00aa' : '#00f0ff') + '15',
                   color: p.includes('leg') ? '#ff00aa' : '#00f0ff',
@@ -206,7 +206,7 @@ export default function ScenarioFlow() {
                 <button
                   key={lvl.level}
                   onClick={() => setSelectedLevel(lvl.level)}
-                  className={`px-3 py-1 rounded text-[10px] font-bold transition-all border ${
+                  className={`px-3 py-1 rounded text-xs font-bold transition-all border ${
                     selectedLevel === lvl.level ? '' : 'opacity-40 hover:opacity-70'
                   }`}
                   style={{
@@ -222,7 +222,7 @@ export default function ScenarioFlow() {
           </div>
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="px-4 py-1.5 rounded-lg text-[10px] font-bold transition-all border"
+            className="px-4 py-1.5 rounded-lg text-xs font-bold transition-all border"
             style={{
               color: isPlaying ? '#ff0044' : '#00ff88',
               borderColor: isPlaying ? '#ff004440' : '#00ff8840',
@@ -249,21 +249,21 @@ export default function ScenarioFlow() {
             >
               <div className="flex items-center gap-1.5 mb-0.5">
                 <span
-                  className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
+                  className="w-4 h-4 rounded-full flex items-center justify-center text-sm font-bold"
                   style={{ backgroundColor: step.color + '20', color: step.color }}
                 >
                   {i + 1}
                 </span>
-                <span className="text-[9px] font-bold truncate" style={{ color: step.color }}>
+                <span className="text-xs font-bold truncate" style={{ color: step.color }}>
                   {step.title}
                 </span>
               </div>
               {activeStep === i && (
                 <>
-                  <p className="text-[9px] text-[#e0e8ff] ml-5 mb-1">{step.description}</p>
+                  <p className="text-xs text-[#e0e8ff] ml-5 mb-1">{step.description}</p>
                   <div className="flex flex-wrap gap-0.5 ml-5">
                     {step.systems.map((sys, j) => (
-                      <span key={j} className="text-[7px] px-1 py-0.5 rounded bg-[#ffffff08] text-[#6a7090]">
+                      <span key={j} className="text-xs px-1 py-0.5 rounded bg-[#ffffff08] text-[#6a7090]">
                         {sys}
                       </span>
                     ))}

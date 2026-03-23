@@ -59,7 +59,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
             AI 코파일럿
           </span>
           {!hasApiKey && (
-            <span className="text-[9px] text-[#ff8800] bg-[#ff880015] px-1.5 py-0.5 rounded">
+            <span className="text-xs text-[#ff8800] bg-[#ff880015] px-1.5 py-0.5 rounded">
               API 키 필요
             </span>
           )}
@@ -67,14 +67,14 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
         <div className="flex items-center gap-1">
           <button
             onClick={onClear}
-            className="w-6 h-6 rounded flex items-center justify-center text-[10px] text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
+            className="w-6 h-6 rounded flex items-center justify-center text-xs text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
             title="대화 초기화"
           >
             🗑
           </button>
           <button
             onClick={() => setIsOpen(false)}
-            className="w-6 h-6 rounded flex items-center justify-center text-[10px] text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
+            className="w-6 h-6 rounded flex items-center justify-center text-xs text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff10]"
           >
             ✕
           </button>
@@ -86,7 +86,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
         {messages.length === 0 && (
           <div className="text-center py-8">
             <div className="text-2xl mb-2">🤖</div>
-            <p className="text-[11px] text-[#6a7090] mb-3">
+            <p className="text-sm text-[#6a7090] mb-3">
               프로젝트에 대해 무엇이든 질문하세요
             </p>
             <div className="space-y-1">
@@ -94,7 +94,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
                 <button
                   key={q}
                   onClick={() => { setInput(q); }}
-                  className="block w-full text-left text-[10px] text-[#4466ff] hover:text-[#6688ff] px-2 py-1 rounded hover:bg-[#4466ff08]"
+                  className="block w-full text-left text-xs text-[#4466ff] hover:text-[#6688ff] px-2 py-1 rounded hover:bg-[#4466ff08]"
                 >
                   "{q}"
                 </button>
@@ -106,7 +106,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
-              className={`max-w-[85%] px-3 py-2 rounded-lg text-[11px] leading-relaxed ${
+              className={`max-w-[85%] px-3 py-2 rounded-lg text-sm leading-relaxed ${
                 msg.role === 'user'
                   ? 'bg-[#4466ff20] text-[#e0e8ff] border border-[#4466ff20]'
                   : 'bg-[#ffffff08] text-[#e0e8ff] border border-[#ffffff08]'
@@ -117,8 +117,8 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
                   p: ({children}) => <p className="mb-1.5 last:mb-0">{children}</p>,
                   strong: ({children}) => <strong className="text-[#e0e8ff] font-bold">{children}</strong>,
                   code: ({children, className}) => className
-                    ? <pre className="bg-[#0a0a0f] rounded p-1.5 my-1 overflow-x-auto"><code className="text-[10px] text-[#00ff88]">{children}</code></pre>
-                    : <code className="bg-[#ffffff10] px-1 rounded text-[10px] text-[#ff8800]">{children}</code>,
+                    ? <pre className="bg-[#0a0a0f] rounded p-1.5 my-1 overflow-x-auto"><code className="text-xs text-[#00ff88]">{children}</code></pre>
+                    : <code className="bg-[#ffffff10] px-1 rounded text-xs text-[#ff8800]">{children}</code>,
                   li: ({children}) => <li className="ml-3 list-disc">{children}</li>,
                 }}>{msg.content}</Markdown>
               ) : (
@@ -141,7 +141,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
         )}
 
         {error && (
-          <div className="text-[10px] text-[#ff8800] bg-[#ff880010] px-3 py-2 rounded-lg border border-[#ff880020]">
+          <div className="text-xs text-[#ff8800] bg-[#ff880010] px-3 py-2 rounded-lg border border-[#ff880020]">
             {error === 'API_KEY_MISSING' && (
               <span>API 키가 설정되지 않았습니다. <button onClick={onOpenSettings} className="underline text-[#4466ff]">설정</button></span>
             )}
@@ -164,7 +164,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
             placeholder={hasApiKey ? '질문을 입력하세요...' : 'API 키를 먼저 설정하세요'}
-            className="flex-1 px-3 py-2 rounded-lg bg-[#0a0a0f] border border-[#ffffff15] text-[11px] text-[#e0e8ff] placeholder-[#6a7090] focus:border-[#4466ff40] focus:outline-none"
+            className="flex-1 px-3 py-2 rounded-lg bg-[#0a0a0f] border border-[#ffffff15] text-sm text-[#e0e8ff] placeholder-[#6a7090] focus:border-[#4466ff40] focus:outline-none"
           />
           <button
             onClick={handleSend}

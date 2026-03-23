@@ -47,7 +47,7 @@ export default function SettingsModal({ isOpen, onClose }) {
 
         {/* API Key */}
         <div className="mb-4">
-          <label className="text-[10px] text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
+          <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
             Anthropic API Key
           </label>
           <div className="relative">
@@ -61,26 +61,26 @@ export default function SettingsModal({ isOpen, onClose }) {
             />
             <button
               onClick={() => setShowKey(!showKey)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#6a7090] hover:text-[#e0e8ff]"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#6a7090] hover:text-[#e0e8ff]"
             >
               {showKey ? '숨기기' : '보기'}
             </button>
           </div>
-          <p className="text-[10px] text-[#6a7090] mt-2">
+          <p className="text-xs text-[#6a7090] mt-2">
             키는 브라우저에만 저장됩니다. 서버로 전송되지 않습니다.
           </p>
         </div>
 
         {/* Help */}
         <div className="mb-5 p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
-          <p className="text-[10px] text-[#6a7090]">
+          <p className="text-xs text-[#6a7090]">
             API 키가 없으면?
           </p>
           <a
             href="https://console.anthropic.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[11px] text-[#4466ff] hover:text-[#6688ff] underline"
+            className="text-sm text-[#4466ff] hover:text-[#6688ff] underline"
           >
             console.anthropic.com에서 발급
           </a>

@@ -55,7 +55,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
           <div className="text-sm font-bold text-[#00f0ff]" style={{ fontFamily: 'Orbitron' }}>
             {component.name}
           </div>
-          <div className="text-[10px] text-[#6a7090]">{component.category}</div>
+          <div className="text-xs text-[#6a7090]">{component.category}</div>
         </div>
         <button
           onClick={onClose}
@@ -69,7 +69,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
       {component.specs && (
         <Section title="스펙">
           {Object.entries(component.specs).map(([k, v]) => (
-            <div key={k} className="flex items-baseline gap-2 text-[11px]">
+            <div key={k} className="flex items-baseline gap-2 text-sm">
               <span className="text-[#6a7090] min-w-[60px] shrink-0">{k}</span>
               <span className="text-[#e0e8ff]">{v}</span>
             </div>
@@ -80,8 +80,8 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
       {/* Project usage */}
       {component.usage && (
         <Section title="프로젝트 내 용도">
-          <p className="text-[11px] text-[#e0e8ff] mb-1">{component.usage.description}</p>
-          <div className="flex gap-2 text-[10px] text-[#6a7090]">
+          <p className="text-sm text-[#e0e8ff] mb-1">{component.usage.description}</p>
+          <div className="flex gap-2 text-xs text-[#6a7090]">
             {component.usage.quantity && <span>수량: {component.usage.quantity}개</span>}
             {component.usage.spares > 0 && <span>(+예비 {component.usage.spares})</span>}
             {component.usage.owner && <span>담당: {component.usage.owner}</span>}
@@ -89,7 +89,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
           {component.usage.parts?.length > 0 && (
             <div className="flex gap-1 mt-1">
               {component.usage.parts.map(p => (
-                <span key={p} className="tag text-[8px]" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
+                <span key={p} className="tag text-sm" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
                   {p.replaceAll('_', ' ')}
                 </span>
               ))}
@@ -101,9 +101,9 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
       {/* Procurement */}
       {component.procurement && (
         <Section title="조달">
-          <div className="flex items-center gap-2 text-[11px]">
+          <div className="flex items-center gap-2 text-sm">
             <span
-              className="tag text-[9px]"
+              className="tag text-xs"
               style={{ backgroundColor: status.bg, color: status.text, border: `1px solid ${status.border}` }}
             >
               {status.label}
@@ -125,7 +125,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[11px] text-[#4466ff] hover:text-[#6688ff] mb-0.5"
+              className="block text-sm text-[#4466ff] hover:text-[#6688ff] mb-0.5"
             >
               🔗 {link.label}
             </a>
@@ -137,7 +137,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
       {component.location3D && onShowIn3D && (
         <button
           onClick={() => onShowIn3D(component.location3D)}
-          className="w-full mt-2 py-1.5 rounded-md text-[11px] font-bold text-[#00f0ff] border border-[#00f0ff30] hover:bg-[#00f0ff10] transition-colors"
+          className="w-full mt-2 py-1.5 rounded-md text-sm font-bold text-[#00f0ff] border border-[#00f0ff30] hover:bg-[#00f0ff10] transition-colors"
         >
           3D에서 위치 보기
         </button>
@@ -149,7 +149,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
 function Section({ title, children }) {
   return (
     <div className="mb-3">
-      <div className="text-[9px] text-[#6a7090] uppercase tracking-wider mb-1" style={{ fontFamily: 'Orbitron' }}>
+      <div className="text-xs text-[#6a7090] uppercase tracking-wider mb-1" style={{ fontFamily: 'Orbitron' }}>
         {title}
       </div>
       {children}

@@ -61,7 +61,7 @@ export default function Navigation({
           {/* "All" button */}
           <button
             onClick={() => onMemberChange(null)}
-            className={`w-8 h-8 rounded-full text-[11px] font-bold transition-all flex items-center justify-center ${
+            className={`w-8 h-8 rounded-full text-sm font-bold transition-all flex items-center justify-center ${
               !selectedMember ? 'outline outline-2 outline-[#e0e8ff]' : 'opacity-40 hover:opacity-70'
             }`}
             style={{ backgroundColor: '#ffffff10', color: '#e0e8ff' }}
@@ -73,7 +73,7 @@ export default function Navigation({
             <button
               key={member.id}
               onClick={() => onMemberChange(selectedMember === member.id ? null : member.id)}
-              className={`w-8 h-8 rounded-full text-[11px] font-bold transition-all flex items-center justify-center ${
+              className={`w-8 h-8 rounded-full text-sm font-bold transition-all flex items-center justify-center ${
                 selectedMember === member.id ? 'outline outline-2' : 'opacity-40 hover:opacity-70'
               }`}
               style={{
@@ -93,11 +93,11 @@ export default function Navigation({
         {/* Search */}
         <button
           onClick={onOpenSearch}
-          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-[10px] text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all"
+          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-xs text-[#6a7090] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all"
           title="문서 검색 (Ctrl+K)"
         >
           🔍
-          <kbd className="text-[8px] bg-[#ffffff08] px-1 py-0.5 rounded border border-[#ffffff10]">⌘K</kbd>
+          <kbd className="text-sm bg-[#ffffff08] px-1 py-0.5 rounded border border-[#ffffff10]">⌘K</kbd>
         </button>
 
         {/* Docs */}

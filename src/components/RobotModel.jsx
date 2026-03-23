@@ -442,7 +442,7 @@ function InternalComponents({ modelHeight }) {
         <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.5} />
       </mesh>
       <Html position={[0.04 * s, 0.72 * s, 0]} center distanceFactor={3}>
-        <div className="text-[8px] text-green-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>Orin</div>
+        <div className="text-sm text-green-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>Orin</div>
       </Html>
 
       <mesh position={[-0.04 * s, 0.62 * s, 0]}>
@@ -450,7 +450,7 @@ function InternalComponents({ modelHeight }) {
         <meshStandardMaterial color="#4466ff" emissive="#4466ff" emissiveIntensity={0.5} />
       </mesh>
       <Html position={[-0.04 * s, 0.66 * s, 0]} center distanceFactor={3}>
-        <div className="text-[8px] text-blue-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>NUC</div>
+        <div className="text-sm text-blue-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>NUC</div>
       </Html>
 
       <mesh position={[0, 0.53 * s, 0]}>
@@ -458,7 +458,7 @@ function InternalComponents({ modelHeight }) {
         <meshStandardMaterial color="#c8ff00" emissive="#c8ff00" emissiveIntensity={0.3} />
       </mesh>
       <Html position={[0, 0.57 * s, 0]} center distanceFactor={3}>
-        <div className="text-[8px] text-yellow-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>BAT A+B</div>
+        <div className="text-sm text-yellow-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>BAT A+B</div>
       </Html>
 
       <mesh position={[0, 0.25 * s, 0.04 * s]}>
@@ -466,7 +466,7 @@ function InternalComponents({ modelHeight }) {
         <meshStandardMaterial color="#ff8800" emissive="#ff8800" emissiveIntensity={0.6} />
       </mesh>
       <Html position={[0, 0.28 * s, 0.04 * s]} center distanceFactor={3}>
-        <div className="text-[8px] text-orange-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>ESP32</div>
+        <div className="text-sm text-orange-400 font-bold whitespace-nowrap pointer-events-none" style={{ fontFamily: 'Orbitron' }}>ESP32</div>
       </Html>
     </group>
   );

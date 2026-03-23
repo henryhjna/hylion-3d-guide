@@ -70,7 +70,7 @@ export default function PartInfoPanel({ partId, onClose }) {
                   {ownerId}
                 </span>
                 {part.ownerRoles[ownerId] && (
-                  <span className="text-[10px] text-[#6a7090]">{part.ownerRoles[ownerId]}</span>
+                  <span className="text-xs text-[#6a7090]">{part.ownerRoles[ownerId]}</span>
                 )}
               </div>
             );
@@ -83,7 +83,7 @@ export default function PartInfoPanel({ partId, onClose }) {
         <div className="space-y-1.5">
           {part.specs.map((spec, i) => (
             <div key={i} className="flex items-baseline gap-2">
-              <span className="text-[10px] text-[#6a7090] min-w-[80px] shrink-0">{spec.label}</span>
+              <span className="text-xs text-[#6a7090] min-w-[80px] shrink-0">{spec.label}</span>
               <span className="text-xs text-[#e0e8ff]">{spec.value}</span>
             </div>
           ))}
@@ -96,7 +96,7 @@ export default function PartInfoPanel({ partId, onClose }) {
           <div className="space-y-1">
             {part.internalLayout.map((item, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded bg-[#ffffff08] flex items-center justify-center text-[10px] text-[#6a7090]">
+                <span className="w-5 h-5 rounded bg-[#ffffff08] flex items-center justify-center text-xs text-[#6a7090]">
                   {i + 1}
                 </span>
                 <span className="text-xs text-[#e0e8ff]">{item}</span>
@@ -113,7 +113,7 @@ export default function PartInfoPanel({ partId, onClose }) {
             {part.assemblySteps.map((step, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span
-                  className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+                  className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
                   style={{ backgroundColor: part.color + '15', color: part.color }}
                 >
                   {i + 1}
@@ -132,7 +132,7 @@ export default function PartInfoPanel({ partId, onClose }) {
             {part.manufacturingPaths.map((path, i) => (
               <div key={i} className="p-2 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
                 <span className="text-xs font-bold text-[#e0e8ff]">{path.label}</span>
-                <p className="text-[10px] text-[#6a7090] mt-0.5">{path.desc}</p>
+                <p className="text-xs text-[#6a7090] mt-0.5">{path.desc}</p>
               </div>
             ))}
           </div>
@@ -147,15 +147,15 @@ export default function PartInfoPanel({ partId, onClose }) {
               {part.smolvla.objects.map((obj, i) => (
                 <div key={i} className="px-2 py-1 rounded bg-[#c8ff0010] border border-[#c8ff0020]">
                   <span className="text-xs text-[#c8ff00]">{obj.name}</span>
-                  <span className="text-[10px] text-[#6a7090] ml-1">×{obj.episodes}</span>
+                  <span className="text-xs text-[#6a7090] ml-1">×{obj.episodes}</span>
                 </div>
               ))}
             </div>
-            <div className="text-[10px] text-[#6a7090]">
+            <div className="text-xs text-[#6a7090]">
               총 {part.smolvla.totalEpisodes} 에피소드
             </div>
             <div className="text-xs text-[#e0e8ff]">{part.smolvla.training}</div>
-            <div className="text-[10px] text-[#6a7090]">{part.smolvla.pipeline}</div>
+            <div className="text-xs text-[#6a7090]">{part.smolvla.pipeline}</div>
           </div>
         </Section>
       )}
@@ -237,13 +237,13 @@ function PartComponents({ partId }) {
               onClick={() => setExpanded(expanded === comp.id ? null : comp.id)}
               className="w-full text-left flex items-center gap-2 p-1.5 rounded hover:bg-[#ffffff05] transition-colors"
             >
-              <span className="text-[10px]">📦</span>
-              <span className="text-[11px] text-[#e0e8ff] flex-1">{comp.name}</span>
-              <span className="text-[9px] text-[#6a7090]">×{comp.usage?.quantity || '?'}</span>
-              <span className="text-[9px] text-[#6a7090]">{expanded === comp.id ? '▴' : '▾'}</span>
+              <span className="text-xs">📦</span>
+              <span className="text-sm text-[#e0e8ff] flex-1">{comp.name}</span>
+              <span className="text-xs text-[#6a7090]">×{comp.usage?.quantity || '?'}</span>
+              <span className="text-xs text-[#6a7090]">{expanded === comp.id ? '▴' : '▾'}</span>
             </button>
             {expanded === comp.id && (
-              <div className="ml-6 mb-2 p-2 rounded bg-[#ffffff04] border border-[#ffffff08] text-[10px]">
+              <div className="ml-6 mb-2 p-2 rounded bg-[#ffffff04] border border-[#ffffff08] text-xs">
                 <p className="text-[#aab0cc] mb-1"><GlossaryText text={comp.usage?.description || ''} /></p>
                 {comp.specs && (
                   <div className="space-y-0.5 mb-1">
