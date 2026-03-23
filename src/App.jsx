@@ -49,6 +49,7 @@ export default function App() {
   // Modals/overlays
   const [showDocsSearch, setShowDocsSearch] = useState(false);
   const [showDocsReader, setShowDocsReader] = useState(false);
+  const [docsInitialDoc, setDocsInitialDoc] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [showTechTree, setShowTechTree] = useState(false);
   const [copilotPrefill, setCopilotPrefill] = useState('');
@@ -187,7 +188,8 @@ export default function App() {
         selectedMember={selectedMember}
         onMemberChange={setSelectedMember}
         onOpenSearch={() => setShowDocsSearch(true)}
-        onOpenDocs={() => setShowDocsReader(true)}
+        onOpenDocs={() => { setDocsInitialDoc(null); setShowDocsReader(true); }}
+        onOpenDgx={() => { setDocsInitialDoc('dgx'); setShowDocsReader(true); }}
         onOpenSettings={() => setShowSettings(true)}
       />
 
@@ -322,6 +324,7 @@ export default function App() {
         isOpen={showDocsReader}
         onClose={() => setShowDocsReader(false)}
         onAskCopilot={handleAskCopilotFromDocs}
+        initialDocId={docsInitialDoc}
       />
 
       {/* Settings modal (z-50) */}

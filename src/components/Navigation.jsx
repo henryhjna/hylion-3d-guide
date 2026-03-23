@@ -11,6 +11,7 @@ export default function Navigation({
   onMemberChange,
   onOpenSearch,
   onOpenDocs,
+  onOpenDgx,
   onOpenSettings,
 }) {
   return (
@@ -109,6 +110,15 @@ export default function Navigation({
           title="문서 리더 (Ctrl+B)"
         >
           📖
+        </button>
+
+        {/* DGX Spark */}
+        <button
+          onClick={onOpenDgx}
+          className="w-7 h-7 rounded-full flex items-center justify-center text-[#9aa0b8] hover:text-[#e0e8ff] hover:bg-[#ffffff08] transition-all text-sm"
+          title="DGX Spark 가이드"
+        >
+          🖥
         </button>
 
         {/* Settings */}
