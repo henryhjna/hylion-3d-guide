@@ -104,7 +104,7 @@ export const PARTS = {
     ownerRoles: { '인혁': '하드웨어', '성래': '제어/SmolVLA 배포' },
     specs: [
       { label: '모델', value: 'SO-ARM101 6DOF' },
-      { label: 'Dynamixel', value: 'ID 1~6 (U2D2 #1)' },
+      { label: '서보', value: 'STS3215 ×6 (Waveshare Board #1)' },
       { label: '프로토콜', value: 'Protocol 2.0, 1Mbps' },
       { label: '제어 주기', value: 'sync read/write ~5ms, 200Hz' },
       { label: '그리퍼 jaw', value: '~5~6cm' },
@@ -124,7 +124,7 @@ export const PARTS = {
     ownerRoles: { '인혁': '하드웨어', '성래': '제어/SmolVLA 배포' },
     specs: [
       { label: '모델', value: 'SO-ARM101 6DOF' },
-      { label: 'Dynamixel', value: 'ID 7~12 + 목 XL430 ID 13~14 (U2D2 #2)' },
+      { label: '서보', value: 'STS3215 ×6 (Waveshare #2) + 목 XL430 ×2 (U2D2)' },
       { label: '프로토콜', value: 'Protocol 2.0, 1Mbps' },
       { label: '제어 주기', value: 'sync read/write ~5ms, 200Hz' },
       { label: '그리퍼 jaw', value: '~5~6cm' },

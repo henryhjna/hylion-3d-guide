@@ -37,7 +37,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'SmolVLA 추론(TensorRT), MediaPipe(CPU), ROS2 마스터, 상태 머신, TTS 재생, LED/입 서보 제어, SO-ARM Dynamixel 제어. 로봇 두뇌 역할',
+        'SmolVLA 추론(TensorRT), MediaPipe(CPU), ROS2 마스터, 상태 머신, TTS 재생, LED/입 서보 제어, SO-ARM STS3215 제어. 로봇 두뇌 역할',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
@@ -245,7 +245,7 @@ export const COMPONENTS = {
   },
 
   so_arm_servo: {
-    name: 'SO-ARM101 Dynamixel 서보 (STS3215)',
+    name: 'SO-ARM101 서보 (STS3215)',
     category: 'motor_servo',
     specs: {
       type: 'Serial Bus Servo (Feetech STS3215)',
@@ -385,7 +385,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'Orin USB → Dynamixel 서보 통신. U2D2 #1: 좌팔 SO-ARM 6개(ID 1~6). U2D2 #2: 우팔 SO-ARM 6개(ID 7~12) + 목 XL430 2개(ID 13~14). 데이지체인 연결',
+        'Waveshare Board #1: 좌팔 STS3215 ×6, Waveshare Board #2: 우팔 STS3215 ×6 (USB). U2D2: 목 XL430 ×2 (Protocol 2.0)',
       parts: ['torso'],
       quantity: 2,
       spares: 0,
@@ -613,7 +613,7 @@ export const COMPONENTS = {
       chemistry: 'Li-ion / LiPo',
       discharge: '5~10C',
       voltage_range: '9.0~12.6V',
-      loads: 'SO-ARM Dynamixel ×12, 목 XL430 ×2',
+      loads: 'SO-ARM STS3215 ×12, 목 XL430 ×2',
     },
     usage: {
       description:

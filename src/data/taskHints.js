@@ -127,7 +127,7 @@ export const TASK_HINTS = {
   },
 
   w0_battery_calc: {
-    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 25W, NUC 15W, SO-ARM Dynamixel x14, BHL BLDC x10)의 소비전류를 합산하여 배터리 A/B/C 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
+    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 25W, NUC 15W, SO-ARM STS3215 x12 + 목 XL430 x2, BHL BLDC x10)의 소비전류를 합산하여 배터리 A/B/C 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
     steps: [
       "각 보드/모터 스펙시트에서 정격 소비전력 추출 (Orin 25W, NUC 15W 등)",
       "SO-ARM XL430 x14개 (양팔 12 + 목 2) 피크/평균 전류 계산",
@@ -1901,7 +1901,7 @@ export const TASK_HINTS = {
     summary: "상하체 결합에 맞춰 3개 배터리 전원을 통합 배선한다. A(Orin+NUC+LED+입서보+스피커, 토르소 최하단 또는 hip), B(Dynamixel x14, 토르소 최하단), C(BHL BLDC x10+ESP32, 다리 프레임)가 PDB+BMS+DC-DC(5V/12V/19V)를 통해 각 부하에 공급되도록 연결한다. 비상정지 시 B+C는 NC 차단되고 A는 유지(Orin 로그 보존). 전원 시퀀싱(A→부팅→B→토크→C→캘리브)을 실물에서 처음 통합 검증한다.",
     steps: [
       "배터리 A: PDB→DC-DC(5V Orin, 19V NUC)→각 부하 배선 확인",
-      "배터리 B: PDB→SO-ARM Dynamixel x12 + 목 XL430 x2 배선 확인",
+      "배터리 B: PDB→SO-ARM STS3215 x12 + 목 XL430 x2 배선 확인",
       "배터리 C: BHL 다리 BLDC x10 + ESP32 배선 확인 (다리 프레임 내부)",
       "BMS x3 셀 밸런싱 상태 확인",
       "비상정지 회로 연결: B+C 양극 NC 차단 + ESP32 MOSFET C 라인 차단",
