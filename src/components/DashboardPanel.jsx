@@ -329,7 +329,7 @@ export default function DashboardPanel({
       </div>
 
       {/* ── Scrollable content ───────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto flex flex-col gap-7" style={{ scrollbarGutter: 'stable', padding: '0 28px 32px 28px' }}>
+      <div className="flex-1 overflow-y-auto flex flex-col gap-7" style={{ scrollbarGutter: 'stable', padding: '24px 28px 32px 28px' }}>
         {/* ── Gate card ───────────────────────────────────────────── */}
         {gate && <GateCard gate={gate} weekNum={weekNum} checkedTasks={checkedTasks} memberId={memberId} onToggleGateItem={toggleKey} />}
 

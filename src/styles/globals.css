@@ -33,7 +33,8 @@
 }
 
 /* ── Reset ── */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* NOTE: Do NOT set padding/margin on * — it overrides Tailwind utilities!
+   Tailwind v4 has its own reset in @layer base. */
 body {
   background: var(--bg-deep);
   color: var(--text-bright);
