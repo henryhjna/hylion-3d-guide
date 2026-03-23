@@ -28,8 +28,9 @@ export default function ExploreToggles({
     <div
       style={{
         position: 'fixed',
-        bottom: 24,
+        bottom: scenarioMode ? '42%' : 24,
         left: 24,
+        transition: 'bottom 0.3s ease',
         zIndex: 15,
         display: 'flex',
         gap: 8,

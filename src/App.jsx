@@ -269,7 +269,7 @@ export default function App() {
 
         {/* ── EXPLORE MODE: Scenario overlay (when scenario ON, hidden if sidebar open) ── */}
         {isExploreMode && scenarioMode && !selectedPart && (
-          <div className="absolute bottom-0 left-0 right-0 h-[45%] z-10">
+          <div className="absolute bottom-0 left-0 right-0 h-[40%] z-10 pb-2">
             <ScenarioFlow />
           </div>
         )}
