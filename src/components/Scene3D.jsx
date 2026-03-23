@@ -23,11 +23,12 @@ export default function Scene3D({
     >
       <Suspense fallback={null}>
         {/* Lighting */}
-        <ambientLight intensity={0.15} />
-        <directionalLight position={[5, 8, 5]} intensity={0.4} color="#e0e8ff" />
-        <directionalLight position={[-5, 3, -5]} intensity={0.2} color="#4466ff" />
-        <pointLight position={[0, 2, 2]} intensity={0.3} color="#00f0ff" distance={8} />
-        <pointLight position={[0, -1, 0]} intensity={0.15} color="#ff00aa" distance={5} />
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[5, 8, 5]} intensity={1.0} color="#ffffff" />
+        <directionalLight position={[-5, 3, -5]} intensity={0.5} color="#4466ff" />
+        <pointLight position={[0, 2, 2]} intensity={0.6} color="#00f0ff" distance={12} />
+        <pointLight position={[0, -1, 0]} intensity={0.4} color="#ff00aa" distance={10} />
+        <hemisphereLight args={['#1a1a3e', '#0a0a0f', 0.4]} />
 
         {/* Background particles */}
         <Stars radius={50} depth={30} count={80} factor={2} saturation={0} fade speed={0.5} />

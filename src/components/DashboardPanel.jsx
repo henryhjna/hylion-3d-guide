@@ -82,8 +82,8 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
   const hint = useMemo(() => findHintForTask(task, weekNum), [task, weekNum]);
 
   return (
-    <div className="mb-1">
-      <label className={`flex items-start gap-2 px-2 py-1.5 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
+    <div className="mb-2">
+      <label className={`flex items-start gap-2 px-2 py-2 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
         <input
           type="checkbox"
           checked={isChecked}
@@ -92,7 +92,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           style={{ accentColor: memberColor }}
         />
         <span
-          className="text-[11px] leading-relaxed flex-1"
+          className="text-sm leading-relaxed flex-1"
           style={{
             color: isChecked ? '#6a7090' : '#e0e8ff',
             textDecoration: isChecked ? 'line-through' : 'none',
@@ -104,14 +104,14 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
         {hint && (
           <button
             onClick={(e) => { e.preventDefault(); setExpanded(!expanded); }}
-            className="text-[9px] text-[#6a7090] hover:text-[#e0e8ff] shrink-0 ml-1"
+            className="text-[11px] text-[#6a7090] hover:text-[#e0e8ff] shrink-0 ml-1"
           >
             {expanded ? '\u25B4' : '\u25BE'}
           </button>
         )}
       </label>
       {expanded && hint && (
-        <div className="ml-7 mt-1 mb-2 p-2 rounded-lg text-[10px]" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="ml-7 mt-1 mb-2 p-3 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
           <p className="text-[#aab0cc] mb-1.5">{hint.summary}</p>
           {hint.steps?.length > 0 && (
             <ol className="list-decimal ml-4 mb-1.5 space-y-0.5 text-[#e0e8ff]">
@@ -134,7 +134,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           {hint.components?.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1">
               {hint.components.map((c, i) => (
-                <span key={i} className="text-[8px] px-1.5 py-0.5 rounded" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
+                <span key={i} className="text-[10px] px-1.5 py-0.5 rounded" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
                   {'\uD83D\uDCE6'} {c}
                 </span>
               ))}
@@ -154,18 +154,18 @@ function ExpandableDep({ dep, memberId }) {
   return (
     <div className="mb-0.5">
       <div
-        className={`text-[10px] text-[#e0e8ff] ml-4 leading-relaxed flex items-start gap-1 ${handoff ? 'cursor-pointer hover:text-[#ffffff]' : ''}`}
+        className={`text-xs text-[#e0e8ff] ml-4 leading-relaxed flex items-start gap-1 ${handoff ? 'cursor-pointer hover:text-[#ffffff]' : ''}`}
         onClick={() => handoff && setExpanded(!expanded)}
       >
         <span>{'\u2022'} {dep}</span>
         {handoff && (
-          <span className="text-[8px] text-[#6a7090] shrink-0 mt-0.5">
+          <span className="text-[10px] text-[#6a7090] shrink-0 mt-0.5">
             {expanded ? '\u25B4' : '\u25BE'}
           </span>
         )}
       </div>
       {expanded && handoff && (
-        <div className="ml-7 mt-1 mb-1.5 p-2 rounded-lg text-[10px]" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="ml-7 mt-1 mb-1.5 p-3 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
           <div className="text-[#aab0cc] mb-1"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
           {handoff.format && <div className="text-[#aab0cc] mb-0.5"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
           {handoff.location && <div className="text-[#aab0cc] mb-0.5"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
@@ -331,7 +331,7 @@ export default function DashboardPanel({
     <div
       className="fixed top-0 left-0 h-full flex flex-col"
       style={{
-        width: 380,
+        width: 420,
         background: 'rgba(18, 18, 26, 0.88)',
         backdropFilter: 'blur(14px)',
         WebkitBackdropFilter: 'blur(14px)',
@@ -426,9 +426,9 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
 
   return (
     <div
-      className="rounded-xl p-3 relative overflow-hidden"
+      className="rounded-xl p-4 relative overflow-hidden"
       style={{
-        background: 'rgba(200, 255, 0, 0.04)',
+        background: 'rgba(200, 255, 0, 0.03)',
         border: '1px solid rgba(200, 255, 0, 0.25)',
         boxShadow: '0 0 20px rgba(200, 255, 0, 0.06), inset 0 0 20px rgba(200, 255, 0, 0.02)',
       }}
@@ -441,32 +441,32 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
           animation: 'pulse-neon 2s ease-in-out infinite',
         }}
       />
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-2 mb-3">
         <span
-          className="text-[10px] font-bold uppercase tracking-widest"
+          className="text-xs font-bold uppercase tracking-widest"
           style={{ fontFamily: 'Orbitron', color: '#c8ff00' }}
         >
           GATE
         </span>
         <span
-          className="text-xs font-bold"
+          className="text-sm font-bold"
           style={{ fontFamily: 'Orbitron', color: '#c8ff00' }}
         >
           {gate.name}
         </span>
-        <span className="text-[10px] text-[#6a7090] ml-auto">
+        <span className="text-xs text-[#6a7090] ml-auto">
           Week {weekNum} 말
         </span>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-2">
         {gate.items.map((item, i) => {
           const key = memberId ? `gate_${weekNum}_${i}` : `gate_all_${weekNum}_${i}`;
           const checked = !!checkedTasks[key];
           return (
-            <label key={i} className="flex items-center gap-2 text-[11px] cursor-pointer hover:bg-[#c8ff0008] rounded px-1 -mx-1">
+            <label key={i} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-[#c8ff0008] rounded px-1 -mx-1">
               <span
                 onClick={() => onToggleGateItem?.(key)}
-                className="w-3.5 h-3.5 rounded-sm border flex items-center justify-center text-[8px] flex-shrink-0 cursor-pointer"
+                className="w-3.5 h-3.5 rounded-sm border flex items-center justify-center text-[10px] flex-shrink-0 cursor-pointer"
                 style={{
                   borderColor: checked ? '#c8ff00' : 'rgba(200, 255, 0, 0.3)',
                   backgroundColor: checked ? 'rgba(200, 255, 0, 0.15)' : 'transparent',
@@ -481,7 +481,7 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
         })}
       </div>
       {/* Progress text */}
-      <div className="mt-2 text-[10px] text-[#6a7090]">
+      <div className="mt-3 text-xs text-[#6a7090]">
         체크리스트 진행: {completedGateItems}/{gate.items.length}
       </div>
     </div>

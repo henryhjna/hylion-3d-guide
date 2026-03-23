@@ -177,7 +177,7 @@ export default function App() {
   const isExploreMode = mode === MODES.EXPLORE;
 
   return (
-    <div className="relative w-full h-screen overflow-hidden grid-bg scanlines">
+    <div className="relative w-full h-screen overflow-hidden grid-bg">
       {/* ── Top bar ── */}
       <Navigation
         mode={mode}
@@ -193,13 +193,13 @@ export default function App() {
       />
 
       {/* ── Main area (below top bar, full height) ── */}
-      <div className="absolute top-14 left-0 right-0 bottom-0">
+      <div className="absolute top-16 left-0 right-0 bottom-0">
 
         {/* 3D Scene — ALWAYS rendered as background (z-0) */}
         <div
           className="absolute inset-0 transition-all duration-500"
           style={{
-            left: isWorkMode && !dashCollapsed ? '380px' : isWorkMode && dashCollapsed ? '48px' : '0',
+            left: isWorkMode && !dashCollapsed ? '420px' : isWorkMode && dashCollapsed ? '48px' : '0',
             right: isExploreMode && selectedPart ? '380px' : '0',
           }}
         >
@@ -220,7 +220,7 @@ export default function App() {
 
         {/* ── WORK MODE: Data backup banner (above dashboard) ── */}
         {isWorkMode && !dashCollapsed && (
-          <div className="absolute top-0 left-0 w-[380px] z-11">
+          <div className="absolute top-0 left-0 w-[420px] z-11">
             <DataBackup memberId={selectedMember} />
           </div>
         )}

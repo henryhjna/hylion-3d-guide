@@ -16,17 +16,17 @@ export default function PartInfoPanel({ partId, onClose }) {
   if (!part) return null;
 
   return (
-    <div className="h-full glass-panel rounded-l-xl border-r-0 rounded-r-none p-5 overflow-y-auto">
+    <div className="h-full glass-panel rounded-l-2xl border-r-0 rounded-r-none p-6 overflow-y-auto">
       {/* Header */}
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex items-start justify-between mb-5">
         <div>
           <h2
-            className="text-lg font-bold tracking-wide mb-1"
+            className="text-xl font-bold tracking-wide mb-1.5"
             style={{ fontFamily: 'Orbitron', color: part.color }}
           >
             {part.label}
           </h2>
-          <p className="text-xs text-[#6a7090]">{part.subtitle}</p>
+          <p className="text-sm text-[#6a7090]">{part.subtitle}</p>
         </div>
         <button
           onClick={onClose}
@@ -205,8 +205,8 @@ export default function PartInfoPanel({ partId, onClose }) {
 
 function Section({ title, children }) {
   return (
-    <div className="mb-4">
-      <h3 className="text-[10px] font-bold text-[#6a7090] uppercase tracking-wider mb-2" style={{ fontFamily: 'Orbitron' }}>
+    <div className="mb-5">
+      <h3 className="text-xs font-bold text-[#6a7090] uppercase tracking-wider mb-2.5" style={{ fontFamily: 'Orbitron' }}>
         {title}
       </h3>
       {children}
@@ -216,9 +216,9 @@ function Section({ title, children }) {
 
 function Row({ label, value }) {
   return (
-    <div className="flex items-baseline gap-2">
-      <span className="text-[10px] text-[#6a7090] min-w-[60px]">{label}</span>
-      <span className="text-xs text-[#e0e8ff]"><GlossaryText text={value} /></span>
+    <div className="flex items-baseline gap-3">
+      <span className="text-xs text-[#6a7090] min-w-[70px] shrink-0">{label}</span>
+      <span className="text-sm text-[#e0e8ff]"><GlossaryText text={value} /></span>
     </div>
   );
 }

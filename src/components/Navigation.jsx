@@ -14,17 +14,17 @@ export default function Navigation({
   onOpenSettings,
 }) {
   return (
-    <nav className="absolute top-0 left-0 right-0 h-14 z-50 glass-panel rounded-none border-t-0 border-x-0 flex items-center justify-between px-4">
+    <nav className="absolute top-0 left-0 right-0 h-16 z-50 glass-panel rounded-none border-t-0 border-x-0 flex items-center justify-between px-6">
       {/* Left: Logo + Mode tabs */}
       <div className="flex items-center gap-4">
-        <h1 className="text-sm font-bold tracking-widest glow-cyan" style={{ fontFamily: 'Orbitron', color: '#00f0ff' }}>
+        <h1 className="text-base font-bold tracking-widest glow-cyan" style={{ fontFamily: 'Orbitron', color: '#00f0ff' }}>
           HYlion
         </h1>
 
         <div className="flex items-center gap-1 bg-[#ffffff06] rounded-lg p-0.5">
           <button
             onClick={() => onModeChange('work')}
-            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               mode === 'work'
                 ? 'bg-[#00f0ff12] text-[#00f0ff] shadow-sm'
                 : 'text-[#6a7090] hover:text-[#e0e8ff]'
@@ -35,7 +35,7 @@ export default function Navigation({
           </button>
           <button
             onClick={() => onModeChange('explore')}
-            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               mode === 'explore'
                 ? 'bg-[#00f0ff12] text-[#00f0ff] shadow-sm'
                 : 'text-[#6a7090] hover:text-[#e0e8ff]'
@@ -57,11 +57,11 @@ export default function Navigation({
       {/* Right: Member select + Tools */}
       <div className="flex items-center gap-2">
         {/* Member buttons */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           {/* "All" button */}
           <button
             onClick={() => onMemberChange(null)}
-            className={`w-7 h-7 rounded-full text-[10px] font-bold transition-all flex items-center justify-center ${
+            className={`w-8 h-8 rounded-full text-[11px] font-bold transition-all flex items-center justify-center ${
               !selectedMember ? 'outline outline-2 outline-[#e0e8ff]' : 'opacity-40 hover:opacity-70'
             }`}
             style={{ backgroundColor: '#ffffff10', color: '#e0e8ff' }}
@@ -73,7 +73,7 @@ export default function Navigation({
             <button
               key={member.id}
               onClick={() => onMemberChange(selectedMember === member.id ? null : member.id)}
-              className={`w-7 h-7 rounded-full text-[10px] font-bold transition-all flex items-center justify-center ${
+              className={`w-8 h-8 rounded-full text-[11px] font-bold transition-all flex items-center justify-center ${
                 selectedMember === member.id ? 'outline outline-2' : 'opacity-40 hover:opacity-70'
               }`}
               style={{

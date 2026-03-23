@@ -90,7 +90,7 @@ function createHologramMaterial(color = 0x00f0ff) {
 function createRegionShaderMaterial() {
   return new THREE.ShaderMaterial({
     uniforms: {
-      baseColor: { value: new THREE.Color(0x1a1a2e) },
+      baseColor: { value: new THREE.Color(0x8090b0) },
       highlightColor: { value: new THREE.Color(0x00f0ff) },
       highlightYMin: { value: -1.0 },
       highlightYMax: { value: -1.0 },
@@ -152,13 +152,15 @@ function createRegionShaderMaterial() {
         float ownership = getRegionOwnership(ny, nx);
         float dim = memberActive > 0.5 ? mix(0.3, 1.0, ownership) : 1.0;
 
-        vec3 color = baseColor * dim;
+        // Add ambient term so model is always visible
+        float ambient = 0.35;
+        vec3 color = baseColor * (dim * 0.7 + ambient);
         if (inHighlight && highlightIntensity > 0.0) {
           float pulse = sin(time * 3.0) * 0.1 + 0.9;
-          color = mix(color, highlightColor, highlightIntensity * 0.35 * pulse);
-          color += highlightColor * fresnel * highlightIntensity * 0.3;
+          color = mix(color, highlightColor, highlightIntensity * 0.5 * pulse);
+          color += highlightColor * fresnel * highlightIntensity * 0.5;
         } else {
-          color += vec3(0.02) * fresnel * dim;
+          color += vec3(0.08) * fresnel * dim;
         }
         gl_FragColor = vec4(color, 1.0);
       }

@@ -61,38 +61,38 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
       }}
     >
       <div
-        className="glass-panel p-3.5"
-        style={{ borderColor: color + '60', boxShadow: `0 0 18px ${color}33, 0 4px 24px rgba(0,0,0,0.5)` }}
+        className="glass-panel p-5"
+        style={{ borderColor: color + '50', boxShadow: `0 0 24px ${color}25, 0 8px 32px rgba(0,0,0,0.4)` }}
       >
-        {/* Header — use part.label from PARTS data */}
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-sm font-bold" style={{ color, fontFamily: 'Orbitron' }}>
+        {/* Header */}
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-base font-bold" style={{ color, fontFamily: 'Orbitron' }}>
             {part.label}
           </span>
         </div>
 
         {/* Subtitle */}
         {part.subtitle && (
-          <div className="text-[10px] text-[#6a7090] mb-2">{part.subtitle}</div>
+          <div className="text-xs text-[#6a7090] mb-3">{part.subtitle}</div>
         )}
 
         {/* Owners */}
         {part.owners && (
-          <div className="text-[11px] text-[#aab0cc] mb-2">
+          <div className="text-sm text-[#aab0cc] mb-3">
             {part.owners.join(' + ')}
             {part.ownerRoles && Object.values(part.ownerRoles).length > 0 && (
-              <span className="text-[#6a7090] ml-1">
+              <span className="text-[#6a7090] ml-1.5">
                 ({Object.values(part.ownerRoles).join(', ')})
               </span>
             )}
           </div>
         )}
 
-        {/* Specs — part.specs is array of {label, value} objects */}
+        {/* Specs */}
         {specs.length > 0 && (
-          <div className="border-t border-[#ffffff10] pt-2 mb-3 space-y-0.5">
+          <div className="border-t border-[#ffffff08] pt-3 mb-4 space-y-1.5">
             {specs.map((spec, i) => (
-              <div key={i} className="text-[11px] text-[#ccd0e4]">
+              <div key={i} className="text-sm text-[#ccd0e4]">
                 <span className="text-[#6a7090]">{spec.label}: </span>
                 {spec.value}
               </div>
