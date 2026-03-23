@@ -83,7 +83,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
 
   return (
     <div className="mb-6">
-      <label className={`flex items-start gap-4 px-4 py-3 rounded-lg cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
+      <label className={`flex items-start gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
         <input
           type="checkbox"
           checked={isChecked}
@@ -329,7 +329,7 @@ export default function DashboardPanel({
       </div>
 
       {/* ── Scrollable content ───────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto flex flex-col gap-7" style={{ scrollbarGutter: 'stable', padding: '24px 28px 32px 28px' }}>
+      <div className="flex-1 overflow-y-auto flex flex-col gap-5" style={{ scrollbarGutter: 'stable', padding: '20px 24px 28px 24px' }}>
         {/* ── Gate card ───────────────────────────────────────────── */}
         {gate && <GateCard gate={gate} weekNum={weekNum} checkedTasks={checkedTasks} memberId={memberId} onToggleGateItem={toggleKey} />}
 
@@ -455,7 +455,7 @@ function MemberView({
   return (
     <>
       {/* ── Member header card ── */}
-      <div className="rounded-xl p-6 mb-6" style={{ background: member.color + '08', border: `1px solid ${member.color}20` }}>
+      <div className="rounded-xl p-5" style={{ background: member.color + '08', border: `1px solid ${member.color}20` }}>
         <div className="flex items-center gap-3">
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center text-base font-bold shrink-0"
@@ -500,7 +500,7 @@ function MemberView({
 
           {/* ── Progress bar (질감: 네온 글로우) ── */}
           <div className="mb-6">
-            <div className="h-3 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden border border-[#ffffff06]">
+            <div className="h-2.5 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden border border-[#ffffff06]">
               <div
                 className="h-full rounded-full transition-[width] duration-700 ease-out"
                 style={{
@@ -580,7 +580,7 @@ function OverallView({
     <>
       {/* Header */}
       {/* Project header — 위계: 가장 높음 */}
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ marginBottom: 0 }}>
         <h2 className="text-2xl font-bold tracking-wider text-[#e0e8ff]" style={{ marginBottom: 4, textShadow: '0 0 20px rgba(224,232,255,0.15)' }}>
           전체 프로젝트
         </h2>
@@ -589,13 +589,13 @@ function OverallView({
 
       {/* Week title — 위계: 높음 */}
       <div>
-        <h3 className="text-xl font-bold tracking-wide text-[#00ff88]" style={{ marginBottom: 20, textShadow: '0 0 16px rgba(0,255,136,0.3)' }}>
+        <h3 className="text-xl font-bold tracking-wide text-[#00ff88]" style={{ marginBottom: 12, textShadow: '0 0 16px rgba(0,255,136,0.3)' }}>
           Week {weekNum} — {weekTitle}
         </h3>
 
         {/* Overall progress */}
         <div className="flex items-center gap-4 mb-6">
-          <div className="flex-1 h-3 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden">
+          <div className="flex-1 h-2.5 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden">
             <div
               className="h-full rounded-full bg-[linear-gradient(90deg,#00ff88,#00f0ff)] shadow-[0_0_10px_rgba(0,255,136,0.3)] transition-[width] duration-700"
               style={{
