@@ -213,6 +213,7 @@ export default function RobotModel({
         model.position.z = -center.z;
 
         // Assign per-part materials and collect meshes
+        const unmatchedMeshes = [];
         model.traverse((child) => {
           if (child.isMesh) {
             // Match by object name to part ID
@@ -225,9 +226,22 @@ export default function RobotModel({
               materialsRef.current[partId] = mat;
               child.material = mat;
               meshes[partId] = child;
+            } else {
+              unmatchedMeshes.push(child.name);
+              // Ensure unmatched meshes are still visible with a default material
+              child.material = new THREE.MeshStandardMaterial({
+                color: 0x556688,
+                emissive: 0x112233,
+                emissiveIntensity: 0.1,
+                metalness: 0.3,
+                roughness: 0.6,
+              });
             }
           }
         });
+        if (unmatchedMeshes.length > 0) {
+          console.warn('⚠️ Unmatched meshes:', unmatchedMeshes.join(', '));
+        }
 
         const h = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3()).y;
         setModelHeight(h);
@@ -235,9 +249,11 @@ export default function RobotModel({
         setLoadState('glb');
         console.log('✅ GLB loaded, parts:', Object.keys(meshes).join(', '), 'height:', h.toFixed(3));
       },
-      undefined,
+      (progress) => {
+        if (progress.total) console.log(`📦 GLB loading: ${Math.round(progress.loaded / progress.total * 100)}%`);
+      },
       (err) => {
-        console.warn('GLB load failed, using placeholder:', err);
+        console.warn('❌ GLB load failed, using placeholder:', err);
         setLoadState('placeholder');
       }
     );
