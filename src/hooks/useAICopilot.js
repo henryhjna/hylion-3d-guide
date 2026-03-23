@@ -11,11 +11,18 @@ export function useAICopilot({ rawDocs, currentWeek, currentView, selectedPart, 
   // Force re-check after settings modal saves
   const refreshApiKey = useCallback(() => setApiKeyVersion(v => v + 1), []);
 
+  // Member ID → 실명 매핑
+  const memberNames = { delta1: '인혁', delta2: '승민', delta3: '희승', epsilon1: '성래', epsilon2: '상윤' };
+  const memberRoles = { delta1: '하드웨어·외장 오너 (Track A 리드)', delta2: '보행 시스템 오너 (Track B 리드)', delta3: 'AI 인프라 오너 (A+B)', epsilon1: '배포·통합 오너 (Track A)', epsilon2: '캐릭터·검증·외장 오너 (A+B)' };
+
   const buildSystemPrompt = useCallback(() => {
     const plan = rawDocs?.plan || '';
     const guide = rawDocs?.guide || '';
+    const memberName = selectedMember ? (memberNames[selectedMember] || selectedMember) : '없음';
+    const memberRole = selectedMember ? (memberRoles[selectedMember] || '') : '';
 
     return `당신은 HYlion Physical AI 로봇 프로젝트의 AI 어시스턴트입니다.
+팀원 5명(인혁/δ1, 승민/δ2, 희승/δ3, 성래/ε1, 상윤/ε2)이 10주간 이족보행 로봇을 만듭니다.
 
 ## 프로젝트 문서
 
@@ -27,14 +34,15 @@ ${guide}
 
 ## 현재 컨텍스트
 - 현재 주차: Week ${currentWeek ?? '미정'}
-- 선택된 뷰: ${currentView || '로봇 탐색'}
+- 선택된 뷰: ${currentView || '작업'}
 - 선택된 파트: ${selectedPart || '없음'}
-- 선택된 멤버: ${selectedMember || '없음'}
+- 선택된 멤버: ${memberName}${memberRole ? ' (' + memberRole + ')' : ''}
 
 ## 행동 지침
 - 질문에 대해 기획서/실행가이드의 구체적 섹션을 근거로 답변하라.
 - 가능하면 "기획서 7.2절에 따르면..." 식으로 출처를 밝혀라.
 - 학생의 현재 맥락(주차, 파트, 역할)을 고려하여 답변하라.
+- 멤버를 부를 때는 실명을 사용하라 (인혁, 승민 등).
 - 기술적 질문에는 정확하게, 동기부여가 필요한 질문에는 따뜻하게.
 - "이번 주 뭐 해야 해?"류에는 실행가이드에서 해당 멤버의 체크리스트를 뽑아라.
 - "왜 이렇게 설계했어?"류에는 기획서의 설계 원칙(2절)과 해당 섹션의 맥락을 설명하라.
@@ -87,7 +95,7 @@ ${guide}
       }
 
       const data = await response.json();
-      const assistantMessage = data.content[0].text;
+      const assistantMessage = data.content?.[0]?.text || '응답을 받지 못했습니다.';
 
       setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
       setIsLoading(false);
