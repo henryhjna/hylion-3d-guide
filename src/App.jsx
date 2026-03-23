@@ -264,11 +264,11 @@ export default function App() {
           />
         )}
 
-        {/* ── EXPLORE MODE: Architecture overlay (when xray ON) ── */}
-        {isExploreMode && xrayMode && <ArchitectureView />}
+        {/* ── EXPLORE MODE: Architecture overlay (when xray ON, hidden if sidebar open) ── */}
+        {isExploreMode && xrayMode && !selectedPart && <ArchitectureView />}
 
-        {/* ── EXPLORE MODE: Scenario overlay (when scenario ON) ── */}
-        {isExploreMode && scenarioMode && (
+        {/* ── EXPLORE MODE: Scenario overlay (when scenario ON, hidden if sidebar open) ── */}
+        {isExploreMode && scenarioMode && !selectedPart && (
           <div className="absolute bottom-0 left-0 right-0 h-[45%] z-10">
             <ScenarioFlow />
           </div>

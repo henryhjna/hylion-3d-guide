@@ -447,39 +447,46 @@ function PlaceholderRobot({ selectedPart, hoveredPart, onPartClick, onPartHover,
 }
 
 // ── Internal components (X-ray mode) ───────────────────────────────────────
+// Positions based on hyurion_rig.blend bone structure:
+// pelvis=0.27, torso=0.33, neck=0.37, head=0.41~1.0
+// Internal components are in the torso region (0.27~0.37)
 function InternalComponents({ modelHeight }) {
   const s = modelHeight || 1.0;
   return (
     <group>
-      <mesh position={[0.04 * s, 0.68 * s, 0]}>
-        <boxGeometry args={[0.08 * s, 0.02 * s, 0.08 * s]} />
+      {/* Orin — torso upper area */}
+      <mesh position={[0.03 * s, 0.35 * s, 0]}>
+        <boxGeometry args={[0.06 * s, 0.015 * s, 0.06 * s]} />
         <meshStandardMaterial color="#00ff88" emissive="#00ff88" emissiveIntensity={0.5} />
       </mesh>
-      <Html position={[0.04 * s, 0.72 * s, 0]} center distanceFactor={3}>
+      <Html position={[0.03 * s, 0.38 * s, 0]} center distanceFactor={3}>
         <div className="text-sm text-green-400 font-bold whitespace-nowrap pointer-events-none">Orin</div>
       </Html>
 
-      <mesh position={[-0.04 * s, 0.62 * s, 0]}>
-        <boxGeometry args={[0.07 * s, 0.02 * s, 0.07 * s]} />
+      {/* NUC — torso middle */}
+      <mesh position={[-0.03 * s, 0.32 * s, 0]}>
+        <boxGeometry args={[0.05 * s, 0.015 * s, 0.05 * s]} />
         <meshStandardMaterial color="#4466ff" emissive="#4466ff" emissiveIntensity={0.5} />
       </mesh>
-      <Html position={[-0.04 * s, 0.66 * s, 0]} center distanceFactor={3}>
+      <Html position={[-0.03 * s, 0.35 * s, 0]} center distanceFactor={3}>
         <div className="text-sm text-blue-400 font-bold whitespace-nowrap pointer-events-none">NUC</div>
       </Html>
 
-      <mesh position={[0, 0.53 * s, 0]}>
-        <boxGeometry args={[0.2 * s, 0.04 * s, 0.1 * s]} />
+      {/* Batteries — torso bottom (near pelvis) */}
+      <mesh position={[0, 0.28 * s, 0]}>
+        <boxGeometry args={[0.12 * s, 0.03 * s, 0.08 * s]} />
         <meshStandardMaterial color="#c8ff00" emissive="#c8ff00" emissiveIntensity={0.3} />
       </mesh>
-      <Html position={[0, 0.57 * s, 0]} center distanceFactor={3}>
+      <Html position={[0, 0.30 * s, 0]} center distanceFactor={3}>
         <div className="text-sm text-yellow-400 font-bold whitespace-nowrap pointer-events-none">BAT A+B</div>
       </Html>
 
-      <mesh position={[0, 0.25 * s, 0.04 * s]}>
-        <boxGeometry args={[0.03 * s, 0.015 * s, 0.02 * s]} />
+      {/* ESP32 — leg area (near pelvis, independent safety) */}
+      <mesh position={[0.04 * s, 0.22 * s, 0.03 * s]}>
+        <boxGeometry args={[0.02 * s, 0.01 * s, 0.015 * s]} />
         <meshStandardMaterial color="#ff8800" emissive="#ff8800" emissiveIntensity={0.6} />
       </mesh>
-      <Html position={[0, 0.28 * s, 0.04 * s]} center distanceFactor={3}>
+      <Html position={[0.04 * s, 0.24 * s, 0.03 * s]} center distanceFactor={3}>
         <div className="text-sm text-orange-400 font-bold whitespace-nowrap pointer-events-none">ESP32</div>
       </Html>
     </group>
