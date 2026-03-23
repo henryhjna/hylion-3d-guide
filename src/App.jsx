@@ -218,13 +218,6 @@ export default function App() {
           <Loading3D isLoading={modelLoading} />
         </div>
 
-        {/* ── WORK MODE: Data backup banner (above dashboard) ── */}
-        {isWorkMode && !dashCollapsed && (
-          <div className="absolute top-0 left-0 w-[420px] z-11">
-            <DataBackup memberId={selectedMember} />
-          </div>
-        )}
-
         {/* ── WORK MODE: Left dashboard (z-10) ── */}
         {isWorkMode && (
           <DashboardPanel
