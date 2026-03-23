@@ -326,12 +326,10 @@ export default function RobotModel({
     while (obj && !obj.userData.partId) obj = obj.parent;
     const partId = obj?.userData?.partId || null;
     onPartHover(partId);
-    document.body.style.cursor = partId ? 'pointer' : 'default';
   }, [onPartHover]);
 
   const handlePointerOut = useCallback(() => {
     onPartHover(null);
-    document.body.style.cursor = 'default';
   }, [onPartHover]);
 
   // ── Week-based highlighting for placeholder ──
@@ -440,8 +438,8 @@ function PlaceholderRobot({ selectedPart, hoveredPart, onPartClick, onPartHover,
           material={materials[id]}
           position={def.pos}
           onClick={(e) => { e.stopPropagation(); onPartClick(id, e); }}
-          onPointerOver={(e) => { e.stopPropagation(); onPartHover(id); document.body.style.cursor = 'pointer'; }}
-          onPointerOut={() => { onPartHover(null); document.body.style.cursor = 'default'; }}
+          onPointerOver={(e) => { e.stopPropagation(); onPartHover(id); }}
+          onPointerOut={() => { onPartHover(null); }}
         />
       ))}
     </>
