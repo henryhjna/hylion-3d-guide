@@ -30,7 +30,7 @@ export default function PartInfoPanel({ partId, onClose }) {
         </div>
         <button
           onClick={onClose}
-          className="w-8 h-8 rounded-lg bg-[#ffffff08] hover:bg-[#ffffff15] flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] transition-colors text-sm"
+          className="w-8 h-8 rounded-lg bg-[#ffffff08] hover:bg-[#ffffff15] flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] transition-colors text-sm cursor-pointer"
         >
           ✕
         </button>
@@ -235,7 +235,7 @@ function PartComponents({ partId }) {
           <div key={comp.id}>
             <button
               onClick={() => setExpanded(expanded === comp.id ? null : comp.id)}
-              className="w-full text-left flex items-center gap-2 p-3.5 rounded hover:bg-[#ffffff05] transition-colors"
+              className="w-full text-left flex items-center gap-3 p-3.5 rounded-lg hover:bg-[#ffffff08] transition-colors cursor-pointer"
             >
               <span className="text-sm">📦</span>
               <span className="text-sm text-[#e0e8ff] flex-1">{comp.name}</span>
