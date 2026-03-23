@@ -500,7 +500,7 @@ function MemberView({
 
           {/* ── Progress bar (질감: 네온 글로우) ── */}
           <div className="mb-6">
-            <div className="h-2 rounded-full bg-[#ffffff08] overflow-hidden border border-[#ffffff06]">
+            <div className="h-3 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden border border-[#ffffff06]">
               <div
                 className="h-full rounded-full transition-[width] duration-700 ease-out"
                 style={{
@@ -579,26 +579,23 @@ function OverallView({
   return (
     <>
       {/* Header */}
-      <div>
-        <h2
-          className="text-sm font-bold tracking-wide mb-6 text-[#e0e8ff]"
-        >
+      {/* Project header — 위계: 가장 높음 */}
+      <div style={{ marginBottom: 24 }}>
+        <h2 className="text-2xl font-bold tracking-wider text-[#e0e8ff]" style={{ marginBottom: 4, textShadow: '0 0 20px rgba(224,232,255,0.15)' }}>
           전체 프로젝트
         </h2>
-        <div className="text-sm text-[#6a7090]">HYlion Physical AI</div>
+        <div className="text-base text-[#6a7090]">HYlion Physical AI</div>
       </div>
 
-      {/* Current week title */}
+      {/* Week title — 위계: 높음 */}
       <div>
-        <h3
-          className="text-sm font-bold tracking-wide mb-6 text-[#00ff88]"
-        >
+        <h3 className="text-xl font-bold tracking-wide text-[#00ff88]" style={{ marginBottom: 20, textShadow: '0 0 16px rgba(0,255,136,0.3)' }}>
           Week {weekNum} — {weekTitle}
         </h3>
 
         {/* Overall progress */}
         <div className="flex items-center gap-4 mb-6">
-          <div className="flex-1 h-2 rounded-full bg-[#ffffff08] overflow-hidden">
+          <div className="flex-1 h-3 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden">
             <div
               className="h-full rounded-full bg-[linear-gradient(90deg,#00ff88,#00f0ff)] shadow-[0_0_10px_rgba(0,255,136,0.3)] transition-[width] duration-700"
               style={{
@@ -623,10 +620,10 @@ function OverallView({
                 className="w-full flex items-center gap-4 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-3 py-2.5 transition-colors"
                 onClick={() => onPartClick?.(key)}
               >
-                <span className="text-sm w-12 text-left text-[#6a7090]">
+                <span className="text-base w-14 text-left text-[#8890aa]">
                   {meta.label}
                 </span>
-                <div className="flex-1 h-1.5 rounded-full bg-[#ffffff08] overflow-hidden">
+                <div className="flex-1 h-2 rounded-full bg-[#ffffff0a] overflow-hidden">
                   <div
                     className="h-full rounded-full transition-[width] duration-700"
                     style={{
