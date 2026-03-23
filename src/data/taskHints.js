@@ -92,16 +92,16 @@ export const TASK_HINTS = {
   },
 
   w0_soarm_sim: {
-    summary: "Week 0 Day 2 전원 공통 과제. LeRobot 커리큘럼(5-4~5-5)에 따라 SO-ARM URDF를 RViz/Gazebo에서 검증한다. 이 과정에서 URDF 구조와 시뮬레이션 개념을 익히며, 프로젝트 본 시뮬레이션(IsaacLab)과의 차이를 이해한다. 기획서 2.2절에 따르면 프로젝트 시뮬 플랫폼은 IsaacLab(USD)이므로, 여기서는 학습 목적의 커리큘럼 실습이다.",
+    summary: "Week 0 Day 2 전원 공통 과제. SO-ARM URDF 구조를 파악하고 IsaacSim/IsaacLab에서 시뮬레이션 검증한다. 기획서 2.2절에 따라 프로젝트 전체 시뮬레이션 플랫폼은 IsaacLab(USD)이므로, 커리큘럼 단계부터 IsaacLab을 사용하여 URDF→USD 파이프라인에 익숙해진다.",
     steps: [
       "SO-ARM URDF 파일 구조 파악 — link, joint, transmission 태그 이해",
-      "RViz에서 URDF 시각화 확인 (메쉬 로드, 좌표계 방향)",
-      "joint_state_publisher_gui로 각 관절 구동 테스트",
-      "Gazebo에서 물리 시뮬 실행 — 중력 하에서 자세 유지 확인",
-      "(선택) URDF → USD 변환 개념 사전 파악 (δ3의 IsaacLab 작업과 연계)",
+      "URDF → USD 변환 (IsaacLab urdf_converter 또는 Isaac Sim URDF importer)",
+      "IsaacLab에서 SO-ARM 로드 + joint 구동 테스트",
+      "중력 하에서 자세 유지 확인 (IsaacSim 물리 엔진)",
+      "δ3의 BHL IsaacLab 환경과 동일 플랫폼임을 확인 — 향후 통합 용이",
     ],
     resources: [
-      { label: "ROS2 URDF 튜토리얼", url: "https://docs.ros.org/en/humble/Tutorials.html" },
+      { label: "IsaacLab URDF Import", url: "https://isaac-sim.github.io/IsaacLab/main/index.html" },
     ],
     components: ["xl430"],
     estimatedHours: 4,
