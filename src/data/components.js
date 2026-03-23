@@ -227,7 +227,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        '목(neck) pan/tilt 서보. 토르소 상단에 배치되며, MediaPipe 얼굴 인식 → PID 제어로 시선 추적 수행. U2D2 #2 버스에 연결 (ID 13~14)',
+        '목(neck) pan/tilt 서보. 토르소 상단에 배치되며, MediaPipe 얼굴 인식 → PID 제어로 시선 추적 수행. U2D2에 연결 (Dynamixel Protocol 2.0, ID 13~14)',
       parts: ['torso'],
       quantity: 2,
       spares: 0,
@@ -260,7 +260,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'SO-ARM101 양팔 로봇팔 관절 구동. 좌팔 6개(ID 1~6) + 우팔 6개(ID 7~12), 총 12개. U2D2 #1(좌팔), U2D2 #2(우팔+목)에 연결. Protocol 2.0 sync read/write 200Hz 제어',
+        'SO-ARM101 양팔 로봇팔 관절 구동. 좌팔 6개(ID 1~6) + 우팔 6개(ID 7~12), 총 12개. Waveshare Board #1(좌팔), #2(우팔)에 연결. Feetech SCServo sync read/write 200Hz 제어',
       parts: ['left_arm', 'right_arm'],
       quantity: 12,
       spares: 0,

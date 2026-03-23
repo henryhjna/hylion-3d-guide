@@ -22,7 +22,7 @@ export const RESOURCES = {
   },
 
   // ──────────────────────────────────────────────
-  // 상체 (SO-ARM / Dynamixel)
+  // 상체 (SO-ARM101 STS3215 + 목 XL430)
   // ──────────────────────────────────────────────
   "so_arm_github": {
     label: "SO-ARM100 GitHub 리포지토리",
@@ -74,7 +74,7 @@ export const RESOURCES = {
     label: "LeRobot Hub (데이터셋 + 모델)",
     url: "https://huggingface.co/lerobot",
     category: "AI",
-    tags: ["LeRobot", "데이터셋", "모방학습", "SO-100"],
+    tags: ["LeRobot", "데이터셋", "모방학습", "SO-100/SO-101"],
   },
   "lerobot_github": {
     label: "LeRobot GitHub 리포지토리",

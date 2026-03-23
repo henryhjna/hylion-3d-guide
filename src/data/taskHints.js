@@ -7,7 +7,7 @@ export const TASK_HINTS = {
   // =======================================================================
 
   w0_soarm_assembly: {
-    summary: "Week 0 Day 1 전원 공통 과제. SO-ARM을 직접 조립하며 로봇 하드웨어 감각을 익히는 첫 단계로, 이후 텔레오퍼레이션(Day 3)과 모방학습(Day 4)의 물리적 기반이 된다. 기획서 5.7절에 따라 U2D2 버스 분배(좌팔 6 / 우팔 6+목 2)를 고려해 ID를 할당한다.",
+    summary: "Week 0 Day 1 전원 공통 과제. SO-ARM을 직접 조립하며 로봇 하드웨어 감각을 익히는 첫 단계로, 이후 텔레오퍼레이션(Day 3)과 모방학습(Day 4)의 물리적 기반이 된다. 기획서 5.7절에 따라 서보 버스 분배(Waveshare Board: 좌팔 6 / 우팔 6, U2D2: 목 2)를 고려해 ID를 할당한다.",
     steps: [
       "SO-ARM 키트 구성품 확인 — 서보 6개, 프레임 파트, 나사류 누락 체크",
       "서보모터(XL430) 6개를 프레임에 순서대로 조립 (어깨→팔꿈치→손목→그리퍼)",
@@ -687,9 +687,9 @@ export const TASK_HINTS = {
   },
 
   w1_smolvla_stage1_start: {
-    summary: "δ3 전용 과제. 기획서 4.3절의 2-Stage 파인튜닝 전략에 따라, Stage 1에서는 LeRobot Hub의 SO-100 공개 pick-place 데이터(수천 에피소드)로 SmolVLA를 사전 파인튜닝한다. 카메라 위치와 물체가 달라도 접근-그립-리프트 패턴을 사전 학습하면 Stage 2(자체 데이터) 효율이 올라간다. DGX Spark 백그라운드 작업.",
+    summary: "δ3 전용 과제. 기획서 4.3절의 2-Stage 파인튜닝 전략에 따라, Stage 1에서는 LeRobot Hub의 SO-100/SO-101 공개 pick-place 데이터(수천 에피소드)로 SmolVLA를 사전 파인튜닝한다. 카메라 위치와 물체가 달라도 접근-그립-리프트 패턴을 사전 학습하면 Stage 2(자체 데이터) 효율이 올라간다. DGX Spark 백그라운드 작업.",
     steps: [
-      "LeRobot Hub에서 SO-100 호환 공개 pick-place 데이터셋 다운로드",
+      "LeRobot Hub에서 SO-100/SO-101 공개 pick-place 데이터셋 다운로드",
       "SmolVLA 베이스 모델 로드 + 데이터 전처리 파이프라인 구축",
       "Stage 1 학습 하이퍼파라미터 설정 — lr, batch size, epoch 수",
       "DGX Spark에서 백그라운드 학습 시작 (Walking RL과 GPU 시간 분배)",
@@ -766,7 +766,7 @@ export const TASK_HINTS = {
       "④ NUC(BeeLink N95) 마운트 (δ1) → δ2가 전원·Ethernet·USB 연결",
       "⑤ Orin + carrier + 방열판 장착 (δ1) → ε1이 전원·USB 연결",
       "⑥ 40mm 환기팬 + 배기구(상단)/흡기구(하단) 설치 (δ1)",
-      "⑦ SO-ARM ×2 어깨 마운트 (δ1) → ε1이 U2D2 USB 연결",
+      "⑦ SO-ARM ×2 어깨 마운트 (δ1) → ε1이 Waveshare Board USB 연결",
       "⑧ 목 서보 XL430 ×2 장착 (δ1) → ε1이 U2D2 데이지체인 연결",
       "⑨ 스피커 + 마이크 장착 (δ1) → ε1이 Orin USB 오디오 연결",
       "⑩ Orin↔NUC Ethernet 직결 (δ2)",
@@ -1898,7 +1898,7 @@ export const TASK_HINTS = {
   },
 
   w8_power_integration: {
-    summary: "상하체 결합에 맞춰 3개 배터리 전원을 통합 배선한다. A(Orin+NUC+LED+입서보+스피커, 토르소 최하단 또는 hip), B(Dynamixel x14, 토르소 최하단), C(BHL BLDC x10+ESP32, 다리 프레임)가 PDB+BMS+DC-DC(5V/12V/19V)를 통해 각 부하에 공급되도록 연결한다. 비상정지 시 B+C는 NC 차단되고 A는 유지(Orin 로그 보존). 전원 시퀀싱(A→부팅→B→토크→C→캘리브)을 실물에서 처음 통합 검증한다.",
+    summary: "상하체 결합에 맞춰 3개 배터리 전원을 통합 배선한다. A(Orin+NUC+LED+입서보+스피커, 토르소 최하단 또는 hip), B(STS3215 x12 + 목 XL430 x2, 토르소 최하단), C(BHL BLDC x10+ESP32, 다리 프레임)가 PDB+BMS+DC-DC(5V/12V/19V)를 통해 각 부하에 공급되도록 연결한다. 비상정지 시 B+C는 NC 차단되고 A는 유지(Orin 로그 보존). 전원 시퀀싱(A→부팅→B→토크→C→캘리브)을 실물에서 처음 통합 검증한다.",
     steps: [
       "배터리 A: PDB→DC-DC(5V Orin, 19V NUC)→각 부하 배선 확인",
       "배터리 B: PDB→SO-ARM STS3215 x12 + 목 XL430 x2 배선 확인",

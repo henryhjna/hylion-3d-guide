@@ -32,7 +32,7 @@ export const GLOSSARY = {
     related: ["NUC", "CAN-USB"],
   },
   "Dynamixel": {
-    definition: "ROBOTIS 사의 스마트 서보 액추에이터 시리즈. 하이리온은 SO-ARM에 XL430 12개, 목에 XL430 2개를 사용하며, U2D2를 통해 Protocol 2.0으로 통신한다.",
+    definition: "ROBOTIS 사의 스마트 서보 액추에이터 시리즈. 하이리온은 목에 XL430 2개를 사용하며, U2D2를 통해 Protocol 2.0으로 통신한다. SO-ARM은 STS3215(Feetech)을 사용하며 Dynamixel이 아니다.",
     related: ["Protocol 2.0", "U2D2", "SO-ARM"],
     links: [{ label: "Dynamixel 공식", url: "https://emanual.robotis.com/docs/en/dxl/" }],
   },
