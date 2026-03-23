@@ -92,14 +92,14 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
           </div>
 
           {/* TOC */}
-          <div className="space-y-0.5">
+          <div className="space-y-2">
             {toc.map((item, i) => (
               <button
                 key={i}
                 onClick={() => {
                   document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="block w-full text-left text-xs text-[#6a7090] hover:text-[#e0e8ff] py-0.5 transition-colors truncate"
+                className="block w-full text-left text-xs text-[#6a7090] hover:text-[#e0e8ff] py-1.5 transition-colors truncate"
                 style={{ paddingLeft: `${(item.level - 1) * 12}px` }}
               >
                 {item.title}
@@ -119,15 +119,15 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                 components={{
                   h1: ({ children, ...props }) => <h1 id={findTocId(children, toc, 1)} className="text-lg font-bold mt-6 mb-3" style={{ fontFamily: 'Orbitron', color: '#00f0ff' }} {...props}>{children}</h1>,
                   h2: ({ children, ...props }) => <h2 id={findTocId(children, toc, 2)} className="text-sm font-bold mt-5 mb-2" style={{ fontFamily: 'Orbitron', color: '#4466ff' }} {...props}>{children}</h2>,
-                  h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-xs font-bold mt-4 mb-1.5" style={{ fontFamily: 'Orbitron', color: '#c8ff00' }} {...props}>{children}</h3>,
+                  h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-xs font-bold mt-4 mb-2.5" style={{ fontFamily: 'Orbitron', color: '#c8ff00' }} {...props}>{children}</h3>,
                   p: ({ children }) => <p className="text-sm text-[#e0e8ff] leading-relaxed mb-2">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</p>,
-                  li: ({ children }) => <li className="text-sm text-[#e0e8ff] ml-4 mb-0.5 list-disc">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</li>,
+                  li: ({ children }) => <li className="text-sm text-[#e0e8ff] ml-4 mb-2 list-disc">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</li>,
                   code: ({ children, className }) => className ? (
                     <pre className="bg-[#0a0a0f] border border-[#ffffff10] rounded-lg p-3 mb-3 overflow-x-auto">
                       <code className="text-xs text-[#00ff88]" style={{ fontFamily: 'JetBrains Mono' }}>{children}</code>
                     </pre>
                   ) : (
-                    <code className="bg-[#ffffff10] px-1 py-0.5 rounded text-xs text-[#ff8800]">{children}</code>
+                    <code className="bg-[#ffffff10] px-1 py-1.5 rounded text-xs text-[#ff8800]">{children}</code>
                   ),
                   table: ({ children }) => <div className="overflow-x-auto mb-3"><table className="w-full text-xs border-collapse">{children}</table></div>,
                   th: ({ children }) => <th className="text-left px-2 py-1 border-b border-[#ffffff15] text-[#6a7090] font-bold">{children}</th>,

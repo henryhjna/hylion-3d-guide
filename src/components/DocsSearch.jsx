@@ -71,7 +71,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
             className="flex-1 bg-transparent text-sm text-[#e0e8ff] placeholder-[#6a7090] focus:outline-none"
             style={{ fontFamily: 'JetBrains Mono' }}
           />
-          <kbd className="text-xs text-[#6a7090] bg-[#ffffff08] px-1.5 py-0.5 rounded border border-[#ffffff10]">
+          <kbd className="text-xs text-[#6a7090] bg-[#ffffff08] px-2.5 py-1.5 rounded border border-[#ffffff10]">
             ESC
           </kbd>
         </div>
@@ -87,7 +87,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
               >
                 ← 검색 결과
               </button>
-              <div className="text-xs text-[#6a7090] mb-1">{viewingEntry.fileName}</div>
+              <div className="text-xs text-[#6a7090] mb-2">{viewingEntry.fileName}</div>
               <h3 className="text-sm font-bold text-[#e0e8ff] mb-3" style={{ fontFamily: 'Orbitron' }}>
                 {viewingEntry.sectionTitle}
               </h3>
@@ -117,7 +117,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
                       onSelectResult?.(entry);
                     }
                   }}
-                  className={`w-full text-left px-4 py-2.5 flex flex-col gap-0.5 transition-colors ${
+                  className={`w-full text-left px-4 py-2.5 flex flex-col gap-1.5 transition-colors ${
                     i === selectedIdx ? 'bg-[#4466ff10]' : 'hover:bg-[#ffffff05]'
                   }`}
                 >

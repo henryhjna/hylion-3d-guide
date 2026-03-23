@@ -59,7 +59,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
             AI 코파일럿
           </span>
           {!hasApiKey && (
-            <span className="text-xs text-[#ff8800] bg-[#ff880015] px-1.5 py-0.5 rounded">
+            <span className="text-xs text-[#ff8800] bg-[#ff880015] px-2.5 py-1.5 rounded">
               API 키 필요
             </span>
           )}
@@ -89,7 +89,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
             <p className="text-sm text-[#6a7090] mb-3">
               프로젝트에 대해 무엇이든 질문하세요
             </p>
-            <div className="space-y-1">
+            <div className="space-y-2.5">
               {['이번 주 뭐 해야 해?', '배터리를 왜 최하단에 놓아?', 'SmolVLA 추론 속도는?'].map(q => (
                 <button
                   key={q}
@@ -114,10 +114,10 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
             >
               {msg.role === 'assistant' ? (
                 <Markdown components={{
-                  p: ({children}) => <p className="mb-1.5 last:mb-0">{children}</p>,
+                  p: ({children}) => <p className="mb-2.5 last:mb-0">{children}</p>,
                   strong: ({children}) => <strong className="text-[#e0e8ff] font-bold">{children}</strong>,
                   code: ({children, className}) => className
-                    ? <pre className="bg-[#0a0a0f] rounded p-1.5 my-1 overflow-x-auto"><code className="text-xs text-[#00ff88]">{children}</code></pre>
+                    ? <pre className="bg-[#0a0a0f] rounded p-3.5 my-1 overflow-x-auto"><code className="text-xs text-[#00ff88]">{children}</code></pre>
                     : <code className="bg-[#ffffff10] px-1 rounded text-xs text-[#ff8800]">{children}</code>,
                   li: ({children}) => <li className="ml-3 list-disc">{children}</li>,
                 }}>{msg.content}</Markdown>
@@ -131,7 +131,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
         {isLoading && (
           <div className="flex justify-start">
             <div className="px-3 py-2 rounded-lg bg-[#ffffff08] border border-[#ffffff08]">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse" />
                 <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse" style={{ animationDelay: '0.2s' }} />
                 <div className="w-1.5 h-1.5 rounded-full bg-[#4466ff] animate-pulse" style={{ animationDelay: '0.4s' }} />

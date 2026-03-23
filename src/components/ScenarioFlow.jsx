@@ -239,7 +239,7 @@ export default function ScenarioFlow() {
             <button
               key={step.id}
               onClick={() => { setActiveStep(i); setIsPlaying(false); }}
-              className={`flex-1 p-2 rounded-lg transition-all border text-left ${
+              className={`flex-1 p-3 rounded-lg transition-all border text-left ${
                 activeStep === i ? '' : 'opacity-40 hover:opacity-70'
               }`}
               style={{
@@ -247,7 +247,7 @@ export default function ScenarioFlow() {
                 borderColor: activeStep === i ? step.color + '40' : '#ffffff08',
               }}
             >
-              <div className="flex items-center gap-1.5 mb-0.5">
+              <div className="flex items-center gap-2.5 mb-2">
                 <span
                   className="w-4 h-4 rounded-full flex items-center justify-center text-sm font-bold"
                   style={{ backgroundColor: step.color + '20', color: step.color }}
@@ -260,10 +260,10 @@ export default function ScenarioFlow() {
               </div>
               {activeStep === i && (
                 <>
-                  <p className="text-xs text-[#e0e8ff] ml-5 mb-1">{step.description}</p>
-                  <div className="flex flex-wrap gap-0.5 ml-5">
+                  <p className="text-xs text-[#e0e8ff] ml-5 mb-2">{step.description}</p>
+                  <div className="flex flex-wrap gap-1.5 ml-5">
                     {step.systems.map((sys, j) => (
-                      <span key={j} className="text-xs px-1 py-0.5 rounded bg-[#ffffff08] text-[#6a7090]">
+                      <span key={j} className="text-xs px-1 py-1.5 rounded bg-[#ffffff08] text-[#6a7090]">
                         {sys}
                       </span>
                     ))}

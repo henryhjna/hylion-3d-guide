@@ -21,7 +21,7 @@ export default function PartInfoPanel({ partId, onClose }) {
       <div className="flex items-start justify-between mb-5">
         <div>
           <h2
-            className="text-xl font-bold tracking-wide mb-1.5"
+            className="text-xl font-bold tracking-wide mb-2.5"
             style={{ fontFamily: 'Orbitron', color: part.color }}
           >
             {part.label}
@@ -80,7 +80,7 @@ export default function PartInfoPanel({ partId, onClose }) {
 
       {/* Specs */}
       <Section title="스펙">
-        <div className="space-y-1.5">
+        <div className="space-y-2.5.5">
           {part.specs.map((spec, i) => (
             <div key={i} className="flex items-baseline gap-2">
               <span className="text-xs text-[#6a7090] min-w-[80px] shrink-0">{spec.label}</span>
@@ -93,7 +93,7 @@ export default function PartInfoPanel({ partId, onClose }) {
       {/* Internal layout (torso) */}
       {part.internalLayout && (
         <Section title="내부 배치 (아래→위)">
-          <div className="space-y-1">
+          <div className="space-y-2.5">
             {part.internalLayout.map((item, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="w-5 h-5 rounded bg-[#ffffff08] flex items-center justify-center text-xs text-[#6a7090]">
@@ -109,7 +109,7 @@ export default function PartInfoPanel({ partId, onClose }) {
       {/* Assembly steps (torso) */}
       {part.assemblySteps && (
         <Section title="조립 순서">
-          <div className="space-y-1">
+          <div className="space-y-2.5">
             {part.assemblySteps.map((step, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span
@@ -130,9 +130,9 @@ export default function PartInfoPanel({ partId, onClose }) {
         <Section title="제작 경로">
           <div className="space-y-2">
             {part.manufacturingPaths.map((path, i) => (
-              <div key={i} className="p-2 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
+              <div key={i} className="p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
                 <span className="text-xs font-bold text-[#e0e8ff]">{path.label}</span>
-                <p className="text-xs text-[#6a7090] mt-0.5">{path.desc}</p>
+                <p className="text-xs text-[#6a7090] mt-1.5">{path.desc}</p>
               </div>
             ))}
           </div>
@@ -163,7 +163,7 @@ export default function PartInfoPanel({ partId, onClose }) {
       {/* Walking RL (legs) */}
       {part.walkingRL && (
         <Section title="Walking RL">
-          <div className="space-y-1">
+          <div className="space-y-2.5">
             <Row label="시뮬" value={part.walkingRL.sim} />
             <Row label="Sim2sim" value={part.walkingRL.sim2sim} />
             <Row label="보행" value={part.walkingRL.gait} />
@@ -189,7 +189,7 @@ export default function PartInfoPanel({ partId, onClose }) {
       {/* Risks */}
       {part.risks.length > 0 && (
         <Section title="리스크">
-          <div className="space-y-1">
+          <div className="space-y-2.5">
             {part.risks.map((risk, i) => (
               <div key={i} className="flex items-center gap-2 text-xs">
                 <span className="text-[#ff8800]">⚡</span>
@@ -230,12 +230,12 @@ function PartComponents({ partId }) {
 
   return (
     <Section title="부품">
-      <div className="space-y-1">
+      <div className="space-y-2.5">
         {comps.map((comp) => (
           <div key={comp.id}>
             <button
               onClick={() => setExpanded(expanded === comp.id ? null : comp.id)}
-              className="w-full text-left flex items-center gap-2 p-1.5 rounded hover:bg-[#ffffff05] transition-colors"
+              className="w-full text-left flex items-center gap-2 p-3.5 rounded hover:bg-[#ffffff05] transition-colors"
             >
               <span className="text-xs">📦</span>
               <span className="text-sm text-[#e0e8ff] flex-1">{comp.name}</span>
@@ -243,10 +243,10 @@ function PartComponents({ partId }) {
               <span className="text-xs text-[#6a7090]">{expanded === comp.id ? '▴' : '▾'}</span>
             </button>
             {expanded === comp.id && (
-              <div className="ml-6 mb-2 p-2 rounded bg-[#ffffff04] border border-[#ffffff08] text-xs">
-                <p className="text-[#aab0cc] mb-1"><GlossaryText text={comp.usage?.description || ''} /></p>
+              <div className="ml-6 mb-2 p-3 rounded bg-[#ffffff04] border border-[#ffffff08] text-xs">
+                <p className="text-[#aab0cc] mb-2"><GlossaryText text={comp.usage?.description || ''} /></p>
                 {comp.specs && (
-                  <div className="space-y-0.5 mb-1">
+                  <div className="space-y-2 mb-2">
                     {Object.entries(comp.specs).map(([k, v]) => (
                       <div key={k} className="flex gap-2">
                         <span className="text-[#6a7090] min-w-[50px]">{k}</span>
@@ -256,7 +256,7 @@ function PartComponents({ partId }) {
                   </div>
                 )}
                 {comp.links?.length > 0 && (
-                  <div className="space-y-0.5">
+                  <div className="space-y-2">
                     {comp.links.map((link, i) => (
                       <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
                         className="block text-[#4466ff] hover:text-[#6688ff]">

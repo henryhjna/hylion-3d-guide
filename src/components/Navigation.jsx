@@ -17,7 +17,11 @@ export default function Navigation({
     <nav className="absolute top-0 left-0 right-0 h-16 z-50 glass-panel rounded-none border-t-0 border-x-0 flex items-center justify-between px-6">
       {/* Left: Logo + Mode tabs */}
       <div className="flex items-center gap-4">
-        <h1 className="text-base font-bold tracking-widest glow-cyan" style={{ fontFamily: 'Orbitron', color: '#00f0ff' }}>
+        <h1
+          onClick={() => onModeChange('work')}
+          className="text-base font-bold tracking-widest glow-cyan cursor-pointer hover:opacity-80 transition-opacity"
+          style={{ fontFamily: 'Orbitron', color: '#00f0ff' }}
+        >
           HYlion
         </h1>
 
@@ -97,7 +101,7 @@ export default function Navigation({
           title="문서 검색 (Ctrl+K)"
         >
           🔍
-          <kbd className="text-sm bg-[#ffffff08] px-1 py-0.5 rounded border border-[#ffffff10]">⌘K</kbd>
+          <kbd className="text-sm bg-[#ffffff08] px-1 py-1.5 rounded border border-[#ffffff10]">⌘K</kbd>
         </button>
 
         {/* Docs */}

@@ -43,7 +43,7 @@ export default function ArchitectureView() {
           <div className="text-xs font-bold mb-2" style={{ color: resources.color, fontFamily: 'Orbitron' }}>
             {resources.label}
           </div>
-          <div className="space-y-1.5 text-xs">
+          <div className="space-y-2.5.5 text-xs">
             <ResourceRow label="Orin GPU" value={resources.orin_gpu} active={resources.orin_gpu !== '없음' && resources.orin_gpu !== '비어있음'} />
             <ResourceRow label="Orin CPU" value={resources.orin_cpu} active={resources.orin_cpu !== '로그 유지'} />
             <ResourceRow label="NUC" value={resources.nuc} active={resources.nuc !== '대기' && resources.nuc !== '정지' && resources.nuc !== '전원 차단'} />
@@ -63,22 +63,22 @@ export default function ArchitectureView() {
             <button
               key={node.id}
               onClick={() => setSelectedNode(selectedNode === node.id ? null : node.id)}
-              className="w-full text-left p-2.5 rounded-lg transition-all border"
+              className="w-full text-left p-3.5 rounded-lg transition-all border"
               style={{
                 backgroundColor: selectedNode === node.id ? node.color + '10' : '#ffffff05',
                 borderColor: selectedNode === node.id ? node.color + '40' : '#ffffff08',
               }}
             >
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-bold" style={{ color: node.color, fontFamily: 'Orbitron' }}>
                   {node.label}
                 </span>
                 <span className="text-xs text-[#6a7090]">{node.subtitle}</span>
               </div>
               {selectedNode === node.id && (
-                <div className="mt-2 space-y-0.5">
+                <div className="mt-2 space-y-2">
                   {node.tasks.map((task, i) => (
-                    <div key={i} className="text-xs text-[#e0e8ff] flex items-start gap-1.5">
+                    <div key={i} className="text-xs text-[#e0e8ff] flex items-start gap-2.5">
                       <span style={{ color: node.color }}>▸</span>
                       {task}
                     </div>
@@ -103,23 +103,23 @@ export default function ArchitectureView() {
         <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
           전원 시스템
         </label>
-        <div className="space-y-1.5">
+        <div className="space-y-2.5.5">
           {POWER_SYSTEM.map(bat => (
-            <div key={bat.id} className="p-2 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
+            <div key={bat.id} className="p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold" style={{ color: bat.color }}>{bat.label}</span>
                 <span className="text-xs text-[#6a7090]">{bat.spec}</span>
               </div>
-              <div className="text-xs text-[#e0e8ff] mt-0.5">{bat.targets}</div>
+              <div className="text-xs text-[#e0e8ff] mt-1.5">{bat.targets}</div>
               <div className="text-xs text-[#6a7090]">{bat.location}</div>
             </div>
           ))}
         </div>
-        <div className="mt-2 p-2 rounded bg-[#ff880010] border border-[#ff880020] text-xs">
+        <div className="mt-2 p-3 rounded bg-[#ff880010] border border-[#ff880020] text-xs">
           <span className="text-[#ff8800] font-bold">투입:</span>
           <span className="text-[#e0e8ff] ml-1">A ON → Orin/NUC 부팅 → B ON → Dynamixel → C ON → BHL 캘</span>
         </div>
-        <div className="mt-1 p-2 rounded bg-[#ff004410] border border-[#ff004420] text-xs">
+        <div className="mt-1 p-3 rounded bg-[#ff004410] border border-[#ff004420] text-xs">
           <span className="text-[#ff0044] font-bold">비상정지:</span>
           <span className="text-[#e0e8ff] ml-1">B+C 양극 NC 차단 + ESP32 MOSFET C (A 유지)</span>
         </div>
@@ -130,7 +130,7 @@ export default function ArchitectureView() {
         <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
           네트워크
         </label>
-        <div className="space-y-1">
+        <div className="space-y-2.5">
           {Object.values(NETWORK).map((net, i) => (
             <div key={i} className="flex items-baseline gap-2 text-xs">
               <span className="text-[#6a7090] min-w-[100px]">{net.label}</span>

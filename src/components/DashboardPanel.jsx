@@ -88,7 +88,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           type="checkbox"
           checked={isChecked}
           onChange={onToggle}
-          className="mt-0.5 flex-shrink-0"
+          className="mt-1.5 flex-shrink-0"
           style={{ accentColor: memberColor }}
         />
         <span
@@ -112,14 +112,14 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
       </label>
       {expanded && hint && (
         <div className="ml-7 mt-1 mb-2 p-3 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
-          <p className="text-[#aab0cc] mb-1.5">{hint.summary}</p>
+          <p className="text-[#aab0cc] mb-2.5">{hint.summary}</p>
           {hint.steps?.length > 0 && (
-            <ol className="list-decimal ml-4 mb-1.5 space-y-0.5 text-[#e0e8ff]">
+            <ol className="list-decimal ml-4 mb-2.5 space-y-2 text-[#e0e8ff]">
               {hint.steps.map((s, i) => <li key={i}>{s}</li>)}
             </ol>
           )}
           {hint.resources?.length > 0 && (
-            <div className="mb-1 space-y-0.5">
+            <div className="mb-2 space-y-2">
               {hint.resources.map((r, i) => (
                 <a key={i} href={r.url || '#'} target={r.type === 'internal' ? undefined : '_blank'} rel="noopener noreferrer"
                   className="block text-[#4466ff] hover:text-[#6688ff]">
@@ -134,7 +134,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
           {hint.components?.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-1">
               {hint.components.map((c, i) => (
-                <span key={i} className="text-xs px-1.5 py-0.5 rounded" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
+                <span key={i} className="text-xs px-2.5 py-1.5 rounded" style={{ backgroundColor: '#00f0ff10', color: '#00f0ff', border: '1px solid #00f0ff20' }}>
                   {'\uD83D\uDCE6'} {c}
                 </span>
               ))}
@@ -152,24 +152,24 @@ function ExpandableDep({ dep, memberId }) {
   const handoff = useMemo(() => findHandoff(dep, memberId), [dep, memberId]);
 
   return (
-    <div className="mb-0.5">
+    <div className="mb-2">
       <div
         className={`text-xs text-[#e0e8ff] ml-4 leading-relaxed flex items-start gap-1 ${handoff ? 'cursor-pointer hover:text-[#ffffff]' : ''}`}
         onClick={() => handoff && setExpanded(!expanded)}
       >
         <span>{'\u2022'} {dep}</span>
         {handoff && (
-          <span className="text-xs text-[#6a7090] shrink-0 mt-0.5">
+          <span className="text-xs text-[#6a7090] shrink-0 mt-1.5">
             {expanded ? '\u25B4' : '\u25BE'}
           </span>
         )}
       </div>
       {expanded && handoff && (
-        <div className="ml-7 mt-1 mb-1.5 p-3 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
-          <div className="text-[#aab0cc] mb-1"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
-          {handoff.format && <div className="text-[#aab0cc] mb-0.5"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
-          {handoff.location && <div className="text-[#aab0cc] mb-0.5"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
-          {handoff.deadline && <div className="text-[#aab0cc] mb-0.5"><span className="text-[#6a7090]">기한:</span> {handoff.deadline}</div>}
+        <div className="ml-7 mt-1 mb-2.5 p-3 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.03)' }}>
+          <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">전달물:</span> {handoff.what}</div>
+          {handoff.format && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">포맷:</span> {handoff.format}</div>}
+          {handoff.location && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">위치:</span> {handoff.location}</div>}
+          {handoff.deadline && <div className="text-[#aab0cc] mb-2"><span className="text-[#6a7090]">기한:</span> {handoff.deadline}</div>}
           {handoff.verification && <div className="text-[#aab0cc]"><span className="text-[#6a7090]">검증:</span> {handoff.verification}</div>}
         </div>
       )}
@@ -531,7 +531,7 @@ function MemberView({
       {/* Current week title + focus */}
       {weekData && (
         <div>
-          <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center justify-between mb-2.5">
             <h3
               className="text-xs font-bold tracking-wide"
               style={{ fontFamily: 'Orbitron', color: accentColor }}
@@ -551,7 +551,7 @@ function MemberView({
               border: `1px solid ${accentColor}25`,
             }}
           >
-            <div className="text-xs text-[#6a7090] mb-0.5" style={{ fontFamily: 'Orbitron' }}>
+            <div className="text-xs text-[#6a7090] mb-2" style={{ fontFamily: 'Orbitron' }}>
               핵심 목표
             </div>
             <div className="text-sm font-bold" style={{ color: accentColor }}>
@@ -573,7 +573,7 @@ function MemberView({
           </div>
 
           {/* Checklist */}
-          <div className="space-y-0.5">
+          <div className="space-y-2">
             {weekData.tasks.map((task, i) => (
               <ExpandableTask
                 key={i}
@@ -607,7 +607,7 @@ function MemberView({
             border: '1px solid rgba(255,255,255,0.05)',
           }}
         >
-          <div className="text-xs text-[#6a7090] mb-0.5">
+          <div className="text-xs text-[#6a7090] mb-2">
             다음 주 미리보기 (Week {weekNum + 1})
           </div>
           <div className="text-sm" style={{ color: accentColor }}>
@@ -644,7 +644,7 @@ function OverallView({
       {/* Header */}
       <div>
         <h2
-          className="text-sm font-bold tracking-wide mb-0.5"
+          className="text-sm font-bold tracking-wide mb-2"
           style={{ fontFamily: 'Orbitron', color: '#e0e8ff' }}
         >
           전체 프로젝트
@@ -689,7 +689,7 @@ function OverallView({
             return (
               <button
                 key={key}
-                className="w-full flex items-center gap-2 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-1 py-0.5 transition-colors"
+                className="w-full flex items-center gap-2 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-1 py-1.5 transition-colors"
                 onClick={() => onPartClick?.(key)}
               >
                 <span className="text-xs w-12 text-left" style={{ color: '#6a7090' }}>
@@ -727,7 +727,7 @@ function OverallView({
 
           {trackHighlights.trackA && (
             <div className="p-3 rounded-lg" style={{ background: 'rgba(0, 240, 255, 0.04)', border: '1px solid rgba(0, 240, 255, 0.12)' }}>
-              <div className="text-xs font-bold mb-1" style={{ color: '#00f0ff', fontFamily: 'Orbitron' }}>
+              <div className="text-xs font-bold mb-2" style={{ color: '#00f0ff', fontFamily: 'Orbitron' }}>
                 Track A (상체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -738,7 +738,7 @@ function OverallView({
 
           {trackHighlights.trackB && (
             <div className="p-3 rounded-lg" style={{ background: 'rgba(255, 0, 170, 0.04)', border: '1px solid rgba(255, 0, 170, 0.12)' }}>
-              <div className="text-xs font-bold mb-1" style={{ color: '#ff00aa', fontFamily: 'Orbitron' }}>
+              <div className="text-xs font-bold mb-2" style={{ color: '#ff00aa', fontFamily: 'Orbitron' }}>
                 Track B (하체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -778,7 +778,7 @@ function DependenciesSection({ receives, gives, memberId }) {
 
       {hasReceives && (
         <div className="mb-3">
-          <div className="text-xs mb-1" style={{ color: '#ff8800' }}>
+          <div className="text-xs mb-2" style={{ color: '#ff8800' }}>
             {'\u2190'} 받는 것
           </div>
           {receives.map((dep, i) => (
@@ -789,7 +789,7 @@ function DependenciesSection({ receives, gives, memberId }) {
 
       {hasGives && (
         <div>
-          <div className="text-xs mb-1" style={{ color: '#00ff88' }}>
+          <div className="text-xs mb-2" style={{ color: '#00ff88' }}>
             {'\u2192'} 주는 것
           </div>
           {gives.map((dep, i) => (
@@ -837,11 +837,11 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
           transition: 'max-height 0.3s cubic-bezier(.4,0,.2,1), opacity 0.2s ease',
         }}
       >
-        <div className="px-3 pb-2.5 space-y-1.5">
+        <div className="px-3 pb-2.5 space-y-2.5.5">
           {items.map((item, i) => (
             <div key={i} className="flex items-start gap-2">
               <span
-                className="text-sm uppercase tracking-wider flex-shrink-0 mt-0.5 px-1.5 py-0.5 rounded"
+                className="text-sm uppercase tracking-wider flex-shrink-0 mt-1.5 px-2.5 py-1.5 rounded"
                 style={{
                   fontFamily: 'Orbitron',
                   color: '#c8ff00',

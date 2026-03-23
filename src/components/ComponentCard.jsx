@@ -80,7 +80,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
       {/* Project usage */}
       {component.usage && (
         <Section title="프로젝트 내 용도">
-          <p className="text-sm text-[#e0e8ff] mb-1">{component.usage.description}</p>
+          <p className="text-sm text-[#e0e8ff] mb-2">{component.usage.description}</p>
           <div className="flex gap-2 text-xs text-[#6a7090]">
             {component.usage.quantity && <span>수량: {component.usage.quantity}개</span>}
             {component.usage.spares > 0 && <span>(+예비 {component.usage.spares})</span>}
@@ -125,7 +125,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-sm text-[#4466ff] hover:text-[#6688ff] mb-0.5"
+              className="block text-sm text-[#4466ff] hover:text-[#6688ff] mb-2"
             >
               🔗 {link.label}
             </a>
@@ -149,7 +149,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
 function Section({ title, children }) {
   return (
     <div className="mb-3">
-      <div className="text-xs text-[#6a7090] uppercase tracking-wider mb-1" style={{ fontFamily: 'Orbitron' }}>
+      <div className="text-xs text-[#6a7090] uppercase tracking-wider mb-2" style={{ fontFamily: 'Orbitron' }}>
         {title}
       </div>
       {children}
