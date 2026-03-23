@@ -83,7 +83,7 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
 
   return (
     <div className="mb-6">
-      <label className={`flex items-start gap-4 px-2 py-2 rounded-md cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
+      <label className={`flex items-start gap-4 px-4 py-3 rounded-lg cursor-pointer transition-colors duration-200 hover:bg-[#ffffff06] ${isChecked ? 'opacity-45' : ''}`}>
         <input
           type="checkbox"
           checked={isChecked}
@@ -620,7 +620,7 @@ function OverallView({
             return (
               <button
                 key={key}
-                className="w-full flex items-center gap-4 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-1 py-1.5 transition-colors"
+                className="w-full flex items-center gap-4 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-3 py-2.5 transition-colors"
                 onClick={() => onPartClick?.(key)}
               >
                 <span className="text-sm w-12 text-left text-[#6a7090]">

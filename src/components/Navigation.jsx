@@ -24,7 +24,7 @@ export default function Navigation({
           HYlion
         </h1>
 
-        <div className="flex items-center gap-1 bg-[#ffffff06] rounded-lg p-0.5">
+        <div className="flex items-center gap-1 bg-[#ffffff06] rounded-lg p-1">
           <button
             onClick={() => onModeChange('work')}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
