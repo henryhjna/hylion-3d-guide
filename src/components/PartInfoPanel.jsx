@@ -22,7 +22,7 @@ export default function PartInfoPanel({ partId, onClose }) {
         <div>
           <h2
             className="text-xl font-bold tracking-wide mb-2.5"
-            style={{ fontFamily: 'Orbitron', color: part.color }}
+            style={{ color: part.color }}
           >
             {part.label}
           </h2>
@@ -206,7 +206,7 @@ export default function PartInfoPanel({ partId, onClose }) {
 function Section({ title, children }) {
   return (
     <div className="mb-5">
-      <h3 className="text-xs font-bold text-[#6a7090] uppercase tracking-wider mb-2.5" style={{ fontFamily: 'Orbitron' }}>
+      <h3 className="text-xs font-bold text-[#6a7090] uppercase tracking-wider mb-2.5">
         {title}
       </h3>
       {children}

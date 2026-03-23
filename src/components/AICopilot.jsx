@@ -55,7 +55,7 @@ export default function AICopilot({ messages, isLoading, error, onSend, onClear,
       <div className="flex items-center justify-between p-3 border-b border-[#ffffff10]">
         <div className="flex items-center gap-2">
           <span className="text-sm">🤖</span>
-          <span className="text-xs font-bold" style={{ fontFamily: 'Orbitron', color: '#4466ff' }}>
+          <span className="text-xs font-bold" style={{ color: '#4466ff' }}>
             AI 코파일럿
           </span>
           {!hasApiKey && (

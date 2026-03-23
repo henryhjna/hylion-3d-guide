@@ -52,7 +52,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
       {/* Header */}
       <div className="flex items-start justify-between mb-2">
         <div>
-          <div className="text-sm font-bold text-[#00f0ff]" style={{ fontFamily: 'Orbitron' }}>
+          <div className="text-sm font-bold text-[#00f0ff]">
             {component.name}
           </div>
           <div className="text-xs text-[#6a7090]">{component.category}</div>
@@ -149,7 +149,7 @@ export default function ComponentCard({ component, position, onClose, onShowIn3D
 function Section({ title, children }) {
   return (
     <div className="mb-3">
-      <div className="text-xs text-[#6a7090] uppercase tracking-wider mb-2" style={{ fontFamily: 'Orbitron' }}>
+      <div className="text-xs text-[#6a7090] uppercase tracking-wider mb-2">
         {title}
       </div>
       {children}

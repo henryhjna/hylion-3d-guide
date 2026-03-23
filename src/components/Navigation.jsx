@@ -20,7 +20,7 @@ export default function Navigation({
         <h1
           onClick={() => onModeChange('work')}
           className="text-base font-bold tracking-widest glow-cyan cursor-pointer hover:opacity-80 transition-opacity"
-          style={{ fontFamily: 'Orbitron', color: '#00f0ff' }}
+          style={{ color: '#00f0ff' }}
         >
           HYlion
         </h1>
@@ -33,7 +33,7 @@ export default function Navigation({
                 ? 'bg-[#00f0ff12] text-[#00f0ff] shadow-sm'
                 : 'text-[#6a7090] hover:text-[#e0e8ff]'
             }`}
-            style={{ fontFamily: 'Orbitron' }}
+           
           >
             📋 작업
           </button>
@@ -44,7 +44,7 @@ export default function Navigation({
                 ? 'bg-[#00f0ff12] text-[#00f0ff] shadow-sm'
                 : 'text-[#6a7090] hover:text-[#e0e8ff]'
             }`}
-            style={{ fontFamily: 'Orbitron' }}
+           
           >
             🤖 탐색
           </button>

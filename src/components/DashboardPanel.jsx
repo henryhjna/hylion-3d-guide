@@ -392,7 +392,6 @@ export default function DashboardPanel({
           onClick={onOpenTechTree}
           className="w-full py-2.5 rounded-lg text-xs font-bold tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
           style={{
-            fontFamily: 'Orbitron',
             color: '#c8ff00',
             background: 'rgba(200, 255, 0, 0.06)',
             border: '1px solid rgba(200, 255, 0, 0.2)',
@@ -444,13 +443,13 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
       <div className="flex items-center gap-2 mb-3">
         <span
           className="text-xs font-bold uppercase tracking-widest"
-          style={{ fontFamily: 'Orbitron', color: '#c8ff00' }}
+          style={{ color: '#c8ff00' }}
         >
           GATE
         </span>
         <span
           className="text-sm font-bold"
-          style={{ fontFamily: 'Orbitron', color: '#c8ff00' }}
+          style={{ color: '#c8ff00' }}
         >
           {gate.name}
         </span>
@@ -520,7 +519,7 @@ function MemberView({
           {member.name}
         </div>
         <div className="flex-1 min-w-0">
-          <span className="text-xs font-bold" style={{ color: member.color, fontFamily: 'Orbitron' }}>
+          <span className="text-xs font-bold" style={{ color: member.color,  }}>
             {member.name}
           </span>
           <span className="text-xs text-[#6a7090] mx-1.5">{memberData.identity}</span>
@@ -534,7 +533,7 @@ function MemberView({
           <div className="flex items-center justify-between mb-2.5">
             <h3
               className="text-xs font-bold tracking-wide"
-              style={{ fontFamily: 'Orbitron', color: accentColor }}
+              style={{ color: accentColor }}
             >
               Week {weekNum} — {weekTitle}
             </h3>
@@ -551,7 +550,7 @@ function MemberView({
               border: `1px solid ${accentColor}25`,
             }}
           >
-            <div className="text-xs text-[#6a7090] mb-2" style={{ fontFamily: 'Orbitron' }}>
+            <div className="text-xs text-[#6a7090] mb-2">
               핵심 목표
             </div>
             <div className="text-sm font-bold" style={{ color: accentColor }}>
@@ -645,7 +644,7 @@ function OverallView({
       <div>
         <h2
           className="text-sm font-bold tracking-wide mb-2"
-          style={{ fontFamily: 'Orbitron', color: '#e0e8ff' }}
+          style={{ color: '#e0e8ff' }}
         >
           전체 프로젝트
         </h2>
@@ -656,7 +655,7 @@ function OverallView({
       <div>
         <h3
           className="text-xs font-bold tracking-wide mb-4"
-          style={{ fontFamily: 'Orbitron', color: '#00ff88' }}
+          style={{ color: '#00ff88' }}
         >
           Week {weekNum} — {weekTitle}
         </h3>
@@ -676,7 +675,7 @@ function OverallView({
           </div>
           <span
             className="text-xs font-bold w-10 text-right"
-            style={{ fontFamily: 'Orbitron', color: '#00ff88' }}
+            style={{ color: '#00ff88' }}
           >
             {progress.total}%
           </span>
@@ -720,14 +719,14 @@ function OverallView({
         <div className="space-y-2">
           <h4
             className="text-xs uppercase tracking-widest"
-            style={{ fontFamily: 'Orbitron', color: '#6a7090' }}
+            style={{ color: '#6a7090' }}
           >
             이번 주 하이라이트
           </h4>
 
           {trackHighlights.trackA && (
             <div className="p-3 rounded-lg" style={{ background: 'rgba(0, 240, 255, 0.04)', border: '1px solid rgba(0, 240, 255, 0.12)' }}>
-              <div className="text-xs font-bold mb-2" style={{ color: '#00f0ff', fontFamily: 'Orbitron' }}>
+              <div className="text-xs font-bold mb-2" style={{ color: '#00f0ff',  }}>
                 Track A (상체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -738,7 +737,7 @@ function OverallView({
 
           {trackHighlights.trackB && (
             <div className="p-3 rounded-lg" style={{ background: 'rgba(255, 0, 170, 0.04)', border: '1px solid rgba(255, 0, 170, 0.12)' }}>
-              <div className="text-xs font-bold mb-2" style={{ color: '#ff00aa', fontFamily: 'Orbitron' }}>
+              <div className="text-xs font-bold mb-2" style={{ color: '#ff00aa',  }}>
                 Track B (하체)
               </div>
               <div className="text-sm text-[#e0e8ff] leading-relaxed">
@@ -771,7 +770,7 @@ function DependenciesSection({ receives, gives, memberId }) {
     <div>
       <h4
         className="text-xs uppercase tracking-widest mb-3"
-        style={{ fontFamily: 'Orbitron', color: '#6a7090' }}
+        style={{ color: '#6a7090' }}
       >
         작업 의존성
       </h4>
@@ -817,7 +816,7 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
       >
         <span
           className="text-xs uppercase tracking-widest"
-          style={{ fontFamily: 'Orbitron', color: '#6a7090' }}
+          style={{ color: '#6a7090' }}
         >
           의존성 흐름
         </span>
@@ -843,7 +842,6 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
               <span
                 className="text-sm uppercase tracking-wider flex-shrink-0 mt-1.5 px-2.5 py-1.5 rounded"
                 style={{
-                  fontFamily: 'Orbitron',
                   color: '#c8ff00',
                   background: 'rgba(200, 255, 0, 0.08)',
                 }}

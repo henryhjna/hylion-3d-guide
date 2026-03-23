@@ -69,7 +69,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
             onChange={e => { setQuery(e.target.value); setViewingEntry(null); }}
             placeholder="문서 검색... (기획서, 실행가이드)"
             className="flex-1 bg-transparent text-sm text-[#e0e8ff] placeholder-[#6a7090] focus:outline-none"
-            style={{ fontFamily: 'JetBrains Mono' }}
+           
           />
           <kbd className="text-xs text-[#6a7090] bg-[#ffffff08] px-2.5 py-1.5 rounded border border-[#ffffff10]">
             ESC
@@ -88,7 +88,7 @@ export default function DocsSearch({ isOpen, onClose, onSearch, onSelectResult, 
                 ← 검색 결과
               </button>
               <div className="text-xs text-[#6a7090] mb-2">{viewingEntry.fileName}</div>
-              <h3 className="text-sm font-bold text-[#e0e8ff] mb-3" style={{ fontFamily: 'Orbitron' }}>
+              <h3 className="text-sm font-bold text-[#e0e8ff] mb-3">
                 {viewingEntry.sectionTitle}
               </h3>
               <div className="text-xs text-[#e0e8ff] leading-relaxed whitespace-pre-wrap">

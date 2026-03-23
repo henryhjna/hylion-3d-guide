@@ -87,7 +87,7 @@ const styles = {
     animation: 'pulseRing 1.8s ease-in-out infinite',
   },
   text: {
-    fontFamily: "'Orbitron', sans-serif",
+    fontFamily: 'Orbitron, sans-serif',
     fontSize: '14px',
     fontWeight: 600,
     letterSpacing: '2px',
@@ -104,7 +104,7 @@ const styles = {
   },
   dot: {
     animation: 'dotPulse 1.2s ease-in-out infinite',
-    fontFamily: "'Orbitron', sans-serif",
+    fontFamily: 'Orbitron, sans-serif',
     fontSize: '14px',
     fontWeight: 600,
     color: 'transparent',

@@ -153,13 +153,13 @@ const styles = {
   text: {
     fontSize: '13px',
     color: '#e0e0e0',
-    fontFamily: "'Orbitron', sans-serif",
+    fontFamily: 'Orbitron, sans-serif',
     whiteSpace: 'nowrap',
   },
   button: (variant) => ({
     padding: '6px 14px',
     fontSize: '12px',
-    fontFamily: "'Orbitron', sans-serif",
+    fontFamily: 'Orbitron, sans-serif',
     fontWeight: 600,
     border: `1px solid ${variant.borderColor}`,
     borderRadius: '6px',

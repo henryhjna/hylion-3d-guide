@@ -147,7 +147,7 @@ export default function ScenarioFlow() {
               >
                 🤖
               </div>
-              <div className="text-xs mt-1 font-bold" style={{ color: currentStep?.color, fontFamily: 'Orbitron' }}>
+              <div className="text-xs mt-1 font-bold" style={{ color: currentStep?.color,  }}>
                 {currentStep?.state}
               </div>
               {selectedLevel === 'C' && (
@@ -198,7 +198,7 @@ export default function ScenarioFlow() {
         {/* Level selector */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold" style={{ fontFamily: 'Orbitron', color: '#ff8800' }}>
+            <span className="text-xs font-bold" style={{ color: '#ff8800' }}>
               시나리오 레벨
             </span>
             <div className="flex gap-1">

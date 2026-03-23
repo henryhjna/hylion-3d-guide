@@ -120,7 +120,7 @@ function GlossaryTooltip({ data, term, position, onMouseEnter, onMouseLeave }) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="text-xs font-bold mb-2" style={{ color: '#4466ff', fontFamily: 'Orbitron' }}>
+      <div className="text-xs font-bold mb-2" style={{ color: '#4466ff',  }}>
         {term}
         {data.full && <span className="text-xs text-[#6a7090] font-normal ml-1.5">({data.full})</span>}
       </div>

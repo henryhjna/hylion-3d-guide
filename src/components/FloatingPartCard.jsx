@@ -66,7 +66,7 @@ export default function FloatingPartCard({ partId, position, onClose, onExplore 
       >
         {/* Header */}
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-base font-bold" style={{ color, fontFamily: 'Orbitron' }}>
+          <span className="text-base font-bold" style={{ color,  }}>
             {part.label}
           </span>
         </div>

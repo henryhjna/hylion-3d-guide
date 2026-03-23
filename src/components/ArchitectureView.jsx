@@ -8,13 +8,13 @@ export default function ArchitectureView() {
 
   return (
     <div className="absolute top-2 right-2 w-[380px] max-h-[calc(100%-16px)] overflow-y-auto glass-panel p-4 slide-in-right z-30">
-      <h2 className="text-sm font-bold tracking-wide mb-3 glow-cyan" style={{ fontFamily: 'Orbitron', color: '#00f0ff' }}>
+      <h2 className="text-sm font-bold tracking-wide mb-3 glow-cyan" style={{ color: '#00f0ff' }}>
         시스템 아키텍처
       </h2>
 
       {/* State selector */}
       <div className="mb-4">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
+        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
           상태별 리소스
         </label>
         <div className="flex flex-wrap gap-1">
@@ -40,7 +40,7 @@ export default function ArchitectureView() {
       {/* Resource mapping for selected state */}
       {resources && (
         <div className="mb-4 p-3 rounded-lg bg-[#ffffff05] border border-[#ffffff08]">
-          <div className="text-xs font-bold mb-2" style={{ color: resources.color, fontFamily: 'Orbitron' }}>
+          <div className="text-xs font-bold mb-2" style={{ color: resources.color,  }}>
             {resources.label}
           </div>
           <div className="space-y-2.5.5 text-xs">
@@ -55,7 +55,7 @@ export default function ArchitectureView() {
 
       {/* Computing Nodes */}
       <div className="mb-4">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
+        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
           컴퓨팅 노드
         </label>
         <div className="space-y-2">
@@ -70,7 +70,7 @@ export default function ArchitectureView() {
               }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold" style={{ color: node.color, fontFamily: 'Orbitron' }}>
+                <span className="text-xs font-bold" style={{ color: node.color,  }}>
                   {node.label}
                 </span>
                 <span className="text-xs text-[#6a7090]">{node.subtitle}</span>
@@ -100,7 +100,7 @@ export default function ArchitectureView() {
 
       {/* Power System */}
       <div className="mb-4">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
+        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
           전원 시스템
         </label>
         <div className="space-y-2.5.5">
@@ -127,7 +127,7 @@ export default function ArchitectureView() {
 
       {/* Network */}
       <div className="mb-2">
-        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
+        <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
           네트워크
         </label>
         <div className="space-y-2.5">

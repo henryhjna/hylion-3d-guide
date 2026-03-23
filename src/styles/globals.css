@@ -47,6 +47,11 @@ body {
 #root { height: 100vh; width: 100vw; overflow: hidden; }
 h1,h2,h3,h4,h5,h6 { font-family: var(--font-display); }
 
+/* Font utility classes */
+.font-display { font-family: var(--font-display) !important; }
+.font-mono { font-family: var(--font-mono) !important; }
+.font-body { font-family: var(--font-body) !important; }
+
 /* Dot grid background */
 body::before {
   content: ''; position: fixed; inset: 0;

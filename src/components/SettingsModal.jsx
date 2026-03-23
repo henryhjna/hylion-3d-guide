@@ -34,7 +34,7 @@ export default function SettingsModal({ isOpen, onClose }) {
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-sm font-bold tracking-wide" style={{ fontFamily: 'Orbitron', color: '#4466ff' }}>
+          <h2 className="text-sm font-bold tracking-wide" style={{ color: '#4466ff' }}>
             설정
           </h2>
           <button
@@ -47,7 +47,7 @@ export default function SettingsModal({ isOpen, onClose }) {
 
         {/* API Key */}
         <div className="mb-4">
-          <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block" style={{ fontFamily: 'Orbitron' }}>
+          <label className="text-xs text-[#6a7090] uppercase tracking-wider mb-2 block">
             Anthropic API Key
           </label>
           <div className="relative">
@@ -57,7 +57,7 @@ export default function SettingsModal({ isOpen, onClose }) {
               onChange={e => setApiKey(e.target.value)}
               placeholder="sk-ant-..."
               className="w-full px-3 py-2 rounded-lg bg-[#0a0a0f] border border-[#ffffff15] text-xs text-[#e0e8ff] placeholder-[#6a7090] focus:border-[#4466ff40] focus:outline-none"
-              style={{ fontFamily: 'JetBrains Mono' }}
+             
             />
             <button
               onClick={() => setShowKey(!showKey)}

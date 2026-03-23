@@ -60,7 +60,6 @@ export default function ExploreToggles({
               color: isOn ? color : '#666',
               fontSize: 13,
               fontWeight: 600,
-              fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif",
               cursor: 'pointer',
               transition: 'all 0.2s ease',
               boxShadow: isOn ? `0 0 12px ${color}55, inset 0 0 8px ${color}22` : 'none',
