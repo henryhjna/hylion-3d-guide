@@ -37,7 +37,7 @@ export default function PartInfoPanel({ partId, onClose }) {
       </div>
 
       {/* Track badge */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-6">
         <span
           className="tag"
           style={{
