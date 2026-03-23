@@ -245,7 +245,12 @@ export default function App() {
         {/* ── EXPLORE MODE: Right panel (z-10) ── */}
         {isExploreMode && selectedPart && (
           <div className="absolute top-0 right-0 w-[380px] h-full z-10 slide-in-right">
-            <PartInfoPanel partId={selectedPart} onClose={handleBack} />
+            <PartInfoPanel
+              partId={selectedPart}
+              onClose={handleBack}
+              onWeekSelect={(week) => { setSelectedWeek(week); }}
+              onMemberSelect={(memberId) => { setSelectedMember(memberId); handleModeChange('work'); }}
+            />
           </div>
         )}
 

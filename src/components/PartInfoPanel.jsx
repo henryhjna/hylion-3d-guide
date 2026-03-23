@@ -11,7 +11,7 @@ function getComponentsForPart(partId) {
     .map(([id, c]) => ({ id, ...c }));
 }
 
-export default function PartInfoPanel({ partId, onClose }) {
+export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberSelect }) {
   const part = PARTS[partId];
   if (!part) return null;
 
@@ -49,7 +49,11 @@ export default function PartInfoPanel({ partId, onClose }) {
           Track {part.track}
         </span>
         {part.weeks.map(w => (
-          <span key={w} className="tag bg-[#ffffff08] text-[#6a7090] border border-[#ffffff10]">
+          <span
+            key={w}
+            onClick={() => onWeekSelect?.(w)}
+            className="tag bg-[#ffffff08] text-[#6a7090] border border-[#ffffff10] cursor-pointer hover:bg-[#00f0ff15] hover:text-[#00f0ff] hover:border-[#00f0ff30] transition-colors"
+          >
             W{w}
           </span>
         ))}
@@ -63,7 +67,8 @@ export default function PartInfoPanel({ partId, onClose }) {
             return (
               <div
                 key={ownerId}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+                onClick={() => { if (member) onMemberSelect?.(member.id); }}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer hover:brightness-125 transition-all"
                 style={{ backgroundColor: (member?.color || '#ffffff') + '10', border: `1px solid ${(member?.color || '#ffffff')}20` }}
               >
                 <span className="text-sm font-bold" style={{ color: member?.color || '#e0e8ff' }}>
