@@ -251,7 +251,7 @@ export default function DashboardPanel({
   if (isCollapsed) {
     return (
       <div
-        className="fixed top-0 left-0 h-full flex flex-col items-center pt-16 pb-4 gap-3 w-12 bg-[rgba(18,18,26,0.92)] backdrop-blur-[12px] border-r border-r-white/[0.06] z-10 transition-all duration-300"
+        className="fixed top-0 left-0 h-full flex flex-col items-center pt-16 pb-4 gap-3 w-12 glass-panel rounded-none border-y-0 border-l-0 z-10 transition-all duration-300"
       >
         {/* Collapse toggle */}
         <button
@@ -315,7 +315,7 @@ export default function DashboardPanel({
 
   return (
     <div
-      className="fixed top-0 left-0 h-full flex flex-col w-[420px] bg-[rgba(18,18,26,0.88)] backdrop-blur-[14px] border-r border-r-white/[0.06] z-10 transition-all duration-300"
+      className="fixed top-0 left-0 h-full flex flex-col w-[420px] glass-panel rounded-none border-y-0 border-l-0 z-10 transition-all duration-300"
     >
       {/* ── Top bar: collapse toggle ─────────────────────────────── */}
       <div className="flex items-center justify-end px-3 pt-3 pb-1">
