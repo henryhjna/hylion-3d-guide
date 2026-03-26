@@ -163,7 +163,7 @@ export const PARTS = {
       { label: '특성', value: '백드라이버블 — 전원 차단 시 안전' },
     ],
     walkingRL: {
-      sim: 'IsaacLab (USD) + Newton 물리 백엔드',
+      sim: 'IsaacLab + Newton (Isaac Lab 3.0 마이그레이션 필요, DGX Spark PhysX GPU 미지원)',
       gait: '타이머 기반 open-loop (시연 환경 고정)',
     },
     safety: 'ESP32 낙상 감지 (MPU6050 → MOSFET OFF)',
@@ -189,7 +189,7 @@ export const PARTS = {
       { label: '특성', value: '백드라이버블 — 전원 차단 시 안전' },
     ],
     walkingRL: {
-      sim: 'IsaacLab (USD) + Newton 물리 백엔드',
+      sim: 'IsaacLab + Newton (Isaac Lab 3.0 마이그레이션 필요, DGX Spark PhysX GPU 미지원)',
       gait: '타이머 기반 open-loop (시연 환경 고정)',
     },
     safety: 'ESP32 낙상 감지 (MPU6050 → MOSFET OFF)',
