@@ -53,7 +53,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["camera_usb", "neopixel_led", "mg90s_servo", "xl430"],
+    components: ["머리cam/손목cam", "neopixel_led", "mg90s_servo", "xl430"],
     estimatedHours: 2,
   },
 
@@ -70,7 +70,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 9.1절 (조달 채널)", type: "internal", section: "9.1" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "u2d2", "camera_usb", "esc_b_g431b"],
+    components: ["orin_nano_super", "nuc", "xl430", "u2d2", "머리cam/손목cam", "esc_b_g431b"],
     estimatedHours: 2,
   },
 
@@ -155,7 +155,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.4절 (무게 예산)", type: "internal", section: "7.4" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "camera_usb", "battery_a", "battery_b"],
+    components: ["orin_nano_super", "nuc", "xl430", "머리cam/손목cam", "battery_a", "battery_b"],
     estimatedHours: 2,
   },
 
@@ -206,7 +206,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 텔레오퍼레이션 가이드", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["xl430", "u2d2", "camera_usb"],
+    components: ["xl430", "u2d2", "머리cam/손목cam"],
     estimatedHours: 4,
   },
 
@@ -255,7 +255,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["camera_usb", "neopixel_led", "mg90s_servo"],
+    components: ["머리cam/손목cam", "neopixel_led", "mg90s_servo"],
     estimatedHours: 3,
   },
 
@@ -291,7 +291,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 프레임워크", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["xl430", "u2d2", "camera_usb"],
+    components: ["xl430", "u2d2", "머리cam/손목cam"],
     estimatedHours: 4,
   },
 
@@ -415,7 +415,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
     ],
-    components: ["xl430", "camera_usb"],
+    components: ["xl430", "머리cam/손목cam"],
     estimatedHours: 2,
   },
 
@@ -447,7 +447,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 텔레오퍼레이션", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["xl430", "u2d2", "camera_usb"],
+    components: ["xl430", "u2d2", "머리cam/손목cam"],
     estimatedHours: 3,
   },
 
@@ -500,7 +500,7 @@ export const TASK_HINTS = {
       { label: "JetPack 설치 가이드", url: "https://developer.nvidia.com/embedded/jetpack" },
       { label: "기획서 5.3절 (컴퓨팅 분배)", type: "internal", section: "5.3" },
     ],
-    components: ["orin_nano_super", "camera_usb"],
+    components: ["orin_nano_super", "머리cam/손목cam"],
     estimatedHours: 6,
   },
 
@@ -793,7 +793,7 @@ export const TASK_HINTS = {
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
       { label: "기획서 4.2절 (수집 전략)", type: "internal", section: "4.2" },
     ],
-    components: ["xl430", "u2d2", "camera_usb"],
+    components: ["xl430", "u2d2", "머리cam/손목cam"],
     estimatedHours: 8,
   },
 
@@ -808,7 +808,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작 타임라인)", type: "internal", section: "7.3" },
     ],
-    components: ["camera_usb", "neopixel_led", "mg90s_servo"],
+    components: ["머리cam/손목cam", "neopixel_led", "mg90s_servo"],
     estimatedHours: 4,
   },
 
@@ -970,7 +970,7 @@ export const TASK_HINTS = {
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
       { label: "기획서 4.2절 (수집 전략)", type: "internal", section: "4.2" },
     ],
-    components: ["xl430", "u2d2", "camera_usb"],
+    components: ["xl430", "u2d2", "머리cam/손목cam"],
     estimatedHours: 40,
   },
 
@@ -1177,7 +1177,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "MediaPipe 얼굴 감지", url: "https://developers.google.com/mediapipe/solutions/vision/face_detector" },
     ],
-    components: ["xl430", "camera_usb", "orin_nano_super"],
+    components: ["xl430", "머리cam/손목cam", "orin_nano_super"],
     estimatedHours: 6,
   },
 
@@ -1325,7 +1325,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 6.1절 (epsilon2 역할)", type: "internal", section: "6.1" },
     ],
-    components: ["neopixel_led", "mg90s_servo", "xl430", "camera_usb"],
+    components: ["neopixel_led", "mg90s_servo", "xl430", "머리cam/손목cam"],
     estimatedHours: 10,
   },
 
@@ -1561,7 +1561,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["camera_usb", "neopixel_led"],
+    components: ["머리cam/손목cam", "neopixel_led"],
     estimatedHours: 4,
   },
 
@@ -1670,7 +1670,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["camera_usb", "neopixel_led", "mg90s_servo", "xl430"],
+    components: ["머리cam/손목cam", "neopixel_led", "mg90s_servo", "xl430"],
     estimatedHours: 8,
   },
 
@@ -2002,7 +2002,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "camera_usb", "neopixel_led", "speaker", "microphone"],
+    components: ["orin_nano_super", "nuc", "xl430", "머리cam/손목cam", "neopixel_led", "speaker", "microphone"],
     estimatedHours: 8,
   },
 
@@ -2122,7 +2122,7 @@ export const TASK_HINTS = {
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
       { label: "기획서 10절 (최종 필수)", type: "internal", section: "10" },
     ],
-    components: ["orin_nano_super", "nuc", "esp32", "xl430", "camera_usb", "neopixel_led", "speaker", "microphone"],
+    components: ["orin_nano_super", "nuc", "esp32", "xl430", "머리cam/손목cam", "neopixel_led", "speaker", "microphone"],
     estimatedHours: 4,
   },
 
