@@ -41,10 +41,10 @@ export const TIMELINE = [
     title: '수집 집중 + Phase 1 마감',
     star: true,
     trackA: '570개 몰아서 수집 (δ1+ε2, 하루 ~120개×5일), SmolVLA Stage 2 학습 시작 (δ3)',
-    trackB: 'Sim2sim 검증 (IsaacLab→MuJoCo), 공중 지그 프린트 (δ2)',
+    trackB: 'Newton 기반 Walking RL 검증 (sim-to-real 준비), 공중 지그 프린트 (δ2)',
     highlight: '양팔(수집) + 양다리(시뮬)',
     highlightParts: ['left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['Phase 1 — 토르소 완성, SmolVLA v1 동작, ESP32 차단, Sim2sim, 수집 600개'],
+    gates: ['Phase 1 — 토르소 완성, SmolVLA v1 동작, ESP32 차단, Newton Walking RL 검증 완료, 수집 600개'],
     key: 'TensorRT 변환 + Orin 배포 + GPU 프로파일링 (ε1)',
   },
   {
@@ -86,7 +86,7 @@ export const TIMELINE = [
     trackB: 'Walking RL 최종본, 비상 매뉴얼 작성 (δ2, δ3)',
     highlight: '머리(통합) + 양다리(최종) + 전체(외장)',
     highlightParts: ['head', 'left_leg', 'right_leg'],
-    gates: ['Phase 3 — 머리 통합, SmolVLA v2, Walking RL 최종, 외장 완성, sim-to-real 리포트'],
+    gates: ['Phase 3 — 머리 통합, SmolVLA v2 배포, Walking RL 최종본, 더미 보행 안정'],
     key: '시나리오 레벨 예비 판정',
   },
   {
@@ -98,7 +98,7 @@ export const TIMELINE = [
     trackB: '실체 장착 보행 테스트',
     highlight: '전체 로봇',
     highlightParts: ['head', 'torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['합류 — 상하체 결합, 실체 보행, MOSFET 차단, 풀 시나리오 1차'],
+    gates: ['합류 — 상하체 결합, 실체 보행, MOSFET 실측, 풀 시나리오 1차 통과'],
     key: 'FETCH 시퀀서 타이머 튜닝 + 시나리오 레벨 판정 (A/B/C)',
   },
   {

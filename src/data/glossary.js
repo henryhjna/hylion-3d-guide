@@ -91,8 +91,12 @@ export const GLOSSARY = {
   },
   "IsaacLab": {
     definition: "NVIDIA의 로봇 시뮬레이션 프레임워크. USD 기반 물리 시뮬레이션 환경에서 Walking RL 학습과 sim-to-real 전이를 수행한다. BHL 환경이 이미 검증되어 있다.",
-    related: ["USD", "sim-to-real", "domain randomization"],
+    related: ["USD", "sim-to-real", "domain randomization", "Newton"],
     links: [{ label: "IsaacLab GitHub", url: "https://github.com/isaac-sim/IsaacLab" }],
+  },
+  "Newton": {
+    definition: "NVIDIA Isaac Sim 4.5+의 기본 물리 엔진. GPU 가속 강체·관절 시뮬레이션을 지원하여 대규모 병렬 RL 학습에 유리하다. 첫 실행 시 JIT 컴파일이 필요하며, BHL의 기존 sim-to-real은 PhysX에서 검증되었으므로 Newton 전환 시 조기 검증이 필수이다.",
+    related: ["IsaacLab", "Walking RL", "sim-to-real", "PhysX"],
   },
   "sim-to-real": {
     definition: "시뮬레이션에서 학습한 정책(policy)을 실제 로봇에 적용하는 전이 기법. 시뮬레이션과 현실의 차이(gap)를 줄이는 것이 핵심 과제이다.",
@@ -284,6 +288,11 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   // Audio / Vision
   // ──────────────────────────────────────────────
+  "손목 카메라": {
+    full: "Wrist Camera (hand-eye view)",
+    definition: "SO-ARM 그리퍼 부근에 장착하는 USB 카메라. SmolVLA 매니퓰레이션 추론의 입력으로 사용된다. 머리 카메라(시선 추적/대화용)와 용도가 구분되며, Week 1에서 위치·각도를 확정한 후 변경하지 않는다.",
+    related: ["SmolVLA", "MediaPipe", "머리 카메라"],
+  },
   "MediaPipe": {
     definition: "Google의 실시간 비전 AI 프레임워크. 얼굴 감지, 손 추적 등을 제공하며, 하이리온에서는 CPU 모드로 관객 얼굴을 감지하여 목 서보 PID 시선 추적에 활용한다.",
     related: ["블렌드셰이프", "lip sync"],

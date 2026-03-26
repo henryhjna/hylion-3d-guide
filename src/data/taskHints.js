@@ -329,12 +329,12 @@ export const TASK_HINTS = {
     estimatedHours: 2,
   },
 
-  w0_sim2sim_study: {
-    summary: "δ2 전용 과제 (Day 4). Sim2sim(IsaacLab→MuJoCo)은 시뮬에서 학습한 Walking RL policy를 실제 NUC에서 실행하기 전 중간 검증 단계다(기획서 8절). Week 3에서 본격 Sim2sim 검증을 실행하므로, BHL 문서에서 절차와 변환 스크립트 구조를 사전 파악한다.",
+  w0_newton_simtoreal_study: {
+    summary: "δ2 전용 과제 (Day 4). Newton sim-to-real(Newton 기반)은 시뮬에서 학습한 Walking RL policy를 실제 NUC에서 실행하기 전 중간 검증 단계다(기획서 8절). Week 3에서 본격 Newton sim-to-real 검증을 실행하므로, BHL 문서에서 절차와 변환 스크립트 구조를 사전 파악한다.",
     steps: [
-      "BHL 문서에서 Sim2sim 관련 섹션 정독 — IsaacLab→MuJoCo 변환 절차",
+      "BHL 문서에서 Newton sim-to-real 관련 섹션 정독 — Newton 기반 변환 절차",
       "MuJoCo XML 모델 구조 확인 — URDF와의 차이점 파악",
-      "Sim2sim 변환 스크립트(있을 경우) 코드 리딩",
+      "Newton sim-to-real 변환 스크립트(있을 경우) 코드 리딩",
       "IsaacLab policy 출력 → MuJoCo 입력 인터페이스 매핑 이해",
       "lowlevel C 코드 리딩 계속 — policy 실행 파트와 CAN 통신 파트 집중",
     ],
@@ -620,11 +620,11 @@ export const TASK_HINTS = {
     estimatedHours: 5,
   },
 
-  w1_sim2sim_setup: {
-    summary: "δ2 전용 과제. Week 0에서 문서 수준으로 파악한 Sim2sim 절차를 실제로 셋업한다. IsaacLab에서 학습한 policy를 MuJoCo에서 실행하여 전이 품질을 검증하는 환경이다(기획서 8절). 동시에 Orin↔NUC 간 Ethernet 직결 ROS2 통신(/gait/cmd, /gait/status)을 확인한다.",
+  w1_newton_rl_setup: {
+    summary: "δ2 전용 과제. Week 0에서 문서 수준으로 파악한 Newton sim-to-real 절차를 실제로 셋업한다. IsaacLab에서 학습한 policy를 MuJoCo에서 실행하여 전이 품질을 검증하는 환경이다(기획서 8절). 동시에 Orin↔NUC 간 Ethernet 직결 ROS2 통신(/gait/cmd, /gait/status)을 확인한다.",
     steps: [
       "MuJoCo 설치 + BHL MuJoCo 모델(MJCF) 로드 확인",
-      "IsaacLab → MuJoCo 변환 파이프라인 실행 테스트",
+      "Newton 기반 변환 파이프라인 실행 테스트",
       "Orin↔NUC Ethernet 직결 설정 — 고정 IP 할당, ping 확인",
       "ROS2 토픽 통신 테스트 — /gait/cmd(Orin→NUC), /gait/status(NUC→Orin) 퍼블리시/구독",
       "통신 지연 측정 — ROS2 토픽 라운드트립 latency 확인",
@@ -1051,8 +1051,8 @@ export const TASK_HINTS = {
     estimatedHours: 6,
   },
 
-  w3_sim2sim_verify: {
-    summary: "IsaacLab에서 학습한 Walking RL policy를 MuJoCo로 전이(Sim2sim)하여 시뮬레이터 간 동작 차이를 검증한다. 이 검증이 통과해야 Week 5 공중 보행(Sim2real) 시 예상치 못한 동작 차이를 줄일 수 있다. 동시에 공중 지그를 3D프린트한다.",
+  w3_newton_rl_verify: {
+    summary: "IsaacLab에서 학습한 Walking RL policy를 MuJoCo로 전이(Newton sim-to-real)하여 시뮬레이터 간 동작 차이를 검증한다. 이 검증이 통과해야 Week 5 공중 보행(Sim2real) 시 예상치 못한 동작 차이를 줄일 수 있다. 동시에 공중 지그를 3D프린트한다.",
     steps: [
       "IsaacLab 학습 policy를 MuJoCo 환경에서 로드",
       "동일 초기 상태에서 두 시뮬의 관절 궤적 비교 (각도·토크 차이 분석)",
@@ -1090,7 +1090,7 @@ export const TASK_HINTS = {
       "수집 600개 완료 (시연 조건 60%+ 확인)",
       "SmolVLA v1 동작 + TensorRT 정합성 확인",
       "ESP32 MOSFET 차단 동작 확인",
-      "Sim2sim(IsaacLab → MuJoCo) 완료 + NUC 준비",
+      "Newton sim-to-real(Newton 기반) 완료 + NUC 준비",
     ],
     resources: [
       { label: "기획서 10절 (게이트 조건 — Phase 1)", type: "internal", section: "10" },
@@ -1226,7 +1226,7 @@ export const TASK_HINTS = {
     estimatedHours: 4,
   },
 
-  w4_groq_stt_llm: {
+  w4_cloud_stt_llm: {
     summary: "클라우드 STT + LLM을 스트리밍으로 연동하고, LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
     steps: [
       "클라우드 STT 스트리밍 연동 — 마이크 입력 → 클라우드 STT → 텍스트",
@@ -1842,9 +1842,9 @@ export const TASK_HINTS = {
   },
 
   w7_sim2real_report: {
-    summary: "epsilon2와 delta3이 공동으로 sim-to-real 파이프라인 전체를 심층 분석한다. IsaacLab 학습→Sim2sim(MuJoCo)→공중 보행→더미 지면 보행→(예비) 실체 보행까지의 각 단계별 gap을 정리하고, DR 파라미터 효과, 관절 응답 지연, 마찰 부정합 등 핵심 gap 요인을 리포트로 문서화한다. 이 리포트는 Phase 3 게이트 자료이자 Week 8 합체 시 참조 문서가 된다.",
+    summary: "epsilon2와 delta3이 공동으로 sim-to-real 파이프라인 전체를 심층 분석한다. IsaacLab 학습→Newton sim-to-real(MuJoCo)→공중 보행→더미 지면 보행→(예비) 실체 보행까지의 각 단계별 gap을 정리하고, DR 파라미터 효과, 관절 응답 지연, 마찰 부정합 등 핵심 gap 요인을 리포트로 문서화한다. 이 리포트는 Phase 3 게이트 자료이자 Week 8 합체 시 참조 문서가 된다.",
     steps: [
-      "각 단계별 gap 데이터 수집 정리 (시뮬→Sim2sim→공중→지면)",
+      "각 단계별 gap 데이터 수집 정리 (시뮬→Newton sim-to-real→공중→지면)",
       "DR 파라미터(mass, 마찰, 관절 강성) 효과 정량 분석",
       "관절 응답 지연(시뮬 명령 vs 실측) 분석 + 개선 여부 추적",
       "마찰 부정합 분석 (시뮬 마찰 vs 실제 바닥 마찰)",

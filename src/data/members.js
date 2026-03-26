@@ -198,7 +198,7 @@ export const MEMBERS = {
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           'BHL 문서 정독 + lowlevel 코드 리딩 (개인 노트북에서, NUC는 Week 1 도착)',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
-          'Sim2sim 절차 파악 (BHL 문서) + BHL lowlevel 코드 리딩 계속',
+          'Newton 기반 sim-to-real 절차 파악 (BHL 문서) + BHL lowlevel 코드 리딩 계속',
         ],
         dependencies: {
           receives: [],
@@ -215,7 +215,7 @@ export const MEMBERS = {
           'NUC xanmod RT 커널 완성 (Ubuntu 22.04 + RT + CAN)',
           'BHL lowlevel C 빌드 + 숙달 (코드 리딩, 더미 CAN 루프)',
           'PDB + BMS + DC-DC 조립·배선 + 전원 시퀀싱 문서화',
-          'Sim2sim 환경 셋업',
+          'Newton Walking RL 환경 셋업 (Isaac Lab + Newton 백엔드 확인)',
           'Orin↔NUC Ethernet + ROS2 통신 확인',
           'IsaacLab 환경 직접 실행 (δ3 인계 후)',
         ],
@@ -242,15 +242,15 @@ export const MEMBERS = {
         },
       },
       3: {
-        focus: 'Walking RL 모니터링 + Sim2sim 검증',
+        focus: 'Walking RL 모니터링 + Newton 검증',
         tasks: [
-          'Walking RL 모니터링 + Sim2sim 검증 (IsaacLab → MuJoCo)',
+          'Walking RL 모니터링 + Newton 기반 Walking RL 검증 (sim-to-real 준비)',
           '공중 지그 3D프린트',
           'SOC 20% 안전 자세 로직',
         ],
         dependencies: {
           receives: [],
-          gives: ['Sim2sim 검증 결과 → δ3 (Week 3)'],
+          gives: ['Newton Walking RL 검증 결과 → δ3 (Week 3)'],
         },
       },
       4: {
@@ -720,7 +720,7 @@ export const MEMBERS = {
         focus: 'SO-ARM 커리큘럼 + 부품 주문 + 사전 조사',
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
-          '한국 부품 온라인 주문 (Orin, NUC, XL430×2, U2D2×2, 카메라, ESC×12, 알루미늄 프로파일)',
+          '한국 부품 온라인 주문 (Orin, NUC, XL430×2, U2D2×2, 카메라 ×2(머리+손목), ESC×12, 알루미늄 프로파일)',
           '머리 외주 사양 논의 (레퍼런스+스케치 준비, δ1과 공동)',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'BHL URDF 파일 구조 파악 (문서 수준, Week 1에서 본격 셋업)',

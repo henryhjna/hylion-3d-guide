@@ -18,7 +18,7 @@ export const RESOURCES = {
     label: "BHL GitBook 문서",
     url: "https://berkeley-humanoid-lite.gitbook.io/docs",
     category: "하체",
-    tags: ["BHL", "문서", "조립", "Sim2sim", "lowlevel"],
+    tags: ["BHL", "문서", "조립", "sim-to-real", "lowlevel"],
   },
 
   // ──────────────────────────────────────────────
@@ -86,7 +86,13 @@ export const RESOURCES = {
     label: "IsaacLab GitHub 리포지토리",
     url: "https://github.com/isaac-sim/IsaacLab",
     category: "AI",
-    tags: ["IsaacLab", "시뮬레이션", "USD", "Walking RL", "NVIDIA"],
+    tags: ["IsaacLab", "시뮬레이션", "USD", "Walking RL", "NVIDIA", "Newton"],
+  },
+  "feetech_sts3215": {
+    label: "Feetech STS3215 서보",
+    url: "https://www.feetechrc.com/",
+    category: "상체",
+    tags: ["Feetech", "STS3215", "서보", "SO-ARM", "TTL"],
   },
   "isaaclab_docs": {
     label: "IsaacLab 공식 문서",
@@ -98,7 +104,7 @@ export const RESOURCES = {
     label: "MuJoCo 공식 사이트",
     url: "https://mujoco.org/",
     category: "AI",
-    tags: ["MuJoCo", "물리 시뮬레이션", "Sim2sim", "MJCF"],
+    tags: ["MuJoCo", "물리 시뮬레이션", "sim-to-real", "MJCF"],
   },
 
   // ──────────────────────────────────────────────

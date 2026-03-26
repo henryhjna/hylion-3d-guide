@@ -385,7 +385,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'Waveshare Board #1: 좌팔 STS3215 ×6, Waveshare Board #2: 우팔 STS3215 ×6 (USB). U2D2: 목 XL430 ×2 (Protocol 2.0)',
+        'U2D2 ×2: 목 XL430 Dynamixel ×2 통신 (Protocol 2.0, 1Mbps). Orin USB 연결',
       parts: ['torso'],
       quantity: 2,
       spares: 0,
