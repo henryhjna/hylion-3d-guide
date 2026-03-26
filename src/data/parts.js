@@ -133,12 +133,13 @@ export const PARTS = {
     ],
     smolvla: {
       objects: [
-        { name: '스타벅스 컵', episodes: 200 },
-        { name: '텀블러', episodes: 200 },
-        { name: '하이리온 인형', episodes: 200 },
+        { name: '스타벅스 컵 (메인)', episodes: 300 },
+        { name: '텀블러', episodes: 150 },
+        { name: '하이리온 인형', episodes: 150 },
       ],
       totalEpisodes: 600,
-      training: '2-Stage: Stage 1(LeRobot Hub 공개) → Stage 2(자체 600)',
+      distribution: '메인 물체 50%, 보조 물체 25% × 2 (시나리오 가중)',
+      training: 'smolvla_base 로드 → Stage 2 자체 600 에피소드 파인튜닝',
       pipeline: 'LLM이 물체 추출 → SmolVLA에 전달',
     },
     timeline: 'Week 0 커리큘럼 → Week 2~3 수집 → Week 4 ablation → Week 7 v2',

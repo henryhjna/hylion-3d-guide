@@ -41,7 +41,7 @@ export const TIMELINE = [
     title: '수집 집중 + Phase 1 마감',
     star: true,
     trackA: '570개 몰아서 수집 (δ1+ε2, 하루 ~120개×5일), SmolVLA Stage 2 학습 시작 (δ3)',
-    trackB: 'Newton 기반 Walking RL 검증 (sim-to-real 준비), HOVER reward 이식, sim2sim 검증, 공중 지그 프린트 (δ2)',
+    trackB: 'Newton 기반 Walking RL 검증 (sim-to-real 준비), HOVER reward 이식, 직립 체크포인트, 공중 지그 프린트 (δ2)',
     highlight: '양팔(수집) + 양다리(시뮬)',
     highlightParts: ['left_arm', 'right_arm', 'left_leg', 'right_leg'],
     gates: ['Phase 1 — 토르소 완성, SmolVLA v1 동작, ESP32 차단, Newton Walking RL 검증 완료, 수집 600개'],

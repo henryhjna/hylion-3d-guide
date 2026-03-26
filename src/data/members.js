@@ -258,6 +258,7 @@ export const MEMBERS = {
         tasks: [
           '액추에이터 10개 조립 (기어박스 후가공 완료 상태)',
           '다리 조립 시작 + 배터리 C 연결',
+          '★ 실측 URDF 확정 (mass·inertia 측정) — 기존 W7에서 앞당김',
         ],
         dependencies: {
           receives: [],
@@ -280,6 +281,8 @@ export const MEMBERS = {
         tasks: [
           '더미 웨이트 제작 (스펙시트 기반, 100g 단위 조절 가능)',
           '지면 보행 첫 시도',
+          'ONNX → TensorRT 변환 (NUC C runtime)',
+          '250Hz CAN 루프 검증',
           'gap 데이터 → ε2 분석, δ3 재학습 판단',
         ],
         dependencies: {
@@ -297,6 +300,7 @@ export const MEMBERS = {
           '재학습 결과 테스트 반복 + 30분 전원 테스트',
           'BMS 최종 + NUC 장기 안정성',
           '비상 매뉴얼 작성 (전원 시퀀싱, 비상정지, 낙상 차단, 재시작 절차)',
+          '드레스 리허설 (하체 트랙)',
         ],
         dependencies: {
           receives: [
@@ -370,6 +374,9 @@ export const MEMBERS = {
           'BHL 액추에이터 파라미터 문서화 + ROS2 토픽 리스트 초안',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
           'IsaacLab 체크포인트 결과 정리 + Week 1 직립 테스트 계획 수립',
+          'DGX Spark PhysX GPU 제약 확인 + Isaac Lab 3.0 마이그레이션 착수',
+          'AMASS 라이선스 신청 (승인까지 수일, 즉시 진행)',
+          'DGX 스케줄 달력 작성 (Walking RL 밤 / SmolVLA 낮)',
         ],
         dependencies: {
           receives: [],
@@ -384,7 +391,9 @@ export const MEMBERS = {
           'IsaacLab 환경 완성 → δ2 인계 (Week 1 최우선)',
           'IsaacLab 로드 검증 → ε2 검증 루프 인계',
           '파라메트릭 직립 테스트 시작 (Week 2 초 결과)',
-          'SmolVLA DGX Stage 1 시작 (LeRobot Hub 공개 데이터, 백그라운드 학습)',
+          'smolvla_base 로드 및 action space 매핑 검증 (D1~2 필수)',
+          'HOVER reward 함수·도메인 랜덤화 BHL 이식 시작',
+          'BONES-SEED 다운로드 + BHL retargeting 시작',
         ],
         dependencies: {
           receives: [],
@@ -396,11 +405,13 @@ export const MEMBERS = {
         },
       },
       2: {
-        focus: 'IsaacLab 직립 최종 확인 + SmolVLA Stage 1 모니터링',
+        focus: 'IsaacLab 직립 최종 확인 + Walking RL 시작 + HOVER 이식',
         tasks: [
           'IsaacLab 상부 mass 직립 최종 확인 → 보행 체크포인트',
-          'SmolVLA Stage 1 DGX 학습 모니터링',
-          '30개로 미니 파인튜닝 (DGX, Stage 2 테스트)',
+          '★ Walking RL 학습 시작 (DGX 밤 슬롯, HOVER reward 이식 완료 선행)',
+          'AMASS·BONES-SEED retargeting 완료',
+          'teacher-student 구조 사용 여부 결정',
+          '30개로 미니 파인튜닝 (DGX 낮 슬롯, Stage 2 테스트)',
           'δ3+δ1: 수집 전략 확정',
         ],
         dependencies: {
@@ -618,6 +629,7 @@ export const MEMBERS = {
         focus: '최적 데이터 조합 확정 + 서바이벌 모드 + 상태 머신 완성',
         tasks: [
           'ablation → 최적 데이터 조합 확정 (δ3 학습 결과 기반)',
+          '★ Orin TensorRT 추론 레이턴시 측정 (SmolVLA vision encoder + action expert 분리 변환)',
           '서바이벌 모드 엔진 완성 (경량 로컬 STT + 로컬 TTS on Orin, ε2 키워드 사전 연동)',
           '상태 머신 + FETCH 시퀀서 완성',
           '카메라 공유 (/camera/image_raw)',
@@ -650,6 +662,7 @@ export const MEMBERS = {
           'SmolVLA v2 데이터 정제 → δ3 전달',
           'TensorRT v2 Orin 배포 (δ3 학습 완료 모델)',
           '서바이벌 시나리오 확정 (ε2 키워드 사전 + δ3 시나리오 B/C 통합)',
+          '드레스 리허설 (상체 트랙)',
         ],
         dependencies: {
           receives: [
