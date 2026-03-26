@@ -216,4 +216,34 @@ export const RESOURCES = {
     category: "하체",
     tags: ["ESC", "BLDC", "모터 드라이버", "CAN", "ST"],
   },
+  "hover_github": {
+    label: "HOVER GitHub",
+    url: "https://github.com/NVlabs/HOVER",
+    category: "AI",
+    tags: ["HOVER", "humanoid", "reward", "locomotion", "NVlabs"],
+  },
+  "bones_seed": {
+    label: "BONES-SEED",
+    url: "https://github.com/NVlabs/HOVER",
+    category: "AI",
+    tags: ["BONES-SEED", "reference motion", "walking", "standing"],
+  },
+  "amass": {
+    label: "AMASS Motion Dataset",
+    url: "https://amass.is.tue.mpg.de/",
+    category: "AI",
+    tags: ["AMASS", "모션 캡처", "reference motion"],
+  },
+  "rsl_rl": {
+    label: "RSL-RL GitHub",
+    url: "https://github.com/leggedrobotics/rsl_rl",
+    category: "AI",
+    tags: ["RSL-RL", "PPO", "RL", "학습"],
+  },
+  "smolvla_base_hf": {
+    label: "smolvla_base (HuggingFace)",
+    url: "https://huggingface.co/lerobot/smolvla_base",
+    category: "AI",
+    tags: ["SmolVLA", "사전학습", "VLA", "450M"],
+  },
 };

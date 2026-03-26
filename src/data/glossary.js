@@ -486,4 +486,27 @@ export const GLOSSARY = {
     definition: "가장 널리 쓰이는 피드백 제어 알고리즘. 목 서보에서 MediaPipe가 감지한 얼굴 위치와 현재 목 각도의 오차를 PID로 보정하여 시선을 추적한다. 오버슈트 5도 미만 목표.",
     related: ["MediaPipe"],
   },
+  "HOVER": {
+    definition: "NVlabs의 오픈소스 humanoid locomotion 프레임워크. reward 함수, 도메인 랜덤화, sim2sim MuJoCo 파이프라인을 제공한다. BHL Walking RL에서 reward 구조를 이식하여 사용.",
+    related: ["Walking RL", "BONES-SEED", "MuJoCo"],
+    links: [{ label: "HOVER GitHub", url: "https://github.com/NVlabs/HOVER" }],
+  },
+  "BONES-SEED": {
+    definition: "NVlabs의 reference motion 데이터셋. 142K+ 모션, ~288시간 분량. standing·walking reference motion을 Walking RL 학습에 활용.",
+    related: ["HOVER", "AMASS", "Walking RL"],
+  },
+  "AMASS": {
+    definition: "대규모 인체 모션 캡처 데이터셋. 연구용 무료 라이선스, 신청 후 승인까지 수일 소요. BONES-SEED 보충용 추가 reference motion.",
+    related: ["BONES-SEED", "Walking RL"],
+    links: [{ label: "AMASS 공식", url: "https://amass.is.tue.mpg.de/" }],
+  },
+  "smolvla_base": {
+    definition: "HuggingFace의 사전학습된 SmolVLA 모델 (450M 파라미터, 487 datasets, ~1천만 프레임). Stage 1 사전학습을 대체.",
+    related: ["SmolVLA", "LeRobot", "파인튜닝"],
+    links: [{ label: "smolvla_base (HuggingFace)", url: "https://huggingface.co/lerobot/smolvla_base" }],
+  },
+  "Teacher-Student": {
+    definition: "RL 학습 구조. Teacher는 privileged observation으로 학습하고, Student는 실제 센서 기반으로 distillation. Walking RL에서 선택적 사용.",
+    related: ["Walking RL", "policy"],
+  },
 };

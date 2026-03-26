@@ -165,6 +165,8 @@ export const PARTS = {
     walkingRL: {
       sim: 'IsaacLab + Newton (Isaac Lab 3.0 마이그레이션 필요, DGX Spark PhysX GPU 미지원)',
       gait: '타이머 기반 open-loop (시연 환경 고정)',
+      reward: 'HOVER reward 구조 이식',
+      refMotion: 'BONES-SEED + AMASS',
     },
     safety: 'ESP32 낙상 감지 (MPU6050 → MOSFET OFF)',
     timeline: 'Week 0 시뮬 셋업 → Week 1~2 직립 테스트+RL 시작 → Week 3 Newton 검증 → Week 4~5 조립+공중보행 → Week 6 지면 → Week 8 실체 보행',
@@ -191,6 +193,8 @@ export const PARTS = {
     walkingRL: {
       sim: 'IsaacLab + Newton (Isaac Lab 3.0 마이그레이션 필요, DGX Spark PhysX GPU 미지원)',
       gait: '타이머 기반 open-loop (시연 환경 고정)',
+      reward: 'HOVER reward 구조 이식',
+      refMotion: 'BONES-SEED + AMASS',
     },
     safety: 'ESP32 낙상 감지 (MPU6050 → MOSFET OFF)',
     timeline: 'Week 0 시뮬 셋업 → Week 1~2 직립 테스트+RL 시작 → Week 3 Newton 검증 → Week 4~5 조립+공중보행 → Week 6 지면 → Week 8 실체 보행',
