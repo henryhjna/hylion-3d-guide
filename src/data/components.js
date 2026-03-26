@@ -201,7 +201,8 @@ export const COMPONENTS = {
     procurement: {
       channel: '심천',
       status: 'confirmed',
-      estimatedArrival: 'Week 0',
+      estimatedArrival: 'W2 발주 → W4 입고',
+      note: '⚠️ MAD 5010 110KV 재고 불안정 — Amazon 품절 시 MAD 직구 (배송 1주+)',
     },
     links: [
       { label: 'MAD Components', url: 'https://www.mad-motor.com/' },
@@ -481,7 +482,8 @@ export const COMPONENTS = {
     procurement: {
       channel: '한국',
       status: 'confirmed',
-      estimatedArrival: 'Week 0',
+      estimatedArrival: 'Week 1',
+      note: 'W1 Blender 스펙시트 이후 스펙 확정, 즉시 발주',
     },
     links: [],
     location3D: { part: 'right_arm', position: 'gripper', internalId: 'wrist_camera' },
