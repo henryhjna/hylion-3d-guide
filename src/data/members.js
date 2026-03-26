@@ -13,7 +13,7 @@ export const MEMBERS = {
         focus: 'SO-ARM 커리큘럼 + 킥오프',
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
-          '조립하면서 조립 기준서 초안 작성 (나사 토크, 그리스, 주의사항)',
+          '조립하면서 주의사항 메모 (δ2 인계 시 직접 시범)',
           '머리 외주 사양 논의 (전자부품 치수 제공, ε2와 공동)',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
@@ -24,26 +24,28 @@ export const MEMBERS = {
         ],
         dependencies: {
           receives: ['ε2: 머리 레퍼런스+스케치'],
-          gives: ['조립 기준서 초안 → δ2 (Week 1)'],
+          gives: ['직접 시범 → δ2 (Week 1)'],
         },
       },
       1: {
         focus: '설계 확정 + Track A 분기',
         tasks: [
+          '★ Day 1: Blender 스크립트 → 외형 규격 스펙 시트 산출 (링크 치수, 관절 원점, 손목 마운트 좌표)',
+          'Day 2: 스펙 시트 기반 손목 마운트 위치·각도 확정 (설계 기준)',
           '[전체 합의] 인터페이스 + 리소스 할당',
           '[전체 합의] U2D2 버스 분배 (좌팔 6 / 우팔 6+목 2)',
-          '[전체 합의] 카메라 마운트 위치·각도',
-          'SO-ARM 작업 공간 실측 + 카메라 위치·각도 확정 (이후 변경 금지)',
+          '[전체 합의] 카메라 마운트 위치·각도 (스펙 시트 확정 후)',
+          'SO-ARM 작업 공간 실측 + 머리cam 위치 확정',
           '실물체 3개 그립 테스트 (컵, 텀블러, 인형 → jaw 부족 시 고무 패드/물체 교체)',
           '텔레오퍼레이션 환경 구축 (leader + follower + 녹화)',
           '토르소 프레임 CAD (환기 구조 + 퀵릴리즈 hip)',
-          'BHL 액추에이터 3개 시험 조립 + 조립 기준서 작성 → δ2 인계',
+          'BHL 액추에이터 3개 시험 조립 → δ2에게 직접 시범 후 인계',
         ],
         dependencies: {
           receives: ['δ2: 상체 무게 적산값', 'ε1: 상태 머신 프레임워크 선정 결과'],
           gives: [
             '카메라 위치·각도 확정 → ε1 (Week 1)',
-            '조립 기준서 → δ2 (Week 1 말)',
+            '직접 시범 → δ2 (Week 1 말)',
             'SmolVLA 수집 기준 합의 → ε1 (Week 1)',
           ],
         },
@@ -221,7 +223,7 @@ export const MEMBERS = {
         ],
         dependencies: {
           receives: [
-            'δ1: 조립 기준서 (Week 1 말)',
+            'δ1: 직접 시범 (Week 1 말)',
             'δ3: IsaacLab 환경 완성 인계 (Week 1)',
           ],
           gives: ['상체 무게 적산값 → 전체 (Week 1 합의)'],
@@ -258,7 +260,8 @@ export const MEMBERS = {
         tasks: [
           '액추에이터 10개 조립 (기어박스 후가공 완료 상태)',
           '다리 조립 시작 + 배터리 C 연결',
-          '★ 실측 URDF 확정 (mass·inertia 측정) — 기존 W7에서 앞당김',
+          '토르소+팔 부분 실측 (시뮬 파라미터 보정용)',
+          'NUC 측 ROS2 /gait/cmd 수신 + /gait/status 발행 구현',
         ],
         dependencies: {
           receives: [],
@@ -269,6 +272,7 @@ export const MEMBERS = {
         focus: '다리 완성 + 공중 지그 보행 테스트',
         tasks: [
           '다리 완성 + NUC↔CAN 실물 연결',
+          '★ 다리 완료 직후 전체 실측 URDF 확정 (토르소+팔+다리 mass·inertia)',
           '공중 지그 보행 테스트 + NUC jitter 측정',
         ],
         dependencies: {
@@ -384,16 +388,18 @@ export const MEMBERS = {
         },
       },
       1: {
-        focus: 'IsaacLab 환경 완성 + 직립 테스트 + SmolVLA Stage 1',
+        focus: 'IsaacLab 환경 완성 + 직립 테스트 + Dependency 체인 시작',
         tasks: [
+          '★ Day 2: δ1 스펙 시트 기반 URDF ground truth 확정',
           '[전체 합의] 인터페이스 + 리소스 할당',
-          'IsaacLab 커스텀 상부 추가 (토르소 mesh, 머리 mass, SO-ARM 간략 모델, DR ±20%)',
+          'IsaacLab 커스텀 상부 추가 (확정된 URDF 기반, DR ±20%)',
           'IsaacLab 환경 완성 → δ2 인계 (Week 1 최우선)',
           'IsaacLab 로드 검증 → ε2 검증 루프 인계',
           '파라메트릭 직립 테스트 시작 (Week 2 초 결과)',
-          'smolvla_base 로드 및 action space 매핑 검증 (D1~2 필수)',
-          'HOVER reward 함수·도메인 랜덤화 BHL 이식 시작',
+          'Day 3~: smolvla_base action space → BHL 매핑 검증 (스펙 시트 확정 후)',
+          'Day 3~: HOVER reward·도메인 랜덤화 BHL 이식 시작 (URDF 확정 후)',
           'BONES-SEED 다운로드 + BHL retargeting 시작',
+          '★ Teacher-Student vs 단일 policy 결정 (ONNX export 일정에 영향)',
         ],
         dependencies: {
           receives: [],
@@ -410,7 +416,6 @@ export const MEMBERS = {
           'IsaacLab 상부 mass 직립 최종 확인 → 보행 체크포인트',
           '★ Walking RL 학습 시작 (DGX 밤 슬롯, HOVER reward 이식 완료 선행)',
           'AMASS·BONES-SEED retargeting 완료',
-          'teacher-student 구조 사용 여부 결정',
           '30개로 미니 파인튜닝 (DGX 낮 슬롯, Stage 2 테스트)',
           'δ3+δ1: 수집 전략 확정',
         ],
@@ -561,7 +566,7 @@ export const MEMBERS = {
           '상태별 프로세스-리소스 매핑표 초안',
           'smach/FlexBE 평가 → 상태 머신 프레임워크 선정',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
-          'SmolVLA 수집 기준 문서 초안 + LeRobot 데이터 포맷 사전 조사',
+          'SmolVLA 수집 조건 합의 (δ1과) + LeRobot 수집 파이프라인 세팅',
         ],
         dependencies: {
           receives: [],
@@ -617,8 +622,11 @@ export const MEMBERS = {
         focus: 'ablation 해석 + 대화 연동 + FETCH 시퀀서',
         tasks: [
           'ablation 결과 해석 (δ3 실행 결과 받아서)',
-          '클라우드 API STT + LLM 연동 (스트리밍) + LLM 프롬프트에 fetch 태스크 타입 추가',
+          '★ JSON 스키마 작성 (W3 말 intent·물체 목록 확정 기반)',
+          'LLM 프롬프트 설계 (스키마 기반)',
+          '클라우드 API STT + LLM 연동 (스트리밍) + fetch 태스크 타입 추가',
           'FETCH 시퀀서 구현 (WALKING→MANIPULATING→WALKING→handover)',
+          'Orin 측 ROS2 /gait/cmd 발행 구현',
         ],
         dependencies: {
           receives: ['δ3: ablation 실행 결과 (Week 4)'],
@@ -632,6 +640,7 @@ export const MEMBERS = {
           '★ Orin TensorRT 추론 레이턴시 측정 (SmolVLA vision encoder + action expert 분리 변환)',
           '서바이벌 모드 엔진 완성 (경량 로컬 STT + 로컬 TTS on Orin, ε2 키워드 사전 연동)',
           '상태 머신 + FETCH 시퀀서 완성',
+          '★ 파서 구현 + 대화 파이프라인 통합 테스트 (JSON 스키마 기반)',
           '카메라 공유 (/camera/image_raw)',
         ],
         dependencies: {
@@ -730,7 +739,7 @@ export const MEMBERS = {
     parts: ['head'],
     weeklyTasks: {
       0: {
-        focus: 'SO-ARM 커리큘럼 + 부품 주문 + 사전 조사',
+        focus: 'SO-ARM 커리큘럼 + 부품 주문 + ESP32 구현 시작',
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '한국 부품 온라인 주문 (Orin, NUC, XL430×2, U2D2×2, 카메라 ×2(머리+손목), ESC×12, 알루미늄 프로파일)',
@@ -741,7 +750,7 @@ export const MEMBERS = {
           '텔레옵 직접 해보며 수집 감각 사전 체험',
           '머리 외주 사양서 마무리 (δ1과 공동, 외형+내부 치수+개구부+≤300g)',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
-          'ESP32 + MPU6050 낙상 감지 사전 조사 + 평가 지표 구상',
+          'ESP32 + MPU6050 낙상 감지 구현 시작',
         ],
         dependencies: {
           receives: ['δ1: 전자부품 치수 (머리 외주 사양 논의)'],
@@ -794,14 +803,14 @@ export const MEMBERS = {
         focus: '수집 종료 → 외장+캐릭터 표현 전환',
         tasks: [
           '바디 천 커버 패턴 제작 (하이리온 컬러, 벨크로 고정, 환기구 메쉬)',
-          'SmolVLA v1 평가 리포트 (물체별 성공률, 실패 유형)',
+          'SmolVLA v1 평가 (물체별 성공률, 실패 유형)',
           'lip sync 구현 (오픈소스, ε1이 TTS 오디오 타이밍 제공 → 입 서보 동기)',
           '목 서보 PID 시선 추적 시작 (MediaPipe 얼굴 → XL430 목 PID)',
           'Walking RL 시뮬 평가 (외장 작업과 시간 분배, Track B)',
         ],
         dependencies: {
           receives: ['ε1: TTS 오디오 타이밍 (Week 4)'],
-          gives: ['SmolVLA v1 평가 리포트 → δ3·ε1 (Week 4)'],
+          gives: ['SmolVLA v1 평가 → δ3·ε1 (Week 4)'],
         },
       },
       5: {

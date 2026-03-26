@@ -33,7 +33,7 @@ export const TIMELINE = [
     trackB: 'Walking RL 학습 시작, 기어박스 후가공, 직립 체크포인트 (δ2, δ3)',
     highlight: '토르소 + 양팔 + 양다리(시뮬)',
     highlightParts: ['torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['직립 체크포인트 (IsaacLab 상부 mass 직립 확인)', 'W2 — ESP32 실측 / 로컬 폴백 / Precoded 모션 / Walking RL 시작'],
+    gates: ['직립 체크포인트 (IsaacLab 상부 mass 직립 확인)', 'W2 — ESP32 실측 / 로컬 폴백 / Precoded 손 흔들기 / Walking RL 시작 / ROS2 토픽 포맷 확정'],
     key: '미니 파인튜닝 피드백 루프',
   },
   {
@@ -51,7 +51,7 @@ export const TIMELINE = [
     week: 4,
     title: '머리/외장 전환 + 물리 진입',
     trackA: '머리 표면 마감 시작, 바디 커버 패턴 (δ1→머리, ε2→외장+lip sync+목PID)',
-    trackB: '액추에이터 10개 조립 + 다리 조립 시작 (δ2), 실측 URDF 확정 (W7에서 앞당김)',
+    trackB: '액추에이터 10개 조립 + 다리 조립 시작 (δ2), 토르소+팔 부분 실측 (전체는 W5)',
     highlight: '머리 + 양다리(물리)',
     highlightParts: ['head', 'left_leg', 'right_leg'],
     gates: [],
