@@ -158,6 +158,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
             </div>
             <div className="text-sm text-[#9aa0b8]">
               총 {part.smolvla.totalEpisodes} 에피소드
+              {part.smolvla.distribution && <span className="ml-2">({part.smolvla.distribution})</span>}
             </div>
             <div className="text-sm text-[#e0e8ff]">{part.smolvla.training}</div>
             <div className="text-sm text-[#9aa0b8]">{part.smolvla.pipeline}</div>
@@ -170,7 +171,8 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
         <Section title="Walking RL">
           <div className="space-y-2.5">
             <Row label="시뮬" value={part.walkingRL.sim} />
-            <Row label="Sim2sim" value={part.walkingRL.sim2sim} />
+            {part.walkingRL.reward && <Row label="Reward" value={part.walkingRL.reward} />}
+            {part.walkingRL.refMotion && <Row label="Ref Motion" value={part.walkingRL.refMotion} />}
             <Row label="보행" value={part.walkingRL.gait} />
           </div>
         </Section>
@@ -258,6 +260,15 @@ function PartComponents({ partId }) {
                         <span className="text-[#e0e8ff]">{v}</span>
                       </div>
                     ))}
+                  </div>
+                )}
+                {comp.procurement && (
+                  <div className="flex gap-2 mb-2">
+                    <span className="text-[#9aa0b8]">조달</span>
+                    <span className="text-[#e0e8ff]">{comp.procurement.estimatedArrival || '미정'}</span>
+                    {comp.procurement.note && (
+                      <span className="text-[#ff8800] text-sm">{comp.procurement.note}</span>
+                    )}
                   </div>
                 )}
                 {comp.links?.length > 0 && (

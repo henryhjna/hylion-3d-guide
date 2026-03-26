@@ -135,6 +135,11 @@ export const STATE_TRANSITIONS = [
   { from: 'WALKING', to: 'IDLE', trigger: '정지 명령' },
   { from: '*', to: 'EMERGENCY', trigger: '비상' },
   { from: '*', to: 'LOW_BATTERY', trigger: 'SOC ≤20%' },
+  // 실패 경로
+  { from: 'MANIPULATING', to: 'IDLE', trigger: 'SmolVLA pick 실패 (재시도 한도 초과)', isFailure: true },
+  { from: 'FETCH', to: 'IDLE', trigger: 'stable 대기 타임아웃', isFailure: true },
+  { from: 'WALKING', to: 'MANIPULATING', trigger: '팔 안전 자세 복귀 후 전환', isFailure: false, note: '전환 시 팔 먼저 복귀' },
+  { from: 'TALKING', to: 'TALKING', trigger: '클라우드 API 장애 → 로컬 폴백 전환', isFailure: true },
 ];
 
 export const POWER_SYSTEM = [

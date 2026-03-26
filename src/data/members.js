@@ -214,7 +214,7 @@ export const MEMBERS = {
           '[전체 합의] 상체 무게 적산값 공유',
           '[전체 합의] 배터리 배치 방향 (토르소 vs hip)',
           '[전체 합의] 전원 시퀀싱',
-          'NUC xanmod RT 커널 완성 (Ubuntu 22.04 + RT + CAN)',
+          'NUC OS 설치 + xanmod RT 커널 + CAN 드라이버 세팅',
           'BHL lowlevel C 빌드 + 숙달 (코드 리딩, 더미 CAN 루프)',
           'PDB + BMS + DC-DC 조립·배선 + 전원 시퀀싱 문서화',
           'Newton Walking RL 환경 셋업 (Isaac Lab + Newton 백엔드 확인)',
@@ -645,10 +645,10 @@ export const MEMBERS = {
         ],
         dependencies: {
           receives: [
-            'δ3: SmolVLA 최적 조합 학습 결과 (Week 5)',
+            'δ3: SmolVLA ablation 학습 결과 (Week 4 말)',
             'ε2: 서바이벌 키워드 사전 (Week 5)',
           ],
-          gives: ['최적 데이터 조합 확정 → δ3 (Week 5)'],
+          gives: ['최적 데이터 조합 확정 → δ3 v2 학습 시작 (Week 5 초)'],
         },
       },
       6: {
@@ -847,11 +847,11 @@ export const MEMBERS = {
           'SmolVLA v2 실물 평가',
           '감정 표현 평가 (5인 테스트)',
           '외장 전체 최종 점검 (머리+바디+다리)',
-          'sim-to-real 심층 분석 + 리포트 정리 (Track B)',
+          'sim-to-real gap 확인 + DR 파라미터 조정 (Track B)',
         ],
         dependencies: {
           receives: ['δ3+ε1: SmolVLA v2 모델 (Week 7)'],
-          gives: ['sim-to-real 리포트 → 전체 (Week 7)'],
+          gives: ['sim-to-real gap 분석 결과 → δ3 재학습 판단 (Week 7)'],
         },
       },
       8: {
