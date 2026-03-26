@@ -544,7 +544,7 @@ export const MEMBERS = {
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
-          'LLM JSON 안정성 테스트 (Groq 100회) + Groq 전체 파이프라인 latency 측정 (STT→LLM→TTS 라운드트립)',
+          'LLM JSON 안정성 테스트 (클라우드 API 100회) + 클라우드 API 전체 파이프라인 latency 측정 (STT→LLM→TTS 라운드트립)',
           'JSON 액션 스키마 초안',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           '상태별 프로세스-리소스 매핑표 초안',
@@ -606,7 +606,7 @@ export const MEMBERS = {
         focus: 'ablation 해석 + 대화 연동 + FETCH 시퀀서',
         tasks: [
           'ablation 결과 해석 (δ3 실행 결과 받아서)',
-          'Groq STT + LLM 연동 (스트리밍) + LLM 프롬프트에 fetch 태스크 타입 추가',
+          '클라우드 API STT + LLM 연동 (스트리밍) + LLM 프롬프트에 fetch 태스크 타입 추가',
           'FETCH 시퀀서 구현 (WALKING→MANIPULATING→WALKING→handover)',
         ],
         dependencies: {
@@ -618,7 +618,7 @@ export const MEMBERS = {
         focus: '최적 데이터 조합 확정 + 서바이벌 모드 + 상태 머신 완성',
         tasks: [
           'ablation → 최적 데이터 조합 확정 (δ3 학습 결과 기반)',
-          '서바이벌 모드 엔진 완성 (Whisper tiny + Piper TTS on Orin, ε2 키워드 사전 연동)',
+          '서바이벌 모드 엔진 완성 (경량 로컬 STT + 로컬 TTS on Orin, ε2 키워드 사전 연동)',
           '상태 머신 + FETCH 시퀀서 완성',
           '카메라 공유 (/camera/image_raw)',
         ],
@@ -795,7 +795,7 @@ export const MEMBERS = {
         focus: '바디 커버 완성 + 캐릭터 표현 확장 + 키워드 사전',
         tasks: [
           '바디 천 커버 완성 + 토르소 임시 피팅',
-          'LED 감정 5종 확장 + Gemini 폴백 + VAD 비활성화',
+          'LED 감정 5종 확장 + 클라우드 API 폴백 + VAD 비활성화',
           'lip sync 완성 + PID 목 제어 완성 (오버슈트 <5°)',
           '서바이벌 키워드 사전 작성 ("컵/빨간거/저거" → starbucks_cup 등 동의어 매핑 + 사전 Q&A 30개)',
           '시뮬 궤적 저장 + 공중 보행 로그 vs 시뮬 비교 (Track B)',

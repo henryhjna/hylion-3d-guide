@@ -302,35 +302,20 @@ export const GLOSSARY = {
     definition: "Adafruit의 주소 지정 가능 RGB LED 제품군(WS2812B 기반). 하이리온의 눈 LED에 사용하며, Orin GPIO로 제어하여 감정별 색상·패턴을 표현한다.",
     related: ["GPIO"],
   },
-  "Groq": {
-    definition: "초저지연 LLM 추론 클라우드 서비스. STT(음성 인식) + LLM(대화 생성) + TTS(음성 합성) 파이프라인을 Groq API로 처리하여 실시간 대화를 구현한다.",
-    related: ["STT", "TTS", "LLM", "TTFT"],
-    links: [{ label: "Groq Console", url: "https://console.groq.com" }],
-  },
   "STT": {
     full: "Speech-to-Text (음성 인식)",
-    definition: "음성을 텍스트로 변환하는 기술. 온라인 시 Groq API, 오프라인 서바이벌 시 Whisper tiny를 Orin 로컬에서 실행한다.",
-    related: ["Whisper", "Groq", "TTS"],
+    definition: "음성을 텍스트로 변환하는 기술. 온라인 시 클라우드 API, 오프라인 서바이벌 시 경량 로컬 모델을 Orin에서 실행한다.",
+    related: ["TTS", "LLM"],
   },
   "TTS": {
     full: "Text-to-Speech (음성 합성)",
-    definition: "텍스트를 음성으로 변환하는 기술. 온라인 시 Groq TTS, 오프라인 서바이벌 시 Piper TTS를 Orin 로컬에서 실행한다.",
-    related: ["Piper", "Groq", "STT", "lip sync"],
+    definition: "텍스트를 음성으로 변환하는 기술. 온라인 시 클라우드 API, 오프라인 서바이벌 시 경량 로컬 TTS를 Orin에서 실행한다.",
+    related: ["STT", "lip sync"],
   },
   "LLM": {
     full: "Large Language Model (대규모 언어 모델)",
-    definition: "대규모 텍스트 데이터로 학습된 자연어 처리 모델. 하이리온에서는 Groq를 통해 관객과의 대화를 생성하고, fetch 태스크 명령을 추출한다.",
-    related: ["Groq", "STT", "TTS"],
-  },
-  "Whisper": {
-    definition: "OpenAI의 오픈소스 음성 인식 모델. 오프라인 서바이벌 모드에서 Whisper tiny 모델을 Orin에서 로컬 실행하여 네트워크 없이 음성을 인식한다.",
-    related: ["STT", "Groq"],
-    links: [{ label: "Whisper GitHub", url: "https://github.com/openai/whisper" }],
-  },
-  "Piper": {
-    definition: "경량 오픈소스 TTS 엔진. 오프라인 서바이벌 모드에서 Orin 로컬에서 실행하여 네트워크 없이 음성을 합성한다.",
-    related: ["TTS", "Groq"],
-    links: [{ label: "Piper GitHub", url: "https://github.com/rhasspy/piper" }],
+    definition: "대규모 텍스트 데이터로 학습된 자연어 처리 모델. 하이리온에서는 클라우드 LLM API를 통해 관객과의 대화를 생성하고, fetch 태스크 명령을 추출한다.",
+    related: ["STT", "TTS"],
   },
   "VAD": {
     full: "Voice Activity Detection (음성 활동 감지)",
@@ -414,7 +399,7 @@ export const GLOSSARY = {
   "TTFT": {
     full: "Time To First Token",
     definition: "사용자 입력 후 첫 번째 응답 토큰이 생성되기까지의 시간. 대화 파이프라인의 반응 속도 지표로, Phase 2 게이트에서 500ms 미만을 요구한다.",
-    related: ["latency", "Groq"],
+    related: ["latency", "LLM"],
   },
   "latency": {
     definition: "요청과 응답 사이의 지연 시간. STT->LLM->TTS 라운드트립 latency를 측정하여 대화 품질을 평가한다.",
@@ -491,10 +476,5 @@ export const GLOSSARY = {
     full: "Proportional-Integral-Derivative (비례-적분-미분 제어)",
     definition: "가장 널리 쓰이는 피드백 제어 알고리즘. 목 서보에서 MediaPipe가 감지한 얼굴 위치와 현재 목 각도의 오차를 PID로 보정하여 시선을 추적한다. 오버슈트 5도 미만 목표.",
     related: ["MediaPipe"],
-  },
-  "Gemini": {
-    definition: "Google의 멀티모달 AI 모델. 하이리온에서 Groq 장애 시 폴백으로 사용할 수 있다.",
-    related: ["Groq", "LLM"],
-    links: [{ label: "Gemini 개발자", url: "https://ai.google.dev" }],
   },
 };

@@ -501,7 +501,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        '음성 입력 캡처. Orin USB 오디오로 연결. Groq STT(온라인) 또는 Whisper tiny(서바이벌 모드)에 입력. 스피커와 에코 캔슬링 테스트 필요',
+        '음성 입력 캡처. Orin USB 오디오로 연결. 클라우드 STT(온라인) 또는 로컬 STT(서바이벌 모드)에 입력. 스피커와 에코 캔슬링 테스트 필요',
       parts: ['head'],
       quantity: 1,
       spares: 0,
@@ -529,7 +529,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'TTS 음성 출력. Orin USB 오디오로 연결. Groq TTS(온라인) 또는 Piper TTS(서바이벌 오프라인). 인사/대화 음성 재생, lip sync 타이밍 기준 제공',
+        'TTS 음성 출력. Orin USB 오디오로 연결. 클라우드 TTS(온라인) 또는 로컬 TTS(서바이벌 오프라인). 인사/대화 음성 재생, lip sync 타이밍 기준 제공',
       parts: ['torso'],
       quantity: 1,
       spares: 0,

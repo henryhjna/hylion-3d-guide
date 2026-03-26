@@ -160,17 +160,17 @@ export const TASK_HINTS = {
   },
 
   w0_llm_latency_test: {
-    summary: "ε1 전용 과제. 시연 시나리오(기획서 3절)에서 관객과의 대화→물체 가져오기(FETCH) 트리거가 핵심이므로, LLM의 JSON 응답 안정성과 전체 대화 파이프라인(STT→LLM→TTS) 지연 시간을 사전에 검증한다. Groq 클라우드(기획서 5.4절)를 1차 연결로 사용하며, JSON 파싱 실패율이 높으면 프롬프트 조정이나 응답 포맷 제약이 필요하다.",
+    summary: "ε1 전용 과제. 시연 시나리오(기획서 3절)에서 관객과의 대화→물체 가져오기(FETCH) 트리거가 핵심이므로, LLM의 JSON 응답 안정성과 전체 대화 파이프라인(STT→LLM→TTS) 지연 시간을 사전에 검증한다. 클라우드 API 클라우드(기획서 5.4절)를 1차 연결로 사용하며, JSON 파싱 실패율이 높으면 프롬프트 조정이나 응답 포맷 제약이 필요하다.",
     steps: [
-      "Groq API 키 발급 + Python 테스트 스크립트 작성",
+      "클라우드 API API 키 발급 + Python 테스트 스크립트 작성",
       "100회 호출 테스트 — JSON 형식 응답 요청 후 파싱 성공/실패율 측정",
-      "STT(Whisper) → LLM(Groq) → TTS 전체 라운드트립 시간 측정 (목표: 2초 이내)",
+      "STT(Whisper) → LLM(클라우드 API) → TTS 전체 라운드트립 시간 측정 (목표: 2초 이내)",
       "JSON 액션 스키마 초안 작성 — fetch(target_object), greet, talk 등 액션 타입 정의",
       "파싱 실패 패턴 분석 — 실패 시 프롬프트 개선 방향 메모",
       "결과 정리하여 Week 1 합의 미팅에서 공유 준비",
     ],
     resources: [
-      { label: "Groq API 문서", url: "https://console.groq.com/docs" },
+      { label: "클라우드 API API 문서", url: "https://console.groq.com/docs" },
       { label: "기획서 5.4절 (네트워크)", type: "internal", section: "5.4" },
     ],
     components: ["orin_nano_super"],
@@ -1042,7 +1042,7 @@ export const TASK_HINTS = {
       "TALKING → MANIPULATING 전환: LLM이 pick 액션 추출 시 SmolVLA 실행",
       "MANIPULATING → TALKING: SmolVLA 동작 완료 후 대화 복귀",
       "MANIPULATING 중 대화 요청 → 큐잉 후 완료 시 처리 (기획서 5.1절)",
-      "상태별 리소스 매핑 검증 — GPU(SmolVLA), CPU(MediaPipe), 네트워크(Groq) 동시 사용 시 충돌 없음 확인",
+      "상태별 리소스 매핑 검증 — GPU(SmolVLA), CPU(MediaPipe), 네트워크(클라우드 API) 동시 사용 시 충돌 없음 확인",
     ],
     resources: [
       { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
@@ -1227,16 +1227,16 @@ export const TASK_HINTS = {
   },
 
   w4_groq_stt_llm: {
-    summary: "Groq 클라우드 STT + LLM을 스트리밍으로 연동하고, LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
+    summary: "클라우드 API 클라우드 STT + LLM을 스트리밍으로 연동하고, LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
     steps: [
-      "Groq STT 스트리밍 연동 — 마이크 입력 → Groq Whisper → 텍스트",
+      "클라우드 API STT 스트리밍 연동 — 마이크 입력 → 클라우드 API Whisper → 텍스트",
       "LLM 프롬프트에 fetch 태스크 타입 추가 — \"컵 가져와\" → {action: \"fetch\", target: \"starbucks_cup\"}",
       "FETCH 시퀀서 구현: ①WALKING(테이블 방향, T1초) → ②MANIPULATING(SmolVLA pick) → ③WALKING(홈 방향, 180°+T2초) → ④MANIPULATING(handover) → ⑤IDLE",
       "기획서 4.4절 언어→동작 연결 로직: LLM이 물체 종류 추출 → SmolVLA에 target_object 전달",
       "Week 5에서 상태 머신과 완전 통합 + 카메라 공유 토픽 설정",
     ],
     resources: [
-      { label: "Groq API 문서", url: "https://console.groq.com/docs" },
+      { label: "클라우드 API API 문서", url: "https://console.groq.com/docs" },
       { label: "기획서 5.1절 (FETCH 서브스텝)", type: "internal", section: "5.1" },
       { label: "기획서 4.4절 (언어->동작 연결)", type: "internal", section: "4.4" },
     ],
@@ -1314,10 +1314,10 @@ export const TASK_HINTS = {
   },
 
   w5_emotion_5types: {
-    summary: "Week 2에서 구현한 3종(중립·기쁨·놀람) 감정을 5종(+슬픔·분노)으로 확장하고, lip sync와 PID 목 제어를 최종 완성한다. Groq 연결 장애 시 Gemini 폴백도 추가하며, VAD 비활성화로 TTS 자체 음성이 STT에 피드백되는 문제를 방지한다.",
+    summary: "Week 2에서 구현한 3종(중립·기쁨·놀람) 감정을 5종(+슬픔·분노)으로 확장하고, lip sync와 PID 목 제어를 최종 완성한다. 클라우드 API 연결 장애 시 클라우드 API 폴백도 추가하며, VAD 비활성화로 TTS 자체 음성이 STT에 피드백되는 문제를 방지한다.",
     steps: [
       "슬픔·분노 LED 패턴 추가 구현 (총 5종: 중립/기쁨/놀람/슬픔/분노)",
-      "Gemini 폴백 로직 추가 — Groq 장애 시 자동 전환",
+      "클라우드 API 폴백 로직 추가 — 클라우드 API 장애 시 자동 전환",
       "VAD 비활성화 처리 — TTS 재생 중 STT 입력 차단",
       "lip sync 최종 완성 — 음량→서보 매핑 미세 조정, 지연 보정",
       "PID 목 제어 완성 — 오버슈트 5° 이하로 Kp/Ki/Kd 튜닝",
@@ -1407,10 +1407,10 @@ export const TASK_HINTS = {
   },
 
   w5_survival_engine: {
-    summary: "네트워크 완전 차단 상황에서도 10분간 크래시 없이 자율 대화가 가능한 서바이벌 모드 엔진을 완성한다. Whisper tiny(STT)와 Piper TTS를 Orin 로컬에서 실행하고, ε2의 키워드 사전으로 물체 인식 + 사전 Q&A 30개로 대화를 처리한다.",
+    summary: "네트워크 완전 차단 상황에서도 10분간 크래시 없이 자율 대화가 가능한 서바이벌 모드 엔진을 완성한다. 경량 로컬 STT(STT)와 경량 로컬 TTS를 Orin 로컬에서 실행하고, ε2의 키워드 사전으로 물체 인식 + 사전 Q&A 30개로 대화를 처리한다.",
     steps: [
-      "Whisper tiny 모델을 Orin에 배포 + 마이크 입력 연결",
-      "Piper TTS 경량 엔진 Orin 설치 + 스피커 출력 확인",
+      "경량 로컬 STT 모델을 Orin에 배포 + 마이크 입력 연결",
+      "경량 로컬 TTS 경량 엔진 Orin 설치 + 스피커 출력 확인",
       "ε2 키워드 사전(동의어 매핑 + Q&A 30개) JSON 연동",
       "계층 1(스크립트 시연) + 계층 2(오프라인 자율) 모드 전환 로직 구현",
       "네트워크 차단 상태에서 10분 연속 크래시 없음 테스트",
@@ -1418,7 +1418,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 5.5절 (Fallback 계층 설계)", type: "internal", section: "5.5" },
       { label: "Whisper", url: "https://github.com/openai/whisper" },
-      { label: "Piper TTS", url: "https://github.com/rhasspy/piper" },
+      { label: "경량 로컬 TTS", url: "https://github.com/rhasspy/piper" },
     ],
     components: ["orin_nano_super", "speaker", "microphone"],
     estimatedHours: 8,
@@ -1518,7 +1518,7 @@ export const TASK_HINTS = {
       "FETCH 시퀀서 로직 연결 — WALKING 서브스텝은 mock(/gait/cmd 더미), pick+handover는 실제",
       "LOW_BATTERY 상태 구현 (SOC 20% 이하 → 안전 자세, 대화만 가능)",
       "EMERGENCY 상태 구현 (비상정지 → BHL 전원 차단, Orin 로그 유지)",
-      "서바이벌 계층 1(스크립트 시연: 키워드 매칭+사전 녹음) + 계층 2(Whisper tiny+Piper TTS) 통합",
+      "서바이벌 계층 1(스크립트 시연: 키워드 매칭+사전 녹음) + 계층 2(경량 로컬 STT+경량 로컬 TTS) 통합",
       "전체 파이프라인 10분 연속 크래시 없음 확인 — 메모리 누수/토픽 지연 모니터링",
     ],
     resources: [
@@ -1990,7 +1990,7 @@ export const TASK_HINTS = {
     steps: [
       "1. 시선 추적: MediaPipe 얼굴 감지 → XL430 목 PID → 관객 바라보기",
       "2. 인사: '안녕하세요' TTS + 손 흔들기(precoded) + happy LED + lip sync",
-      "3. 대화: 관객 '저 빨간 컵 줄 수 있어?' → Groq STT→LLM→fetch 트리거",
+      "3. 대화: 관객 '저 빨간 컵 줄 수 있어?' → 클라우드 API STT→LLM→fetch 트리거",
       "4. FETCH 서브스텝1: WALKING 테이블 방향 (T1초) → 정지",
       "5. FETCH 서브스텝2: MANIPULATING SmolVLA pick (target: starbucks_cup)",
       "6. FETCH 서브스텝3: WALKING 홈 복귀 (180도 회전+T2초) → 정지",
@@ -2030,10 +2030,10 @@ export const TASK_HINTS = {
     summary: "Week 9부터 개인별 분업이 아니라 전원이 같은 공간에서 함께 작업한다(올핸즈). 풀 시나리오를 반복 실행하며 실패 시 즉시 원인을 분류(HW/SW/네트워크/보행/조작)하고 담당자가 현장에서 수정한다. 5분 연속 보행과 보행+대화 동시 수행을 목표로 하며, 교수님 피드백을 받아 delta3이 현장에서 즉시 재튜닝(보행 파라미터/감정 표현 등)을 반영한다.",
     steps: [
       "풀 시나리오(시선→인사→FETCH→자유보행) 반복 실행 — 최소 5회",
-      "실패 시 즉시 원인 분류: HW(결합부/관절) / SW(상태머신/SmolVLA) / 네트워크(Groq) / 보행(policy) / 조작(pick 실패)",
+      "실패 시 즉시 원인 분류: HW(결합부/관절) / SW(상태머신/SmolVLA) / 네트워크(클라우드 API) / 보행(policy) / 조작(pick 실패)",
       "원인별 담당자 즉시 수정: delta1(HW), epsilon1(SW), delta2(보행), delta3(policy 재튜닝)",
       "5분 연속 보행 도전 — 낙상 없이 직진+회전+정지 반복",
-      "보행+대화 동시 테스트 — WALKING 상태에서 Groq STT/LLM/TTS 정상 동작 확인",
+      "보행+대화 동시 테스트 — WALKING 상태에서 클라우드 API STT/LLM/TTS 정상 동작 확인",
       "교수님 피드백 수렴 → delta3 현장 재튜닝(DGX 원격 또는 파라미터 미세조정)",
       "안정화 결과를 바탕으로 답사/리허설 1차 진입 판단",
     ],
@@ -2045,9 +2045,9 @@ export const TASK_HINTS = {
   },
 
   w9_site_survey: {
-    summary: "전원이 발표 장소에 방문하여 시연 환경을 실측하는 답사. 핵심 체크 3가지: (1) 5GHz 핫스팟 latency가 500ms 이내인지 — 초과 시 서바이벌 모드로 전환해야 하므로 Groq 라운드트립을 현장에서 직접 측정, (2) 바닥 마찰이 학습 환경과 다른지 — 달라질 경우 delta3이 policy 마찰 파라미터를 현장 보정, (3) 로봇 분리 운반→현장 10분 조립이 가능한지 — 퀵릴리즈 결합+전원 시퀀싱+캘리브를 10분 내에 완료하는 리허설.",
+    summary: "전원이 발표 장소에 방문하여 시연 환경을 실측하는 답사. 핵심 체크 3가지: (1) 5GHz 핫스팟 latency가 500ms 이내인지 — 초과 시 서바이벌 모드로 전환해야 하므로 클라우드 API 라운드트립을 현장에서 직접 측정, (2) 바닥 마찰이 학습 환경과 다른지 — 달라질 경우 delta3이 policy 마찰 파라미터를 현장 보정, (3) 로봇 분리 운반→현장 10분 조립이 가능한지 — 퀵릴리즈 결합+전원 시퀀싱+캘리브를 10분 내에 완료하는 리허설.",
     steps: [
-      "5GHz 핫스팟 latency 측정: Groq STT→LLM→TTS 라운드트립 500ms 이내 확인 — epsilon1 (초과 시 서바이벌 모드 전환 계획)",
+      "5GHz 핫스팟 latency 측정: 클라우드 API STT→LLM→TTS 라운드트립 500ms 이내 확인 — epsilon1 (초과 시 서바이벌 모드 전환 계획)",
       "바닥 재질 마찰 확인: 현장 바닥에서 보행 테스트 → 미끄러짐 발생 시 delta3 policy 마찰 보정 — delta2",
       "MediaPipe 조명 테스트: 현장 조명에서 얼굴 감지 정상 동작 확인 — epsilon2",
       "전원 콘센트 위치 확인: 충전/대기 위치 결정 — delta2",
@@ -2175,9 +2175,9 @@ export const TASK_HINTS = {
   },
 
   w10_bonus_walk_talk: {
-    summary: "최종 선택(보너스) 목표. 레벨 A 달성 이후 도전하는 상위 목표 2가지: (1) 보행+대화 동시 수행 — WALKING 상태에서 Groq STT/LLM/TTS가 정상 동작하며 관객과 대화하면서 걷기, (2) 30분 연속 보행 — 배터리 C SOC 모니터링하며 30분간 낙상 없이 보행 유지. 두 목표 모두 레벨 A가 안정적으로 통과된 후에만 시도한다.",
+    summary: "최종 선택(보너스) 목표. 레벨 A 달성 이후 도전하는 상위 목표 2가지: (1) 보행+대화 동시 수행 — WALKING 상태에서 클라우드 API STT/LLM/TTS가 정상 동작하며 관객과 대화하면서 걷기, (2) 30분 연속 보행 — 배터리 C SOC 모니터링하며 30분간 낙상 없이 보행 유지. 두 목표 모두 레벨 A가 안정적으로 통과된 후에만 시도한다.",
     steps: [
-      "보행+대화 동시: WALKING 상태에서 Groq 라운드트립 정상 확인",
+      "보행+대화 동시: WALKING 상태에서 클라우드 API 라운드트립 정상 확인",
       "보행+대화 동시: 관객 질문에 TTS로 응답하면서 직진+회전 동시 수행",
       "30분 보행: 배터리 C SOC 모니터링 시작 (초기 100%→30분 후 SOC 기록)",
       "30분 보행: 5분 간격 상태 체크 (직립/보행/관절 온도/NUC 안정성)",

@@ -126,7 +126,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w0_llm_latency_test',
-      label: 'LLM JSON 안정성 + Groq 파이프라인 latency 측정',
+      label: 'LLM JSON 안정성 + 클라우드 API 파이프라인 latency 측정',
       week: 0,
       track: 'A',
       members: ['epsilon1'],
@@ -135,7 +135,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: 'LLM JSON 안정성 테스트 (Groq 100회) + Groq 전체 파이프라인 latency 측정 (STT->LLM->TTS 라운드트립) + JSON 액션 스키마 초안',
+      description: 'LLM JSON 안정성 테스트 (클라우드 API 100회) + 클라우드 API 전체 파이프라인 latency 측정 (STT->LLM->TTS 라운드트립) + JSON 액션 스키마 초안',
     },
     {
       id: 'w0_bhl_urdf_study',
@@ -1008,7 +1008,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w4_groq_stt_llm',
-      label: 'Groq STT + LLM 연동 + FETCH 시퀀서 구현',
+      label: '클라우드 API STT + LLM 연동 + FETCH 시퀀서 구현',
       week: 4,
       track: 'A',
       members: ['epsilon1'],
@@ -1017,7 +1017,7 @@ export const TECH_TREE = {
       dependencies: ['w3_state_machine_v1_complete', 'w0_llm_latency_test'],
       isGate: false,
       isCheckpoint: false,
-      description: 'Groq STT + LLM 연동 (스트리밍) + LLM 프롬프트에 fetch 태스크 타입 추가 + FETCH 시퀀서 구현 (WALKING->MANIPULATING->WALKING->handover)',
+      description: '클라우드 API STT + LLM 연동 (스트리밍) + LLM 프롬프트에 fetch 태스크 타입 추가 + FETCH 시퀀서 구현 (WALKING->MANIPULATING->WALKING->handover)',
     },
 
     // Track B (물리 진입)
@@ -1081,7 +1081,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w5_emotion_5types',
-      label: 'LED 감정 5종 확장 + Gemini 폴백',
+      label: 'LED 감정 5종 확장 + 클라우드 API 폴백',
       week: 5,
       track: 'A',
       members: ['epsilon2'],
@@ -1090,7 +1090,7 @@ export const TECH_TREE = {
       dependencies: ['w2_emotion_v1', 'w4_lip_sync', 'w4_neck_pid_start'],
       isGate: false,
       isCheckpoint: false,
-      description: 'LED 감정 5종 확장 + Gemini 폴백 + VAD 비활성화 + lip sync 완성 + PID 목 제어 완성 (오버슈트 <5도)',
+      description: 'LED 감정 5종 확장 + 클라우드 API 폴백 + VAD 비활성화 + lip sync 완성 + PID 목 제어 완성 (오버슈트 <5도)',
     },
     {
       id: 'w5_survival_keywords',
@@ -1168,7 +1168,7 @@ export const TECH_TREE = {
       dependencies: ['w4_groq_stt_llm', 'w5_survival_keywords'],
       isGate: false,
       isCheckpoint: false,
-      description: '서바이벌 모드 엔진 완성 (Whisper tiny + Piper TTS on Orin, epsilon2 키워드 사전 연동)',
+      description: '서바이벌 모드 엔진 완성 (경량 로컬 STT + 로컬 TTS on Orin, epsilon2 키워드 사전 연동)',
     },
     {
       id: 'w5_fetch_sequencer_complete',

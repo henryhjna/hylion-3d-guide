@@ -136,37 +136,13 @@ export const RESOURCES = {
   },
 
   // ──────────────────────────────────────────────
-  // 대화 (Groq / STT / TTS)
+  // 대화 (STT / LLM / TTS)
   // ──────────────────────────────────────────────
-  "groq_console": {
-    label: "Groq 개발자 콘솔",
-    url: "https://console.groq.com",
-    category: "대화",
-    tags: ["Groq", "LLM", "STT", "TTS", "API", "클라우드"],
-  },
-  "groq_docs": {
-    label: "Groq API 문서",
-    url: "https://console.groq.com/docs",
-    category: "대화",
-    tags: ["Groq", "API", "Whisper", "스트리밍"],
-  },
   "whisper_github": {
     label: "OpenAI Whisper GitHub",
     url: "https://github.com/openai/whisper",
     category: "대화",
     tags: ["Whisper", "STT", "음성 인식", "오프라인", "서바이벌"],
-  },
-  "piper_github": {
-    label: "Piper TTS GitHub",
-    url: "https://github.com/rhasspy/piper",
-    category: "대화",
-    tags: ["Piper", "TTS", "음성 합성", "오프라인", "경량"],
-  },
-  "gemini_dev": {
-    label: "Google Gemini 개발자 페이지",
-    url: "https://ai.google.dev",
-    category: "대화",
-    tags: ["Gemini", "LLM", "폴백", "멀티모달"],
   },
 
   // ──────────────────────────────────────────────

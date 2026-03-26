@@ -21,7 +21,7 @@ export const COMPUTING_NODES = [
       'SmolVLA 추론 (TensorRT) — GPU 전용',
       'MediaPipe 시선 추적 (CPU)',
       'ROS2 + 상태 머신',
-      'Groq 네트워크 I/O (STT + LLM + TTS)',
+      '클라우드 API (STT + LLM + TTS)',
       'TTS 재생 + LED 제어 + 입 서보',
       'SO-ARM STS3215 제어 (Waveshare Board ×2 → USB)',
       '카메라·스피커·마이크 (USB)',
@@ -72,7 +72,7 @@ export const STATE_RESOURCES = {
     orin_cpu: '오디오+ROS2+LED',
     nuc: '대기',
     esp32: 'IMU',
-    network: 'Groq (STT+LLM+TTS)',
+    network: '클라우드 STT+LLM+TTS',
   },
   MANIPULATING: {
     label: 'MANIPULATING',
@@ -99,7 +99,7 @@ export const STATE_RESOURCES = {
     orin_cpu: 'ROS2+시퀀서',
     nuc: 'Walking (전환)',
     esp32: '낙상 감지',
-    network: 'Groq',
+    network: '클라우드 API',
   },
   LOW_BATTERY: {
     label: 'LOW_BATTERY',
@@ -165,7 +165,7 @@ export const POWER_SYSTEM = [
 ];
 
 export const NETWORK = {
-  primary: { label: '1차: 5GHz 핫스팟', target: 'Groq (STT+LLM+TTS)' },
+  primary: { label: '1차: 5GHz 핫스팟', target: '클라우드 STT+LLM+TTS' },
   secondary: { label: '2차: 시설 WiFi', target: '핫스팟 장애 시' },
-  survival: { label: '서바이벌: 로컬', target: 'Whisper tiny + 키워드 매칭 + Piper TTS' },
+  survival: { label: '서바이벌: 로컬', target: '경량 STT + 키워드 매칭 + 로컬 TTS' },
 };
