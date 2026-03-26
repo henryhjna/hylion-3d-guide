@@ -304,7 +304,7 @@ export const GLOSSARY = {
     related: ["MediaPipe"],
   },
   "lip sync": {
-    definition: "TTS 음성 출력과 입 서보 동작을 동기화하는 기능. TTS가 생성한 오디오 타이밍 정보를 기반으로 입 서보(MG90S)를 구동하여 자연스러운 말하는 동작을 구현한다.",
+    definition: "TTS 재생 중 입 서보(MG90S)를 open, 묵음 시 close하는 단순 동작. 정밀 립싱크가 아닌 open/close 방식. 선택적으로 오디오 볼륨 threshold 기반으로 자연스럽게 구현 가능.",
     related: ["TTS", "MediaPipe"],
   },
   "NeoPixel": {
