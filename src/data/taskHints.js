@@ -160,17 +160,17 @@ export const TASK_HINTS = {
   },
 
   w0_llm_latency_test: {
-    summary: "ε1 전용 과제. 시연 시나리오(기획서 3절)에서 관객과의 대화→물체 가져오기(FETCH) 트리거가 핵심이므로, LLM의 JSON 응답 안정성과 전체 대화 파이프라인(STT→LLM→TTS) 지연 시간을 사전에 검증한다. 클라우드 API 클라우드(기획서 5.4절)를 1차 연결로 사용하며, JSON 파싱 실패율이 높으면 프롬프트 조정이나 응답 포맷 제약이 필요하다.",
+    summary: "ε1 전용 과제. 시연 시나리오(기획서 3절)에서 관객과의 대화→물체 가져오기(FETCH) 트리거가 핵심이므로, LLM의 JSON 응답 안정성과 전체 대화 파이프라인(STT→LLM→TTS) 지연 시간을 사전에 검증한다. 클라우드 API(기획서 5.4절)를 1차 연결로 사용하며, JSON 파싱 실패율이 높으면 프롬프트 조정이나 응답 포맷 제약이 필요하다.",
     steps: [
-      "클라우드 API API 키 발급 + Python 테스트 스크립트 작성",
+      "클라우드 API 키 발급 + Python 테스트 스크립트 작성",
       "100회 호출 테스트 — JSON 형식 응답 요청 후 파싱 성공/실패율 측정",
-      "STT(Whisper) → LLM(클라우드 API) → TTS 전체 라운드트립 시간 측정 (목표: 2초 이내)",
+      "STT → LLM → TTS 전체 라운드트립 시간 측정 (목표: 2초 이내)",
       "JSON 액션 스키마 초안 작성 — fetch(target_object), greet, talk 등 액션 타입 정의",
       "파싱 실패 패턴 분석 — 실패 시 프롬프트 개선 방향 메모",
       "결과 정리하여 Week 1 합의 미팅에서 공유 준비",
     ],
     resources: [
-      { label: "클라우드 API API 문서", url: "https://console.groq.com/docs" },
+      { label: "기획서 5.2절 (리소스 매핑)", type: "internal", section: "5.2" },
       { label: "기획서 5.4절 (네트워크)", type: "internal", section: "5.4" },
     ],
     components: ["orin_nano_super"],
@@ -1227,16 +1227,16 @@ export const TASK_HINTS = {
   },
 
   w4_groq_stt_llm: {
-    summary: "클라우드 API 클라우드 STT + LLM을 스트리밍으로 연동하고, LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
+    summary: "클라우드 STT + LLM을 스트리밍으로 연동하고, LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
     steps: [
-      "클라우드 API STT 스트리밍 연동 — 마이크 입력 → 클라우드 API Whisper → 텍스트",
+      "클라우드 STT 스트리밍 연동 — 마이크 입력 → 클라우드 STT → 텍스트",
       "LLM 프롬프트에 fetch 태스크 타입 추가 — \"컵 가져와\" → {action: \"fetch\", target: \"starbucks_cup\"}",
       "FETCH 시퀀서 구현: ①WALKING(테이블 방향, T1초) → ②MANIPULATING(SmolVLA pick) → ③WALKING(홈 방향, 180°+T2초) → ④MANIPULATING(handover) → ⑤IDLE",
       "기획서 4.4절 언어→동작 연결 로직: LLM이 물체 종류 추출 → SmolVLA에 target_object 전달",
       "Week 5에서 상태 머신과 완전 통합 + 카메라 공유 토픽 설정",
     ],
     resources: [
-      { label: "클라우드 API API 문서", url: "https://console.groq.com/docs" },
+      { label: "기획서 5.2절 (리소스 매핑)", type: "internal", section: "5.2" },
       { label: "기획서 5.1절 (FETCH 서브스텝)", type: "internal", section: "5.1" },
       { label: "기획서 4.4절 (언어->동작 연결)", type: "internal", section: "4.4" },
     ],

@@ -431,8 +431,8 @@ export const COMPONENTS = {
   // ===========================================================================
   // 센서
   // ===========================================================================
-  usb_camera: {
-    name: 'USB 카메라',
+  head_camera: {
+    name: '머리 카메라 (USB)',
     category: 'sensor',
     specs: {
       type: 'USB UVC 카메라',
@@ -444,7 +444,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'SmolVLA 추론 입력 + MediaPipe 얼굴 인식(시선 추적). 머리 내부 정면 장착. Week 1에서 위치/각도 확정 후 변경 금지 (수집/추론 동일 조건 보장). /camera/image_raw ROS2 토픽으로 공유',
+        'MediaPipe 시선 추적 + 얼굴 인식 입력. 머리 내부 정면 장착. 대화/감정 인식용. SmolVLA에는 사용하지 않음',
       parts: ['head'],
       quantity: 1,
       spares: 0,
@@ -457,6 +457,34 @@ export const COMPONENTS = {
     },
     links: [],
     location3D: { part: 'head', position: 'front_center', internalId: 'camera' },
+  },
+
+  wrist_camera: {
+    name: '손목 카메라 (USB)',
+    category: 'sensor',
+    specs: {
+      type: 'USB UVC 카메라',
+      resolution: '1080p',
+      fps: '30fps',
+      fov: '~90° (광각)',
+      interface: 'USB 2.0/3.0',
+      mount: 'SO-ARM 그리퍼 부근 고정',
+    },
+    usage: {
+      description:
+        'SmolVLA 매니퓰레이션 추론 입력 (hand-eye view). SO-ARM 그리퍼 근처 마운트, Orin USB 연결. Week 1에서 위치/각도 확정 후 변경 금지 (수집/추론 동일 조건 보장)',
+      parts: ['right_arm'],
+      quantity: 1,
+      spares: 0,
+      owner: 'epsilon1',
+    },
+    procurement: {
+      channel: '한국',
+      status: 'confirmed',
+      estimatedArrival: 'Week 0',
+    },
+    links: [],
+    location3D: { part: 'right_arm', position: 'gripper', internalId: 'wrist_camera' },
   },
 
   mpu6050: {
