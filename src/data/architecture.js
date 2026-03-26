@@ -6,9 +6,10 @@ export const COMPUTING_NODES = [
     color: '#c8ff00',
     position: { x: -200, y: 50 },
     tasks: [
-      'SmolVLA 파인튜닝 (Stage 1 + Stage 2)',
-      'Walking RL 학습 (IsaacLab)',
+      'SmolVLA 파인튜닝 (낮 슬롯)',
+      'Walking RL 학습 (밤 슬롯)',
     ],
+    scheduling: '낮: SmolVLA / 밤: Walking RL — 동시 실행 불가, 슬롯 분리',
     connections: ['orin', 'nuc'],
   },
   {
