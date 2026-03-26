@@ -95,7 +95,7 @@ export const GLOSSARY = {
     links: [{ label: "IsaacLab GitHub", url: "https://github.com/isaac-sim/IsaacLab" }],
   },
   "Newton": {
-    definition: "NVIDIA Isaac Sim 4.5+의 기본 물리 엔진. GPU 가속 강체·관절 시뮬레이션을 지원하여 대규모 병렬 RL 학습에 유리하다. 첫 실행 시 JIT 컴파일이 필요하며, BHL의 기존 sim-to-real은 PhysX에서 검증되었으므로 Newton 전환 시 조기 검증이 필수이다.",
+    definition: "NVIDIA Isaac Sim 4.5+에서 PhysX와 함께 제공되는 대안 물리 백엔드. GPU 가속 강체·관절 시뮬레이션을 지원하여 대규모 병렬 RL 학습에 유리하다. 첫 실행 시 JIT 컴파일이 필요하며, BHL의 기존 sim-to-real은 PhysX에서 검증되었으므로 Newton 전환 시 조기 검증이 필수이다.",
     related: ["IsaacLab", "Walking RL", "sim-to-real", "PhysX"],
   },
   "sim-to-real": {
