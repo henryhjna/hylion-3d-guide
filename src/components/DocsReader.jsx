@@ -2,11 +2,16 @@ import { useState, useEffect, useMemo } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import GlossaryText from './GlossaryText';
+import MermaidBlock from './MermaidBlock';
 
 const DOC_LIST = [
-  { id: 'plan', name: '기획서 v13', path: `${import.meta.env.BASE_URL}assets/docs/기획서_v13.md` },
-  { id: 'guide', name: '실행가이드 v13', path: `${import.meta.env.BASE_URL}assets/docs/실행가이드_v13.md` },
-  { id: 'dgx', name: 'DGX Spark', path: `${import.meta.env.BASE_URL}assets/docs/DGX_Spark_가이드.md` },
+  { id: 'plan', name: '기획서', path: `${import.meta.env.BASE_URL}assets/docs/기획서_v13.md` },
+  { id: 'guide', name: '실행가이드', path: `${import.meta.env.BASE_URL}assets/docs/실행가이드_v13.md` },
+  { id: 'signal_flow', name: 'Signal Flow', path: `${import.meta.env.BASE_URL}assets/docs/signal_flow.md` },
+  { id: 'signal_cables', name: 'Cables', path: `${import.meta.env.BASE_URL}assets/docs/signal_cables.md` },
+  { id: 'power', name: 'Power', path: `${import.meta.env.BASE_URL}assets/docs/power_cables.md` },
+  { id: 'software', name: 'Software', path: `${import.meta.env.BASE_URL}assets/docs/software_architecture.md` },
+  { id: 'dgx', name: 'DGX', path: `${import.meta.env.BASE_URL}assets/docs/DGX_Spark_가이드.md` },
 ];
 
 export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId, initialSearch }) {
@@ -127,13 +132,18 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                   h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-sm font-bold mt-4 mb-2.5 text-[#c8ff00]" {...props}>{children}</h3>,
                   p: ({ children }) => <p className="text-sm text-[#e0e8ff] leading-relaxed mb-2">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</p>,
                   li: ({ children }) => <li className="text-sm text-[#e0e8ff] ml-4 mb-2 list-disc">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</li>,
-                  code: ({ children, className }) => className ? (
-                    <pre className="bg-[#0a0a0f] border border-[#ffffff10] rounded-lg p-3 mb-3 overflow-x-auto">
-                      <code className="text-sm text-[#00ff88]">{children}</code>
-                    </pre>
-                  ) : (
-                    <code className="bg-[#ffffff10] px-1 py-1.5 rounded text-sm text-[#ff8800]">{children}</code>
-                  ),
+                  code: ({ children, className }) => {
+                    if (className === 'language-mermaid') {
+                      return <MermaidBlock code={String(children).trim()} />;
+                    }
+                    return className ? (
+                      <pre className="bg-[#0a0a0f] border border-[#ffffff10] rounded-lg p-3 mb-3 overflow-x-auto">
+                        <code className="text-sm text-[#00ff88]">{children}</code>
+                      </pre>
+                    ) : (
+                      <code className="bg-[#ffffff10] px-1 py-1.5 rounded text-sm text-[#ff8800]">{children}</code>
+                    );
+                  },
                   table: ({ children }) => <div className="overflow-x-auto mb-3"><table className="w-full text-sm border-collapse">{children}</table></div>,
                   th: ({ children }) => <th className="text-left px-2 py-1 border-b border-[#ffffff15] text-[#9aa0b8] font-bold">{children}</th>,
                   td: ({ children }) => <td className="px-2 py-1 border-b border-[#ffffff08] text-[#e0e8ff]">{children}</td>,

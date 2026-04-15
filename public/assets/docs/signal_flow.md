@@ -1,25 +1,19 @@
-# HYlion Signal Flow — 전체 신호 흐름도
-
-로봇의 센서 입력부터 액추에이터 출력까지의 전체 신호 흐름.
-
-## Mermaid 다이어그램
-
-```mermaid
 flowchart TD
     S0["S0. User\n음성으로 명령"]
     S1["S1. USB Microphone\n음성을 디지털 신호로 변환"]
     S2["S2. USB Camera x3\n좌 그리퍼 + 우 그리퍼 + 외부"]
 
     subgraph JETSON ["S3. Jetson Orin Nano"]
-        S3a["S3a. STT\nWhisper 등, local 실행\n음성을 텍스트로 변환"]
-        S3b["S3b. Cloud LLM\nGemini Flash 또는 GPT-4o mini\nWiFi API 호출, 응답+명령 분류\nfallback: Qwen 2.5 0.5B Q4, local"]
-        S3c["S3c. TTS\nPiper TTS, local\n응답 텍스트를 음성으로 합성"]
+        S3a["S3a. STT\nWhisper, local 실행\n음성을 텍스트로 변환"]
+        S3b["S3b. Cloud LLM\nGemini Flash 또는 GPT-4o mini\nWiFi 또는 테더링으로 API 호출\nfallback: Qwen 2.5 0.5B Q4, local"]
+        S3f["S3f. 오케스트레이터\nPython FSM, 상태 전환 관리\nFETCH 시퀀서\nNUC 피드백 수신"]
+        S3c["S3c. Piper TTS, local\n응답 텍스트를 음성으로 합성"]
         S3d["S3d. 명령 매핑, 다리용\n미리 정의된 명령 테이블에서\nvx vy wz 룩업"]
-        S3e["S3e. SmolVLA 450M, 팔용, 항상 local\nLeRobot/PyTorch, 비동기 추론\n텍스트 + 카메라 영상 → 관절 액션"]
+        S3e["S3e. SmolVLA 450M, 팔용, 항상 local\n텍스트 + 카메라 영상으로\n관절 액션 생성"]
     end
 
     subgraph LEG ["다리 - BHL"]
-        L1["L1. Intel N95 Mini PC\nONNX Runtime C API, MLP 25Hz\nIsaac Gym 모델"]
+        L1["L1. Intel N95 Mini PC\nRL Policy, MLP via ONNX, 250Hz"]
         L2["L2. USB-CAN Adapter x2\nUSB를 CAN으로 변환\n다리당 1개"]
         L3["L3. CAN Bus x2\n2가닥 배선, 1Mbps\n다리당 1버스"]
         L4["L4. B-G431B-ESC1 x12\nSTM32 FOC, 수 kHz"]
@@ -46,10 +40,11 @@ flowchart TD
     S1 -->|USB PCM 오디오| S3a
     S2 -->|USB RGB 영상 x3| S3e
     S3a -->|텍스트| S3b
+    S3b -->|intent + 응답 텍스트| S3f
 
-    S3b -->|항상: 응답 텍스트| S3c
-    S3b -->|다리 명령일 때| S3d
-    S3b -->|팔 명령일 때| S3e
+    S3f -->|항상: 응답 텍스트| S3c
+    S3f -->|다리 명령일 때| S3d
+    S3f -->|팔 명령일 때| S3e
 
     S3c -->|USB 오디오, 합성 음성| M1
     S3c -->|GPIO PWM, 말하는 중 신호| M2
@@ -69,27 +64,25 @@ flowchart TD
     LF2 -->|I2C 또는 SPI| LF3
     LF3 -.->|USB, 각속도+중력| L1
 
+    L1 -.->|Ethernet UDP, 보행 상태+IMU stable| S3f
+
     S3e -->|USB Serial x2, 목표 각도| A1
     A1 -->|TTL Serial Bus, 서보 ID+위치| A2
     A2 -->|서보 출력축 회전| A3
 
     A2 -.->|TTL Serial, 현재 위치| A1
     A1 -.->|USB Serial, 관절 상태| S3e
-```
 
-## 신호 경로 요약
+    classDef human fill:#2a2a3a,stroke:#888780,stroke-width:1.5px,color:#e0ddd5
+    classDef sensor fill:#0d2a28,stroke:#4ecdc4,stroke-width:1.5px,color:#e0ddd5
+    classDef brain fill:#1e1040,stroke:#c084fc,stroke-width:2px,color:#e0ddd5
+    classDef comm fill:#1a2040,stroke:#6e8efb,stroke-width:1.5px,color:#e0ddd5
+    classDef actuator fill:#2a1f10,stroke:#f7a046,stroke-width:1.5px,color:#e0ddd5
+    classDef mech fill:#2a1018,stroke:#e85d75,stroke-width:1.5px,color:#e0ddd5
 
-### 음성 대화 경로
-User → USB Mic → **Orin Whisper STT (local)** → Cloud LLM (Gemini Flash / GPT-4o mini, fallback: Qwen 2.5 0.5B Q4 Ollama) → Piper TTS (local) → USB Speaker (ALSA/PulseAudio PCM) + 입 서보 (Jetson.GPIO PWM)
-
-### 팔 조작 경로 (SmolVLA)
-Cloud LLM (명령 분류) → **Orin SmolVLA 450M** (LeRobot/PyTorch, 비동기 추론) ← USB Camera ×3 (OpenCV)
-→ BusLinker ×2 (LeRobot ServoControl, USB Serial) → STS3215 ×12 (TTL Bus) → 관절 ×12
-← STS3215 위치 피드백 (TTL → USB)
-
-### 다리 보행 경로 (Walking RL)
-Cloud LLM (명령 분류) → Orin 명령 매핑 (YAML/JSON 테이블, vx vy wz 룩업) → UDP Client (Python)
-→ **NUC** (UDP Server, udp_joystick.py 호환) → RL Policy (ONNX Runtime C API, MLP 25Hz, Isaac Gym 모델)
-→ SocketCAN → USB-CAN ×2 → CAN Bus ×2 → ESC ×12 (Recoil-BESC, FOC 수kHz) → BLDC ×12 → 기어박스 ×12 → 관절 ×12
-← AS5600 인코더 (I2C → ESC → CAN → NUC)
-← BNO085 IMU (Arduino I2C/SPI → USB Serial → NUC)
+    class S0 human
+    class S1,S2,LF1,LF2 sensor
+    class S3a,S3b,S3c,S3d,S3e,S3f,L1,L4 brain
+    class L2,L3,A1,LF3 comm
+    class L5,A2,M1,M2 actuator
+    class L6,L7,A3 mech
