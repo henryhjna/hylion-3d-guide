@@ -11,6 +11,7 @@ const DOC_LIST = [
   { id: 'signal_cables', name: 'Cables', path: `${import.meta.env.BASE_URL}assets/docs/signal_cables.md` },
   { id: 'power', name: 'Power', path: `${import.meta.env.BASE_URL}assets/docs/power_cables.md` },
   { id: 'software', name: 'Software', path: `${import.meta.env.BASE_URL}assets/docs/software_architecture.md` },
+  { id: 'state_machine', name: 'State Machine', path: `${import.meta.env.BASE_URL}assets/docs/state_machine.md` },
   { id: 'dgx', name: 'DGX', path: `${import.meta.env.BASE_URL}assets/docs/DGX_Spark_가이드.md` },
 ];
 

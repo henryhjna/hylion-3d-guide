@@ -190,6 +190,7 @@ export default function App() {
         onOpenSearch={() => setShowDocsSearch(true)}
         onOpenDocs={() => { setDocsInitialDoc(null); setShowDocsReader(true); }}
         onOpenDgx={() => { setDocsInitialDoc('dgx'); setShowDocsReader(true); }}
+        onOpenDiagrams={() => { setDocsInitialDoc('signal_flow'); setShowDocsReader(true); }}
         onOpenSettings={() => setShowSettings(true)}
       />
 

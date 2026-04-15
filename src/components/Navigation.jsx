@@ -12,6 +12,7 @@ export default function Navigation({
   onOpenSearch,
   onOpenDocs,
   onOpenDgx,
+  onOpenDiagrams,
   onOpenSettings,
 }) {
   return (
@@ -110,6 +111,15 @@ export default function Navigation({
           title="문서 리더 (Ctrl+B)"
         >
           📖
+        </button>
+
+        {/* Diagrams */}
+        <button
+          onClick={onOpenDiagrams}
+          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-sm text-[#c084fc] hover:text-[#d4a0ff] hover:bg-[#c084fc10] transition-all font-medium"
+          title="시스템 다이어그램 (Signal Flow, Cables, Power, Software, State Machine)"
+        >
+          ⚡ Diagrams
         </button>
 
         {/* DGX Spark */}
