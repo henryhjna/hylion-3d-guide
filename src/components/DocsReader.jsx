@@ -64,12 +64,12 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
           </div>
 
           {/* Doc selector */}
-          <div className="flex gap-1 mb-3">
+          <div className="flex flex-wrap gap-1 mb-3">
             {DOC_LIST.map(doc => (
               <button
                 key={doc.id}
                 onClick={() => setSelectedDoc(doc.id)}
-                className={`flex-1 text-sm py-1.5 rounded transition-all ${
+                className={`text-sm py-1 px-2 rounded whitespace-nowrap transition-all ${
                   selectedDoc === doc.id
                     ? 'bg-[#4466ff15] text-[#4466ff] border border-[#4466ff30]'
                     : 'text-[#9aa0b8] hover:text-[#e0e8ff] bg-[#ffffff05]'
@@ -133,17 +133,28 @@ export default function DocsReader({ isOpen, onClose, onAskCopilot, initialDocId
                   h3: ({ children, ...props }) => <h3 id={findTocId(children, toc, 3)} className="text-sm font-bold mt-4 mb-2.5 text-[#c8ff00]" {...props}>{children}</h3>,
                   p: ({ children }) => <p className="text-sm text-[#e0e8ff] leading-relaxed mb-2">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</p>,
                   li: ({ children }) => <li className="text-sm text-[#e0e8ff] ml-4 mb-2 list-disc">{searchQuery ? highlightNode(children, searchQuery) : typeof children === 'string' ? <GlossaryText text={children} /> : children}</li>,
-                  code: ({ children, className }) => {
-                    if (className === 'language-mermaid') {
-                      return <MermaidBlock code={String(children).trim()} />;
+                  pre: ({ children }) => {
+                    // If child is a mermaid block, don't wrap in pre
+                    if (children?.props?.className === 'language-mermaid') {
+                      return <MermaidBlock code={String(children.props.children).trim()} />;
                     }
-                    return className ? (
+                    return (
                       <pre className="bg-[#0a0a0f] border border-[#ffffff10] rounded-lg p-3 mb-3 overflow-x-auto">
-                        <code className="text-sm text-[#00ff88]">{children}</code>
+                        {children}
                       </pre>
-                    ) : (
-                      <code className="bg-[#ffffff10] px-1 py-1.5 rounded text-sm text-[#ff8800]">{children}</code>
                     );
+                  },
+                  code: ({ children, className, inline }) => {
+                    if (className === 'language-mermaid') {
+                      // Handled by pre component above
+                      return <code>{children}</code>;
+                    }
+                    if (className) {
+                      // Fenced code block (non-mermaid) — just render code, pre handles wrapper
+                      return <code className="text-sm text-[#00ff88]">{children}</code>;
+                    }
+                    // Inline code
+                    return <code className="bg-[#ffffff10] px-1 py-0.5 rounded text-sm text-[#ff8800]">{children}</code>;
                   },
                   table: ({ children }) => <div className="overflow-x-auto mb-3"><table className="w-full text-sm border-collapse">{children}</table></div>,
                   th: ({ children }) => <th className="text-left px-2 py-1 border-b border-[#ffffff15] text-[#9aa0b8] font-bold">{children}</th>,

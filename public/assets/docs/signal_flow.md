@@ -1,3 +1,6 @@
+# Signal Flow
+
+```mermaid
 flowchart TD
     S0["S0. User\n음성으로 명령"]
     S1["S1. USB Microphone\n음성을 디지털 신호로 변환"]
@@ -86,3 +89,4 @@ flowchart TD
     class L2,L3,A1,LF3 comm
     class L5,A2,M1,M2 actuator
     class L6,L7,A3 mech
+```

@@ -6,17 +6,19 @@ import { HANDOFFS } from '../data/handoffs';
 
 /* ── Gate definitions ─────────────────────────────────────────── */
 const GATES = {
-  3: { name: 'Phase 1', items: ['토르소 완성', 'SmolVLA v1 동작', 'Sim2sim 완료', '수집 600개'] },
+  3: { name: 'Phase 1', items: ['토르소 완성', 'SmolVLA v1 동작', '낙상 감지 검증', 'Newton Walking RL 검증 완료', '수집 600개'] },
   5: { name: 'Phase 2', items: ['TTFT<500ms', '시선추적+표정5종', '공중보행', 'ablation', '머리+바디'] },
   7: { name: 'Phase 3', items: ['머리 통합', 'SmolVLA v2', 'Walking RL 최종', '외장 완성'] },
   8: { name: '합류', items: ['상하체 결합', '실체 보행', '낙상 감지 검증', '풀 시나리오 1차'] },
+  9: { name: '리허설 1차', items: ['시나리오 전체 통과', '서바이벌 전환', '비상정지', '10보+회전', '5분 낙상 없음'] },
+  10: { name: '최종 필수', items: ['시나리오 C 이상', '낙상 감지 정상', '비상정지 정상', '리허설 2회+'] },
 };
 
 /* ── Week-based progress estimate ─────────────────────────────── */
 const getProgress = (week) => ({
   total: Math.min(100, Math.round((week / 10) * 100)),
   head:        week < 2 ? 0 : week < 4 ? 20 : week < 5 ? 40 : week < 7 ? 65 : week < 8 ? 85 : 100,
-  torso:       week < 2 ? 0 : week < 3 ? 70 : 85,
+  torso:       week < 1 ? 0 : week < 2 ? 30 : week < 6 ? 70 : week < 8 ? 85 : 100,
   arms:        week < 1 ? 0 : week < 3 ? 50 : week < 4 ? 80 : 100,
   legs:        week < 2 ? 0 : week < 4 ? 20 : week < 5 ? 40 : week < 6 ? 50 : week < 7 ? 70 : week < 8 ? 85 : 100,
   integration: week < 6 ? 0 : week < 8 ? 30 : week < 9 ? 60 : week < 10 ? 80 : 100,
@@ -107,9 +109,9 @@ function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor
       </label>
       {expanded && hint && (
         <div className="ml-7 mt-1 mb-6 p-5 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
-          <p className="text-[#aab0cc] mb-6.5">{hint.summary}</p>
+          <p className="text-[#aab0cc] mb-6">{hint.summary}</p>
           {hint.steps?.length > 0 && (
-            <ol className="list-decimal ml-4 mb-6.5 space-y-3 text-[#e0e8ff]">
+            <ol className="list-decimal ml-4 mb-6 space-y-3 text-[#e0e8ff]">
               {hint.steps.map((s, i) => <li key={i}>{s}</li>)}
             </ol>
           )}
@@ -160,7 +162,7 @@ function ExpandableDep({ dep, memberId }) {
         )}
       </div>
       {expanded && handoff && (
-        <div className="ml-7 mt-1 mb-6.5 p-5 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
+        <div className="ml-7 mt-1 mb-6 p-5 rounded-lg text-sm bg-white/[0.015] border border-white/[0.03]">
           <div className="text-[#aab0cc] mb-6"><span className="text-[#9aa0b8]">전달물:</span> {handoff.what}</div>
           {handoff.format && <div className="text-[#aab0cc] mb-6"><span className="text-[#9aa0b8]">포맷:</span> {handoff.format}</div>}
           {handoff.location && <div className="text-[#aab0cc] mb-6"><span className="text-[#9aa0b8]">위치:</span> {handoff.location}</div>}
@@ -500,7 +502,7 @@ function MemberView({
 
           {/* ── Progress bar (질감: 네온 글로우) ── */}
           <div className="mb-6">
-            <div className="h-2.5 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden border border-[#ffffff06]">
+            <div className="h-2.5 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden">
               <div
                 className="h-full rounded-full transition-[width] duration-700 ease-out"
                 style={{
@@ -565,6 +567,8 @@ function MemberView({
   );
 }
 
+const PART_ID_MAP = { arms: 'left_arm', legs: 'left_leg', integration: 'torso' };
+
 /* ── Overall project view (no member) ──────────────────────────── */
 function OverallView({
   weekNum,
@@ -618,7 +622,7 @@ function OverallView({
               <button
                 key={key}
                 className="w-full flex items-center gap-4 group cursor-pointer hover:bg-[#ffffff04] rounded-md px-3 py-2.5 transition-colors"
-                onClick={() => onPartClick?.(key)}
+                onClick={() => onPartClick?.(PART_ID_MAP[key] || key)}
               >
                 <span className="text-base w-14 text-left text-[#8890aa]">
                   {meta.label}
@@ -755,7 +759,7 @@ function CollapsibleFlow({ items, flowOpen, setFlowOpen }) {
           opacity: flowOpen ? 1 : 0,
         }}
       >
-        <div className="px-3 pb-2.5 space-y-3.5.5">
+        <div className="px-3 pb-2.5 space-y-3.5">
           {items.map((item, i) => (
             <div key={i} className="flex items-start gap-4">
               <span

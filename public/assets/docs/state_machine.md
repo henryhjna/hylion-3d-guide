@@ -1,3 +1,6 @@
+# State Machine
+
+```mermaid
 stateDiagram-v2
     [*] --> IDLE
 
@@ -91,3 +94,4 @@ stateDiagram-v2
 
     TALKING --> FETCH : LLM intent = fetch
     FETCH --> IDLE : 시퀀스 완료
+```

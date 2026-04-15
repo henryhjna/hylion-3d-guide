@@ -101,7 +101,7 @@ export default function Navigation({
           title="문서 검색 (Ctrl+K)"
         >
           🔍
-          <kbd className="text-sm bg-[#ffffff08] px-1 py-1.5 rounded border border-[#ffffff10]">⌘K</kbd>
+          <kbd className="text-sm bg-[#ffffff08] px-1 py-1.5 rounded border border-[#ffffff10]">Ctrl+K</kbd>
         </button>
 
         {/* Docs */}

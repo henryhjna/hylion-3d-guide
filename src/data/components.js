@@ -250,7 +250,7 @@ export const COMPONENTS = {
     location3D: { part: 'left_arm', position: 'joints', internalId: 'so_arm_servo' },
   },
 
-  mg90s: {
+  sg90_servo: {
     name: 'SG90급 마이크로 서보',
     category: 'motor_servo',
     specs: {

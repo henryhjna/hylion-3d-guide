@@ -391,7 +391,7 @@ export default function RobotModel({
       {/* Hover label (both modes) */}
       {activePart && PARTS[activePart] && (
         <Html
-          position={[0, loadState === 'fbx' ? modelHeight * (PART_REGIONS[activePart]?.yMax || 0.5) + 0.08 : 1.0, 0]}
+          position={[0, loadState === 'glb' ? modelHeight * (PART_REGIONS[activePart]?.yMax || 0.5) + 0.08 : 1.0, 0]}
           center
           distanceFactor={3}
         >
@@ -580,13 +580,13 @@ function InternalComponents({ modelHeight }) {
 
       {/* ── LEG AREA (y<0.27) ── */}
 
-      {/* Battery C (BHL) */}
+      {/* Battery 1 (6S) */}
       <mesh position={[0, 0.20 * s, 0]}>
         <boxGeometry args={[0.08 * s, 0.02 * s, 0.04 * s]} />
         <meshStandardMaterial color="#ff00aa" emissive="#ff00aa" emissiveIntensity={0.3} />
       </mesh>
       <Html position={[0, 0.22 * s, 0]} center distanceFactor={3}>
-        {label('BAT C (BHL)', 'text-fuchsia-400')}
+        {label('BAT 1 (6S)', 'text-fuchsia-400')}
       </Html>
 
       {/* CAN-USB ×2 */}

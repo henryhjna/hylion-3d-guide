@@ -1,3 +1,6 @@
+# Software Architecture
+
+```mermaid
 flowchart TD
     subgraph JETSON_SW ["Jetson Orin Nano - JetPack Ubuntu"]
         subgraph JETSON_INPUT ["입력 처리"]
@@ -91,3 +94,4 @@ flowchart TD
     class SW_CALIB util
     class SW_FOC,SW_PD,SW_CAN_RX,SW_I2C fw
     class SW_IMU_DRV,SW_IMU_SERIAL fw
+```

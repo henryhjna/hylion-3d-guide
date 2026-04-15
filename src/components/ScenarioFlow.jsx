@@ -67,7 +67,7 @@ const STEPS = [
     description: '보행 + precoded 팔 스윙 + 대화 가능',
     state: 'WALKING',
     color: '#ff00aa',
-    systems: ['Walking RL', 'Groq 대화', 'Precoded 팔'],
+    systems: ['Walking RL', '클라우드 LLM 대화', 'Precoded 팔'],
     activeParts: ['left_leg', 'right_leg', 'left_arm', 'right_arm'],
     robotPos: 35,
   },

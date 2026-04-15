@@ -7,6 +7,11 @@ const DOC_FILES = [
   { id: 'plan', name: '기획서 v13', path: `${import.meta.env.BASE_URL}assets/docs/기획서_v13.md` },
   { id: 'guide', name: '실행가이드 v13', path: `${import.meta.env.BASE_URL}assets/docs/실행가이드_v13.md` },
   { id: 'dgx', name: 'DGX Spark 가이드', path: `${import.meta.env.BASE_URL}assets/docs/DGX_Spark_가이드.md` },
+  { id: 'signal_flow', name: 'Signal Flow', path: `${import.meta.env.BASE_URL}assets/docs/signal_flow.md` },
+  { id: 'signal_cables', name: 'Signal Cables', path: `${import.meta.env.BASE_URL}assets/docs/signal_cables.md` },
+  { id: 'power_cables', name: 'Power Cables', path: `${import.meta.env.BASE_URL}assets/docs/power_cables.md` },
+  { id: 'software_arch', name: 'Software Architecture', path: `${import.meta.env.BASE_URL}assets/docs/software_architecture.md` },
+  { id: 'state_machine', name: 'State Machine', path: `${import.meta.env.BASE_URL}assets/docs/state_machine.md` },
 ];
 
 const SECTION_PART_MAP = {

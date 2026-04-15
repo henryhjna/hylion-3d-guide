@@ -188,7 +188,7 @@ export default function App() {
         selectedMember={selectedMember}
         onMemberChange={setSelectedMember}
         onOpenSearch={() => setShowDocsSearch(true)}
-        onOpenDocs={() => { setDocsInitialDoc(null); setShowDocsReader(true); }}
+        onOpenDocs={() => { setDocsInitialDoc('plan'); setShowDocsReader(true); }}
         onOpenDgx={() => { setDocsInitialDoc('dgx'); setShowDocsReader(true); }}
         onOpenDiagrams={() => { setDocsInitialDoc('signal_flow'); setShowDocsReader(true); }}
         onOpenSettings={() => setShowSettings(true)}

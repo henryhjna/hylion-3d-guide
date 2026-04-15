@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import mermaid from 'mermaid';
 
 mermaid.initialize({
@@ -21,7 +21,6 @@ mermaid.initialize({
 let idCounter = 0;
 
 export default function MermaidBlock({ code }) {
-  const ref = useRef(null);
   const [svg, setSvg] = useState('');
   const [error, setError] = useState(null);
 
@@ -30,7 +29,13 @@ export default function MermaidBlock({ code }) {
     const id = `mermaid-${++idCounter}`;
     mermaid.render(id, code)
       .then(({ svg: rendered }) => { setSvg(rendered); setError(null); })
-      .catch(() => setError(true));
+      .catch((err) => { console.warn('MermaidBlock render failed:', err); setError(true); });
+
+    return () => {
+      // Clean up orphaned SVG elements created by mermaid.render
+      const orphan = document.getElementById(id);
+      if (orphan) orphan.remove();
+    };
   }, [code]);
 
   if (error) {
@@ -43,8 +48,7 @@ export default function MermaidBlock({ code }) {
 
   return (
     <div
-      ref={ref}
-      className="my-4 overflow-x-auto bg-[#0a0c14] rounded-lg p-4 border border-[#ffffff08]"
+      className="my-4 max-h-[600px] overflow-y-auto overflow-x-auto bg-[#0a0c14] rounded-lg p-4 border border-[#ffffff08]"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
