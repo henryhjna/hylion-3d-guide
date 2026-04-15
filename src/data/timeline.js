@@ -33,7 +33,7 @@ export const TIMELINE = [
     trackB: 'Walking RL 학습 시작, 기어박스 후가공, 직립 체크포인트 (δ2, δ3)',
     highlight: '토르소 + 양팔 + 양다리(시뮬)',
     highlightParts: ['torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['직립 체크포인트 (IsaacLab 상부 mass 직립 확인)', 'W2 — ESP32 실측 / 로컬 폴백 / Precoded 손 흔들기 / Walking RL 시작 / ROS2 토픽 포맷 확정'],
+    gates: ['직립 체크포인트 (IsaacLab 상부 mass 직립 확인)', 'W2 — 낙상 감지 로직 / 로컬 폴백 / Precoded 손 흔들기 / Walking RL 시작 / UDP 메시지 포맷 확정'],
     key: '미니 파인튜닝 피드백 루프',
   },
   {
@@ -44,7 +44,7 @@ export const TIMELINE = [
     trackB: 'Newton 기반 Walking RL 검증 (sim-to-real 준비), HOVER reward 이식, 직립 체크포인트, 공중 지그 프린트 (δ2)',
     highlight: '양팔(수집) + 양다리(시뮬)',
     highlightParts: ['left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['Phase 1 — 토르소 완성, SmolVLA v1 동작, ESP32 차단, Newton Walking RL 검증 완료, 수집 600개'],
+    gates: ['Phase 1 — 토르소 완성, SmolVLA v1 동작, 낙상 감지 검증, Newton Walking RL 검증 완료, 수집 600개'],
     key: 'TensorRT 변환 + Orin 배포 + GPU 프로파일링 (ε1)',
   },
   {
@@ -99,7 +99,7 @@ export const TIMELINE = [
     trackB: '실체 장착 보행 테스트',
     highlight: '전체 로봇',
     highlightParts: ['head', 'torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['합류 — 상하체 결합, 실체 보행, MOSFET 실측, 풀 시나리오 1차 통과'],
+    gates: ['합류 — 상하체 결합, 실체 보행, 낙상 감지 실측, 풀 시나리오 1차 통과'],
     key: 'FETCH 시퀀서 타이머 튜닝 + 시나리오 레벨 판정 (A/B/C)',
   },
   {
@@ -122,7 +122,7 @@ export const TIMELINE = [
     trackB: '비상 시나리오 전환 확인 (A→B, A→C)',
     highlight: '전체 로봇 (완성)',
     highlightParts: ['head', 'torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['최종 필수 — 시나리오 C 이상, MOSFET, 비상정지, 리허설 2회+'],
+    gates: ['최종 필수 — 시나리오 C 이상, 낙상 감지, 비상정지, 리허설 2회+'],
     key: '발표',
     levels: [
       { level: 'A (풀)', desc: 'FETCH 시퀀스 + 10보+' },

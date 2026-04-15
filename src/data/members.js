@@ -1,5 +1,5 @@
 // HYlion Physical AI — 멤버별 주차 태스크 맵
-// 실행가이드 v12 기반 전수 추출
+// 실행가이드 v13 기반 전수 추출
 
 export const MEMBERS = {
   delta1: {
@@ -145,7 +145,7 @@ export const MEMBERS = {
           '외장 부착 준비 (외주 도착 확인)',
         ],
         dependencies: {
-          receives: ['δ2: 전원 A+B+C 통합 배선 완료'],
+          receives: ['δ2: 전원 배터리 1+2 통합 배선 완료'],
           gives: ['상하체 결합 완료 → 전원 풀 시나리오 진입'],
         },
       },
@@ -172,7 +172,7 @@ export const MEMBERS = {
           '[리허설 2차] 시연 시나리오 전체 2회 이상 반복',
           '[리허설 2차] 비상 시나리오 전환 확인 (A→B, A→C)',
           '[발표] 시선·인사·대화·집기 동작',
-          '[발표] MOSFET 정상 확인',
+          '[발표] 낙상 감지 정상 확인',
           '[발표] 비상정지 정상 확인',
         ],
         dependencies: {
@@ -195,7 +195,7 @@ export const MEMBERS = {
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
-          '배터리 소비 전류 계산 (Orin 25W + NUC 15W + SO-ARM + BHL BLDC → 30분 가능 확인)',
+          '배터리 소비 전류 계산 (배터리 1: 6S→다리 ESC 24V / 배터리 2: 4S→Orin+DC-DC×3 → 30분 가능 확인)',
           '스펙시트 기반 상체 무게 적산 (Week 2 직립 테스트 결과와 대조 예정)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           'BHL 문서 정독 + lowlevel 코드 리딩 (개인 노트북에서, NUC는 Week 1 도착)',
@@ -212,13 +212,13 @@ export const MEMBERS = {
         tasks: [
           '[전체 합의] 인터페이스 + 리소스 할당',
           '[전체 합의] 상체 무게 적산값 공유',
-          '[전체 합의] 배터리 배치 방향 (토르소 vs hip)',
+          '[전체 합의] 배터리 1+2 배치 방향 (토르소 vs hip)',
           '[전체 합의] 전원 시퀀싱',
           'NUC OS 설치 + xanmod RT 커널 + CAN 드라이버 세팅',
           'BHL lowlevel C 빌드 + 숙달 (코드 리딩, 더미 CAN 루프)',
-          'PDB + BMS + DC-DC 조립·배선 + 전원 시퀀싱 문서화',
+          'DC-DC ×3 조립·배선 + LiPo 알람 장착 + 전원 시퀀싱 문서화',
           'Newton Walking RL 환경 셋업 (Isaac Lab + Newton 백엔드 확인)',
-          'Orin↔NUC Ethernet + ROS2 통신 확인',
+          'Orin↔NUC Ethernet UDP 통신 확인',
           'IsaacLab 환경 직접 실행 (δ3 인계 후)',
         ],
         dependencies: {
@@ -259,9 +259,9 @@ export const MEMBERS = {
         focus: '물리 진입 — 액추에이터 조립 + 다리 조립',
         tasks: [
           '액추에이터 10개 조립 (기어박스 후가공 완료 상태)',
-          '다리 조립 시작 + 배터리 C 연결',
+          '다리 조립 시작 + 배터리 1 (6S LiPo) 연결',
           '토르소+팔 부분 실측 (시뮬 파라미터 보정용)',
-          'NUC 측 ROS2 /gait/cmd 수신 + /gait/status 발행 구현',
+          'NUC 측 UDP 수신 (vx vy wz) + 상태 응답 구현',
         ],
         dependencies: {
           receives: [],
@@ -302,7 +302,7 @@ export const MEMBERS = {
         focus: '최종 policy 테스트 + 전원 테스트 + 비상 매뉴얼',
         tasks: [
           '재학습 결과 테스트 반복 + 30분 전원 테스트',
-          'BMS 최종 + NUC 장기 안정성',
+          'LiPo 알람 최종 확인 + NUC 장기 안정성',
           '비상 매뉴얼 작성 (전원 시퀀싱, 비상정지, 낙상 차단, 재시작 절차)',
           '드레스 리허설 (하체 트랙)',
         ],
@@ -317,7 +317,7 @@ export const MEMBERS = {
       8: {
         focus: '트랙 합류 — 전원 통합 + 실체 보행',
         tasks: [
-          '전원 A+B+C 통합 배선',
+          '배터리 1+2 통합 배선 (NC 비상정지 양쪽 차단 확인)',
           '실체 장착 보행 테스트 (안 되면 δ3 재학습)',
           '풀 시나리오 보행 (걷기+멈추기+재시작)',
         ],
@@ -350,7 +350,7 @@ export const MEMBERS = {
           '[리허설 2차] 시연 시나리오 전체 2회 이상 반복',
           '[리허설 2차] 비상 시나리오 전환 확인 (A→B, A→C)',
           '[발표] 시선·인사·대화·집기 동작',
-          '[발표] MOSFET 정상 확인',
+          '[발표] 낙상 감지 정상 확인',
           '[발표] 비상정지 정상 확인',
         ],
         dependencies: {
@@ -375,7 +375,7 @@ export const MEMBERS = {
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'BHL 리포지토리 클론 → IsaacLab 환경 로드 (체크포인트)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
-          'BHL 액추에이터 파라미터 문서화 + ROS2 토픽 리스트 작성',
+          'BHL 액추에이터 파라미터 문서화 + UDP 메시지 포맷 작성',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
           'IsaacLab 체크포인트 결과 정리 + Week 1 직립 테스트 계획 수립',
           'DGX Spark PhysX GPU 제약 확인 + Isaac Lab 3.0 마이그레이션 착수',
@@ -537,7 +537,7 @@ export const MEMBERS = {
           '[리허설 2차] 시연 시나리오 전체 2회 이상 반복',
           '[리허설 2차] 비상 시나리오 전환 확인 (A→B, A→C)',
           '[발표] 시선·인사·대화·집기 동작',
-          '[발표] MOSFET 정상 확인',
+          '[발표] 낙상 감지 정상 확인',
           '[발표] 비상정지 정상 확인',
         ],
         dependencies: {
@@ -578,7 +578,7 @@ export const MEMBERS = {
         tasks: [
           '[전체 합의] 인터페이스 + 리소스 할당',
           '[전체 합의] 상태 머신 프레임워크 선정 결과 공유',
-          'Orin JetPack + TensorRT + ROS2 + 카메라 드라이버 초기 셋업',
+          'Orin JetPack + TensorRT + 카메라 드라이버 초기 셋업',
           '에코 캔슬링 테스트 (→ AEC 필요 여부)',
           '상태 머신 설계 확정',
           'SmolVLA 수집 기준 문서 (δ1 합의)',
@@ -626,7 +626,7 @@ export const MEMBERS = {
           'LLM 프롬프트 설계 (스키마 기반)',
           '클라우드 API STT + LLM 연동 (스트리밍) + fetch 태스크 타입 추가',
           'FETCH 시퀀서 구현 (WALKING→MANIPULATING→WALKING→handover)',
-          'Orin 측 ROS2 /gait/cmd 발행 구현',
+          'Orin 측 UDP 보행 명령 발행 구현',
         ],
         dependencies: {
           receives: ['δ3: ablation 실행 결과 (Week 4)'],
@@ -686,7 +686,7 @@ export const MEMBERS = {
         focus: '트랙 합류 — 풀 시나리오 1차',
         tasks: [
           '보행 중 팔 정지 정책',
-          '대화→보행 명령 ("걸어" → /gait/cmd)',
+          '대화→보행 명령 ("걸어" → UDP vx vy wz)',
           'FETCH 시퀀서 타이머 튜닝 (시연 환경 레이아웃 T1, T2)',
           '풀 시나리오 1차 테스트 (시선→인사→FETCH→자유보행)',
           '보행 로깅',
@@ -720,7 +720,7 @@ export const MEMBERS = {
           '[리허설 2차] 시연 시나리오 전체 2회 이상 반복',
           '[리허설 2차] 비상 시나리오 전환 확인 (A→B, A→C)',
           '[발표] 시선·인사·대화·집기 동작',
-          '[발표] MOSFET 정상 확인',
+          '[발표] 낙상 감지 정상 확인',
           '[발표] 비상정지 정상 확인',
         ],
         dependencies: {
@@ -739,7 +739,7 @@ export const MEMBERS = {
     parts: ['head'],
     weeklyTasks: {
       0: {
-        focus: 'SO-ARM 커리큘럼 + 부품 주문 + ESP32 구현 시작',
+        focus: 'SO-ARM 커리큘럼 + 부품 주문',
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '한국 부품 온라인 주문 (Orin, NUC, XL430×2, U2D2×2, 카메라 ×2(머리+손목), ESC×12, 알루미늄 프로파일)',
@@ -750,7 +750,7 @@ export const MEMBERS = {
           '텔레옵 직접 해보며 수집 감각 사전 체험',
           '머리 외주 사양서 마무리 (δ1과 공동, 외형+내부 치수+개구부+≤300g)',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
-          'ESP32 + MPU6050 낙상 감지 구현 시작',
+          'BNO085 IMU 낙상 감지 사전 조사',
         ],
         dependencies: {
           receives: ['δ1: 전자부품 치수 (머리 외주 사양 논의)'],
@@ -758,14 +758,14 @@ export const MEMBERS = {
         },
       },
       1: {
-        focus: '머리 외주 발주 + ESP32 구현 + URDF/IsaacLab 검증',
+        focus: '머리 외주 발주 + NUC 낙상 감지 구현 + URDF/IsaacLab 검증',
         tasks: [
           '[전체 합의] 인터페이스 + 리소스 할당',
           '머리 외주 사양서 최종 → 외주 발주 (납기 목표 Week 5~6)',
           '바디 외장 방향 확정',
           'SmolVLA 평가 스크립트 작성',
           'URDF export 스크립트 직접 셋업',
-          'ESP32 낙상 ISR + MOSFET 구현',
+          'NUC 낙상 감지 로직 구현 (BNO085 임계치 → 토크 해제)',
           'IsaacLab 검증 루프 시작',
         ],
         dependencies: {
@@ -774,12 +774,12 @@ export const MEMBERS = {
         },
       },
       2: {
-        focus: 'ESP32 벤치 테스트 + 감정 상태 머신 + 평가 스크립트',
+        focus: 'NUC 낙상 감지 벤치 테스트 + 감정 상태 머신 + 평가 스크립트',
         tasks: [
-          'ESP32 MOSFET 벤치 테스트 (기울임 → 차단 확인)',
+          'NUC 낙상 감지 벤치 테스트',
           '감정 상태 머신 v1 (중립·기쁨·놀람)',
           '평가 스크립트 완성',
-          'IMU 구조 확정 (ESP32용 + NUC용 별도)',
+          'BNO085 IMU 구조 확정 (NUC policy + 낙상 감지 겸용)',
           'IsaacLab 검증 계속',
         ],
         dependencies: {
@@ -855,9 +855,9 @@ export const MEMBERS = {
         },
       },
       8: {
-        focus: '트랙 합류 — MOSFET 검증 + sim-to-real 비교 + 캐릭터 조정',
+        focus: '트랙 합류 — 낙상 감지 검증 + sim-to-real 비교 + 캐릭터 조정',
         tasks: [
-          'MOSFET 낙상 차단 실물 검증',
+          'NUC 낙상 감지 실물 검증',
           '실체 vs 더미 sim-to-real 비교',
           '스텝 응답 vs 시뮬 비교',
           '보행 로그 분석 + 캐릭터 최종 조정',
@@ -890,7 +890,7 @@ export const MEMBERS = {
           '[리허설 2차] 시연 시나리오 전체 2회 이상 반복',
           '[리허설 2차] 비상 시나리오 전환 확인 (A→B, A→C)',
           '[발표] 시선·인사·대화·집기 동작',
-          '[발표] MOSFET 정상 확인',
+          '[발표] 낙상 감지 정상 확인',
           '[발표] 비상정지 정상 확인',
         ],
         dependencies: {

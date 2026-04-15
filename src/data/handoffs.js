@@ -142,7 +142,7 @@ export const HANDOFFS = {
   // ─── δ2 → ε2: 실물 보행 로그 ─────────────────────────────────────────
   "w6_ground_gait_first -> w6_gap_analysis": {
     what: "실물 보행 로그 (관절 위치/토크/IMU 시계열 데이터)",
-    format: "ROS2 bag 파일 또는 CSV 로그",
+    format: "CSV 로그",
     location: "NUC 로컬 → 공유 드라이브 전송",
     deadline: "Week 6 (지면 보행 직후)",
     verification: "epsilon2가 로그 파싱 + 시뮬 궤적과 비교 분석 수행 가능 확인",
@@ -162,7 +162,7 @@ export const HANDOFFS = {
   },
 
   // ─── ε2 → δ1: IsaacLab 검증 → CAD 수정 ──────────────────────────────
-  "w1_esp32_fall_isr -> w1_torso_cad": {
+  "w1_fall_detection_impl -> w1_torso_cad": {
     what: "IsaacLab 검증 결과 (상부 mass 분포가 CAD에 미치는 영향 분석)",
     format: "검증 리포트 (CoM 위치, 전도 마진 등)",
     location: "공유 드라이브",
@@ -231,7 +231,7 @@ export const HANDOFFS = {
   // ─── w8 풀 시나리오 보행 로그 → ε2 분석 ──────────────────────────────
   "w8_full_scenario_v1 -> w9_stabilization": {
     what: "풀 시나리오 보행 로그 + 캐릭터 표현 피드백",
-    format: "ROS2 bag + 영상 기록 + 실패 분류 시트",
+    format: "CSV 로그 + 영상 기록 + 실패 분류 시트",
     location: "공유 드라이브",
     deadline: "Week 8 말",
     verification: "epsilon2가 보행 로그 분석 + 캐릭터 최종 조정 반영",

@@ -36,8 +36,8 @@ export default function WeekSelector({ currentWeek, onWeekChange, weekTitle }) {
   };
 
   const getTitle = (w) => {
-    if (TIMELINE && TIMELINE[w]?.title) return TIMELINE[w].title;
-    return '';
+    const weekData = TIMELINE?.find(t => t.week === w);
+    return weekData?.title || '';
   };
 
   const displayTitle = weekTitle || getTitle(currentWeek);

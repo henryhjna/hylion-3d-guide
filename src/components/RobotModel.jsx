@@ -503,7 +503,7 @@ function InternalComponents({ modelHeight }) {
         {label('LED 눈 ×2', 'text-cyan-400')}
       </Html>
 
-      {/* MG90S lip servo — mouth area */}
+      {/* SG90 lip servo — mouth area */}
       <mesh position={[0, 0.53 * s, 0.08 * s]}>
         <boxGeometry args={[0.02 * s, 0.012 * s, 0.012 * s]} />
         <meshStandardMaterial color="#ff8800" emissive="#ff8800" emissiveIntensity={0.5} />
@@ -551,31 +551,22 @@ function InternalComponents({ modelHeight }) {
         <meshStandardMaterial color="#88aacc" emissive="#88aacc" emissiveIntensity={0.3} />
       </mesh>
 
-      {/* PDB + DC-DC */}
+      {/* DC-DC x3 */}
       <mesh position={[0, 0.30 * s, 0]}>
         <boxGeometry args={[0.06 * s, 0.008 * s, 0.04 * s]} />
         <meshStandardMaterial color="#ff4444" emissive="#ff4444" emissiveIntensity={0.3} />
       </mesh>
       <Html position={[0, 0.31 * s, 0]} center distanceFactor={3}>
-        {label('PDB+DC-DC', 'text-red-400')}
+        {label('DC-DC ×3', 'text-red-400')}
       </Html>
 
-      {/* Battery A */}
-      <mesh position={[0.03 * s, 0.28 * s, 0]}>
-        <boxGeometry args={[0.05 * s, 0.02 * s, 0.04 * s]} />
-        <meshStandardMaterial color="#c8ff00" emissive="#c8ff00" emissiveIntensity={0.3} />
+      {/* Battery 2 (4S LiPo) */}
+      <mesh position={[0, 0.28 * s, 0]}>
+        <boxGeometry args={[0.07 * s, 0.02 * s, 0.04 * s]} />
+        <meshStandardMaterial color="#c084fc" emissive="#c084fc" emissiveIntensity={0.3} />
       </mesh>
-      <Html position={[0.03 * s, 0.29 * s, 0]} center distanceFactor={3}>
-        {label('BAT A', 'text-yellow-400')}
-      </Html>
-
-      {/* Battery B */}
-      <mesh position={[-0.03 * s, 0.28 * s, 0]}>
-        <boxGeometry args={[0.05 * s, 0.02 * s, 0.04 * s]} />
-        <meshStandardMaterial color="#aacc00" emissive="#aacc00" emissiveIntensity={0.3} />
-      </mesh>
-      <Html position={[-0.03 * s, 0.29 * s, 0]} center distanceFactor={3}>
-        {label('BAT B', 'text-lime-400')}
+      <Html position={[0, 0.29 * s, 0]} center distanceFactor={3}>
+        {label('BAT 2 (4S)', 'text-purple-400')}
       </Html>
 
       {/* Speaker + Mic */}
@@ -596,15 +587,6 @@ function InternalComponents({ modelHeight }) {
       </mesh>
       <Html position={[0, 0.22 * s, 0]} center distanceFactor={3}>
         {label('BAT C (BHL)', 'text-fuchsia-400')}
-      </Html>
-
-      {/* ESP32 */}
-      <mesh position={[0.04 * s, 0.18 * s, 0.03 * s]}>
-        <boxGeometry args={[0.015 * s, 0.008 * s, 0.012 * s]} />
-        <meshStandardMaterial color="#ff8800" emissive="#ff8800" emissiveIntensity={0.6} />
-      </mesh>
-      <Html position={[0.04 * s, 0.19 * s, 0.03 * s]} center distanceFactor={3}>
-        {label('ESP32', 'text-orange-400')}
       </Html>
 
       {/* CAN-USB ×2 */}

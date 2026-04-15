@@ -69,11 +69,11 @@ for (const b of btns) {
 await new Promise(r => setTimeout(r, 2000));
 
 const xrayState = await page.evaluate(() => {
-  // Count visible 3D labels (Orin, NUC, BAT, ESP32)
+  // Count visible 3D labels (Orin, NUC, BAT)
   const labels = [];
   document.querySelectorAll('div').forEach(d => {
     const text = d.textContent?.trim();
-    if (text && ['Orin', 'NUC', 'BAT A+B', 'ESP32'].includes(text)) {
+    if (text && ['Orin', 'NUC', 'BAT A+B'].includes(text)) {
       const r = d.getBoundingClientRect();
       labels.push({ text, visible: r.width > 0, x: Math.round(r.x), y: Math.round(r.y) });
     }

@@ -167,7 +167,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w0_bhl_actuator_doc',
-      label: 'BHL 액추에이터 파라미터 문서화 + ROS2 토픽 초안',
+      label: 'BHL 액추에이터 파라미터 문서화 + UDP 메시지 포맷 초안',
       week: 0,
       track: 'B',
       members: ['delta3'],
@@ -176,7 +176,7 @@ export const TECH_TREE = {
       dependencies: ['w0_isaaclab_load'],
       isGate: false,
       isCheckpoint: false,
-      description: 'BHL 액추에이터 파라미터 문서화 + ROS2 토픽 리스트 초안',
+      description: 'BHL 액추에이터 파라미터 문서화 + UDP 메시지 포맷 초안',
     },
     {
       id: 'w0_bhl_lowlevel_reading',
@@ -272,8 +272,8 @@ export const TECH_TREE = {
       description: 'Newton 기반 sim-to-real 절차 파악 (BHL 문서) + BHL lowlevel 코드 리딩 계속',
     },
     {
-      id: 'w0_esp32_fall_research',
-      label: 'ESP32 + MPU6050 낙상 감지 사전 조사',
+      id: 'w0_fall_detection_research',
+      label: 'BNO085 IMU 낙상 감지 사전 조사',
       week: 0,
       track: 'B',
       members: ['epsilon2'],
@@ -282,7 +282,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: 'ESP32 + MPU6050 낙상 감지 사전 조사 + 평가 지표 구상',
+      description: 'BNO085 IMU 낙상 감지 사전 조사 + 평가 지표 구상',
     },
 
     // Shenzhen procurement
@@ -297,7 +297,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: 'MAD 모터 수령 + 화창베이 일괄 구매 (ESP32, MPU6050, CAN-USB, MOSFET, 베어링 등) + 배터리 A+B+C + BMS + PDB',
+      description: 'MAD 모터 수령 + 화창베이 일괄 구매 (CAN-USB, 베어링 등) + 배터리 1(6S)+2(4S) + LiPo 알람',
     },
 
     // =========================================================================
@@ -386,7 +386,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w1_orin_setup',
-      label: 'Orin JetPack + TensorRT + ROS2 + 카메라 드라이버 셋업',
+      label: 'Orin JetPack + TensorRT + 카메라 드라이버 셋업',
       week: 1,
       track: 'A',
       members: ['epsilon1'],
@@ -395,7 +395,7 @@ export const TECH_TREE = {
       dependencies: ['w0_kr_parts_order'],
       isGate: false,
       isCheckpoint: false,
-      description: 'Orin JetPack + TensorRT + ROS2 + 카메라 드라이버 초기 셋업',
+      description: 'Orin JetPack + TensorRT + 카메라 드라이버 초기 셋업',
     },
     {
       id: 'w1_echo_cancel_test',
@@ -479,7 +479,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w1_power_assembly',
-      label: 'PDB + BMS + DC-DC 조립 + 전원 시퀀싱 문서화',
+      label: 'DC-DC 3개 조립 + 전원 시퀀싱 문서화',
       week: 1,
       track: 'B',
       members: ['delta2'],
@@ -488,7 +488,7 @@ export const TECH_TREE = {
       dependencies: ['w0_shenzhen_procurement'],
       isGate: false,
       isCheckpoint: false,
-      description: 'PDB + BMS + DC-DC 조립/배선 + 전원 시퀀싱 문서화',
+      description: 'DC-DC 3개(12V NUC, 12V 팔서보, 5V USB) 조립/배선 + 전원 시퀀싱 문서화',
     },
     {
       id: 'w1_newton_rl_setup',
@@ -501,7 +501,7 @@ export const TECH_TREE = {
       dependencies: ['w0_newton_simtoreal_study'],
       isGate: false,
       isCheckpoint: false,
-      description: 'Newton Walking RL 환경 셋업 (Isaac Lab + Newton 백엔드 확인) + Orin↔NUC Ethernet + ROS2 통신 확인',
+      description: 'Newton Walking RL 환경 셋업 (Isaac Lab + Newton 백엔드 확인) + Orin↔NUC Ethernet UDP 통신 확인',
     },
     {
       id: 'w1_isaaclab_custom_upper',
@@ -582,17 +582,17 @@ export const TECH_TREE = {
       description: 'URDF export 스크립트 직접 셋업',
     },
     {
-      id: 'w1_esp32_fall_isr',
-      label: 'ESP32 낙상 ISR + MOSFET 구현',
+      id: 'w1_fall_detection_impl',
+      label: 'NUC 낙상 감지 로직 구현 (BNO085 임계치 → 토크 해제)',
       week: 1,
       track: 'B',
       members: ['epsilon2'],
       parts: [],
       status: 'locked',
-      dependencies: ['w0_esp32_fall_research', 'w0_shenzhen_procurement'],
+      dependencies: ['w0_fall_detection_research', 'w0_shenzhen_procurement'],
       isGate: false,
       isCheckpoint: false,
-      description: 'ESP32 낙상 ISR + MOSFET 구현 + IsaacLab 검증 루프 시작',
+      description: 'NUC 낙상 감지 로직 구현 (BNO085 IMU 임계치 → 토크 해제) + IsaacLab 검증 루프 시작',
     },
 
     // =========================================================================
@@ -653,17 +653,17 @@ export const TECH_TREE = {
       description: '상태 머신 v1 구현 시작 + SmolVLA Stage 1 모니터링 + 에코 캔슬링 후속 완료',
     },
     {
-      id: 'w2_esp32_bench_test',
-      label: 'ESP32 MOSFET 벤치 테스트',
+      id: 'w2_fall_detection_bench',
+      label: 'NUC 낙상 감지 벤치 테스트',
       week: 2,
       track: 'B',
       members: ['epsilon2'],
       parts: [],
       status: 'locked',
-      dependencies: ['w1_esp32_fall_isr'],
+      dependencies: ['w1_fall_detection_impl'],
       isGate: false,
       isCheckpoint: false,
-      description: 'ESP32 MOSFET 벤치 테스트 (기울임 -> 차단 확인)',
+      description: 'NUC 낙상 감지 벤치 테스트 (기울임 → 토크 해제 확인)',
     },
     {
       id: 'w2_emotion_v1',
@@ -740,10 +740,10 @@ export const TECH_TREE = {
       members: ['epsilon2'],
       parts: [],
       status: 'locked',
-      dependencies: ['w1_esp32_fall_isr'],
+      dependencies: ['w1_fall_detection_impl'],
       isGate: false,
       isCheckpoint: false,
-      description: 'IMU 구조 확정 (ESP32용 + NUC용 별도) + IsaacLab 검증 계속',
+      description: 'BNO085 IMU 구조 확정 (NUC policy + 낙상 감지 겸용) + IsaacLab 검증 계속',
     },
 
     // Week 2 mini finetuning feedback
@@ -888,13 +888,13 @@ export const TECH_TREE = {
         'w2_torso_assembly',
         'w3_collect_570',
         'w3_tensorrt_deploy',
-        'w2_esp32_bench_test',
+        'w2_fall_detection_bench',
         'w3_newton_rl_verify',
         'w1_nuc_rt_kernel',
       ],
       isGate: true,
       isCheckpoint: false,
-      description: 'Phase 1 게이트: 토르소 완성, SmolVLA v1 동작, ESP32 차단, Newton Walking RL 검증 완료, 수집 600개',
+      description: 'Phase 1 게이트: 토르소 완성, SmolVLA v1 동작, 낙상 감지 검증, Newton Walking RL 검증 완료, 수집 600개',
     },
 
     // =========================================================================
@@ -1036,7 +1036,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w4_leg_assembly_start',
-      label: '다리 조립 시작 + 배터리 C 연결',
+      label: '다리 조립 시작 + 배터리 1(6S) 연결',
       week: 4,
       track: 'B',
       members: ['delta2'],
@@ -1045,7 +1045,7 @@ export const TECH_TREE = {
       dependencies: ['w4_actuator_10_assembly'],
       isGate: false,
       isCheckpoint: false,
-      description: '다리 조립 시작 + 배터리 C 연결',
+      description: '다리 조립 시작 + 배터리 1(6S) 연결',
     },
 
     // =========================================================================
@@ -1455,7 +1455,7 @@ export const TECH_TREE = {
       dependencies: ['w6_ground_gait_first', 'w6_gap_analysis'],
       isGate: false,
       isCheckpoint: false,
-      description: '재학습 결과 테스트 반복 + 30분 전원 테스트 + BMS 최종 + NUC 장기 안정성',
+      description: '재학습 결과 테스트 반복 + 30분 전원 테스트 + LiPo 알람 최종 + NUC 장기 안정성',
     },
     {
       id: 'w7_emergency_manual',
@@ -1569,7 +1569,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w8_power_integration',
-      label: '전원 A+B+C 통합 배선',
+      label: '전원 배터리 1+2 통합 배선',
       week: 8,
       track: 'both',
       members: ['delta2'],
@@ -1578,7 +1578,7 @@ export const TECH_TREE = {
       dependencies: ['w8_body_merge'],
       isGate: false,
       isCheckpoint: false,
-      description: '전원 A+B+C 통합 배선',
+      description: '전원 배터리 1(6S 다리)+2(4S 연산/팔) 통합 배선',
     },
     {
       id: 'w8_real_body_gait',
@@ -1607,8 +1607,8 @@ export const TECH_TREE = {
       description: '실체 mass 최종 재학습 (필요 시)',
     },
     {
-      id: 'w8_mosfet_real_verify',
-      label: 'MOSFET 낙상 차단 실물 검증',
+      id: 'w8_fall_detect_real_verify',
+      label: 'NUC 낙상 감지 실물 검증',
       week: 8,
       track: 'both',
       members: ['epsilon2'],
@@ -1617,7 +1617,7 @@ export const TECH_TREE = {
       dependencies: ['w8_body_merge'],
       isGate: false,
       isCheckpoint: false,
-      description: 'MOSFET 낙상 차단 실물 검증 + 실체 vs 더미 sim-to-real 비교 + 스텝 응답 vs 시뮬 비교',
+      description: 'NUC 낙상 감지 실물 검증 + 실체 vs 더미 sim-to-real 비교 + 스텝 응답 vs 시뮬 비교',
     },
 
     // 풀 시나리오 1차
@@ -1632,7 +1632,7 @@ export const TECH_TREE = {
       dependencies: ['w8_real_body_gait', 'w6_upper_integration'],
       isGate: false,
       isCheckpoint: false,
-      description: '보행 중 팔 정지 정책 + 대화->보행 명령 ("걸어" -> /gait/cmd) + FETCH 시퀀서 타이머 튜닝 (시연 환경 레이아웃 T1, T2)',
+      description: '보행 중 팔 정지 정책 + 대화->보행 명령 ("걸어" -> UDP vx vy wz) + FETCH 시퀀서 타이머 튜닝 (시연 환경 레이아웃 T1, T2)',
     },
     {
       id: 'w8_full_scenario_v1',
@@ -1642,7 +1642,7 @@ export const TECH_TREE = {
       members: ['delta1', 'delta2', 'delta3', 'epsilon1', 'epsilon2'],
       parts: ['head', 'torso', 'left_arm', 'right_arm', 'left_leg', 'right_leg'],
       status: 'locked',
-      dependencies: ['w8_walk_arm_policy', 'w8_mosfet_real_verify'],
+      dependencies: ['w8_walk_arm_policy', 'w8_fall_detect_real_verify'],
       isGate: false,
       isCheckpoint: true,
       description: '풀 시나리오 1차 테스트 (시선->인사->FETCH->자유보행) + 보행 로깅 + 보행 로그 분석 + 캐릭터 최종 조정',
@@ -1660,12 +1660,12 @@ export const TECH_TREE = {
       dependencies: [
         'w8_body_merge',
         'w8_real_body_gait',
-        'w8_mosfet_real_verify',
+        'w8_fall_detect_real_verify',
         'w8_full_scenario_v1',
       ],
       isGate: true,
       isCheckpoint: false,
-      description: '합류 게이트: 상하체 결합 완료, 실체 보행 (직립 + 전진 + 정지), MOSFET 차단 실측, 풀 시나리오 1차 통과 (시나리오 레벨 A/B/C 판정)',
+      description: '합류 게이트: 상하체 결합 완료, 실체 보행 (직립 + 전진 + 정지), 낙상 감지 검증, 풀 시나리오 1차 통과 (시나리오 레벨 A/B/C 판정)',
     },
 
     // =========================================================================
@@ -1740,7 +1740,7 @@ export const TECH_TREE = {
       dependencies: ['w10_scenario_level_a', 'w10_scenario_level_b', 'w10_scenario_level_c'],
       isGate: true,
       isCheckpoint: false,
-      description: '최종 발표: 시선/인사/대화/집기 동작, MOSFET 정상, 비상정지 정상, 리허설 2회+',
+      description: '최종 발표: 시선/인사/대화/집기 동작, 낙상 감지 정상, 비상정지 정상, 리허설 2회+',
     },
     {
       id: 'w10_scenario_level_a',

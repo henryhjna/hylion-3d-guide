@@ -4,8 +4,8 @@ import remarkGfm from 'remark-gfm';
 import GlossaryText from './GlossaryText';
 
 const DOC_LIST = [
-  { id: 'plan', name: '기획서 v12', path: `${import.meta.env.BASE_URL}assets/docs/기획서_v12.md` },
-  { id: 'guide', name: '실행가이드 v12', path: `${import.meta.env.BASE_URL}assets/docs/실행가이드_v12.md` },
+  { id: 'plan', name: '기획서 v13', path: `${import.meta.env.BASE_URL}assets/docs/기획서_v13.md` },
+  { id: 'guide', name: '실행가이드 v13', path: `${import.meta.env.BASE_URL}assets/docs/실행가이드_v13.md` },
   { id: 'dgx', name: 'DGX Spark', path: `${import.meta.env.BASE_URL}assets/docs/DGX_Spark_가이드.md` },
 ];
 

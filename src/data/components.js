@@ -1,6 +1,6 @@
 // =============================================================================
 // HYlion Robot — 부품/하드웨어 데이터베이스 (components.js)
-// 기획서 v12 + 실행가이드 v12 기반 전수 추출
+// 기획서 v13 + 실행가이드 v13 기반 전수 추출
 // =============================================================================
 
 export const COMPONENT_CATEGORIES = {
@@ -29,7 +29,8 @@ export const COMPONENTS = {
       gpu: 'Ampere (1024 CUDA cores)',
       cpu: '6-core Arm Cortex-A78AE',
       memory: '8GB LPDDR5',
-      tdp: '25W (기본)',
+      tdp: '15W max',
+      voltage: '9-20V 허용 (14.8V 직결 from Battery 2)',
       ai_performance: '67 TOPS (INT8)',
       storage: 'NVMe SSD (별도)',
       os: 'JetPack 6.x (Ubuntu 22.04)',
@@ -37,11 +38,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'SmolVLA 추론(TensorRT), MediaPipe(CPU), ROS2 마스터, 상태 머신, TTS 재생, LED/입 서보 제어, SO-ARM STS3215 제어. 로봇 두뇌 역할',
+        'Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), MediaPipe(CPU), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라 캡처). USB Hub A(센서)+Hub B(제어) 경유',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
-      owner: 'epsilon1',
+      owner: '성래',
     },
     procurement: {
       channel: '한국',
@@ -62,17 +63,18 @@ export const COMPONENTS = {
       memory: '16GB DDR4',
       storage: '500GB SSD',
       tdp: '15W',
+      power: '12V (DC-DC #1 from Battery 2)',
       os: 'Ubuntu 22.04 + xanmod RT 커널',
       interfaces: 'USB 3.0, Ethernet, HDMI',
-      can_support: 'CAN-USB ×2 → 4 CAN 버스',
+      can_support: 'USB-CAN ×2 → 2 CAN 버스 (다리당 1)',
     },
     usage: {
       description:
-        'BHL lowlevel C 코드 실행, Walking RL policy 추론, CAN 버스 통신으로 10개 액추에이터 250Hz 제어. Orin과 Ethernet 직결(ROS2)',
+        'Walking RL policy (ONNX Runtime C API, MLP 25Hz, Isaac Gym 모델), SocketCAN으로 USB-CAN ×2 제어, Arduino USB Serial로 BNO085 IMU 수신. UDP Server로 Orin에서 보행 명령 수신 (udp_joystick.py 호환)',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '한국',
@@ -83,37 +85,6 @@ export const COMPONENTS = {
       { label: 'BeeLink Official', url: 'https://www.bee-link.com/' },
     ],
     location3D: { part: 'torso', position: 'mid', internalId: 'nuc' },
-  },
-
-  esp32: {
-    name: 'ESP32 개발 보드',
-    category: 'compute',
-    specs: {
-      cpu: 'Xtensa LX6 듀얼코어 240MHz',
-      memory: '520KB SRAM',
-      flash: '4MB',
-      interfaces: 'I2C, SPI, UART, GPIO, ADC',
-      wifi: '802.11 b/g/n',
-      bluetooth: 'BLE 4.2',
-      voltage: '3.3V (5V USB 입력)',
-    },
-    usage: {
-      description:
-        'MPU6050 IMU로 낙상 감지 → 하드웨어 인터럽트(ISR) → N-channel MOSFET으로 배터리 C 전원 즉시 차단. 안전 전용 마이크로컨트롤러',
-      parts: ['torso'],
-      quantity: 1,
-      spares: 1,
-      owner: 'epsilon2',
-    },
-    procurement: {
-      channel: '심천',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [
-      { label: 'ESP32 Datasheet', url: 'https://www.espressif.com/en/products/socs/esp32' },
-    ],
-    location3D: { part: 'torso', position: 'lower_mid', internalId: 'esp32' },
   },
 
   dgx_spark: {
@@ -131,7 +102,7 @@ export const COMPONENTS = {
       parts: [],
       quantity: 1,
       spares: 0,
-      owner: 'delta3',
+      owner: '희승',
     },
     procurement: {
       channel: '기보유',
@@ -153,7 +124,7 @@ export const COMPONENTS = {
     specs: {
       type: 'Brushless DC (outrunner)',
       kv: '150 KV',
-      application: 'BHL 다리 — 고토크 관절 (hip, knee)',
+      application: 'BHL 다리 — 고토크 관절 (hip roll/yaw/pitch, knee)',
       weight: '~120g',
       shaft: '6mm',
       voltage: '3S~6S LiPo',
@@ -161,11 +132,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'BHL 이족보행 다리의 대형 관절(hip roll/pitch/yaw, knee)용 BLDC 모터. 사이클로이드 기어박스와 결합하여 액추에이터 구성',
+        'BHL 이족보행 다리의 대형 관절(hip roll/yaw/pitch, knee)용 BLDC 모터. 사이클로이드 기어박스와 결합하여 액추에이터 구성. 다리당 4개',
       parts: ['left_leg', 'right_leg'],
-      quantity: 6,
+      quantity: 8,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '심천',
@@ -184,7 +155,7 @@ export const COMPONENTS = {
     specs: {
       type: 'Brushless DC (outrunner)',
       kv: '110 KV',
-      application: 'BHL 다리 — 발목 관절',
+      application: 'BHL 다리 — 발목 관절 (ankle pitch/roll)',
       weight: '~80g',
       shaft: '5mm',
       voltage: '3S~4S LiPo',
@@ -192,11 +163,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'BHL 이족보행 다리의 발목 관절(ankle roll/pitch)용 BLDC 모터. M6C12보다 소형이며 발목에 최적화',
+        'BHL 이족보행 다리의 발목 관절(ankle pitch/roll)용 BLDC 모터. M6C12보다 소형이며 발목에 최적화. 다리당 2개',
       parts: ['left_leg', 'right_leg'],
       quantity: 4,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '심천',
@@ -232,7 +203,7 @@ export const COMPONENTS = {
       parts: ['torso'],
       quantity: 2,
       spares: 0,
-      owner: 'epsilon2',
+      owner: '상윤',
     },
     procurement: {
       channel: '한국',
@@ -250,7 +221,7 @@ export const COMPONENTS = {
     category: 'motor_servo',
     specs: {
       type: 'Serial Bus Servo (Feetech STS3215)',
-      stall_torque: '~15 kg·cm',
+      stall_torque: '~30 kg·cm (12V)',
       no_load_speed: '~60 RPM',
       resolution: '4096',
       voltage: '6~12V',
@@ -261,11 +232,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'SO-ARM101 양팔 로봇팔 관절 구동. 좌팔 6개(ID 1~6) + 우팔 6개(ID 7~12), 총 12개. Waveshare Board #1(좌팔), #2(우팔)에 연결. Feetech SCServo sync read/write 200Hz 제어',
+        'SO-ARM101 양팔 로봇팔 관절 구동. 좌팔 6개(ID 1~6) + 우팔 6개(ID 7~12), 총 12개. BusLinker Board #1(좌팔), #2(우팔)에 연결. Feetech SCServo sync read/write 200Hz 제어',
       parts: ['left_arm', 'right_arm'],
       quantity: 12,
       spares: 0,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '기보유',
@@ -280,24 +251,24 @@ export const COMPONENTS = {
   },
 
   mg90s: {
-    name: 'MG90S 마이크로 서보',
+    name: 'SG90급 마이크로 서보',
     category: 'motor_servo',
     specs: {
       type: 'Analog Micro Servo',
-      stall_torque: '2.2 kg·cm (6V)',
-      no_load_speed: '0.08 sec/60° (6V)',
-      voltage: '4.8~6V',
-      signal: 'PWM',
-      weight: '13.4g',
-      gear: '메탈 기어',
+      stall_torque: '~1.8 kg·cm (5V)',
+      no_load_speed: '0.08 sec/60° (5V)',
+      voltage: '5V (Jetson GPIO)',
+      signal: 'PWM (Jetson GPIO 핀)',
+      weight: '~9g',
+      gear: '플라스틱 기어',
     },
     usage: {
       description:
-        '머리 내부 입(lip) 서보. TTS 오디오 타이밍에 맞춰 lip sync 구현. Orin PWM 핀으로 직접 제어',
+        '머리 내부 입(lip) 서보. TTS 오디오 타이밍에 맞춰 lip sync 구현. Jetson GPIO 5V 전원 + PWM 핀으로 직접 제어',
       parts: ['head'],
       quantity: 1,
       spares: 1,
-      owner: 'epsilon2',
+      owner: '상윤',
     },
     procurement: {
       channel: '심천',
@@ -321,16 +292,16 @@ export const COMPONENTS = {
       continuous_current: '15A',
       peak_current: '40A',
       communication: 'CAN 2.0B',
-      firmware: 'BHL 커스텀 FOC',
+      firmware: 'Recoil-Motor-Controller-BESC (C 펌웨어, FOC+PD 위치 제어+CAN 프로토콜+AS5600 I2C)',
       size: '30×15mm',
     },
     usage: {
       description:
-        'BHL 다리 BLDC 모터 개별 제어용 ESC. 10개 액추에이터에 각 1개씩, CAN 버스로 NUC에 연결. 250Hz FOC 제어. 사이클로이드 기어박스 내부에 장착',
+        'BHL 다리 BLDC 모터 개별 제어용 ESC. 12개 액추에이터에 각 1개씩 (다리당 6), CAN 버스로 NUC에 연결. FOC 수kHz, CAN 통신 250Hz. 사이클로이드 기어박스 내부에 장착',
       parts: ['left_leg', 'right_leg'],
-      quantity: 10,
+      quantity: 12,
       spares: 2,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '한국',
@@ -354,11 +325,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        '서보/모터 다채널 PWM 제어 보조. MG90S 입 서보 등 PWM 서보 제어 확장용',
+        '서보/모터 다채널 PWM 제어 보조. SG90급 입 서보 등 PWM 서보 제어 확장용',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
-      owner: 'epsilon1',
+      owner: '성래',
     },
     procurement: {
       channel: '한국',
@@ -386,11 +357,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'U2D2 ×2: 목 XL430 Dynamixel ×2 통신 (Protocol 2.0, 1Mbps). Orin USB 연결',
+        '목 XL430 Dynamixel ×2 통신 (Protocol 2.0, 1Mbps). Orin USB 연결',
       parts: ['torso'],
-      quantity: 2,
+      quantity: 1,
       spares: 0,
-      owner: 'epsilon1',
+      owner: '성래',
     },
     procurement: {
       channel: '한국',
@@ -410,15 +381,15 @@ export const COMPONENTS = {
       type: 'USB ↔ CAN 2.0B 변환기',
       baudrate: '1Mbps',
       interface: 'USB 2.0',
-      channels: '2개 USB → 4 CAN 버스 (각 어댑터 2 버스)',
+      channels: '2개 USB → 2 CAN 버스 (다리당 1)',
     },
     usage: {
       description:
-        'NUC USB → BHL 다리 CAN 버스 통신. 2개 어댑터로 4개 CAN 버스 구성, 10개 ESC와 250Hz 통신',
+        'NUC USB → BHL 다리 CAN 버스 통신. 2개 어댑터로 2개 CAN 버스 구성 (다리당 1), 12개 ESC와 250Hz 통신',
       parts: ['torso'],
       quantity: 2,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '심천',
@@ -427,6 +398,61 @@ export const COMPONENTS = {
     },
     links: [],
     location3D: { part: 'torso', position: 'mid', internalId: 'can_usb' },
+  },
+
+  buslinker_controller: {
+    name: 'BusLinker Controller (SO-ARM 어댑터)',
+    category: 'communication',
+    specs: {
+      type: 'USB ↔ TTL Serial Bus Servo 어댑터',
+      protocol: 'Feetech SCServo Half-Duplex TTL',
+      baudrate: '1Mbps',
+      interface: 'USB-C',
+      connector: 'TTL 3-pin 데이지체인',
+    },
+    usage: {
+      description:
+        'SO-ARM101 양팔 STS3215 서보 USB 시리얼 어댑터. #1(좌팔 ID 1~6), #2(우팔 ID 7~12). Orin USB 연결. SmolVLA(S3e)가 목표 각도 전송, 현재 위치 피드백 수신',
+      parts: ['left_arm', 'right_arm'],
+      quantity: 2,
+      spares: 0,
+      owner: '인혁',
+    },
+    procurement: {
+      channel: '기보유',
+      status: 'confirmed',
+      estimatedArrival: null,
+    },
+    links: [
+      { label: 'SO-ARM101 GitHub', url: 'https://github.com/TheRobotStudio/SO-ARM100' },
+    ],
+    location3D: { part: 'torso', position: 'upper_mid', internalId: 'buslinker' },
+  },
+
+  arduino_imu_bridge: {
+    name: 'Arduino (IMU USB 브릿지)',
+    category: 'communication',
+    specs: {
+      type: 'Arduino 보드 (Nano/Uno 등)',
+      purpose: 'BNO085 IMU → USB 브릿지',
+      interface_in: 'I2C 또는 SPI (BNO085)',
+      interface_out: 'USB Serial (NUC)',
+    },
+    usage: {
+      description:
+        'BNO085 IMU 데이터를 USB Serial로 NUC에 전달하는 브릿지. Walking RL policy의 몸체 자세 입력용. NUC USB 연결',
+      parts: ['torso'],
+      quantity: 1,
+      spares: 0,
+      owner: '승민',
+    },
+    procurement: {
+      channel: '기보유',
+      status: 'confirmed',
+      estimatedArrival: null,
+    },
+    links: [],
+    location3D: { part: 'torso', position: 'mid', internalId: 'arduino' },
   },
 
   // ===========================================================================
@@ -445,11 +471,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'MediaPipe 시선 추적 + 얼굴 인식 입력. 머리 내부 정면 장착. 대화/감정 인식용. SmolVLA에는 사용하지 않음',
+        'MediaPipe 시선 추적 + 얼굴 인식 + SmolVLA external view (3대 카메라 중 외부). 머리 내부 정면 장착',
       parts: ['head'],
       quantity: 1,
       spares: 0,
-      owner: 'epsilon1',
+      owner: '성래',
     },
     procurement: {
       channel: '한국',
@@ -473,11 +499,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'SmolVLA 매니퓰레이션 추론 입력 (hand-eye view). SO-ARM 그리퍼 근처 마운트, Orin USB 연결. Week 1에서 위치/각도 확정 후 변경 금지 (수집/추론 동일 조건 보장)',
-      parts: ['right_arm'],
-      quantity: 1,
+        'SmolVLA 매니퓰레이션 추론 입력 (hand-eye view). SO-ARM 양팔 그리퍼 근처 마운트, Orin USB 연결. Week 1에서 위치/각도 확정 후 변경 금지 (수집/추론 동일 조건 보장)',
+      parts: ['left_arm', 'right_arm'],
+      quantity: 2,
       spares: 0,
-      owner: 'epsilon1',
+      owner: '성래',
     },
     procurement: {
       channel: '한국',
@@ -487,36 +513,6 @@ export const COMPONENTS = {
     },
     links: [],
     location3D: { part: 'right_arm', position: 'gripper', internalId: 'wrist_camera' },
-  },
-
-  mpu6050: {
-    name: 'MPU6050 6축 IMU',
-    category: 'sensor',
-    specs: {
-      type: '6-DOF IMU (3축 가속도 + 3축 자이로)',
-      accelerometer: '±2/4/8/16g',
-      gyroscope: '±250/500/1000/2000°/s',
-      communication: 'I2C (400kHz)',
-      voltage: '3.3~5V',
-      size: '~20×16mm',
-    },
-    usage: {
-      description:
-        '낙상 감지용 IMU (ESP32 I2C 연결 → 기울기 임계값 초과 시 하드웨어 인터럽트 → MOSFET 차단). NUC용 policy IMU와 별도 운용 가능',
-      parts: ['torso'],
-      quantity: 2,
-      spares: 1,
-      owner: 'epsilon2',
-    },
-    procurement: {
-      channel: '심천',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [
-      { label: 'MPU6050 Datasheet', url: 'https://invensense.tdk.com/products/motion-tracking/6-axis/mpu-6050/' },
-    ],
-    location3D: { part: 'torso', position: 'center', internalId: 'imu' },
   },
 
   microphone: {
@@ -535,7 +531,7 @@ export const COMPONENTS = {
       parts: ['head'],
       quantity: 1,
       spares: 0,
-      owner: 'epsilon1',
+      owner: '성래',
     },
     procurement: {
       channel: '심천',
@@ -546,6 +542,60 @@ export const COMPONENTS = {
     location3D: { part: 'head', position: 'front_lower', internalId: 'mic' },
   },
 
+  as5600_encoder: {
+    name: 'AS5600 자석 인코더',
+    category: 'sensor',
+    specs: {
+      type: '12-bit 자석 로터리 인코더',
+      resolution: '4096 positions (0.088°)',
+      communication: 'I2C',
+      voltage: '3.3~5V',
+      mount: 'BLDC 모터 축 끝단',
+    },
+    usage: {
+      description:
+        'BHL 다리 BLDC 모터 축 각도 측정. 각 ESC(B-G431B)에 I2C로 연결되어 FOC 제어의 위치 피드백 제공. 12개 모터에 각 1개씩',
+      parts: ['left_leg', 'right_leg'],
+      quantity: 12,
+      spares: 2,
+      owner: '승민',
+    },
+    procurement: {
+      channel: '심천',
+      status: 'confirmed',
+      estimatedArrival: 'Week 0',
+    },
+    links: [],
+    location3D: { part: 'left_leg', position: 'actuator_internal', internalId: 'encoder' },
+  },
+
+  bno085_imu: {
+    name: 'BNO085 9축 IMU',
+    category: 'sensor',
+    specs: {
+      type: '9-DOF IMU (가속도 + 자이로 + 지자기)',
+      communication: 'I2C 또는 SPI',
+      voltage: '3.3V',
+      fusion: '내장 센서 퓨전 (게임 회전 벡터)',
+      update_rate: '최대 400Hz',
+    },
+    usage: {
+      description:
+        'Walking RL policy용 몸체 기울기/각속도 측정. Arduino를 USB 브릿지로 NUC에 전달. 낙상 감지 겸용: IMU 임계치 초과 시 NUC가 모터 토크 해제',
+      parts: ['torso'],
+      quantity: 1,
+      spares: 0,
+      owner: '승민',
+    },
+    procurement: {
+      channel: '심천',
+      status: 'confirmed',
+      estimatedArrival: 'Week 0',
+    },
+    links: [],
+    location3D: { part: 'torso', position: 'center', internalId: 'policy_imu' },
+  },
+
   // ===========================================================================
   // 입출력 장치
   // ===========================================================================
@@ -553,17 +603,17 @@ export const COMPONENTS = {
     name: '소형 스피커',
     category: 'io_device',
     specs: {
-      type: 'USB 또는 3.5mm 소형 스피커',
+      type: 'USB 소형 스피커',
       power: '3~5W',
-      interface: 'USB Audio / 3.5mm',
+      interface: 'USB Audio',
     },
     usage: {
       description:
-        'TTS 음성 출력. Orin USB 오디오로 연결. 클라우드 TTS(온라인) 또는 로컬 TTS(서바이벌 오프라인). 인사/대화 음성 재생, lip sync 타이밍 기준 제공',
+        'Piper TTS 합성 음성 출력. ALSA 또는 PulseAudio로 PCM 출력. Orin USB 오디오로 연결. 인사/대화 음성 재생, lip sync 타이밍 기준 제공',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
-      owner: 'epsilon1',
+      owner: '성래',
     },
     procurement: {
       channel: '심천',
@@ -590,7 +640,7 @@ export const COMPONENTS = {
       parts: ['head'],
       quantity: 2,
       spares: 2,
-      owner: 'epsilon2',
+      owner: '상윤',
     },
     procurement: {
       channel: '심천',
@@ -603,163 +653,134 @@ export const COMPONENTS = {
     location3D: { part: 'head', position: 'eyes', internalId: 'led_eyes' },
   },
 
+  usb_hub_a: {
+    name: 'USB Hub A (센서/입력)',
+    category: 'io_device',
+    specs: {
+      type: '유전원 USB Hub',
+      ports: '4포트 이상',
+      power: '5V (DC-DC #3)',
+    },
+    usage: {
+      description:
+        'Orin USB1에 연결. USB Mic + 카메라 ×3 연결. 유전원으로 카메라 안정 공급',
+      parts: ['torso'],
+      quantity: 1,
+      spares: 0,
+      owner: '성래',
+    },
+    procurement: {
+      channel: '한국',
+      status: 'confirmed',
+      estimatedArrival: 'Week 0',
+    },
+    links: [],
+    location3D: { part: 'torso', position: 'upper_mid', internalId: 'usb_hub_a' },
+  },
+
+  usb_hub_b: {
+    name: 'USB Hub B (출력/제어)',
+    category: 'io_device',
+    specs: {
+      type: '유전원 USB Hub',
+      ports: '4포트 이상',
+      power: '5V (DC-DC #3)',
+    },
+    usage: {
+      description:
+        'Orin USB2에 연결. USB Speaker + BusLinker ×2 (USB-C) 연결',
+      parts: ['torso'],
+      quantity: 1,
+      spares: 0,
+      owner: '성래',
+    },
+    procurement: {
+      channel: '한국',
+      status: 'confirmed',
+      estimatedArrival: 'Week 0',
+    },
+    links: [],
+    location3D: { part: 'torso', position: 'upper_mid', internalId: 'usb_hub_b' },
+  },
+
   // ===========================================================================
   // 전원 시스템
   // ===========================================================================
-  battery_a: {
-    name: '배터리 A (컴퓨팅/IO)',
+  battery_1: {
+    name: '배터리 1 (다리 전용)',
     category: 'power',
     specs: {
-      config: '3S2P (11.1V nominal)',
-      capacity: '~5000mAh',
-      chemistry: 'Li-ion / LiPo',
-      discharge: '5~10C',
-      voltage_range: '9.0~12.6V',
-      loads: 'Orin(25W), NUC(15W), LED, 입 서보, 스피커',
-    },
-    usage: {
-      description:
-        '컴퓨팅 보드(Orin, NUC) + IO 장치(LED, 스피커, 입 서보) 전원. 비상정지 시에도 A는 유지하여 Orin 로그 보존. DC-DC 통해 5V/12V/19V 공급',
-      parts: ['torso'],
-      quantity: 1,
-      spares: 0,
-      owner: 'delta2',
-    },
-    procurement: {
-      channel: '심천',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [],
-    location3D: { part: 'torso', position: 'bottom', internalId: 'battery_a' },
-  },
-
-  battery_b: {
-    name: '배터리 B (서보)',
-    category: 'power',
-    specs: {
-      config: '3S3P (11.1V nominal)',
-      capacity: '~7500mAh',
-      chemistry: 'Li-ion / LiPo',
-      discharge: '5~10C',
-      voltage_range: '9.0~12.6V',
-      loads: 'SO-ARM STS3215 ×12, 목 XL430 ×2',
-    },
-    usage: {
-      description:
-        'SO-ARM 양팔 12개 서보 + 목 2개 서보 전원. 비상정지 시 NC 스위치로 차단. 토르소 최하단 배치 (CoM 낮추기)',
-      parts: ['torso'],
-      quantity: 1,
-      spares: 0,
-      owner: 'delta2',
-    },
-    procurement: {
-      channel: '심천',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [],
-    location3D: { part: 'torso', position: 'bottom', internalId: 'battery_b' },
-  },
-
-  battery_c: {
-    name: '배터리 C (BHL 다리)',
-    category: 'power',
-    specs: {
-      config: 'BHL 원본 사양',
+      config: '6S LiPo',
+      capacity: '4000mAh',
+      voltage_nom: '22.2V',
+      voltage_max: '25.2V',
       chemistry: 'LiPo',
-      loads: 'BHL BLDC ×10, ESP32',
-      note: 'BHL 공식 문서 권장 사양 준수',
+      discharge: '25C+',
+      safety: 'LiPo 저전압 알람 장착',
     },
     usage: {
       description:
-        'BHL 다리 BLDC 모터 10개 + ESP32 전원. 다리 프레임에 장착. ESP32 MOSFET으로 긴급 차단 가능. 비상정지 NC 스위치로도 차단',
+        'BHL 다리 BLDC ×12 전용. XT60으로 ESC 데이지 체인에 직결 (24V). 다리 프레임에 장착',
       parts: ['left_leg', 'right_leg'],
       quantity: 1,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
-      channel: '심천',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [
-      { label: 'BHL Docs', url: 'https://berkeley-humanoid-lite.gitbook.io/docs' },
-    ],
-    location3D: { part: 'left_leg', position: 'hip_frame', internalId: 'battery_c' },
-  },
-
-  bms: {
-    name: 'BMS (Battery Management System)',
-    category: 'power',
-    specs: {
-      type: '3S 리튬 배터리 보호 회로',
-      protection: '과충전, 과방전, 과전류, 단락 보호',
-      balance: '셀 밸런싱',
-      quantity_note: '배터리 A/B/C 각각 1개씩 총 3개',
-    },
-    usage: {
-      description:
-        '배터리 A, B, C 각각에 BMS 1개씩 장착. 셀 밸런싱 + 과충전/과방전/과전류 보호. 기성품 사용',
-      parts: ['torso', 'left_leg'],
-      quantity: 3,
-      spares: 0,
-      owner: 'delta2',
-    },
-    procurement: {
-      channel: '심천',
+      channel: '한국',
       status: 'confirmed',
       estimatedArrival: 'Week 0',
     },
     links: [],
-    location3D: { part: 'torso', position: 'bottom', internalId: 'bms' },
+    location3D: { part: 'left_leg', position: 'hip_frame', internalId: 'battery_1' },
   },
 
-  pdb: {
-    name: 'PDB (Power Distribution Board)',
+  battery_2: {
+    name: '배터리 2 (연산+팔+주변기기)',
     category: 'power',
     specs: {
-      type: '드론용 전원 분배 보드',
-      input: 'XT60 (배터리 입력)',
-      output: '다중 XT30/패드',
-      current: '최대 120A+',
-      features: '전압 분배, 퓨즈 패드',
+      config: '4S LiPo',
+      capacity: '8000mAh',
+      voltage_nom: '14.8V',
+      voltage_max: '16.8V',
+      chemistry: 'LiPo',
+      discharge: '10C+',
+      safety: 'LiPo 저전압 알람 장착, 14.0V 컷오프',
     },
     usage: {
       description:
-        '배터리 전원을 각 서브시스템으로 분배. 기성 드론용 PDB 사용. DC-DC 컨버터와 연동하여 5V/12V/19V 생성',
+        'Orin(14.8V 직결) + DC-DC #1→NUC(12V) + DC-DC #2→팔 서보(12V) + DC-DC #3→USB Hub(5V). 토르소에 장착',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
-      channel: '심천',
+      channel: '한국',
       status: 'confirmed',
       estimatedArrival: 'Week 0',
     },
     links: [],
-    location3D: { part: 'torso', position: 'lower_mid', internalId: 'pdb' },
+    location3D: { part: 'torso', position: 'bottom', internalId: 'battery_2' },
   },
 
   dc_dc_converter: {
-    name: 'DC-DC 벅 컨버터',
+    name: 'DC-DC 벅-부스트 컨버터',
     category: 'power',
     specs: {
-      type: '강압형(Buck) DC-DC 컨버터',
-      input: '9~30V',
-      output_options: '5V, 12V, 19V (별도 모듈)',
+      type: '벅-부스트(Buck-Boost) DC-DC 컨버터',
+      input: '14.8V (Battery 2)',
+      output_options: '12V (NUC), 12V (팔 서보), 5V (USB Hub)',
       efficiency: '>90%',
-      current: '3~5A per module',
+      current: '#1: 3A, #2: 15A, #3: 3A',
     },
     usage: {
       description:
-        '배터리 전압(11.1V nominal)을 Orin(19V), NUC(12V), 서보(12V), LED/로직(5V) 등 각 전압으로 변환. 복수 모듈 사용',
+        'DC-DC #1: 14.8V→12V 3A buck-boost (NUC 전용), DC-DC #2: 14.8V→12V 15A buck-boost (팔 서보 전용), DC-DC #3: 14.8V→5V 3A (USB Hub 전원)',
       parts: ['torso'],
       quantity: 3,
       spares: 1,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '심천',
@@ -773,33 +794,6 @@ export const COMPONENTS = {
   // ===========================================================================
   // 안전 장치
   // ===========================================================================
-  mosfet_n_channel: {
-    name: 'N-channel MOSFET',
-    category: 'safety',
-    specs: {
-      type: 'N-channel Power MOSFET',
-      vds: '30~60V',
-      ids: '30~60A',
-      rds_on: '<10mOhm',
-      gate_driver: 'ESP32 GPIO 3.3V (게이트 드라이버 또는 레벨 시프터 사용)',
-    },
-    usage: {
-      description:
-        'ESP32 낙상 감지 시 배터리 C(다리 BLDC) 전원 즉시 차단. MPU6050 → ESP32 ISR → MOSFET OFF. BHL 다리가 백드라이버블이므로 전원 차단 시 관절이 풀려 안전하게 주저앉음',
-      parts: ['torso'],
-      quantity: 1,
-      spares: 2,
-      owner: 'epsilon2',
-    },
-    procurement: {
-      channel: '심천',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [],
-    location3D: { part: 'torso', position: 'lower_mid', internalId: 'mosfet' },
-  },
-
   nc_emergency_stop: {
     name: 'NC 비상정지 스위치',
     category: 'safety',
@@ -811,11 +805,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        '물리 비상정지. 배터리 B+C 양극 직렬 NC 차단. 누르면 서보 + 다리 BLDC 전원 동시 차단. 배터리 A(컴퓨팅)는 유지하여 Orin 로그 보존',
+        '물리 비상정지. Battery 1+2 양극 NC 차단. 누르면 전체 전원 동시 차단',
       parts: ['torso'],
       quantity: 1,
       spares: 1,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '심천',
@@ -846,7 +840,7 @@ export const COMPONENTS = {
       parts: ['torso'],
       quantity: 8,
       spares: 2,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '한국',
@@ -874,7 +868,7 @@ export const COMPONENTS = {
       parts: ['torso'],
       quantity: 1,
       spares: 1,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '심천',
@@ -895,11 +889,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'BHL 액추에이터 사이클로이드 기어박스 내부 베어링. 기어박스 10세트에 필요한 수량 일괄 구매',
+        'BHL 액추에이터 사이클로이드 기어박스 내부 베어링. 기어박스 12세트에 필요한 수량 일괄 구매',
       parts: ['left_leg', 'right_leg'],
       quantity: 30,
       spares: 5,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '심천',
@@ -924,7 +918,7 @@ export const COMPONENTS = {
       parts: ['left_leg', 'right_leg', 'torso'],
       quantity: 100,
       spares: 20,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '심천',
@@ -943,11 +937,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        '전원 배선(배터리→PDB→DC-DC→각 보드), 신호선(CAN, I2C, GPIO), 커넥터 일체 등 전체 배선 부자재',
+        '전원 배선(배터리→DC-DC→각 보드, XT60 분기), 신호선(CAN, I2C, GPIO), 커넥터 일체 등 전체 배선 부자재',
       parts: ['torso', 'left_leg', 'right_leg', 'head'],
       quantity: 1,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '심천',
@@ -965,15 +959,15 @@ export const COMPONENTS = {
       type: 'CAT6 Ethernet',
       length: '~30cm (토르소 내부)',
       speed: '1Gbps',
-      purpose: 'Orin↔NUC ROS2 직결 통신',
+      purpose: 'Orin↔NUC UDP 직결 통신 (vx vy wz)',
     },
     usage: {
       description:
-        'Orin과 NUC 사이 Ethernet 직결. ROS2 토픽 통신: /gait/cmd (Orin→NUC), /gait/status (NUC→Orin)',
+        'Orin과 NUC 사이 Ethernet UDP 직결. Orin→NUC: vx vy wz 보행 명령, NUC→Orin: 보행 상태',
       parts: ['torso'],
       quantity: 1,
       spares: 1,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '기보유',
@@ -999,11 +993,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'BHL 다리 각 관절 액추에이터용 감속기. BLDC 모터(MAD) + ESC + 기어박스 → 1개 액추에이터. 10개 관절에 각 1개씩. 후가공(Week 2 δ2)이 품질에 결정적',
+        'BHL 다리 각 관절 액추에이터용 감속기. BLDC 모터(MAD) + ESC + 기어박스 → 1개 액추에이터. 12개 관절에 각 1개씩 (다리당 6). 후가공(Week 2 δ2)이 품질에 결정적',
       parts: ['left_leg', 'right_leg'],
-      quantity: 10,
+      quantity: 12,
       spares: 2,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '3D프린트',
@@ -1031,7 +1025,7 @@ export const COMPONENTS = {
       parts: ['left_leg', 'right_leg'],
       quantity: 2,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '3D프린트',
@@ -1060,7 +1054,7 @@ export const COMPONENTS = {
       parts: ['left_arm', 'right_arm'],
       quantity: 2,
       spares: 0,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '3D프린트',
@@ -1087,7 +1081,7 @@ export const COMPONENTS = {
       parts: ['torso'],
       quantity: 1,
       spares: 0,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '3D프린트',
@@ -1112,7 +1106,7 @@ export const COMPONENTS = {
       parts: ['head'],
       quantity: 1,
       spares: 1,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '3D프린트',
@@ -1137,7 +1131,7 @@ export const COMPONENTS = {
       parts: [],
       quantity: 1,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '3D프린트',
@@ -1162,7 +1156,7 @@ export const COMPONENTS = {
       parts: ['head'],
       quantity: 2,
       spares: 1,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '3D프린트',
@@ -1187,7 +1181,7 @@ export const COMPONENTS = {
       parts: ['left_leg', 'right_leg'],
       quantity: 2,
       spares: 0,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '3D프린트',
@@ -1215,11 +1209,11 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        '하이리온 캐릭터 머리 외형. 내부에 카메라, NeoPixel LED ×2, MG90S 입 서보 장착. 전체 머리 무게 ≤700g(외주 ≤300g + 전자부품 ≤400g). Week 1 발주 → Week 5~6 도착 목표',
+        '하이리온 캐릭터 머리 외형. 내부에 카메라, NeoPixel LED ×2, SG90급 입 서보 장착. 전체 머리 무게 ≤700g(외주 ≤300g + 전자부품 ≤400g). Week 1 발주 → Week 5~6 도착 목표',
       parts: ['head'],
       quantity: 1,
       spares: 0,
-      owner: 'epsilon2',
+      owner: '상윤',
     },
     procurement: {
       channel: '외주 CNC',
@@ -1245,7 +1239,7 @@ export const COMPONENTS = {
       parts: ['torso'],
       quantity: 1,
       spares: 0,
-      owner: 'epsilon2',
+      owner: '상윤',
     },
     procurement: {
       channel: '한국',
@@ -1269,7 +1263,7 @@ export const COMPONENTS = {
       parts: ['left_leg', 'right_leg'],
       quantity: 2,
       spares: 0,
-      owner: 'delta1',
+      owner: '인혁',
     },
     procurement: {
       channel: '한국',
@@ -1294,7 +1288,7 @@ export const COMPONENTS = {
       parts: [],
       quantity: 1,
       spares: 0,
-      owner: 'delta2',
+      owner: '승민',
     },
     procurement: {
       channel: '기보유',

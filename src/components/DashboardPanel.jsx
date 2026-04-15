@@ -6,10 +6,10 @@ import { HANDOFFS } from '../data/handoffs';
 
 /* ── Gate definitions ─────────────────────────────────────────── */
 const GATES = {
-  3: { name: 'Phase 1', items: ['토르소 완성', 'SmolVLA v1 동작', 'ESP32 MOSFET', 'Sim2sim 완료', '수집 600개'] },
+  3: { name: 'Phase 1', items: ['토르소 완성', 'SmolVLA v1 동작', 'Sim2sim 완료', '수집 600개'] },
   5: { name: 'Phase 2', items: ['TTFT<500ms', '시선추적+표정5종', '공중보행', 'ablation', '머리+바디'] },
   7: { name: 'Phase 3', items: ['머리 통합', 'SmolVLA v2', 'Walking RL 최종', '외장 완성'] },
-  8: { name: '합류', items: ['상하체 결합', '실체 보행', 'MOSFET 차단', '풀 시나리오 1차'] },
+  8: { name: '합류', items: ['상하체 결합', '실체 보행', '낙상 감지 검증', '풀 시나리오 1차'] },
 };
 
 /* ── Week-based progress estimate ─────────────────────────────── */

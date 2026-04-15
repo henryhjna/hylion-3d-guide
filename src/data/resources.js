@@ -168,20 +168,8 @@ export const RESOURCES = {
   },
 
   // ──────────────────────────────────────────────
-  // 소프트웨어 (ROS2 등)
+  // 소프트웨어
   // ──────────────────────────────────────────────
-  "ros2_docs": {
-    label: "ROS2 공식 문서",
-    url: "https://docs.ros.org/en/rolling/",
-    category: "소프트웨어",
-    tags: ["ROS2", "토픽", "노드", "미들웨어"],
-  },
-  "ros2_humble": {
-    label: "ROS2 Humble (LTS) 설치 가이드",
-    url: "https://docs.ros.org/en/humble/Installation.html",
-    category: "소프트웨어",
-    tags: ["ROS2", "설치", "Ubuntu", "Humble"],
-  },
   "urdf_wiki": {
     label: "ROS URDF 튜토리얼",
     url: "https://wiki.ros.org/urdf/Tutorials",
@@ -198,18 +186,6 @@ export const RESOURCES = {
   // ──────────────────────────────────────────────
   // 안전
   // ──────────────────────────────────────────────
-  "esp32_docs": {
-    label: "ESP32 공식 문서 (Espressif)",
-    url: "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/",
-    category: "안전",
-    tags: ["ESP32", "낙상 감지", "ISR", "MOSFET", "GPIO"],
-  },
-  "mpu6050_datasheet": {
-    label: "MPU6050 데이터시트 (InvenSense)",
-    url: "https://invensense.tdk.com/products/motion-tracking/6-axis/mpu-6050/",
-    category: "안전",
-    tags: ["MPU6050", "IMU", "가속도", "자이로", "I2C"],
-  },
   "bg431_esc": {
     label: "B-G431B-ESC1 모터 드라이버 (ST)",
     url: "https://www.st.com/en/evaluation-tools/b-g431b-esc1.html",

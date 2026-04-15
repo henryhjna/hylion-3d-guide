@@ -37,7 +37,7 @@ export const TEAM = {
     trackLead: 'A+B',
     color: '#c8ff00',
     colorBright: '#e0ff66',
-    parts: [],
+    parts: ['left_leg', 'right_leg'],
     responsibilities: [
       'SmolVLA 아키텍처',
       'DGX 학습 실행',
@@ -52,7 +52,7 @@ export const TEAM = {
     trackLead: 'Track A 리드',
     color: '#4466ff',
     colorBright: '#7799ff',
-    parts: ['torso'],
+    parts: ['torso', 'left_arm', 'right_arm'],
     responsibilities: [
       'TensorRT 변환',
       'Orin 배포',

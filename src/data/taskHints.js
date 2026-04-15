@@ -1,5 +1,5 @@
 // taskHints.js — 각 techTree 노드의 실행 힌트, 리소스, 예상 시간
-// 기획서 v12 + 실행가이드 v12 기반
+// 기획서 v13 + 실행가이드 v13 기반
 
 export const TASK_HINTS = {
   // =======================================================================
@@ -45,7 +45,7 @@ export const TASK_HINTS = {
     summary: "δ1+ε2 공동 과제. 하이리온 캐릭터 머리의 외주 CNC 사양을 준비하기 위한 첫 논의로, ε2는 외형 디자인(레퍼런스+스케치)을, δ1은 내부에 들어갈 전자부품(카메라, LED 눈, 입 서보) 치수를 공유한다. 기획서 7.3절에 따르면 충돌 시 내부 공간 확보 우선(기능 > 외형)이 원칙이다.",
     steps: [
       "ε2: 하이리온 캐릭터 레퍼런스 이미지 수집 + 외형 스케치 준비",
-      "δ1: 내부 전자부품 치수 정리 — 카메라(USB), LED 눈(NeoPixel) 2개, 입 서보(MG90S) 1개",
+      "δ1: 내부 전자부품 치수 정리 — 카메라(USB), LED 눈(NeoPixel) 2개, 입 서보(SG90급) 1개",
       "카메라 렌즈 위치와 LED 눈 개구부 크기 합의 (시야각 확보 vs 디자인)",
       "머리 무게 제약 확인 — 외주 조형물 ≤300g + 내부 전자부품 ≤400g = 총 ≤700g (기획서 7.3절)",
       "목 서보(XL430 x2)는 토르소 상단에 배치됨을 확인 (머리 무게 미포함)",
@@ -53,7 +53,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "mg90s_servo", "xl430"],
+    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo", "xl430"],
     estimatedHours: 2,
   },
 
@@ -127,18 +127,18 @@ export const TASK_HINTS = {
   },
 
   w0_battery_calc: {
-    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 25W, NUC 15W, SO-ARM STS3215 x12 + 목 XL430 x2, BHL BLDC x10)의 소비전류를 합산하여 배터리 A/B/C 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
+    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 25W, NUC 15W, SO-ARM STS3215 x12 + 목 XL430 x2, BHL BLDC x10)의 소비전류를 합산하여 배터리 1(6S 4000mAh)/배터리 2(4S 8000mAh) 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
     steps: [
       "각 보드/모터 스펙시트에서 정격 소비전력 추출 (Orin 25W, NUC 15W 등)",
       "SO-ARM XL430 x14개 (양팔 12 + 목 2) 피크/평균 전류 계산",
       "BHL BLDC x10개 (MAD M6C12 x6 + 5010 x4) 보행 시 평균 전류 추정",
-      "배터리 A/B/C 각각의 용량(Wh) 대비 소비전력으로 구동 시간 산출",
+      "배터리 1(다리 ESC 직결 24V) / 배터리 2(Orin 14.8V + DC-DC → NUC 12V, 서보 12V, USB 5V) 각각의 용량(Wh) 대비 소비전력으로 구동 시간 산출",
       "30분 구동 가능 여부 판정 — 부족 시 배터리 용량 업그레이드 또는 사용 패턴 조정 제안",
     ],
     resources: [
       { label: "기획서 7.5절 (배터리 배치)", type: "internal", section: "7.5" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "mad_m6c12", "battery_a", "battery_b", "battery_c"],
+    components: ["orin_nano_super", "nuc", "xl430", "mad_m6c12", "battery_1", "battery_2"],
     estimatedHours: 2,
   },
 
@@ -148,14 +148,14 @@ export const TASK_HINTS = {
       "Orin Nano Super + carrier board 무게 확인 (스펙시트 기반)",
       "NUC (BeeLink N95) 무게 확인",
       "SO-ARM x2 (서보 x12 + 프레임) + 목 XL430 x2 무게 합산",
-      "배터리 A + B + 카메라 + 스피커 + 마이크 + LED 등 부품별 무게 적산",
+      "배터리 1 + 배터리 2 + 카메라 + 스피커 + 마이크 + LED 등 부품별 무게 적산",
       "토르소 프레임(2020 알루미늄 프로파일 + 3D프린트 브래킷) 무게 추정",
       "총합 산출 + δ3의 파라메트릭 직립 테스트 조합(3/4/5/6kg) 중 해당 구간 확인",
     ],
     resources: [
       { label: "기획서 7.4절 (무게 예산)", type: "internal", section: "7.4" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "head_camera", "wrist_camera", "battery_a", "battery_b"],
+    components: ["orin_nano_super", "nuc", "xl430", "head_camera", "wrist_camera", "battery_1", "battery_2"],
     estimatedHours: 2,
   },
 
@@ -211,13 +211,13 @@ export const TASK_HINTS = {
   },
 
   w0_bhl_actuator_doc: {
-    summary: "δ3 전용 과제. BHL 액추에이터(MAD M6C12 150KV x6, 5010 110KV x4)의 파라미터를 문서화하면 IsaacLab 시뮬에서의 모터 모델링 정확도가 올라간다. ROS2 토픽 리스트 초안은 Week 1 합의 미팅(기획서 5.6절)에서 인터페이스 확정의 기초 자료가 된다.",
+    summary: "δ3 전용 과제. BHL 액추에이터(MAD M6C12 150KV x6, 5010 110KV x4)의 파라미터를 문서화하면 IsaacLab 시뮬에서의 모터 모델링 정확도가 올라간다. UDP 메시지 리스트 초안은 Week 1 합의 미팅(기획서 5.6절)에서 인터페이스 확정의 기초 자료가 된다.",
     steps: [
       "MAD M6C12 (150KV, 6개 — 고관절/무릎) 스펙 정리: KV, 최대 토크, 연속 전류",
       "MAD 5010 (110KV, 4개 — 발목) 스펙 정리: KV, 최대 토크, 연속 전류",
       "사이클로이드 기어박스 기어비 확인 (BHL 문서에서 추출)",
       "ESC (B-G431B-ESC1) 제어 파라미터 정리 — CAN 프로토콜, 제어 주기(250Hz)",
-      "ROS2 토픽 리스트 초안 작성 — /gait/cmd(Orin→NUC), /gait/status(NUC→Orin) 등 (기획서 5.3절 참조)",
+      "UDP 메시지 리스트 초안 작성 — UDP 보행 명령 (vx vy wz)(Orin→NUC), UDP 보행 상태(NUC→Orin) 등 (기획서 5.3절 참조)",
     ],
     resources: [
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
@@ -246,7 +246,7 @@ export const TASK_HINTS = {
     summary: "δ1+ε2 공동 과제 (Day 3). Day 1 논의를 바탕으로 머리 외주 사양서를 최종 마무리한다. ε2는 Week 0~1에 하이리온 3D 모델링(Blender/Fusion360)을 진행하여 STL을 준비하고, Week 1에 외주 발주하므로 이 사양서가 모델링의 구속 조건이 된다. 기획서 7.3절 참조.",
     steps: [
       "외형 치수 확정 — 높이 ~25cm, 폭, 깊이, 전체 비례",
-      "내부 전자부품 배치 도면 마무리 — 카메라(정면 USB) + LED 눈(NeoPixel x2) + 입 서보(MG90S)",
+      "내부 전자부품 배치 도면 마무리 — 카메라(정면 USB) + LED 눈(NeoPixel x2) + 입 서보(SG90급)",
       "개구부 위치/크기 확정 — 카메라 렌즈 홀, LED 디퓨저 영역, 입 서보 가동 범위",
       "무게 제약 명시 — 외주 조형물 ≤300g (스티로폼 CNC 기준)",
       "배선 경로 확인 — 모든 배선은 목 내부를 통해 토르소로 내려감 (기획서 7.3절)",
@@ -255,17 +255,17 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "mg90s_servo"],
+    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo"],
     estimatedHours: 3,
   },
 
   w0_state_machine_eval: {
     summary: "ε1 전용 과제 (Day 3). 시연 시나리오의 7개 상태(IDLE/TALKING/MANIPULATING/WALKING/FETCH/LOW_BATTERY/EMERGENCY, 기획서 5.1절)를 관리할 프레임워크를 선정한다. 특히 FETCH 상태의 서브스텝 시퀀스(WALKING→MANIPULATING→WALKING→handover)를 표현할 수 있어야 한다. 선정 결과는 Week 1 합의 미팅에서 전체 공유한다.",
     steps: [
-      "기획서 5.2절 상태별 프로세스-리소스 매핑표를 참고하여 초안 작성 (Orin GPU/CPU, NUC, ESP32 할당)",
+      "기획서 5.2절 상태별 프로세스-리소스 매핑표를 참고하여 초안 작성 (Orin GPU/CPU, NUC 할당)",
       "smach 설치 + 예제 실행 — 계층적 상태 머신, 동시 실행 컨테이너 지원 확인",
       "FlexBE 설치 + 예제 실행 — GUI 기반 행동 트리 편집기, 런타임 수정 기능 확인",
-      "비교 기준: FETCH 서브스텝 표현력, ROS2 호환성, 디버깅 편의성, 비상정지 전환 용이성",
+      "비교 기준: FETCH 서브스텝 표현력, 통신 단순성, 디버깅 편의성, 비상정지 전환 용이성",
       "프레임워크 최종 선정 + 선정 근거 문서화",
       "Week 1 합의 미팅 발표 자료 준비 (기획서 5.6절 인터페이스 명세와 연계)",
     ],
@@ -346,37 +346,37 @@ export const TASK_HINTS = {
     estimatedHours: 3,
   },
 
-  w0_esp32_fall_research: {
-    summary: "ε2 전용 과제 (Day 4). 기획서 7.8절 보행 안전 설계에 따르면 ESP32가 MPU6050 IMU로 낙상을 감지하면 HW 인터럽트(ISR)로 MOSFET을 차단하여 BHL 다리 전원을 즉시 끊는다. Week 1에서 실제 구현을 하므로, 여기서는 회로 구성과 임계값 설정에 필요한 사전 조사를 수행한다.",
+  w0_fall_detection_research: {
+    summary: "ε2 전용 과제 (Day 4). 기획서 7.8절 보행 안전 설계에 따르면 BNO085 IMU가 Arduino를 통해 NUC에 자세 데이터를 전달하고, NUC 소프트웨어가 IMU 임계치를 판단하여 BHL 모터 토크를 해제한다. BHL 모터는 백드라이버블이므로 토크 해제 시 관절이 풀리며 안전하게 주저앉는다. Week 1에서 실제 구현을 하므로, 여기서는 임계값 설정에 필요한 사전 조사를 수행한다.",
     steps: [
-      "ESP32 + MPU6050 I2C 연결 방법 조사 — 핀 배치, 라이브러리 선택",
+      "BNO085 IMU + Arduino USB 연결 방법 조사 — 라이브러리 선택, 데이터 포맷",
       "낙상 감지 알고리즘 조사 — 기울기 각도 임계값, 가속도 스파이크 기반 방식 비교",
-      "MOSFET 전원 차단 회로 구성 조사 — N-channel MOSFET, 게이트 드라이버 필요 여부",
-      "평가 지표 구상 — 낙상 감지 지연(ms), false positive 비율, 차단 후 복구 절차",
+      "NUC에서 IMU 임계치 판단 → 모터 토크 해제 소프트웨어 설계 조사",
+      "평가 지표 구상 — 낙상 감지 지연(ms), false positive 비율, 토크 해제 후 복구 절차",
       "Week 1 구현 계획 수립 — 필요 부품(심천 조달 확인), 테스트 시나리오",
     ],
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["esp32", "mpu6050"],
+    components: ["bno085_imu", "arduino_imu_bridge"],
     estimatedHours: 3,
   },
 
   w0_shenzhen_procurement: {
-    summary: "별도 진행 과제. 심천 현지에서 BHL 핵심 부품(MAD BLDC 모터, 배터리, BMS, PDB)과 전자부품을 일괄 조달한다. 이 부품들이 Week 1까지 도착해야 δ2의 전원 조립, δ1의 액추에이터 시험 조립, ε2의 ESP32 낙상 감지 구현이 가능하다. 기획서 9.1절 조달 채널, 9.2절 예산 참조.",
+    summary: "별도 진행 과제. 심천 현지에서 BHL 핵심 부품(MAD BLDC 모터, LiPo 배터리)과 전자부품을 일괄 조달한다. 이 부품들이 Week 1까지 도착해야 δ2의 전원 조립, δ1의 액추에이터 시험 조립, ε2의 낙상 감지 구현이 가능하다. 기획서 9.1절 조달 채널, 9.2절 예산 참조.",
     steps: [
       "출발 전: MAD Components에 사전 연락 — M6C12 150KV x6, 5010 110KV x4 재고 확인 및 수령 일정 조율",
       "출발 전: BHL BOM 최신 릴리즈 확인 + 전체 부품 리스트를 한국 조달분과 교차 대조",
       "출발 전: 화창베이 구매 리스트 준비 — 부품명 + 중국어 명칭 + 수량 + 예상 가격",
       "현지: MAD 모터 수령 + 외관/축 상태 검수",
-      "현지: 화창베이 일괄 구매 — ESP32, MPU6050 x2~3, CAN-USB x2, MOSFET, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, LED, 환기팬, 배선재",
-      "현지: 배터리 A+B+C + BMS x3 + PDB 구매 — 배터리 사양이 기획서 7.5절 요구와 일치하는지 확인",
+      "현지: 화창베이 일괄 구매 — BNO085 IMU, Arduino, CAN-USB x2, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, LED, 환기팬, 배선재",
+      "현지: 배터리 1(6S LiPo 4000mAh 22.2V) + 배터리 2(4S LiPo 8000mAh 14.8V) + LiPo 저전압 알람 구매 — 배터리 사양이 기획서 7.5절 요구와 일치하는지 확인",
     ],
     resources: [
       { label: "기획서 9.1절 (조달 채널)", type: "internal", section: "9.1" },
       { label: "기획서 9.2절 (예산)", type: "internal", section: "9.2" },
     ],
-    components: ["mad_m6c12", "mad_5010", "esp32", "mpu6050", "can_usb", "mosfet", "battery_a", "battery_b", "battery_c", "bms", "pdb"],
+    components: ["mad_m6c12", "mad_5010", "bno085_imu", "arduino_imu_bridge", "can_usb", "battery_1", "battery_2"],
     estimatedHours: 16,
   },
 
@@ -385,13 +385,13 @@ export const TASK_HINTS = {
   // =======================================================================
 
   w1_kickoff_meeting: {
-    summary: "[공통] Week 1 주 초 전체 합의 미팅. Week 0에서 각자 준비한 결과물(δ2 무게 적산, ε1 상태 머신 프레임워크, δ3 ROS2 토픽 초안, ε1 JSON 스키마)을 모아 프로젝트의 핵심 인터페이스와 리소스 할당을 확정한다. 기획서 5.6절에 따르면 Week 1 이후 인터페이스 변경 시 전체 공지 필수이므로, 이 미팅이 설계 동결 시점이다.",
+    summary: "[공통] Week 1 주 초 전체 합의 미팅. Week 0에서 각자 준비한 결과물(δ2 무게 적산, ε1 상태 머신 프레임워크, δ3 UDP 메시지 초안, ε1 JSON 스키마)을 모아 프로젝트의 핵심 인터페이스와 리소스 할당을 확정한다. 기획서 5.6절에 따르면 Week 1 이후 인터페이스 변경 시 전체 공지 필수이므로, 이 미팅이 설계 동결 시점이다.",
     steps: [
       "δ2: 상체 무게 적산값 발표 — Week 2 직립 테스트 결과와 대조 예정임을 공유",
       "ε1: Week 0에서 선정한 상태 머신 프레임워크(smach 또는 FlexBE) 발표 + 선정 근거",
-      "δ3: ROS2 토픽 리스트 초안 발표 — /gait/cmd, /gait/status 등 (기획서 5.3절)",
+      "δ3: UDP 메시지 리스트 초안 발표 — UDP 보행 명령 (vx vy wz), UDP 보행 상태 등 (기획서 5.3절)",
       "배터리 배치 방향 합의 — 토르소 최하단 vs hip (직립 테스트 결과로 최종 결정 예정)",
-      "전원 시퀀싱 확정 — A ON → Orin/NUC 부팅 → B ON → Dynamixel → C ON → BHL (기획서 7.7절)",
+      "전원 시퀀싱 확정 — 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브 (기획서 7.7절)",
       "U2D2 버스 분배 확정 — #1: 좌팔 6개(ID 1~6), #2: 우팔 6개+목 2개(ID 7~14) (기획서 5.7절)",
       "카메라 마운트 위치/각도 확정 — 이후 변경 금지, 수집/추론 동일 조건 보장 (기획서 7.2절)",
     ],
@@ -455,7 +455,7 @@ export const TASK_HINTS = {
     summary: "δ1 전용 과제. 기획서 7.2절의 토르소 구조(~25cm, 2020 알루미늄 프로파일 프레임)를 CAD로 설계한다. Week 2에서 실제 조립(11단계)을 진행하므로, 모든 부품 마운트 위치와 환기 구조, 퀵릴리즈 hip 결합부가 이 설계에 포함되어야 한다. 상하체 결합은 운송 시 분리→현장 10분 조립이 가능해야 한다(기획서 7.11절).",
     steps: [
       "2020 알루미늄 프로파일 프레임 레이아웃 설계 (높이 ~25cm, 폭/깊이는 부품 수납 기준)",
-      "내부 부품 배치 설계 — 배터리 A+B(최하단), PDB+DC-DC, NUC, Orin, 환기팬 (기획서 7.2절 순서)",
+      "내부 부품 배치 설계 — 배터리 2(최하단), DC-DC 컨버터 x3, NUC, Orin, 환기팬 (기획서 7.2절 순서)",
       "3D프린트 브래킷 설계 — SO-ARM 어깨 마운트, Orin/NUC 마운트, 배터리 슬롯, 머리 목 마운트(상단)",
       "환기 구조 설계 — Orin 방열판 위 40mm 팬 + 배기구(상단) + 흡기구(하단) (기획서 7.9절)",
       "퀵릴리즈 hip 결합부 설계 — 나비너트 또는 퀵릴리즈 핀, 10분 이내 결합/분리 가능",
@@ -487,10 +487,10 @@ export const TASK_HINTS = {
   },
 
   w1_orin_setup: {
-    summary: "ε1 전용 과제. Orin Nano Super는 시연 당일 SmolVLA 추론(TensorRT), MediaPipe, ROS2, 상태 머신, TTS, LED, SO-ARM 제어를 모두 담당하는 메인 보드다(기획서 5.3절). Week 3에 TensorRT 변환/배포가 예정되어 있으므로, 이 시점에 기본 셋업을 완료해야 한다.",
+    summary: "ε1 전용 과제. Orin Nano Super는 시연 당일 SmolVLA 추론(TensorRT), MediaPipe, 상태 머신, TTS, LED, SO-ARM 제어를 모두 담당하는 메인 보드다(기획서 5.3절). Week 3에 TensorRT 변환/배포가 예정되어 있으므로, 이 시점에 기본 셋업을 완료해야 한다.",
     steps: [
       "JetPack SDK 설치 — L4T + CUDA + cuDNN + TensorRT (Orin Nano Super용 버전 확인)",
-      "ROS2 Humble 설치 + 기본 토픽 퍼블리시/구독 테스트",
+      "Ethernet UDP 통신 설정 + 기본 메시지 송수신 테스트",
       "카메라 드라이버(v4l2/USB) 설정 + 이미지 스트리밍 확인",
       "U2D2 x2 USB 연결 확인 — Dynamixel SDK 설치 + 서보 통신 테스트",
       "Orin USB 오디오(스피커 + 마이크) 장치 인식 확인",
@@ -524,7 +524,7 @@ export const TASK_HINTS = {
     steps: [
       "상태 전환 다이어그램 작성 — 7개 상태 + FETCH 서브스텝 5단계 (기획서 5.1절 기반)",
       "각 상태별 활성 프로세스 + 리소스 할당 명세 (기획서 5.2절 매핑표 기반)",
-      "비상정지(EMERGENCY) 전환 로직 설계 — 어느 상태에서든 즉시 전환, ESP32 트리거 수신",
+      "비상정지(EMERGENCY) 전환 로직 설계 — 어느 상태에서든 즉시 전환, NUC 낙상 감지 트리거 수신",
       "SmolVLA 수집 기준 문서를 δ1과 합의 — 카메라 위치, 에피소드 길이, 성공 판정 기준",
       "상태 머신 설계 문서 완성 → Week 2 구현 시작 준비",
     ],
@@ -575,7 +575,7 @@ export const TASK_HINTS = {
       "RT 커널 부팅 확인 + uname -r로 커널 버전 검증",
       "CAN-USB x2 드라이버 활성화 + socketcan 설정 (ip link set can0 type can bitrate 1000000)",
       "실시간성 latency 테스트 — cyclictest로 worst-case latency 측정 (목표: <1ms)",
-      "ROS2 Humble 설치 (Orin과의 Ethernet 통신 준비)",
+      "Ethernet UDP 통신 설정 (Orin과의 직결 통신 준비)",
     ],
     resources: [
       { label: "xanmod 커널", url: "https://xanmod.org/" },
@@ -603,31 +603,31 @@ export const TASK_HINTS = {
   },
 
   w1_power_assembly: {
-    summary: "δ2 전용 과제. 기획서 7.5절(배터리 배치)과 7.7절(전원 시퀀싱)에 따라 전원 분배 시스템을 조립한다. PDB에서 배터리 A(Orin/NUC), B(Dynamixel), C(BHL BLDC)를 분배하고, DC-DC 컨버터로 5V/12V/19V를 생성한다. 비상정지 시 B+C만 차단하고 A는 유지하여 Orin 로그를 보존해야 한다.",
+    summary: "δ2 전용 과제. 기획서 7.5절(배터리 배치)과 7.7절(전원 시퀀싱)에 따라 전원 분배 시스템을 조립한다. 배터리 2(4S 14.8V)에서 Orin(14.8V 직결) + DC-DC#1→NUC(12V) + DC-DC#2→서보(12V) + DC-DC#3→USB Hub(5V)를 분배하고, 배터리 1(6S 22.2V)은 다리 ESC 직결이다. NC 비상정지로 배터리 1+2를 동시 차단한다.",
     steps: [
-      "PDB에 배터리 A(Orin+NUC), B(Dynamixel) 연결 포인트 배선 — 극성/전류 용량 확인",
-      "BMS x3 연결 + 각 배터리 셀 전압 밸런싱 확인",
-      "DC-DC 벅 컨버터 셋업 — 5V(ESP32, LED), 12V(Dynamixel), 19V(NUC) 출력 조정",
-      "비상정지 회로 배선 — B+C 양극 직렬 NC 차단 스위치 + ESP32 MOSFET C 라인 (기획서 7.5절)",
-      "전원 시퀀싱 절차 문서화 — A ON → Orin/NUC 부팅 → B ON → Dynamixel → C ON → BHL",
+      "배터리 2(4S 14.8V) → Orin 14.8V 직결 배선 + DC-DC#1(12V NUC), DC-DC#2(12V 서보), DC-DC#3(5V USB Hub) 셋업",
+      "LiPo 저전압 알람을 배터리 1, 배터리 2 각각에 연결",
+      "DC-DC 벅 컨버터 셋업 — DC-DC#1→12V(NUC), DC-DC#2→12V(서보), DC-DC#3→5V(USB Hub) 출력 조정",
+      "NC 비상정지 회로 배선 — 배터리 1+2 NC 차단 스위치 (기획서 7.5절)",
+      "전원 시퀀싱 절차 문서화 — 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브",
       "전원 투입/차단 테스트 — 멀티미터로 각 단계 전압 확인",
     ],
     resources: [
       { label: "기획서 7.7절 (전원 시퀀싱)", type: "internal", section: "7.7" },
       { label: "기획서 7.5절 (배터리 배치)", type: "internal", section: "7.5" },
     ],
-    components: ["pdb", "bms", "dc_dc_converter", "battery_a", "battery_b"],
+    components: ["dc_dc_converter", "battery_1", "battery_2"],
     estimatedHours: 5,
   },
 
   w1_newton_rl_setup: {
-    summary: "δ2 전용 과제. Week 0에서 문서 수준으로 파악한 Newton sim-to-real 절차를 실제로 셋업한다. IsaacLab에서 학습한 policy를 MuJoCo에서 실행하여 전이 품질을 검증하는 환경이다(기획서 8절). 동시에 Orin↔NUC 간 Ethernet 직결 ROS2 통신(/gait/cmd, /gait/status)을 확인한다.",
+    summary: "δ2 전용 과제. Week 0에서 문서 수준으로 파악한 Newton sim-to-real 절차를 실제로 셋업한다. IsaacLab에서 학습한 policy를 MuJoCo에서 실행하여 전이 품질을 검증하는 환경이다(기획서 8절). 동시에 Orin↔NUC 간 Ethernet UDP 통신(보행 명령, 보행 상태)을 확인한다.",
     steps: [
       "MuJoCo 설치 + BHL MuJoCo 모델(MJCF) 로드 확인",
       "Newton 기반 변환 파이프라인 실행 테스트",
       "Orin↔NUC Ethernet 직결 설정 — 고정 IP 할당, ping 확인",
-      "ROS2 토픽 통신 테스트 — /gait/cmd(Orin→NUC), /gait/status(NUC→Orin) 퍼블리시/구독",
-      "통신 지연 측정 — ROS2 토픽 라운드트립 latency 확인",
+      "Ethernet UDP 통신 테스트 — UDP 보행 명령 (vx vy wz)(Orin→NUC), UDP 보행 상태(NUC→Orin) 송수신",
+      "통신 지연 측정 — UDP 라운드트립 latency 확인",
     ],
     resources: [
       { label: "MuJoCo 공식 문서", url: "https://mujoco.readthedocs.io/" },
@@ -736,20 +736,20 @@ export const TASK_HINTS = {
     estimatedHours: 3,
   },
 
-  w1_esp32_fall_isr: {
-    summary: "ε2 전용 과제. 기획서 7.8절 보행 안전 설계의 핵심 구현. ESP32가 MPU6050에서 기울기/가속도를 읽어 낙상을 감지하면, HW 인터럽트(ISR)로 MOSFET을 즉시 차단하여 BHL 다리 전원(배터리 C)을 끊는다. BHL의 백드라이버블 특성 덕분에 전원 차단 시 관절이 풀리며 안전하게 주저앉는다(기획서 7.1절).",
+  w1_fall_detection_impl: {
+    summary: "ε2 전용 과제. 기획서 7.8절 보행 안전 설계의 핵심 구현. BNO085 IMU가 Arduino USB를 통해 NUC에 자세 데이터를 전달하고, NUC 소프트웨어가 IMU 임계치를 판단하여 BHL 모터 토크를 해제한다. BHL의 백드라이버블 특성 덕분에 토크 해제 시 관절이 풀리며 안전하게 주저앉는다(기획서 7.1절).",
     steps: [
-      "ESP32 + MPU6050 I2C 연결 — Week 0 조사 결과 기반 배선",
-      "MPU6050 캘리브레이션 — 수평 상태에서 offset 보정",
+      "BNO085 IMU + Arduino USB 연결 — Week 0 조사 결과 기반 배선",
+      "BNO085 캘리브레이션 — 수평 상태에서 offset 보정",
       "낙상 감지 임계값 설정 — 기울기 각도(예: 45도 이상), 가속도 스파이크 기준",
-      "HW 인터럽트(ISR) 구현 — MPU6050 INT 핀 → ESP32 GPIO → MOSFET 게이트 차단",
-      "MOSFET 전원 차단 테스트 — 보드 기울여서 차단 동작 확인, 차단 지연 시간 측정",
+      "NUC 소프트웨어 구현 — BNO085 데이터 읽기 → 임계치 판단 → 모터 토크 해제 명령",
+      "토크 해제 테스트 — 보드 기울여서 토크 해제 동작 확인, 반응 지연 시간 측정",
       "IsaacLab 검증 루프 시작 — ε2로서 δ3가 인계한 환경의 기본 검증 수행",
     ],
     resources: [
       { label: "기획서 7.8절 (안전 — 보행)", type: "internal", section: "7.8" },
     ],
-    components: ["esp32", "mpu6050", "mosfet"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
     estimatedHours: 6,
   },
 
@@ -761,8 +761,8 @@ export const TASK_HINTS = {
     summary: "토르소 프레임이 완성되어야 Orin, NUC, 배터리를 장착할 수 있다. 기획서 7.2절의 아래→위 11단계 순서를 따르며, δ1이 물리 장착을 전담하고 각 오너가 자기 부품의 배선·소프트웨어를 담당한다.",
     steps: [
       "① 2020 알루미늄 프로파일 프레임 조립 (δ1)",
-      "② 배터리 A+B 슬롯 장착 (δ1) → δ2가 배선",
-      "③ PDB + DC-DC 벅 컨버터(5V/12V/19V) 장착 (δ1) → δ2 전원 배선",
+      "② 배터리 2(4S LiPo) 슬롯 장착 (δ1) → δ2가 배선",
+      "③ DC-DC 컨버터 x3 (12V NUC / 12V 서보 / 5V USB Hub) 장착 (δ1) → δ2 전원 배선",
       "④ NUC(BeeLink N95) 마운트 (δ1) → δ2가 전원·Ethernet·USB 연결",
       "⑤ Orin + carrier + 방열판 장착 (δ1) → ε1이 전원·USB 연결",
       "⑥ 40mm 환기팬 + 배기구(상단)/흡기구(하단) 설치 (δ1)",
@@ -775,7 +775,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.2절 (토르소 조립 순서)", type: "internal", section: "7.2" },
     ],
-    components: ["aluminum_profile_2020", "orin_nano_super", "nuc", "xl430", "battery_a", "battery_b", "pdb", "dc_dc_converter", "speaker", "microphone"],
+    components: ["aluminum_profile_2020", "orin_nano_super", "nuc", "xl430", "battery_2", "dc_dc_converter", "speaker", "microphone"],
     estimatedHours: 10,
   },
 
@@ -801,14 +801,14 @@ export const TASK_HINTS = {
     summary: "Week 7 전자부품 통합 전에 무게·공간 배치를 사전 검증하기 위한 간이 목업이다. 스티로폼 블록에 카메라·LED·입 서보를 임시 배치하고, 합산 700g 이하인지 확인하여 직립 테스트 mass 데이터에 반영한다.",
     steps: [
       "스티로폼 블록을 머리 크기(~25cm)로 절삭",
-      "카메라(USB) 1개, LED 눈(NeoPixel) 2개, 입 서보(MG90S) 1개를 내부에 임시 배치",
+      "카메라(USB) 1개, LED 눈(NeoPixel) 2개, 입 서보(SG90급) 1개를 내부에 임시 배치",
       "배선 경로(목 내부 → 토르소) 간섭 확인",
       "전체 계량하여 700g(외주 셸 ≤300g + 전자부품 ≤400g) 이하 확인",
     ],
     resources: [
       { label: "기획서 7.3절 (머리 제작 타임라인)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "mg90s_servo"],
+    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo"],
     estimatedHours: 4,
   },
 
@@ -827,18 +827,18 @@ export const TASK_HINTS = {
     estimatedHours: 8,
   },
 
-  w2_esp32_bench_test: {
-    summary: "Week 1에서 구현한 ESP32 낙상 ISR + MOSFET 회로를 벤치에서 실제 기울여 차단 동작을 검증한다. 이 테스트가 통과해야 Phase 1 게이트의 \"ESP32 MOSFET 동작\" 조건을 충족할 수 있다.",
+  w2_fall_detection_bench: {
+    summary: "Week 1에서 구현한 NUC 낙상 감지(BNO085 IMU → Arduino USB → NUC 임계치 판단 → 토크 해제) 시스템을 벤치에서 실제 기울여 동작을 검증한다. 이 테스트가 통과해야 Phase 1 게이트의 \"낙상 감지 동작\" 조건을 충족할 수 있다.",
     steps: [
-      "MPU6050 기울임 임계값(예: 45°) 설정 후 ISR 트리거 확인",
-      "MOSFET이 배터리 C 라인을 실제 차단하는지 전류 측정",
-      "차단 후 BHL 관절이 백드라이버블하게 풀리는지 확인",
-      "복구 절차 테스트 — 안전 자세 후 C 재투입 → IDLE 복귀",
+      "BNO085 기울임 임계값(예: 45°) 설정 후 NUC 토크 해제 트리거 확인",
+      "토크 해제 시 BHL 모터가 실제로 풀리는지 확인",
+      "토크 해제 후 BHL 관절이 백드라이버블하게 풀리는지 확인",
+      "복구 절차 테스트 — 안전 자세 후 토크 재투입 → IDLE 복귀",
     ],
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["esp32", "mpu6050", "mosfet"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
     estimatedHours: 3,
   },
 
@@ -846,14 +846,14 @@ export const TASK_HINTS = {
     summary: "하이리온의 캐릭터 표현 기초가 되는 감정 상태 머신 v1을 구현한다. Week 5에서 5종으로 확장할 예정이므로, 이번 주에는 중립·기쁨·놀람 3종의 LED 패턴과 입 서보 동작을 먼저 구현하고 평가 스크립트를 완성한다.",
     steps: [
       "중립·기쁨·놀람 3종의 NeoPixel LED 패턴(색상·밝기·애니메이션) 정의",
-      "각 감정에 대응하는 입 서보(MG90S) 동작 매핑",
+      "각 감정에 대응하는 입 서보(SG90급) 동작 매핑",
       "상태 전환 트리거 인터페이스 설계 (상태 머신에서 감정 전환 호출)",
       "평가 스크립트 완성 — 각 감정 전환 정상 동작·응답 시간 자동 측정",
     ],
     resources: [
       { label: "기획서 6.1절 (epsilon2 역할)", type: "internal", section: "6.1" },
     ],
-    components: ["neopixel_led", "mg90s_servo"],
+    components: ["neopixel_led", "sg90_servo"],
     estimatedHours: 5,
   },
 
@@ -874,17 +874,17 @@ export const TASK_HINTS = {
   },
 
   w2_emergency_stop: {
-    summary: "배터리 B(Dynamixel)+C(BHL BLDC) 양극에 직렬 NC(Normally Closed) 스위치를 달고, ESP32 MOSFET으로 C 라인을 추가 차단하는 이중 비상정지 회로를 완성한다. 기획서 7.5절에 따라 배터리 A(Orin/NUC)는 로그 유지를 위해 차단하지 않는다.",
+    summary: "배터리 1+2 NC(Normally Closed) 물리 비상정지 스위치를 달고, NUC 소프트웨어 낙상 감지(BNO085 → 토크 해제)를 연계하는 비상정지 체계를 완성한다. NC 비상정지로 배터리 1+2를 동시 차단한다.",
     steps: [
-      "B+C 양극에 직렬 NC 비상정지 스위치 배선",
-      "ESP32 MOSFET으로 C 라인 추가 차단 회로 연결",
-      "물리 비상정지 버튼 + ISR 소프트 차단 이중 동작 확인",
+      "배터리 1+2 NC 비상정지 스위치 배선",
+      "NUC 낙상 감지 → 모터 토크 해제 소프트웨어 연동 확인",
+      "물리 비상정지 버튼 + NUC 소프트 토크 해제 이중 동작 확인",
       "A 라인(Orin/NUC)은 차단되지 않고 로그가 유지되는지 확인",
     ],
     resources: [
       { label: "기획서 7.5절 (배터리 — 비상정지)", type: "internal", section: "7.5" },
     ],
-    components: ["esp32", "mosfet", "emergency_stop_switch"],
+    components: ["bno085_imu", "arduino_imu_bridge", "emergency_stop_switch"],
     estimatedHours: 4,
   },
 
@@ -922,17 +922,17 @@ export const TASK_HINTS = {
   },
 
   w2_imu_structure: {
-    summary: "ESP32용 IMU(MPU6050, 낙상 감지 전용)와 NUC용 IMU(Walking RL policy 입력)는 역할과 샘플레이트가 다르므로 별도 구조로 분리해야 한다. ESP32 IMU는 HW 인터럽트로 즉시 MOSFET 차단을 트리거하고, NUC IMU는 CAN 버스를 통해 250Hz policy 루프에 공급된다.",
+    summary: "낙상 감지용 BNO085 IMU(Arduino USB → NUC)와 Walking RL policy 입력용 IMU는 역할과 샘플레이트가 다르므로 별도 구조로 분리해야 한다. 낙상 감지 IMU는 NUC 소프트웨어에서 임계치를 판단하여 토크 해제를 트리거하고, policy용 IMU는 CAN 버스를 통해 250Hz policy 루프에 공급된다.",
     steps: [
-      "ESP32용 MPU6050 배치 위치 확정 (토르소 중심부, 진동 최소 지점)",
-      "NUC용 IMU 배치 위치 확정 (hip 근처, policy 입력에 적합한 위치)",
-      "두 IMU 간 I2C 주소 충돌 방지 확인 (별도 버스 또는 주소 변경)",
+      "낙상 감지용 BNO085 IMU 배치 위치 확정 (토르소 중심부, 진동 최소 지점)",
+      "NUC용 policy IMU 배치 위치 확정 (hip 근처, policy 입력에 적합한 위치)",
+      "두 IMU 간 연결 경로 분리 확인 (BNO085: Arduino USB → NUC, policy IMU: CAN 버스)",
       "각 IMU의 샘플레이트·필터 설정 문서화",
     ],
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["esp32", "mpu6050", "nuc"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
     estimatedHours: 3,
   },
 
@@ -1067,17 +1067,17 @@ export const TASK_HINTS = {
   },
 
   w3_soc_safety: {
-    summary: "배터리 SOC가 20% 이하로 떨어지면 LOW_BATTERY 상태로 전환하여 안전 자세를 취하고, 대화만 가능하게 제한하는 로직을 구현한다. 기획서 5.1절의 LOW_BATTERY 상태 정의에 따르며, BMS 전압 읽기를 ESP32가 담당한다.",
+    summary: "배터리 SOC가 20% 이하로 떨어지면 LOW_BATTERY 상태로 전환하여 안전 자세를 취하고, 대화만 가능하게 제한하는 로직을 구현한다. 기획서 5.1절의 LOW_BATTERY 상태 정의에 따르며, LiPo 알람 전압 읽기를 NUC가 담당한다.",
     steps: [
-      "ESP32에서 BMS를 통해 배터리 C(BHL) SOC 읽기 구현",
-      "SOC 20% 이하 시 NUC에 LOW_BATTERY 신호 전송",
-      "NUC → Orin ROS2 토픽(/gait/status)으로 상태 전달",
+      "NUC에서 LiPo 알람을 통해 배터리 1(다리) SOC 읽기 구현",
+      "SOC 20% 이하 시 LOW_BATTERY 상태 트리거",
+      "NUC → Orin UDP 메시지(보행 상태)로 상태 전달",
       "상태 머신에서 LOW_BATTERY 전환 → 안전 자세 + 대화만 허용",
     ],
     resources: [
       { label: "기획서 5.1절 (LOW_BATTERY 상태)", type: "internal", section: "5.1" },
     ],
-    components: ["esp32", "bms"],
+    components: ["nuc"],
     estimatedHours: 3,
   },
 
@@ -1089,7 +1089,7 @@ export const TASK_HINTS = {
       "카메라·물체·그립 확정 (Week 1 실측 기반)",
       "수집 600개 완료 (시연 조건 60%+ 확인)",
       "SmolVLA v1 동작 + TensorRT 정합성 확인",
-      "ESP32 MOSFET 차단 동작 확인",
+      "낙상 감지 토크 해제 동작 확인",
       "Newton sim-to-real(Newton 기반) 완료 + NUC 준비",
     ],
     resources: [
@@ -1151,18 +1151,18 @@ export const TASK_HINTS = {
   },
 
   w4_lip_sync: {
-    summary: "TTS 오디오의 타이밍에 맞춰 입 서보(MG90S)를 구동하여 하이리온이 말할 때 입이 움직이는 lip sync를 구현한다. ε1이 TTS 재생 시 오디오 타이밍(음성 구간/무음 구간)을 제공하면, ε2가 이를 입 서보 각도로 변환한다.",
+    summary: "TTS 오디오의 타이밍에 맞춰 입 서보(SG90급, Jetson GPIO 5V PWM)를 구동하여 하이리온이 말할 때 입이 움직이는 lip sync를 구현한다. ε1이 TTS 재생 시 오디오 타이밍(음성 구간/무음 구간)을 제공하면, ε2가 이를 입 서보 각도로 변환한다.",
     steps: [
       "오픈소스 lip sync 라이브러리 조사 및 선정",
       "ε1의 TTS 오디오 스트림에서 음량/에너지 정보 추출",
-      "음량 → MG90S 서보 각도 매핑 함수 구현 (열림/닫힘 범위 설정)",
+      "음량 → SG90급 서보 각도 매핑 함수 구현 (열림/닫힘 범위 설정)",
       "Orin에서 TTS 재생과 서보 구동의 동기화 테스트",
       "Week 5에서 최종 완성 (오버슈트, 지연 미세 조정)",
     ],
     resources: [
       { label: "기획서 6.1절 (epsilon2 역할)", type: "internal", section: "6.1" },
     ],
-    components: ["mg90s_servo", "orin_nano_super"],
+    components: ["sg90_servo", "orin_nano_super"],
     estimatedHours: 6,
   },
 
@@ -1262,18 +1262,18 @@ export const TASK_HINTS = {
   },
 
   w4_leg_assembly_start: {
-    summary: "10개 액추에이터를 3D프린트된 다리 프레임에 장착하여 다리 조립을 시작한다. 배터리 C(BHL BLDC 전용)를 다리 프레임에 연결하여 독립 전원 공급을 확인한다. Week 5에서 다리 완성 + NUC 연결로 이어진다.",
+    summary: "10개 액추에이터를 3D프린트된 다리 프레임에 장착하여 다리 조립을 시작한다. 배터리 1(6S LiPo, ESC 직결 24V)을 다리 프레임에 연결하여 독립 전원 공급을 확인한다. Week 5에서 다리 완성 + NUC 연결로 이어진다.",
     steps: [
       "3D프린트 다리 구조물에 액추에이터 10개 순서대로 장착 (hip→knee→ankle)",
       "각 관절 가동 범위가 URDF 정의와 일치하는지 확인",
-      "배터리 C + BMS 연결 → ESC 전원 공급 확인",
+      "배터리 1(6S LiPo) ESC 직결 연결 → 전원 공급 확인",
       "CAN 버스 배선(CAN-USB ×2, 4버스 1Mbps) 연결",
       "다리 단독 전원 인가 후 모든 관절 동작 테스트",
     ],
     resources: [
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
     ],
-    components: ["mad_m6c12", "mad_5010", "esc_b_g431b", "battery_c"],
+    components: ["mad_m6c12", "mad_5010", "esc_b_g431b", "battery_1"],
     estimatedHours: 8,
   },
 
@@ -1325,7 +1325,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 6.1절 (epsilon2 역할)", type: "internal", section: "6.1" },
     ],
-    components: ["neopixel_led", "mg90s_servo", "xl430", "head_camera", "wrist_camera"],
+    components: ["neopixel_led", "sg90_servo", "xl430", "head_camera", "wrist_camera"],
     estimatedHours: 10,
   },
 
@@ -1447,7 +1447,7 @@ export const TASK_HINTS = {
       "NUC에 CAN-USB ×2 연결 (4개 CAN 버스 구성)",
       "NUC xanmod RT 커널에서 CAN 통신 테스트 (250Hz 명령 주기 확인)",
       "BHL lowlevel C 코드로 전체 10개 관절 동시 구동 확인",
-      "배터리 C 전원으로 독립 구동 테스트",
+      "배터리 1(6S LiPo) 전원으로 독립 구동 테스트",
     ],
     resources: [
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
@@ -1515,11 +1515,11 @@ export const TASK_HINTS = {
       "IDLE→TALKING 전환 확인 (관객 음성 입력 → STT → 대화 파이프라인 활성화)",
       "TALKING→MANIPULATING 전환 확인 (fetch 명령 감지 → SmolVLA 실행)",
       "MANIPULATING→IDLE 복귀 (pick/handover 완료 후 상태 복원)",
-      "FETCH 시퀀서 로직 연결 — WALKING 서브스텝은 mock(/gait/cmd 더미), pick+handover는 실제",
+      "FETCH 시퀀서 로직 연결 — WALKING 서브스텝은 mock(UDP 보행 명령 더미), pick+handover는 실제",
       "LOW_BATTERY 상태 구현 (SOC 20% 이하 → 안전 자세, 대화만 가능)",
       "EMERGENCY 상태 구현 (비상정지 → BHL 전원 차단, Orin 로그 유지)",
       "서바이벌 계층 1(스크립트 시연: 키워드 매칭+사전 녹음) + 계층 2(경량 로컬 STT+경량 로컬 TTS) 통합",
-      "전체 파이프라인 10분 연속 크래시 없음 확인 — 메모리 누수/토픽 지연 모니터링",
+      "전체 파이프라인 10분 연속 크래시 없음 확인 — 메모리 누수/통신 지연 모니터링",
     ],
     resources: [
       { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
@@ -1531,10 +1531,10 @@ export const TASK_HINTS = {
   },
 
   w6_fetch_logic_test: {
-    summary: "FETCH 시퀀서 로직 단독 테스트. 기획서 5.1절 타이머 기반 open-loop 구조에서 WALKING 서브스텝은 /gait/cmd mock 퍼블리시로 대체하고, SmolVLA pick(물체 잡기) + precoded handover(팔 뻗기 전달)는 실제 SO-ARM으로 수행한다. T1(테이블 방향), T2(홈 방향) 타이머 값을 임시 설정하고 서브스텝 간 자동 전환이 올바른지 검증한다.",
+    summary: "FETCH 시퀀서 로직 단독 테스트. 기획서 5.1절 타이머 기반 open-loop 구조에서 WALKING 서브스텝은 UDP 보행 명령 mock 송신으로 대체하고, SmolVLA pick(물체 잡기) + precoded handover(팔 뻗기 전달)는 실제 SO-ARM으로 수행한다. T1(테이블 방향), T2(홈 방향) 타이머 값을 임시 설정하고 서브스텝 간 자동 전환이 올바른지 검증한다.",
     steps: [
       "FETCH 진입 시 LLM이 target_object를 전달하는 인터페이스 확인",
-      "서브스텝 1: WALKING mock — /gait/cmd에 전진 명령 퍼블리시 (타이머 T1초)",
+      "서브스텝 1: WALKING mock — UDP 보행 명령 (vx vy wz) 전진 명령 송신 (타이머 T1초)",
       "서브스텝 2: 정지 → MANIPULATING — SmolVLA pick 실행 (target_object 전달)",
       "서브스텝 3: WALKING mock — 180도 회전 + 전진 (타이머 T2초)",
       "서브스텝 4: 정지 → MANIPULATING — precoded handover (팔 뻗기)",
@@ -1581,9 +1581,9 @@ export const TASK_HINTS = {
   },
 
   w6_dummy_weight: {
-    summary: "Track B 더미 지면 보행을 위한 더미 웨이트 제작. Week 7 실측 전까지 상체 질량을 대리하는 역할이며, delta2가 스펙시트 기반 무게 적산값(Orin+NUC+SO-ARM+배터리 A/B+토르소 프레임+머리 목업)을 합산하여 총 무게를 설정한다. 100g 단위로 추가/제거가 가능하도록 분리형으로 설계하여 Week 7 실측값 반영 시 즉시 업데이트할 수 있게 한다.",
+    summary: "Track B 더미 지면 보행을 위한 더미 웨이트 제작. Week 7 실측 전까지 상체 질량을 대리하는 역할이며, delta2가 스펙시트 기반 무게 적산값(Orin+NUC+SO-ARM+배터리 2+토르소 프레임+머리 목업)을 합산하여 총 무게를 설정한다. 100g 단위로 추가/제거가 가능하도록 분리형으로 설계하여 Week 7 실측값 반영 시 즉시 업데이트할 수 있게 한다.",
     steps: [
-      "스펙시트 기반 상체 총 무게 적산 (Orin 200g + NUC 300g + SO-ARM x2 + 배터리 A/B + 프레임 + 머리)",
+      "스펙시트 기반 상체 총 무게 적산 (Orin 200g + NUC 300g + SO-ARM x2 + 배터리 2 + 프레임 + 머리)",
       "더미 웨이트 소재 선정 (철판/납추/모래주머니 등)",
       "100g 단위 분리 가능한 모듈형 구조 설계",
       "BHL hip 결합부에 안정적으로 고정되는 마운트 제작",
@@ -1639,9 +1639,9 @@ export const TASK_HINTS = {
   // =======================================================================
 
   w7_upper_measurement: {
-    summary: "Week 8 합체 전 마지막 상반신 정밀 계측. delta1이 각 부품(머리, 토르소 프레임, SO-ARM x2, Orin, NUC, 배터리 A/B, 스피커 등)의 질량을 +-10g 정밀도로 측정하고, 무게 중심(CoM)과 관성 텐서를 산출한다. 이 데이터는 delta3의 URDF 업데이트 + Walking RL 재학습, delta2의 더미 웨이트 실측값 업데이트에 직접 사용되므로, 정확도가 Week 8 실체 보행 성공에 직결된다.",
+    summary: "Week 8 합체 전 마지막 상반신 정밀 계측. delta1이 각 부품(머리, 토르소 프레임, SO-ARM x2, Orin, NUC, 배터리 2, 스피커 등)의 질량을 +-10g 정밀도로 측정하고, 무게 중심(CoM)과 관성 텐서를 산출한다. 이 데이터는 delta3의 URDF 업데이트 + Walking RL 재학습, delta2의 더미 웨이트 실측값 업데이트에 직접 사용되므로, 정확도가 Week 8 실체 보행 성공에 직결된다.",
     steps: [
-      "전자저울(0.1g)로 각 부품별 질량 측정 — 머리, 토르소 프레임, SO-ARM x2, Orin+carrier, NUC, 배터리 A/B, 스피커/마이크, 케이블 뭉치",
+      "전자저울(0.1g)로 각 부품별 질량 측정 — 머리, 토르소 프레임, SO-ARM x2, Orin+carrier, NUC, 배터리 2, 스피커/마이크, 케이블 뭉치",
       "부품별 장착 위치 기준 CoM(무게 중심) 산출 — 토르소 좌표계 기준 x/y/z",
       "관성 텐서 계산 (CAD 기반 + 실측 보정)",
       "delta2 더미 웨이트를 실측 총 질량으로 업데이트 (100g 단위 모듈 추가/제거)",
@@ -1661,7 +1661,7 @@ export const TASK_HINTS = {
       "1단계 피팅: 외주 조형물(또는 목업)의 개구부에 전자부품 더미 배치 → 공간 간섭 최종 확인",
       "2단계 카메라: USB 카메라를 정면 개구부에 고정 — 화각이 SO-ARM 작업 공간을 커버하는지 확인",
       "3단계 LED+디퓨저: NeoPixel LED 눈 2개 + 반투명 디퓨저(아크릴/실리콘) 장착 — 균일 발광 확인",
-      "4단계 입 서보: MG90S를 입 개구부에 장착 — lip sync 동작 범위(개폐 각도) 확인",
+      "4단계 입 서보: SG90급을 입 개구부에 장착 — lip sync 동작 범위(개폐 각도) 확인",
       "5단계 배선 집약: 카메라 USB + LED 신호선 + 서보 PWM + 전원을 목 내부 경로로 통합 번들링",
       "6단계 토르소 결합: 머리를 목 서보(XL430 x2) 위에 장착 — 고정 나사 체결, 흔들림 없는지 확인",
       "7단계 계량: 전체(머리 조형물+전자부품) 700g 이하 확인 — 초과 시 디퓨저 소재 변경/배선 단축",
@@ -1670,7 +1670,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "mg90s_servo", "xl430"],
+    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo", "xl430"],
     estimatedHours: 8,
   },
 
@@ -1757,29 +1757,29 @@ export const TASK_HINTS = {
   },
 
   w7_relearn_test: {
-    summary: "Week 6 gap 분석 결과를 반영한 재학습 Walking RL policy를 더미 웨이트 장착 상태에서 반복 테스트한다. 30분 전원 연속 테스트로 배터리 C 소모율과 BMS 동작을 검증하고, NUC의 장시간 운용 안정성(메모리 누수, CAN 타임아웃 등)을 확인한다. Phase 3 게이트의 '더미 보행 안정' 조건 충족이 목표이다.",
+    summary: "Week 6 gap 분석 결과를 반영한 재학습 Walking RL policy를 더미 웨이트 장착 상태에서 반복 테스트한다. 30분 전원 연속 테스트로 배터리 1 소모율과 LiPo 알람 동작을 검증하고, NUC의 장시간 운용 안정성(메모리 누수, CAN 타임아웃 등)을 확인한다. Phase 3 게이트의 '더미 보행 안정' 조건 충족이 목표이다.",
     steps: [
       "재학습 policy를 NUC에 배포 + CAN 통신 정상 확인",
       "더미 웨이트 장착 상태에서 지면 보행 반복 (최소 10회)",
       "직립 유지 + 전진 + 정지 + 회전 기본 동작 안정성 확인",
-      "30분 연속 전원 테스트 — 배터리 C SOC 모니터링 + BMS 셀 밸런싱 확인",
+      "30분 연속 전원 테스트 — 배터리 1 SOC 모니터링 + LiPo 알람 동작 확인",
       "NUC 장시간 운용: 메모리 사용량, CAN 타임아웃, CPU 온도 모니터링",
       "불안정 시 delta3에 추가 재학습 요청 + DR 파라미터 구체 전달",
     ],
     resources: [
       { label: "기획서 8절 (Sim->Real)", type: "internal", section: "8" },
     ],
-    components: ["nuc", "bms", "battery_c"],
+    components: ["nuc", "battery_1"],
     estimatedHours: 8,
   },
 
   w7_emergency_manual: {
-    summary: "delta2가 전원/안전 오너로서 비상 매뉴얼을 작성한다. 전원 투입 순서(A→Orin/NUC 부팅→B→Dynamixel 토크→C→BHL 캘리브), 비상정지 후 복구 절차, ESP32 MOSFET 낙상 차단 동작 확인법, 재시작 절차를 포함한다. Week 9 리허설에서 전원이 이 매뉴얼을 숙지하고, 각자 역할(delta2: 전원 투입/차단, delta1: 물리 안전 등)에 따라 집행한다.",
+    summary: "delta2가 전원/안전 오너로서 비상 매뉴얼을 작성한다. 전원 투입 순서(배터리 2 ON→Orin/NUC 부팅→DC-DC 활성→배터리 1 ON→BHL 캘리브), 비상정지 후 복구 절차, NUC 낙상 감지 토크 해제 동작 확인법, 재시작 절차를 포함한다. Week 9 리허설에서 전원이 이 매뉴얼을 숙지하고, 각자 역할(delta2: 전원 투입/차단, delta1: 물리 안전 등)에 따라 집행한다.",
     steps: [
-      "전원 투입 시퀀싱 문서화: A ON → Orin/NUC 부팅 → B ON → Dynamixel 토크 → C ON → BHL 캘리브",
-      "비상정지 절차: B+C 양극 NC 차단 + ESP32 MOSFET C 차단 → A 유지 → Orin 로그 보존",
-      "비상정지 후 복구: 원인 확인 → 안전 자세 → C 재투입 → B 재투입 → IDLE 복귀",
-      "ESP32 낙상 감지 차단 동작 확인법 (기울임 각도 임계값, ISR 반응 시간)",
+      "전원 투입 시퀀싱 문서화: 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브",
+      "비상정지 절차: 배터리 1+2 NC 차단 → 전체 시스템 안전 정지",
+      "비상정지 후 복구: 원인 확인 → 안전 자세 → 배터리 2 재투입 → 배터리 1 재투입 → IDLE 복귀",
+      "NUC 낙상 감지 토크 해제 동작 확인법 (BNO085 기울임 각도 임계값, 반응 시간)",
       "재시작 절차: 전원 완전 차단 → 30초 대기 → 투입 시퀀싱 재실행",
       "역할별 비상 행동 지침 작성 (delta1: 물리 안전, delta2: 전원, epsilon1: 시스템, epsilon2: 기록)",
     ],
@@ -1787,7 +1787,7 @@ export const TASK_HINTS = {
       { label: "기획서 7.7절 (전원 시퀀싱)", type: "internal", section: "7.7" },
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["esp32", "mosfet", "emergency_stop_switch"],
+    components: ["bno085_imu", "emergency_stop_switch"],
     estimatedHours: 4,
   },
 
@@ -1898,26 +1898,26 @@ export const TASK_HINTS = {
   },
 
   w8_power_integration: {
-    summary: "상하체 결합에 맞춰 3개 배터리 전원을 통합 배선한다. A(Orin+NUC+LED+입서보+스피커, 토르소 최하단 또는 hip), B(STS3215 x12 + 목 XL430 x2, 토르소 최하단), C(BHL BLDC x10+ESP32, 다리 프레임)가 PDB+BMS+DC-DC(5V/12V/19V)를 통해 각 부하에 공급되도록 연결한다. 비상정지 시 B+C는 NC 차단되고 A는 유지(Orin 로그 보존). 전원 시퀀싱(A→부팅→B→토크→C→캘리브)을 실물에서 처음 통합 검증한다.",
+    summary: "상하체 결합에 맞춰 2개 배터리 전원을 통합 배선한다. 배터리 2(4S 14.8V → Orin 직결 + DC-DC#1→NUC 12V + DC-DC#2→서보 12V + DC-DC#3→USB Hub 5V, 토르소), 배터리 1(6S 22.2V → ESC 직결, 다리 프레임). NC 비상정지로 배터리 1+2를 동시 차단한다. 전원 시퀀싱(배터리 2→부팅→DC-DC 활성→배터리 1→캘리브)을 실물에서 처음 통합 검증한다.",
     steps: [
-      "배터리 A: PDB→DC-DC(5V Orin, 19V NUC)→각 부하 배선 확인",
-      "배터리 B: PDB→SO-ARM STS3215 x12 + 목 XL430 x2 배선 확인",
-      "배터리 C: BHL 다리 BLDC x10 + ESP32 배선 확인 (다리 프레임 내부)",
-      "BMS x3 셀 밸런싱 상태 확인",
-      "비상정지 회로 연결: B+C 양극 NC 차단 + ESP32 MOSFET C 라인 차단",
-      "전원 시퀀싱 실물 테스트: A ON → Orin/NUC 부팅 → B ON → Dynamixel 토크 → C ON → BHL 캘리브",
+      "배터리 2: Orin 14.8V 직결 + DC-DC#1→NUC(12V) + DC-DC#2→서보(12V) + DC-DC#3→USB Hub(5V) 배선 확인",
+      "배터리 1: 다리 ESC 직결 24V 배선 확인 (다리 프레임 내부)",
+      "LiPo 저전압 알람 연결 상태 확인 (배터리 1, 배터리 2 각각)",
+      "USB Hub A(센서: 마이크+카메라) / Hub B(제어: 스피커+BusLinker) 배선 확인",
+      "NC 비상정지 회로 연결: 배터리 1+2 NC 차단",
+      "전원 시퀀싱 실물 테스트: 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브",
       "전체 시스템 동시 전원 ON 상태에서 전압/전류 안정성 확인",
     ],
     resources: [
       { label: "기획서 7.5절 (배터리 배치)", type: "internal", section: "7.5" },
       { label: "기획서 7.7절 (전원 시퀀싱)", type: "internal", section: "7.7" },
     ],
-    components: ["battery_a", "battery_b", "battery_c", "pdb", "bms", "dc_dc_converter"],
+    components: ["battery_1", "battery_2", "dc_dc_converter"],
     estimatedHours: 4,
   },
 
   w8_real_body_gait: {
-    summary: "더미 웨이트가 아닌 실제 상체(토르소+SO-ARM+머리+배터리 A/B)가 장착된 상태에서 지면 보행을 테스트한다. 더미 대비 실체의 차이점은: (1) 질량 분포가 비균일(SO-ARM 어깨, 머리 등 돌출), (2) CoM 높이가 다를 수 있음, (3) 배선/외장으로 인한 미세 간섭 가능성. 직립→전진→정지를 확인하고, 실패 시 delta3에 실체 mass 기반 최종 재학습을 요청한다.",
+    summary: "더미 웨이트가 아닌 실제 상체(토르소+SO-ARM+머리+배터리 2)가 장착된 상태에서 지면 보행을 테스트한다. 더미 대비 실체의 차이점은: (1) 질량 분포가 비균일(SO-ARM 어깨, 머리 등 돌출), (2) CoM 높이가 다를 수 있음, (3) 배선/외장으로 인한 미세 간섭 가능성. 직립→전진→정지를 확인하고, 실패 시 delta3에 실체 mass 기반 최종 재학습을 요청한다.",
     steps: [
       "실체 상체 결합 상태에서 전원 시퀀싱 완료 확인",
       "안전 지그/보조자 대기 상태에서 직립 테스트",
@@ -1950,29 +1950,29 @@ export const TASK_HINTS = {
     estimatedHours: 8,
   },
 
-  w8_mosfet_real_verify: {
-    summary: "실체 상하체 결합 상태에서 ESP32 MOSFET 낙상 차단을 실물 검증한다. 의도적으로 불안정 자세를 유발하여 MPU6050 기울임 감지→ISR→MOSFET C 라인 차단→BHL 관절 풀림(백드라이버블)→안전 주저앉음 시퀀스가 정상 동작하는지 확인한다. 동시에 epsilon2가 실체 vs 더미 상태에서의 sim-to-real 차이를 비교 분석한다.",
+  w8_fall_detect_real_verify: {
+    summary: "실체 상하체 결합 상태에서 NUC 낙상 감지(BNO085 → Arduino USB → NUC 임계치 → 토크 해제)를 실물 검증한다. 의도적으로 불안정 자세를 유발하여 BNO085 기울임 감지→NUC 임계치 판단→모터 토크 해제→BHL 관절 풀림(백드라이버블)→안전 주저앉음 시퀀스가 정상 동작하는지 확인한다. 동시에 epsilon2가 실체 vs 더미 상태에서의 sim-to-real 차이를 비교 분석한다.",
     steps: [
-      "ESP32 + MPU6050 장착 상태 + MOSFET 배선 최종 확인",
+      "BNO085 IMU + Arduino USB → NUC 연결 상태 최종 확인",
       "정상 직립 상태에서 IMU 기준값 캘리브레이션",
       "의도적 불안정 유발 (보조자가 살짝 밀기) → 낙상 감지 트리거 확인",
-      "MOSFET 차단 → BHL 관절 풀림 → 안전 주저앉음 동작 확인",
-      "차단 반응 시간 측정 (ISR 트리거 → MOSFET OFF 까지)",
+      "토크 해제 → BHL 관절 풀림 → 안전 주저앉음 동작 확인",
+      "반응 시간 측정 (BNO085 임계치 초과 → 토크 해제 까지)",
       "epsilon2: 실체 vs 더미 sim-to-real 비교 (IMU 궤적, 관절 응답, 낙상 패턴)",
     ],
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["esp32", "mpu6050", "mosfet"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
     estimatedHours: 3,
   },
 
   w8_walk_arm_policy: {
-    summary: "보행 중 SmolVLA를 중단하고 precoded 팔 스윙을 실행하는 정책을 구현한다. 대화에서 '걸어'와 같은 보행 명령 감지 시 Orin이 /gait/cmd 토픽으로 NUC에 전달하는 연동을 완성한다. FETCH 시퀀서의 타이머 T1(홈→테이블)과 T2(테이블→홈)를 실제 보행 속도에 맞춰 튜닝하며, 시연 환경 레이아웃(관객↔로봇홈 ~1.5m↔테이블 ~1.5m)을 기준으로 설정한다.",
+    summary: "보행 중 SmolVLA를 중단하고 precoded 팔 스윙을 실행하는 정책을 구현한다. 대화에서 '걸어'와 같은 보행 명령 감지 시 Orin이 UDP 보행 명령 (vx vy wz)으로 NUC에 전달하는 연동을 완성한다. FETCH 시퀀서의 타이머 T1(홈→테이블)과 T2(테이블→홈)를 실제 보행 속도에 맞춰 튜닝하며, 시연 환경 레이아웃(관객↔로봇홈 ~1.5m↔테이블 ~1.5m)을 기준으로 설정한다.",
     steps: [
       "WALKING 상태 진입 시 SmolVLA 추론 중단 + precoded 팔 스윙 활성화",
       "WALKING→정지 시 팔 중립 복귀 + SmolVLA 추론 재개 가능 상태 확인",
-      "대화 명령 '걸어/가져와' 감지 → /gait/cmd 토픽 퍼블리시 연동",
+      "대화 명령 '걸어/가져와' 감지 → UDP 보행 명령 (vx vy wz) 송신 연동",
       "FETCH 타이머 T1 튜닝: 홈→테이블 방향 전진 시간 (레이아웃 ~1.5m 기준)",
       "FETCH 타이머 T2 튜닝: 180도 회전 + 테이블→홈 복귀 시간",
       "연속 FETCH 3회 반복 테스트 (물체 3종) → 타이머 정밀도 확인",
@@ -1996,7 +1996,7 @@ export const TASK_HINTS = {
       "6. FETCH 서브스텝3: WALKING 홈 복귀 (180도 회전+T2초) → 정지",
       "7. FETCH 서브스텝4: MANIPULATING precoded handover → IDLE 복귀",
       "8. 자유 보행 + 대화 (보행 중 precoded 팔 스윙, 대화 가능)",
-      "9. 전체 보행 로그(IMU, 관절, /gait/status) 기록 + epsilon2 분석",
+      "9. 전체 보행 로그(IMU, 관절, UDP 보행 상태) 기록 + epsilon2 분석",
       "10. 시나리오 레벨 1차 판정: A(전체 성공)/B(보행 미달)/C(보행 전체 실패)",
     ],
     resources: [
@@ -2007,11 +2007,11 @@ export const TASK_HINTS = {
   },
 
   w8_merge_gate: {
-    summary: "합류 게이트 통과 판정. 4개 조건 충족 필요: (1) 상하체 퀵릴리즈 결합 완료 + 분리/조립 10분 이내, (2) 실체 보행 성공(직립+전진+정지), (3) MOSFET 낙상 차단 실물 검증 통과, (4) 풀 시나리오 1차 통과(시나리오 레벨 A/B/C 판정 완료). 미통과 항목이 있으면 Week 9 안정화에서 집중 보완한다.",
+    summary: "합류 게이트 통과 판정. 4개 조건 충족 필요: (1) 상하체 퀵릴리즈 결합 완료 + 분리/조립 10분 이내, (2) 실체 보행 성공(직립+전진+정지), (3) 낙상 감지 토크 해제 실물 검증 통과, (4) 풀 시나리오 1차 통과(시나리오 레벨 A/B/C 판정 완료). 미통과 항목이 있으면 Week 9 안정화에서 집중 보완한다.",
     steps: [
       "상하체 결합 확인: 퀵릴리즈 체결 상태 + 분리/조립 10분 이내",
       "실체 보행 확인: 직립 유지 + 전진 3보 이상 + 정지 명령 정상",
-      "MOSFET 차단 확인: 낙상 감지→차단→안전 주저앉음 시퀀스 정상",
+      "낙상 감지 확인: 낙상 감지→토크 해제→안전 주저앉음 시퀀스 정상",
       "풀 시나리오 1차 통과 확인: 시나리오 레벨 A/B/C 판정 결과 기록",
       "미통과 항목별 보완 계획 수립 + Week 9 안정화 우선순위 결정",
     ],
@@ -2083,7 +2083,7 @@ export const TASK_HINTS = {
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
       { label: "기획서 10절 (게이트 조건)", type: "internal", section: "10" },
     ],
-    components: ["orin_nano_super", "nuc", "esp32"],
+    components: ["orin_nano_super", "nuc"],
     estimatedHours: 8,
   },
 
@@ -2105,12 +2105,12 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "nuc", "esp32"],
+    components: ["orin_nano_super", "nuc"],
     estimatedHours: 6,
   },
 
   w10_final_presentation: {
-    summary: "최종 발표. 최종 필수 조건(시나리오 C 이상)을 충족해야 한다: (1) 시선 추적+인사+대화+집기 동작 정상, (2) MOSFET 낙상 차단 정상, (3) 비상정지 정상, (4) 리허설 2회+ 완료. 역할별 포지션은 Week 9과 동일하며, epsilon1이 현장에서 시나리오 레벨(A/B/C)을 실시간 판단하여 필요 시 B/C로 전환한다. 전원 개인 작업 없이 발표에만 집중한다.",
+    summary: "최종 발표. 최종 필수 조건(시나리오 C 이상)을 충족해야 한다: (1) 시선 추적+인사+대화+집기 동작 정상, (2) 낙상 감지 토크 해제 정상, (3) 비상정지 정상, (4) 리허설 2회+ 완료. 역할별 포지션은 Week 9과 동일하며, epsilon1이 현장에서 시나리오 레벨(A/B/C)을 실시간 판단하여 필요 시 B/C로 전환한다. 전원 개인 작업 없이 발표에만 집중한다.",
     steps: [
       "발표 30분 전: 로봇 조립(delta1) + 전원 투입(delta2) + 시스템 기동(epsilon1) + 외장 점검(epsilon2)",
       "발표 직전: 배터리 SOC 확인 + 네트워크 latency 확인 + 서바이벌 모드 대기 상태 확인",
@@ -2122,7 +2122,7 @@ export const TASK_HINTS = {
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
       { label: "기획서 10절 (최종 필수)", type: "internal", section: "10" },
     ],
-    components: ["orin_nano_super", "nuc", "esp32", "xl430", "head_camera", "wrist_camera", "neopixel_led", "speaker", "microphone"],
+    components: ["orin_nano_super", "nuc", "xl430", "head_camera", "wrist_camera", "neopixel_led", "speaker", "microphone"],
     estimatedHours: 4,
   },
 
@@ -2162,10 +2162,10 @@ export const TASK_HINTS = {
     summary: "시나리오 레벨 C (보행 전체 실패 시 최소 시연) 판정 기준. 로봇을 받침대에 고정하여 보행 없이 시연한다: 시선 추적→인사→대화→제자리 pick-place. 보행 기능을 완전히 포기하는 대신 상체 기능(시선/인사/대화/조작/감정표현)의 완성도를 극대화한다. 이것이 최종 필수 조건(시나리오 C 이상)의 최소 기준이며, 이 레벨조차 달성하지 못하면 발표 조건 미충족이다.",
     steps: [
       "받침대 준비: BHL 다리를 고정할 수 있는 받침대/지그 마련",
-      "로봇 받침대 고정 + 전원 시퀀싱 (C 배터리 투입 불필요할 수 있음)",
+      "로봇 받침대 고정 + 전원 시퀀싱 (배터리 1 투입 불필요할 수 있음)",
       "시연 흐름 1~3 실행: 시선→인사→대화→제자리 SmolVLA pick→handover",
       "상체 기능 완성도 극대화: 감정 5종, lip sync, 시선 추적 자연스러움",
-      "최종 필수 조건 확인: 시선+인사+대화+집기+MOSFET 정상+비상정지 정상",
+      "최종 필수 조건 확인: 시선+인사+대화+집기+낙상 감지 정상+비상정지 정상",
     ],
     resources: [
       { label: "기획서 3절 (시연 시나리오 레벨 C)", type: "internal", section: "3" },
@@ -2175,11 +2175,11 @@ export const TASK_HINTS = {
   },
 
   w10_bonus_walk_talk: {
-    summary: "최종 선택(보너스) 목표. 레벨 A 달성 이후 도전하는 상위 목표 2가지: (1) 보행+대화 동시 수행 — WALKING 상태에서 클라우드 API STT/LLM/TTS가 정상 동작하며 관객과 대화하면서 걷기, (2) 30분 연속 보행 — 배터리 C SOC 모니터링하며 30분간 낙상 없이 보행 유지. 두 목표 모두 레벨 A가 안정적으로 통과된 후에만 시도한다.",
+    summary: "최종 선택(보너스) 목표. 레벨 A 달성 이후 도전하는 상위 목표 2가지: (1) 보행+대화 동시 수행 — WALKING 상태에서 클라우드 API STT/LLM/TTS가 정상 동작하며 관객과 대화하면서 걷기, (2) 30분 연속 보행 — 배터리 1 SOC 모니터링하며 30분간 낙상 없이 보행 유지. 두 목표 모두 레벨 A가 안정적으로 통과된 후에만 시도한다.",
     steps: [
       "보행+대화 동시: WALKING 상태에서 클라우드 API 라운드트립 정상 확인",
       "보행+대화 동시: 관객 질문에 TTS로 응답하면서 직진+회전 동시 수행",
-      "30분 보행: 배터리 C SOC 모니터링 시작 (초기 100%→30분 후 SOC 기록)",
+      "30분 보행: 배터리 1 SOC 모니터링 시작 (초기 100%→30분 후 SOC 기록)",
       "30분 보행: 5분 간격 상태 체크 (직립/보행/관절 온도/NUC 안정성)",
       "30분 보행 중 낙상 발생 시 즉시 중단 + 원인 기록",
     ],

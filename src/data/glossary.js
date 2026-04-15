@@ -5,7 +5,7 @@ export const GLOSSARY = {
   "URDF": {
     full: "Unified Robot Description Format",
     definition: "로봇의 링크, 조인트, 질량, 관성 등을 XML로 기술하는 표준 포맷. ROS 생태계에서 시뮬레이션과 시각화의 기본 입력으로 사용된다.",
-    related: ["USD", "MJCF", "ROS2"],
+    related: ["USD", "MJCF"],
     links: [{ label: "ROS URDF 문서", url: "https://wiki.ros.org/urdf" }],
   },
   "USD": {
@@ -75,7 +75,7 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   "SmolVLA": {
     full: "Small Vision-Language-Action Model",
-    definition: "HuggingFace의 경량 VLA 모델. 카메라 이미지와 언어 명령을 입력받아 로봇 관절 동작을 직접 출력한다. 하이리온에서는 물체 집기(pick-place)에 사용하며, LeRobot 생태계에서 학습·배포한다.",
+    definition: "HuggingFace의 경량 VLA 모델 (450M 파라미터). 카메라 이미지와 언어 명령을 입력받아 로봇 관절 동작을 직접 출력한다. 하이리온에서는 LeRobot 프레임워크(PyTorch) 기반으로 물체 집기(pick-place)에 사용하며, Orin에서 TensorRT 변환 후 비동기 추론한다.",
     related: ["VLA", "LeRobot", "TensorRT", "파인튜닝"],
     links: [{ label: "SmolVLA 블로그", url: "https://huggingface.co/blog/smolvla" }],
   },
@@ -159,7 +159,7 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   "Orin": {
     full: "NVIDIA Jetson Orin Nano Super",
-    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드. SmolVLA 추론(TensorRT), MediaPipe(CPU), ROS2, 상태 머신, 대화 파이프라인, SO-ARM 제어를 담당한다. TDP 25W.",
+    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드. Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Local LLM fallback(Qwen 2.5 0.5B Q4, Ollama), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), MediaPipe(CPU), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라). TDP 25W.",
     related: ["JetPack", "TensorRT", "CUDA"],
     links: [{ label: "Jetson Orin 공식", url: "https://developer.nvidia.com/embedded/jetson-orin" }],
   },
@@ -180,7 +180,7 @@ export const GLOSSARY = {
   },
   "NUC": {
     full: "Next Unit of Computing (BeeLink N95)",
-    definition: "초소형 PC. BHL 다리의 Walking RL policy 실행과 CAN 통신을 전담한다. xanmod RT 커널로 실시간성을 확보하며, Orin과 Ethernet 직결로 ROS2 통신한다.",
+    definition: "초소형 PC. C언어 메인 컨트롤러로 Walking RL policy(ONNX Runtime C API, MLP 25Hz, Isaac Gym 모델) 실행, SocketCAN으로 USB-CAN ×2 제어, Arduino USB Serial로 BNO085 IMU 수신. UDP Server(udp_joystick.py 호환)로 Orin에서 보행 명령 수신. xanmod RT 커널.",
     related: ["xanmod", "RT 커널", "CAN 버스"],
   },
   "xanmod": {
@@ -199,12 +199,12 @@ export const GLOSSARY = {
   },
   "PWM": {
     full: "Pulse Width Modulation",
-    definition: "펄스 폭 변조. 디지털 신호의 듀티 사이클(ON/OFF 비율)을 조절하여 서보 모터(입 서보 MG90S)나 LED 밝기를 제어한다.",
+    definition: "펄스 폭 변조. 디지털 신호의 듀티 사이클(ON/OFF 비율)을 조절하여 서보 모터(입 서보 SG90)나 LED 밝기를 제어한다.",
     related: ["GPIO"],
   },
   "I2C": {
     full: "Inter-Integrated Circuit",
-    definition: "2선식 직렬 통신 프로토콜. NUC와 IMU(MPU6050) 간 통신에 사용한다.",
+    definition: "2선식 직렬 통신 프로토콜. AS5600 인코더↔ESC, BNO085 IMU↔Arduino 등에 사용한다.",
     related: ["SPI"],
   },
   "SPI": {
@@ -214,22 +214,18 @@ export const GLOSSARY = {
   },
   "MOSFET": {
     full: "Metal-Oxide-Semiconductor Field-Effect Transistor",
-    definition: "전자 스위치로 사용되는 반도체 소자. ESP32가 낙상을 감지하면 MOSFET을 OFF하여 BHL 다리(배터리 C)의 전원을 즉시 차단한다.",
-    related: ["ISR", "HW 인터럽트", "ESP32"],
+    definition: "전자 스위치로 사용되는 반도체 소자. B-G431B-ESC1 내부의 3-phase MOSFET 드라이버가 BLDC 모터를 구동한다.",
+    related: ["ESC", "FOC", "BLDC"],
   },
   "ISR": {
     full: "Interrupt Service Routine",
-    definition: "하드웨어 인터럽트 발생 시 즉시 실행되는 핸들러 함수. ESP32에서 MPU6050 낙상 감지 시 ISR이 MOSFET을 차단하여 수ms 이내에 전원을 끊는다.",
-    related: ["HW 인터럽트", "MOSFET"],
+    definition: "하드웨어 인터럽트 발생 시 즉시 실행되는 핸들러 함수. ESC의 FOC 루프에서 사용된다.",
+    related: ["HW 인터럽트", "ESC"],
   },
   "HW 인터럽트": {
     full: "Hardware Interrupt (하드웨어 인터럽트)",
     definition: "외부 하드웨어 이벤트(센서 신호 등)가 발생하면 CPU에 즉시 알리는 메커니즘. 소프트웨어 폴링보다 지연이 짧아 안전 차단에 적합하다.",
-    related: ["ISR", "MOSFET"],
-  },
-  "ESP32": {
-    definition: "Espressif의 저가 마이크로컨트롤러. 하이리온에서는 MPU6050 IMU로 낙상을 감지하고, HW 인터럽트 + MOSFET으로 BHL 전원을 즉시 차단하는 안전 시스템 전담 보드이다.",
-    related: ["MOSFET", "ISR", "MPU6050"],
+    related: ["ISR"],
   },
   "DGX": {
     full: "DGX Spark",
@@ -240,23 +236,9 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   // Communication
   // ──────────────────────────────────────────────
-  "ROS2": {
-    full: "Robot Operating System 2",
-    definition: "로봇 소프트웨어 개발을 위한 오픈소스 미들웨어. 노드 간 토픽 기반 메시지 통신을 제공하며, Orin과 NUC 사이의 보행 명령/상태 교환에 사용한다.",
-    related: ["토픽", "노드"],
-    links: [{ label: "ROS2 공식", url: "https://docs.ros.org/en/rolling/" }],
-  },
-  "토픽": {
-    definition: "ROS2에서 노드 간 데이터를 주고받는 명명된 통신 채널. /gait/cmd (Orin->NUC 보행 명령), /gait/status (NUC->Orin 보행 상태) 등이 있다.",
-    related: ["ROS2", "노드"],
-  },
-  "노드": {
-    definition: "ROS2에서 독립적으로 실행되는 프로세스 단위. 상태 머신, SmolVLA 추론, MediaPipe 등이 각각 별도 노드로 동작한다.",
-    related: ["ROS2", "토픽"],
-  },
   "Ethernet": {
-    definition: "유선 네트워크 통신 규격. Orin과 NUC를 Ethernet 직결로 연결하여 ROS2 토픽 통신의 저지연성과 안정성을 확보한다.",
-    related: ["ROS2"],
+    definition: "유선 네트워크 통신 규격. Orin과 NUC를 Ethernet 직결로 연결하여 Ethernet UDP로 vx vy wz 보행 명령을 전달한다.",
+    related: ["NUC", "Orin"],
   },
   "USB-C": {
     definition: "범용 직렬 버스(USB) Type-C 커넥터. 카메라, U2D2, 오디오 장치 등을 Orin에 연결하는 데 사용한다.",
@@ -304,7 +286,7 @@ export const GLOSSARY = {
     related: ["MediaPipe"],
   },
   "lip sync": {
-    definition: "TTS 재생 중 입 서보(MG90S)를 open, 묵음 시 close하는 단순 동작. 정밀 립싱크가 아닌 open/close 방식. 선택적으로 오디오 볼륨 threshold 기반으로 자연스럽게 구현 가능.",
+    definition: "TTS 재생 중 입 서보(SG90)를 open, 묵음 시 close하는 단순 동작. 정밀 립싱크가 아닌 open/close 방식. 선택적으로 오디오 볼륨 threshold 기반으로 자연스럽게 구현 가능.",
     related: ["TTS", "MediaPipe"],
   },
   "NeoPixel": {
@@ -313,17 +295,17 @@ export const GLOSSARY = {
   },
   "STT": {
     full: "Speech-to-Text (음성 인식)",
-    definition: "음성을 텍스트로 변환하는 기술. 온라인 시 클라우드 API, 오프라인 서바이벌 시 경량 로컬 모델을 Orin에서 실행한다.",
-    related: ["TTS", "LLM"],
+    definition: "음성을 텍스트로 변환하는 기술. 하이리온에서는 Whisper를 Orin에서 로컬 실행한다. 항상 로컬이므로 네트워크 불필요.",
+    related: ["TTS", "LLM", "Whisper"],
   },
   "TTS": {
     full: "Text-to-Speech (음성 합성)",
-    definition: "텍스트를 음성으로 변환하는 기술. 온라인 시 클라우드 API, 오프라인 서바이벌 시 경량 로컬 TTS를 Orin에서 실행한다.",
-    related: ["STT", "lip sync"],
+    definition: "텍스트를 음성으로 변환하는 기술. 하이리온에서는 Piper TTS를 Orin에서 로컬 실행한다. ALSA 또는 PulseAudio로 PCM 출력.",
+    related: ["STT", "lip sync", "Piper TTS"],
   },
   "LLM": {
     full: "Large Language Model (대규모 언어 모델)",
-    definition: "대규모 텍스트 데이터로 학습된 자연어 처리 모델. 하이리온에서는 클라우드 LLM API를 통해 관객과의 대화를 생성하고, fetch 태스크 명령을 추출한다.",
+    definition: "대규모 텍스트 데이터로 학습된 자연어 처리 모델. 하이리온에서는 클라우드 LLM(Gemini Flash 또는 GPT-4o mini)을 WiFi API로 호출하여 대화 생성+명령 분류를 수행한다. WiFi 끊김 시 Qwen 2.5 0.5B Q4(Ollama, 350MB VRAM, 35 t/s)로 자동 전환.",
     related: ["STT", "TTS"],
   },
   "VAD": {
@@ -340,37 +322,32 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   // Power
   // ──────────────────────────────────────────────
-  "BMS": {
-    full: "Battery Management System",
-    definition: "배터리 과충전, 과방전, 과전류를 방지하는 보호 회로. 배터리 A, B, C 각각에 BMS를 장착하여 셀 밸런싱과 안전 보호를 수행한다.",
-    related: ["PDB", "SOC"],
-  },
-  "PDB": {
-    full: "Power Distribution Board",
-    definition: "하나의 전원 입력을 여러 출력으로 분배하는 보드. 기성 드론용 PDB를 사용하여 배터리로부터 Orin, NUC, 서보 등에 전원을 분배한다.",
-    related: ["BMS", "DC-DC"],
+  "LiPo 알람": {
+    full: "LiPo Battery Alarm",
+    definition: "LiPo 배터리 셀 전압이 설정값 이하로 떨어지면 경고음을 울리는 저가 모니터링 장치. BMS 없이 과방전을 방지하는 간이 솔루션으로, 배터리 1(6S)과 배터리 2(4S) 각각에 장착한다.",
+    related: ["SOC", "DC-DC"],
   },
   "DC-DC": {
     full: "DC-DC Converter (직류 변환기)",
-    definition: "직류 전압을 다른 직류 전압으로 변환하는 장치. 배터리 전압(약 11.1V)을 5V, 12V, 19V 등 각 부품에 필요한 전압으로 변환한다.",
-    related: ["벅 컨버터", "PDB"],
+    definition: "직류 전압을 다른 직류 전압으로 변환하는 장치. 배터리 2(4S 14.8V)에서 DC-DC로 12V(NUC, 팔 서보), 5V(USB Hub 등)를 생성한다.",
+    related: ["벅 컨버터"],
   },
   "SOC": {
     full: "State of Charge (충전 상태)",
-    definition: "배터리의 현재 충전량을 백분율로 나타낸 값. SOC 20% 이하가 되면 LOW_BATTERY 상태로 전환하여 안전 자세를 취하고 대화만 가능하게 한다.",
-    related: ["BMS"],
+    definition: "배터리의 현재 충전량을 백분율로 나타낸 값. SOC 20% 이하가 되면 LOW_BATTERY 상태로 전환하여 안전 자세를 취하고 대화만 가능하게 한다. LiPo 알람으로 과방전을 방지한다.",
+    related: ["LiPo 알람"],
   },
   "NC": {
     full: "Normally Closed (상시 폐합)",
     definition: "평상시 닫혀 있다가 작동 시 열리는 스위치/릴레이 방식. 비상정지 회로에서 NC 차단을 사용하여, 배선 단선 시에도 안전하게 차단되도록 한다.",
   },
-  "3S2P": {
-    definition: "리튬 배터리 셀 구성 표기. 3직렬(3S, 11.1V) x 2병렬(2P, 용량 2배). 배터리 A(Orin+NUC+LED 등)에 사용한다.",
-    related: ["3S3P", "BMS"],
+  "6S": {
+    definition: "LiPo 배터리 셀 구성 표기. 6직렬(6S, 22.2V). 배터리 1(다리 전용, 4000mAh)에 사용한다.",
+    related: ["4S", "LiPo 알람"],
   },
-  "3S3P": {
-    definition: "리튬 배터리 셀 구성 표기. 3직렬(3S, 11.1V) x 3병렬(3P, 용량 3배). 배터리 B(Dynamixel 14개)에 사용한다.",
-    related: ["3S2P", "BMS"],
+  "4S": {
+    definition: "LiPo 배터리 셀 구성 표기. 4직렬(4S, 14.8V). 배터리 2(컴퓨트+팔+주변장치, 8000mAh)에 사용한다.",
+    related: ["6S", "LiPo 알람"],
   },
   "벅 컨버터": {
     full: "Buck Converter",
@@ -469,12 +446,8 @@ export const GLOSSARY = {
   },
   "ESC": {
     full: "Electronic Speed Controller",
-    definition: "BLDC 모터의 속도와 방향을 제어하는 전자 장치. BHL은 B-G431B-ESC1 모터 드라이버 10개를 사용한다.",
+    definition: "BLDC 모터의 속도와 방향을 제어하는 전자 장치. BHL은 B-G431B-ESC1(STM32G431CB) 12개를 사용하며, Recoil-Motor-Controller-BESC 펌웨어(C언어)로 FOC+PD 위치 제어+CAN 프로토콜+AS5600 I2C 드라이버를 구동한다.",
     related: ["BLDC", "CAN 버스"],
-  },
-  "MPU6050": {
-    definition: "InvenSense의 6축 IMU(가속도 3축 + 자이로 3축) 센서. ESP32에 연결하여 로봇의 기울기를 측정하고 낙상을 감지한다.",
-    related: ["ESP32", "ISR", "I2C"],
   },
   "CoM": {
     full: "Center of Mass (질량 중심)",
