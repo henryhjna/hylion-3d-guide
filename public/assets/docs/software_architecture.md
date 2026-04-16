@@ -1,5 +1,7 @@
 # Software Architecture
 
+각 보드에서 실행되는 소프트웨어 스택과 데이터 흐름.
+
 ```mermaid
 flowchart TD
     subgraph JETSON_SW ["Jetson Orin Nano - JetPack Ubuntu"]
@@ -95,3 +97,44 @@ flowchart TD
     class SW_FOC,SW_PD,SW_CAN_RX,SW_I2C fw
     class SW_IMU_DRV,SW_IMU_SERIAL fw
 ```
+
+## 소프트웨어 스택 요약
+
+### Jetson Orin Nano (JetPack Ubuntu)
+| 모듈 | 구현 | 역할 |
+|------|------|------|
+| OpenCV | Python | USB Camera ×3 캡처 |
+| Whisper | Python, local | STT (음성→텍스트) |
+| Cloud LLM | API 호출 | Gemini Flash / GPT-4o mini |
+| Local LLM | Ollama | Qwen 2.5 0.5B Q4 (350MB VRAM, 35 t/s) |
+| 오케스트레이터 | Python FSM | 상태 전환 + FETCH 시퀀서 |
+| 명령 매핑 | YAML/JSON | 다리 명령 키 → vx vy wz |
+| SmolVLA 450M | LeRobot/PyTorch | 카메라+텍스트 → 관절 액션 |
+| Piper TTS | Python, local | 텍스트 → 음성 PCM |
+| UDP Client | Python | vx vy wz → NUC |
+| LeRobot ServoControl | Python | USB Serial → BusLinker |
+| Jetson.GPIO | Python | PWM → 입 서보 |
+| ALSA/PulseAudio | System | PCM → USB Speaker |
+
+### NUC N95 (Ubuntu)
+| 모듈 | 언어 | 역할 |
+|------|------|------|
+| UDP Server | C | Orin에서 vx vy wz 수신 |
+| ONNX Runtime | C API | MLP policy 추론, 250Hz |
+| SocketCAN | C (Linux) | CAN 프레임 송수신 |
+| USB Serial | C | Arduino IMU 수신 |
+| calibrate_joints.py | Python | 관절 영점 보정 |
+
+### ESC ×12 (Recoil-BESC, C)
+| 모듈 | 역할 |
+|------|------|
+| FOC 수kHz | Clarke/Park/PI 전류 제어 |
+| PD 위치 제어기 | 목표 각도 → 토크 |
+| CAN 핸들러 | ID 필터링 |
+| I2C | AS5600 인코더 읽기 |
+
+### Arduino (IMU 브릿지)
+| 모듈 | 역할 |
+|------|------|
+| BNO085 드라이버 | I2C/SPI → 각속도+중력 |
+| USB Serial | NUC로 전송 |

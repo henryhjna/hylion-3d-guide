@@ -1,5 +1,7 @@
 # Signal Flow
 
+로봇의 센서 입력부터 액추에이터 출력까지의 전체 신호 흐름.
+
 ```mermaid
 flowchart TD
     S0["S0. User\n음성으로 명령"]
@@ -90,3 +92,21 @@ flowchart TD
     class L5,A2,M1,M2 actuator
     class L6,L7,A3 mech
 ```
+
+## 신호 경로 요약
+
+### 음성 대화 경로
+User → USB Mic → **Orin Whisper STT (local)** → Cloud LLM (Gemini Flash / GPT-4o mini) → 오케스트레이터 → Piper TTS (local) → USB Speaker + 입 서보 (GPIO PWM)
+
+### 팔 조작 경로 (SmolVLA)
+오케스트레이터 (팔 명령) → **SmolVLA 450M** (LeRobot/PyTorch) ← USB Camera ×3 (OpenCV)
+→ BusLinker ×2 (USB Serial) → STS3215 ×12 (TTL Bus) → 관절 ×12
+← 서보 위치 피드백 (TTL → USB)
+
+### 다리 보행 경로 (Walking RL)
+오케스트레이터 (다리 명령) → 명령 매핑 (YAML/JSON, vx vy wz) → UDP Client
+→ **NUC** (UDP Server) → RL Policy (ONNX Runtime C API, MLP 250Hz)
+→ SocketCAN → USB-CAN ×2 → CAN Bus ×2 → ESC ×12 (Recoil-BESC, FOC) → BLDC ×12 → 기어박스 ×12 → 관절 ×12
+← AS5600 인코더 (I2C → ESC → CAN → NUC)
+← BNO085 IMU (Arduino → USB → NUC)
+← NUC → Orin (UDP 보행 상태 + IMU stable)
