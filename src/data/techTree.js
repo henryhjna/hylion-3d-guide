@@ -68,7 +68,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: '랩 프린터 2대 -> BHL 기어박스 10세트 + 다리 구조물 프린트 시작',
+      description: '랩 프린터 2대 -> BHL 기어박스 12세트 + 다리 구조물 프린트 시작',
     },
 
     // Day 2
@@ -859,20 +859,6 @@ export const TECH_TREE = {
       isCheckpoint: false,
       description: 'Walking RL 모니터링 + Newton 기반 Walking RL 검증 (sim-to-real 준비) + 공중 지그 3D프린트',
     },
-    {
-      id: 'w3_soc_safety',
-      label: 'SOC 20% 안전 자세 로직',
-      week: 3,
-      track: 'B',
-      members: ['delta2'],
-      parts: [],
-      status: 'locked',
-      dependencies: ['w2_emergency_stop'],
-      isGate: false,
-      isCheckpoint: false,
-      description: 'SOC 20% 안전 자세 로직',
-    },
-
     // Phase 1 Gate
     {
       id: 'w3_phase1_gate',
@@ -1010,7 +996,7 @@ export const TECH_TREE = {
     // Track B (물리 진입)
     {
       id: 'w4_actuator_10_assembly',
-      label: '액추에이터 10개 조립',
+      label: '액추에이터 12개 조립',
       week: 4,
       track: 'B',
       members: ['delta2'],
@@ -1019,7 +1005,7 @@ export const TECH_TREE = {
       dependencies: ['w2_gearbox_postprocess', 'w3_phase1_gate'],
       isGate: false,
       isCheckpoint: false,
-      description: '액추에이터 10개 조립 (기어박스 후가공 완료 상태)',
+      description: '액추에이터 12개 조립 (기어박스 후가공 완료 상태)',
     },
     {
       id: 'w4_leg_assembly_start',
@@ -1250,7 +1236,7 @@ export const TECH_TREE = {
       dependencies: ['w5_phase2_gate', 'w5_fetch_sequencer_complete', 'w5_survival_engine'],
       isGate: false,
       isCheckpoint: false,
-      description: 'IDLE<->TALKING<->MANIPULATING 전환 + LOW_BATTERY + EMERGENCY + 서바이벌 계층 1+2 + 파이프라인 10분 크래시 없음',
+      description: 'IDLE<->TALKING<->MANIPULATING 전환 + EMERGENCY + 서바이벌 계층 1+2 + 파이프라인 10분 크래시 없음',
     },
     {
       id: 'w6_fetch_logic_test',
@@ -1452,7 +1438,7 @@ export const TECH_TREE = {
       members: ['delta2'],
       parts: [],
       status: 'locked',
-      dependencies: ['w2_emergency_stop', 'w3_soc_safety'],
+      dependencies: ['w2_emergency_stop'],
       isGate: false,
       isCheckpoint: false,
       description: '비상 매뉴얼 작성 (전원 시퀀싱, 비상정지, 낙상 차단, 재시작 절차)',

@@ -179,26 +179,17 @@ Layer 3 (홀로그램): 외장, placeholder, 미완성 파트
 - [ ] 머리 Blender → glTF (Layer 2)
 - [ ] 반응형 레이아웃
 
-## 참고 에셋
+## 참고 문서 (public/assets/docs/)
 
 ```
-../asserts/
-├── model.fbx               # 3D 모델 (FBX)
-├── hyurion_rig.blend        # Blender 리깅 파일
 ├── 기획서_v13.md            # 기획서 원본
-├── 실행가이드_v13.md        # 실행가이드 원본
-└── docs/                    # 11개 카테고리 기술 문서
-    ├── SO-ARM100/           # SO-ARM101 스펙, BOM
-    ├── BHL/                 # Berkeley Humanoid Lite
-    ├── SmolVLA/             # VLA 모델 + LeRobot
-    ├── Orin/                # Jetson Orin Nano Super
-    ├── IsaacLab/            # 시뮬레이션
-    ├── Groq/                # 클라우드 추론 API
-    ├── Dynamixel/           # XL430 목 서보
-    ├── MediaPipe/           # 시선 추적
-    ├── Audio/               # Whisper, Piper TTS
-    ├── ROS2/                # 미들웨어
-    └── Safety/              # BNO085 낙상 감지, NC 비상정지
+├── 실행가이드_v13.md        # 실행가이드 원본  
+├── signal_flow.md           # 신호 흐름도
+├── signal_cables.md         # 케이블 배선도
+├── power_cables.md          # 전원 배선도
+├── software_architecture.md # 소프트웨어 아키텍처
+├── state_machine.md         # 상태 전환 다이어그램
+└── DGX_Spark_가이드.md      # DGX Spark 사용 가이드
 ```
 
 ## 주의사항

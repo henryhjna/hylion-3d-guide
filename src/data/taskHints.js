@@ -72,11 +72,11 @@ export const TASK_HINTS = {
   },
 
   w0_3dprint_start: {
-    summary: "백그라운드 과제. BHL 액추에이터의 사이클로이드 기어박스(10세트)와 다리 구조물 3D프린트는 수일이 소요되므로 Day 1부터 프린터 2대를 풀가동해야 Week 1 시험 조립(δ1)과 Week 2 기어박스 후가공(δ2)에 맞출 수 있다. 기획서 7.1절에 따르면 BHL은 5DOF x 2 = 10개 액추에이터를 사용한다.",
+    summary: "백그라운드 과제. BHL 액추에이터의 사이클로이드 기어박스(12세트)와 다리 구조물 3D프린트는 수일이 소요되므로 Day 1부터 프린터 2대를 풀가동해야 Week 1 시험 조립(δ1)과 Week 2 기어박스 후가공(δ2)에 맞출 수 있다. 기획서 7.1절에 따르면 BHL은 6DOF x 2 = 12개 액추에이터를 사용한다.",
     steps: [
       "BHL GitHub에서 최신 STL 파일 다운로드 (기어박스 + 다리 구조물)",
       "슬라이서 설정 — 기어박스는 정밀도 우선 (레이어 0.15mm, 인필 80% 이상), 구조물은 강도 우선",
-      "프린터 2대에 작업 분배 — 프린터 A: 기어박스 10세트, 프린터 B: 다리 프레임 파트",
+      "프린터 2대에 작업 분배 — 프린터 A: 기어박스 12세트, 프린터 B: 다리 프레임 파트",
       "프린트 진행 중 품질 모니터링 (층간 분리, 서포트 부착 상태 확인)",
       "완성된 파트 서포트 제거 후 치수 검수 (베어링 시트 내경, 모터 마운트 구멍 직경)",
     ],
@@ -224,7 +224,7 @@ export const TASK_HINTS = {
   },
 
   w0_bhl_lowlevel_reading: {
-    summary: "δ2 전용 과제. BHL lowlevel C 코드는 NUC에서 실행되어 10개 액추에이터를 CAN 버스로 250Hz 제어하는 핵심 모듈이다(기획서 5.3절, 7.1절). Week 1에 NUC 도착 후 즉시 빌드+숙달해야 하므로, NUC 없이도 개인 노트북에서 코드 리딩과 구조 파악을 선행한다. Day 3~4에 걸쳐 진행.",
+    summary: "δ2 전용 과제. BHL lowlevel C 코드는 NUC에서 실행되어 12개 액추에이터를 CAN 버스로 250Hz 제어하는 핵심 모듈이다(기획서 5.3절, 7.1절). Week 1에 NUC 도착 후 즉시 빌드+숙달해야 하므로, NUC 없이도 개인 노트북에서 코드 리딩과 구조 파악을 선행한다. Day 3~4에 걸쳐 진행.",
     steps: [
       "BHL GitHub 클론 후 lowlevel C 코드 디렉토리 구조 파악",
       "메인 제어 루프 분석 — 센서 읽기 → policy 출력 적용 → CAN 쓰기 사이클",
@@ -257,7 +257,7 @@ export const TASK_HINTS = {
   },
 
   w0_state_machine_eval: {
-    summary: "ε1 전용 과제 (Day 3). 시연 시나리오의 7개 상태(IDLE/TALKING/MANIPULATING/WALKING/FETCH/LOW_BATTERY/EMERGENCY, 기획서 5.1절)를 관리할 프레임워크를 선정한다. 특히 FETCH 상태의 서브스텝 시퀀스(WALKING→MANIPULATING→WALKING→handover)를 표현할 수 있어야 한다. 선정 결과는 Week 1 합의 미팅에서 전체 공유한다.",
+    summary: "ε1 전용 과제 (Day 3). 시연 시나리오의 6개 상태(IDLE/TALKING/MANIPULATING/WALKING/FETCH/EMERGENCY, 기획서 5.1절)를 관리할 프레임워크를 선정한다. 특히 FETCH 상태의 서브스텝 시퀀스(WALKING→MANIPULATING→WALKING→handover)를 표현할 수 있어야 한다. 선정 결과는 Week 1 합의 미팅에서 전체 공유한다.",
     steps: [
       "기획서 5.2절 상태별 프로세스-리소스 매핑표를 참고하여 초안 작성 (Orin GPU/CPU, NUC 할당)",
       "smach 설치 + 예제 실행 — 계층적 상태 머신, 동시 실행 컨테이너 지원 확인",
@@ -466,7 +466,7 @@ export const TASK_HINTS = {
   },
 
   w1_actuator_trial_assembly: {
-    summary: "δ1 전용 과제. 3D프린트된 사이클로이드 기어박스에 MAD BLDC 모터를 결합하여 BHL 액추에이터 3개를 시험 조립한다. 이 과정에서 Week 0 SO-ARM 조립 기준서를 BHL 액추에이터용으로 확장하며, 완성된 기준서는 δ2가 Week 4에 10개 액추에이터를 본 조립할 때 핵심 참조 문서가 된다(기획서 6.2절 δ1→δ2 조립 노트 인계).",
+    summary: "δ1 전용 과제. 3D프린트된 사이클로이드 기어박스에 MAD BLDC 모터를 결합하여 BHL 액추에이터 3개를 시험 조립한다. 이 과정에서 Week 0 SO-ARM 조립 기준서를 BHL 액추에이터용으로 확장하며, 완성된 기준서는 δ2가 Week 4에 12개 액추에이터를 본 조립할 때 핵심 참조 문서가 된다(기획서 6.2절 δ1→δ2 조립 노트 인계).",
     steps: [
       "3D프린트 기어박스 서포트 제거 + 리밍 — 베어링 시트, 모터 축 구멍 정밀 가공",
       "기어박스 + MAD BLDC 모터(M6C12 또는 5010) 결합 — 정렬 확인, 나사 토크 기록",
@@ -517,9 +517,9 @@ export const TASK_HINTS = {
   },
 
   w1_state_machine_design: {
-    summary: "ε1 전용 과제. Week 0에서 선정한 프레임워크로 상태 머신의 상세 설계를 확정한다. 7개 상태 + FETCH 서브스텝(기획서 5.1절)의 전환 규칙, 각 상태에서의 프로세스-리소스 할당(기획서 5.2절)을 구체화한다. 동시에 SmolVLA 수집 기준 문서를 δ1과 합의하여 Week 2 수집 시작에 대비한다.",
+    summary: "ε1 전용 과제. Week 0에서 선정한 프레임워크로 상태 머신의 상세 설계를 확정한다. 6개 상태 + FETCH 서브스텝(기획서 5.1절)의 전환 규칙, 각 상태에서의 프로세스-리소스 할당(기획서 5.2절)을 구체화한다. 동시에 SmolVLA 수집 기준 문서를 δ1과 합의하여 Week 2 수집 시작에 대비한다.",
     steps: [
-      "상태 전환 다이어그램 작성 — 7개 상태 + FETCH 서브스텝 5단계 (기획서 5.1절 기반)",
+      "상태 전환 다이어그램 작성 — 6개 상태 + FETCH 서브스텝 5단계 (기획서 5.1절 기반)",
       "각 상태별 활성 프로세스 + 리소스 할당 명세 (기획서 5.2절 매핑표 기반)",
       "비상정지(EMERGENCY) 전환 로직 설계 — 어느 상태에서든 즉시 전환, NUC 낙상 감지 트리거 수신",
       "SmolVLA 수집 기준 문서를 δ1과 합의 — 카메라 위치, 에피소드 길이, 성공 판정 기준",
@@ -565,7 +565,7 @@ export const TASK_HINTS = {
   },
 
   w1_nuc_rt_kernel: {
-    summary: "δ2 전용 과제. NUC(BeeLink N95)는 BHL 다리의 lowlevel 제어를 담당하며, 10개 액추에이터를 CAN 버스 250Hz로 구동하려면 RT(실시간) 커널이 필수다(기획서 5.3절, 7.1절). xanmod RT 커널로 실시간성을 확보하고, CAN-USB 드라이버를 활성화하여 Week 1 후반 lowlevel C 빌드의 기반을 준비한다.",
+    summary: "δ2 전용 과제. NUC(BeeLink N95)는 BHL 다리의 lowlevel 제어를 담당하며, 12개 액추에이터를 CAN 버스 250Hz로 구동하려면 RT(실시간) 커널이 필수다(기획서 5.3절, 7.1절). xanmod RT 커널로 실시간성을 확보하고, CAN-USB 드라이버를 활성화하여 Week 1 후반 lowlevel C 빌드의 기반을 준비한다.",
     steps: [
       "Ubuntu 22.04 클린 설치 (BeeLink N95 BIOS 설정 확인)",
       "xanmod RT 커널 빌드 또는 사전 빌드 패키지 설치",
@@ -885,9 +885,9 @@ export const TASK_HINTS = {
   },
 
   w2_gearbox_postprocess: {
-    summary: "Week 4 액추에이터 10개 조립의 선행 공정이다. 3D프린트된 사이클로이드 기어박스 10세트의 서포트를 제거하고, 리밍과 베어링 시트를 가공하여 정밀 결합이 가능한 상태로 만든다. 동시에 Week 5 공중 보행 테스트용 지그를 설계한다.",
+    summary: "Week 4 액추에이터 12개 조립의 선행 공정이다. 3D프린트된 사이클로이드 기어박스 12세트의 서포트를 제거하고, 리밍과 베어링 시트를 가공하여 정밀 결합이 가능한 상태로 만든다. 동시에 Week 5 공중 보행 테스트용 지그를 설계한다.",
     steps: [
-      "기어박스 10세트 서포트 제거 (얇은 벽면 파손 주의)",
+      "기어박스 12세트 서포트 제거 (얇은 벽면 파손 주의)",
       "베어링 시트 리밍 — 내경을 베어링 외경에 맞춰 정밀 가공",
       "모터 마운트 구멍 치수 검수 (M6C12 6개, 5010 4개 각각 확인)",
       "히트인서트 삽입 (나사 체결부)",
@@ -1032,7 +1032,7 @@ export const TASK_HINTS = {
   },
 
   w3_state_machine_v1_complete: {
-    summary: "Week 2에서 시작한 상태 머신 v1을 완성하여 IDLE↔TALKING↔MANIPULATING 기본 전환이 정상 동작해야 한다. 기획서 5.1절 전환 규칙과 5.2절 리소스 매핑을 충실히 반영하며, FETCH·LOW_BATTERY·EMERGENCY는 Week 5~6에서 추가한다.",
+    summary: "Week 2에서 시작한 상태 머신 v1을 완성하여 IDLE↔TALKING↔MANIPULATING 기본 전환이 정상 동작해야 한다. 기획서 5.1절 전환 규칙과 5.2절 리소스 매핑을 충실히 반영하며, FETCH·EMERGENCY는 Week 5~6에서 추가한다.",
     steps: [
       "IDLE → TALKING 전환: 마이크 입력 감지 시 대화 파이프라인 활성화",
       "TALKING → MANIPULATING 전환: LLM이 pick 액션 추출 시 SmolVLA 실행",
@@ -1060,21 +1060,6 @@ export const TASK_HINTS = {
     ],
     components: ["nuc"],
     estimatedHours: 8,
-  },
-
-  w3_soc_safety: {
-    summary: "배터리 SOC가 20% 이하로 떨어지면 LOW_BATTERY 상태로 전환하여 안전 자세를 취하고, 대화만 가능하게 제한하는 로직을 구현한다. 기획서 5.1절의 LOW_BATTERY 상태 정의에 따르며, LiPo 알람 전압 읽기를 NUC가 담당한다.",
-    steps: [
-      "NUC에서 LiPo 알람을 통해 배터리 1(다리) SOC 읽기 구현",
-      "SOC 20% 이하 시 LOW_BATTERY 상태 트리거",
-      "NUC → Orin UDP 메시지(보행 상태)로 상태 전달",
-      "상태 머신에서 LOW_BATTERY 전환 → 안전 자세 + 대화만 허용",
-    ],
-    resources: [
-      { label: "기획서 5.1절 (LOW_BATTERY 상태)", type: "internal", section: "5.1" },
-    ],
-    components: ["nuc"],
-    estimatedHours: 3,
   },
 
   w3_phase1_gate: {
@@ -1226,11 +1211,11 @@ export const TASK_HINTS = {
   },
 
   w4_actuator_10_assembly: {
-    summary: "BHL 하반신의 핵심 공정으로, 5DOF × 2다리 = 10개 액추에이터를 모두 조립한다. Week 2에서 후가공 완료된 사이클로이드 기어박스에 BLDC 모터(MAD M6C12 ×6 + 5010 ×4)를 결합하고, ESC를 솔더링한다.",
+    summary: "BHL 하반신의 핵심 공정으로, 6DOF × 2다리 = 12개 액추에이터를 모두 조립한다. Week 2에서 후가공 완료된 사이클로이드 기어박스에 BLDC 모터(MAD M6C12 ×6 + 5010 ×4)를 결합하고, ESC를 솔더링한다.",
     steps: [
-      "기어박스 10개 최종 점검 — 리밍·베어링 시트·히트인서트 상태 확인",
+      "기어박스 12개 최종 점검 — 리밍·베어링 시트·히트인서트 상태 확인",
       "BLDC 모터 결합: hip/knee용 M6C12(150KV) ×6 + ankle용 5010(110KV) ×4",
-      "ESC(B-G431B-ESC1) 10개 솔더링 + 모터 3상 연결",
+      "ESC(B-G431B-ESC1) 12개 솔더링 + 모터 3상 연결",
       "개별 동작 테스트 — CAN 명령으로 각 액추에이터 회전 확인",
       "조립 기준서(δ1 Week 1 작성) 참조하여 토크·그리스 적용",
       "불량 액추에이터 식별 시 예비 기어박스로 교체",
@@ -1243,9 +1228,9 @@ export const TASK_HINTS = {
   },
 
   w4_leg_assembly_start: {
-    summary: "10개 액추에이터를 3D프린트된 다리 프레임에 장착하여 다리 조립을 시작한다. 배터리 1(6S LiPo, ESC 직결 24V)을 다리 프레임에 연결하여 독립 전원 공급을 확인한다. Week 5에서 다리 완성 + NUC 연결로 이어진다.",
+    summary: "12개 액추에이터를 3D프린트된 다리 프레임에 장착하여 다리 조립을 시작한다. 배터리 1(6S LiPo, ESC 직결 24V)을 다리 프레임에 연결하여 독립 전원 공급을 확인한다. Week 5에서 다리 완성 + NUC 연결로 이어진다.",
     steps: [
-      "3D프린트 다리 구조물에 액추에이터 10개 순서대로 장착 (hip→knee→ankle)",
+      "3D프린트 다리 구조물에 액추에이터 12개 순서대로 장착 (hip→knee→ankle)",
       "각 관절 가동 범위가 URDF 정의와 일치하는지 확인",
       "배터리 1(6S LiPo) ESC 직결 연결 → 전원 공급 확인",
       "CAN 버스 배선(CAN-USB ×2, 2버스 1Mbps) 연결",
@@ -1422,7 +1407,7 @@ export const TASK_HINTS = {
   w5_leg_complete: {
     summary: "Week 4에서 시작한 다리 조립을 완성하고, NUC와 CAN-USB ×2를 실물 연결하여 2버스(1Mbps, 250Hz) 통신을 확인한다. 이것이 공중 보행 테스트의 전제 조건이다.",
     steps: [
-      "다리 프레임 + 액추에이터 10개 최종 조립 완료",
+      "다리 프레임 + 액추에이터 12개 최종 조립 완료",
       "NUC에 CAN-USB ×2 연결 (2개 CAN 버스 구성)",
       "NUC xanmod RT 커널에서 CAN 통신 테스트 (250Hz 명령 주기 확인)",
       "BHL lowlevel C 코드로 전체 10개 관절 동시 구동 확인",
@@ -1489,13 +1474,12 @@ export const TASK_HINTS = {
   // =======================================================================
 
   w6_upper_integration: {
-    summary: "상반신 통합 테스트(epsilon1 주도). IDLE↔TALKING↔MANIPULATING↔FETCH 4개 상태 전환을 실물 SO-ARM + Orin 환경에서 검증한다. 보행은 아직 mock으로 대체하되 SmolVLA pick과 handover는 실제 수행하며, LOW_BATTERY(SOC 20%)와 EMERGENCY 비상정지도 연결한다. 서바이벌 계층 1(스크립트 시연)+계층 2(오프라인 자율)를 통합하여 파이프라인 10분 크래시 없음을 달성해야 한다.",
+    summary: "상반신 통합 테스트(epsilon1 주도). IDLE↔TALKING↔MANIPULATING↔FETCH 4개 상태 전환을 실물 SO-ARM + Orin 환경에서 검증한다. 보행은 아직 mock으로 대체하되 SmolVLA pick과 handover는 실제 수행하며, EMERGENCY 비상정지도 연결한다. 서바이벌 계층 1(스크립트 시연)+계층 2(오프라인 자율)를 통합하여 파이프라인 10분 크래시 없음을 달성해야 한다.",
     steps: [
       "IDLE→TALKING 전환 확인 (관객 음성 입력 → STT → 대화 파이프라인 활성화)",
       "TALKING→MANIPULATING 전환 확인 (fetch 명령 감지 → SmolVLA 실행)",
       "MANIPULATING→IDLE 복귀 (pick/handover 완료 후 상태 복원)",
       "FETCH 시퀀서 로직 연결 — WALKING 서브스텝은 mock(UDP 보행 명령 더미), pick+handover는 실제",
-      "LOW_BATTERY 상태 구현 (SOC 20% 이하 → 안전 자세, 대화만 가능)",
       "EMERGENCY 상태 구현 (비상정지 → BHL 전원 차단, Orin 로그 유지)",
       "서바이벌 계층 1(스크립트 시연: 키워드 매칭+사전 녹음) + 계층 2(경량 로컬 STT+경량 로컬 TTS) 통합",
       "전체 파이프라인 10분 연속 크래시 없음 확인 — 메모리 누수/통신 지연 모니터링",
@@ -1861,7 +1845,7 @@ export const TASK_HINTS = {
     steps: [
       "토르소 하단 퀵릴리즈 핀/나비너트와 BHL hip 프레임 결합부 정렬 확인",
       "퀵릴리즈로 상하체 물리 결합 — 체결 토크 확인, 흔들림 없는지 검증",
-      "결합 상태에서 모든 다리 관절(10DOF) 가동 범위 실측",
+      "결합 상태에서 모든 다리 관절(12DOF) 가동 범위 실측",
       "실측 vs URDF 비교 — +-5도 이상 차이 시 URDF 수정 + delta3 재학습 트리거",
       "관절 스텝 응답 테스트 (명령 각도 스텝 입력 → 응답 시간/오버슈트 측정)",
       "epsilon2: 스텝 응답 vs 시뮬 비교 분석",

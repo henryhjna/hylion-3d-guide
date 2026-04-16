@@ -257,7 +257,7 @@ export const MEMBERS = {
       4: {
         focus: '물리 진입 — 액추에이터 조립 + 다리 조립',
         tasks: [
-          '액추에이터 10개 조립 (기어박스 후가공 완료 상태)',
+          '액추에이터 12개 조립 (기어박스 후가공 완료 상태)',
           '다리 조립 시작 + 배터리 1 (6S LiPo) 연결',
           '토르소+팔 부분 실측 (시뮬 파라미터 보정용)',
           'NUC 측 UDP 수신 (vx vy wz) + 상태 응답 구현',
@@ -655,7 +655,7 @@ export const MEMBERS = {
         tasks: [
           'IDLE↔TALKING↔MANIPULATING 전환',
           'FETCH 시퀀서 로직 테스트 (보행은 mock, SmolVLA pick + handover 실제)',
-          'LOW_BATTERY + EMERGENCY',
+          'EMERGENCY',
           '서바이벌 계층 1 + 계층 2',
           '파이프라인 10분 크래시 없음',
         ],

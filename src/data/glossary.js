@@ -28,12 +28,12 @@ export const GLOSSARY = {
   },
   "CAN 버스": {
     full: "Controller Area Network Bus",
-    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 CAN-USB 어댑터 2개로 2개 CAN 버스 (다리당 1)를 구성하여 10개 액추에이터를 1Mbps, 250Hz로 제어한다.",
+    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 CAN-USB 어댑터 2개로 2개 CAN 버스 (다리당 1)를 구성하여 12개 액추에이터를 1Mbps, 250Hz로 제어한다.",
     related: ["NUC", "CAN-USB"],
   },
   "DOF": {
     full: "Degrees of Freedom (자유도)",
-    definition: "로봇 관절이 독립적으로 움직일 수 있는 축의 수. BHL 다리는 5DOF x 2 = 10DOF, SO-ARM은 6DOF x 2 = 12DOF이다.",
+    definition: "로봇 관절이 독립적으로 움직일 수 있는 축의 수. BHL 다리는 6DOF x 2 = 12DOF, SO-ARM은 6DOF x 2 = 12DOF이다.",
   },
   "그리퍼": {
     definition: "로봇 팔 끝에 달린 물체 파지 장치. SO-ARM101 그리퍼의 jaw 간격은 약 5~6cm이며, 필요 시 고무 패드를 부착하여 그립력을 보강한다.",
@@ -306,7 +306,7 @@ export const GLOSSARY = {
   },
   "SOC": {
     full: "State of Charge (충전 상태)",
-    definition: "배터리의 현재 충전량을 백분율로 나타낸 값. SOC 20% 이하가 되면 LOW_BATTERY 상태로 전환하여 안전 자세를 취하고 대화만 가능하게 한다. LiPo 알람으로 과방전을 방지한다.",
+    definition: "배터리의 현재 충전량을 백분율로 나타낸 값. LiPo 알람으로 과방전을 방지한다.",
     related: ["LiPo 알람"],
   },
   "NC": {
@@ -403,7 +403,7 @@ export const GLOSSARY = {
   },
   "BHL": {
     full: "Berkeley Humanoid Lite",
-    definition: "UC Berkeley HybridRobotics Lab의 오픈소스 이족보행 로봇 플랫폼. 5DOF x 2 다리, 사이클로이드 기어박스, CAN 통신 기반이며, 하이리온의 하반신으로 사용한다.",
+    definition: "UC Berkeley HybridRobotics Lab의 오픈소스 이족보행 로봇 플랫폼. 6DOF x 2 다리, 사이클로이드 기어박스, CAN 통신 기반이며, 하이리온의 하반신으로 사용한다.",
     related: ["사이클로이드 기어박스", "Walking RL", "CAN 버스"],
     links: [
       { label: "BHL 공식 사이트", url: "https://lite.berkeley-humanoid.org" },

@@ -51,7 +51,7 @@ export const TIMELINE = [
     week: 4,
     title: '머리/외장 전환 + 물리 진입',
     trackA: '머리 표면 마감 시작, 바디 커버 패턴 (δ1→머리, ε2→외장+lip sync)',
-    trackB: '액추에이터 10개 조립 + 다리 조립 시작 (δ2), 토르소+팔 부분 실측 (전체는 W5)',
+    trackB: '액추에이터 12개 조립 + 다리 조립 시작 (δ2), 토르소+팔 부분 실측 (전체는 W5)',
     highlight: '머리 + 양다리(물리)',
     highlightParts: ['head', 'left_leg', 'right_leg'],
     gates: [],

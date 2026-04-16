@@ -43,7 +43,7 @@ const SECTIONS = [
     duration: 10000,
     cameraPreset: 'legs',
     title: 'BHL 이족보행',
-    subtitle: '10개 액추에이터, Walking RL',
+    subtitle: '12개 액추에이터, Walking RL',
     effect: null,
   },
   {
