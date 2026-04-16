@@ -1,6 +1,6 @@
 # State Machine
 
-로봇의 상태 전환 다이어그램. 7개 상태와 전환 조건.
+로봇의 상태 전환 다이어그램. 6개 상태와 전환 조건.
 
 ```mermaid
 stateDiagram-v2
@@ -29,6 +29,7 @@ stateDiagram-v2
     TALKING --> EMERGENCY : NUC 통신 두절 / E-stop
     WALKING --> EMERGENCY : NUC 통신 두절 / E-stop
     MANIPULATING --> EMERGENCY : NUC 통신 두절 / E-stop
+    FETCH --> EMERGENCY : NUC 통신 두절 / E-stop
 
     state FETCH {
         FW1 : WALKING 전진 (T1)
@@ -75,4 +76,4 @@ stateDiagram-v2
 | TALKING | WALKING | 대화 중 walk 명령 (대화 유지) |
 | MANIPULATING | IDLE | 조작 완료 |
 | FETCH | IDLE | 시퀀스 완료 |
-| IDLE / TALKING / WALKING / MANIPULATING | EMERGENCY | NUC 통신 두절 또는 E-stop |
+| IDLE / TALKING / WALKING / MANIPULATING / FETCH | EMERGENCY | NUC 통신 두절 또는 E-stop |

@@ -23,7 +23,7 @@ export const TIMELINE = [
     highlight: '양팔 + 양다리 + 토르소',
     highlightParts: ['left_arm', 'right_arm', 'left_leg', 'right_leg', 'torso'],
     gates: [],
-    key: '전체 합의 미팅: 인터페이스, 리소스, 카메라 위치, 상태 머신 프레임워크 확정',
+    key: '전체 합의 미팅: 인터페이스, 리소스, 카메라 위치, 오케스트레이터 프레임워크 확정',
     extra: '머리 외주 발주 (ε2)',
   },
   {
@@ -41,11 +41,11 @@ export const TIMELINE = [
     title: '수집 집중 + Phase 1 마감',
     star: true,
     trackA: '570개 몰아서 수집 (δ1+ε2, 하루 ~120개×5일), SmolVLA Stage 2 학습 시작 (δ3)',
-    trackB: 'Newton 기반 Walking RL 검증 (sim-to-real 준비), HOVER reward 이식, 직립 체크포인트, 공중 지그 프린트 (δ2)',
+    trackB: 'PhysX CPU Walking RL 학습 진행 (sim-to-real 준비), HOVER reward 이식, 직립 체크포인트, 공중 지그 프린트 (δ2)',
     highlight: '양팔(수집) + 양다리(시뮬)',
     highlightParts: ['left_arm', 'right_arm', 'left_leg', 'right_leg'],
-    gates: ['Phase 1 — 토르소 완성, SmolVLA v1 동작, 낙상 감지 검증, Newton Walking RL 검증 완료, 수집 600개'],
-    key: 'TensorRT 변환 + Orin 배포 + GPU 프로파일링 (ε1)',
+    gates: ['Phase 1 — 토르소 완성, SmolVLA v1 동작, 낙상 감지 검증, Walking RL 학습 진행 중 (PhysX CPU), 수집 600개'],
+    key: 'LeRobot 추론 + Orin 배포 + GPU 프로파일링 (ε1)',
   },
   {
     week: 4,
@@ -66,7 +66,7 @@ export const TIMELINE = [
     trackB: '공중 지그 보행 테스트 (δ2)',
     highlight: '머리(도장) + 양다리(공중보행) + 전체(서바이벌)',
     highlightParts: ['head', 'left_leg', 'right_leg'],
-    gates: ['Phase 2 — TTFT<500ms, lip sync+감정표현, 공중보행, ablation', 'Orin TensorRT 레이턴시 측정'],
+    gates: ['Phase 2 — TTFT<500ms, lip sync+감정표현, 공중보행, ablation', 'Orin PyTorch 레이턴시 측정'],
     key: '서바이벌 모드 엔진 완성 (ε1), 시나리오 B/C 설계 (δ3)',
   },
   {

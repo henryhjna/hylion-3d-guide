@@ -54,7 +54,7 @@ export const TEAM = {
     colorBright: '#7799ff',
     parts: ['torso', 'left_arm', 'right_arm'],
     responsibilities: [
-      'TensorRT 변환',
+      'LeRobot Orin 배포',
       'Orin 배포',
       '대화 파이프라인',
       '서바이벌 엔진',

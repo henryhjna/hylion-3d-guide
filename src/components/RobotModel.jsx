@@ -563,13 +563,13 @@ function InternalComponents({ modelHeight }) {
         {label('BAT 1 (6S)', 'text-fuchsia-400')}
       </Html>
 
-      {/* CAN-USB ×2 */}
+      {/* USB-CAN ×2 */}
       <mesh position={[-0.03 * s, 0.19 * s, 0.02 * s]}>
         <boxGeometry args={[0.01 * s, 0.006 * s, 0.02 * s]} />
         <meshStandardMaterial color="#44aaff" emissive="#44aaff" emissiveIntensity={0.4} />
       </mesh>
       <Html position={[-0.03 * s, 0.20 * s, 0.02 * s]} center distanceFactor={3}>
-        {label('CAN-USB ×2', 'text-sky-400')}
+        {label('USB-CAN ×2', 'text-sky-400')}
       </Html>
     </group>
   );

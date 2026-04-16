@@ -90,4 +90,4 @@ flowchart TD
 ### 안전
 - 양쪽 배터리에 LiPo 저전압 알람 장착
 - Battery 2: 14.0V 컷오프
-- NC 비상정지: Battery 1+2 동시 차단
+- NC 비상정지: Battery 1 차단 (Battery 2 유지, Orin 로그 보존)

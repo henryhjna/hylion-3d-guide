@@ -108,7 +108,7 @@ export const SOFTWARE_STACK = [
     color: '#00f0ff',
     groups: [
       { name: '입력', items: ['OpenCV — Camera ×3 캡처', 'Whisper — STT, local'] },
-      { name: '두뇌', items: ['Cloud LLM (Gemini Flash / GPT-4o mini)', 'Local fallback (Qwen 2.5 0.5B Q4, Ollama)', '명령 매핑 (YAML/JSON → vx vy wz)', 'SmolVLA 450M (LeRobot/PyTorch)'] },
+      { name: '두뇌', items: ['오케스트레이터 (Python FSM, asyncio)', 'Cloud LLM (Gemini Flash / GPT-4o mini)', 'Local fallback (Qwen 2.5 0.5B Q4, Ollama)', '명령 매핑 (YAML/JSON → vx vy wz)', 'SmolVLA 450M (LeRobot/PyTorch)'] },
       { name: '출력', items: ['Piper TTS — 음성 합성', 'UDP Client — NUC로 vx vy wz', 'LeRobot ServoControl — BusLinker USB', 'Jetson.GPIO — 입 서보 PWM', 'ALSA/PulseAudio — Speaker'] },
     ],
   },

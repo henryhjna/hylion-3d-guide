@@ -59,7 +59,7 @@ flowchart TD
     SW_ORCH -->|팔 명령일 때| SW_SMOLVLA
     SW_CAM -->|RGB 프레임| SW_SMOLVLA
 
-    SW_UDPSRV -.->|Ethernet UDP, 보행 상태+stable| SW_ORCH
+    SW_UDPSRV -.->|Ethernet UDP, 보행 상태+IMU stable| SW_ORCH
 
     SW_CMDMAP -->|vx vy wz| SW_UDP
     SW_PIPER -->|PCM 오디오| SW_AUDIO

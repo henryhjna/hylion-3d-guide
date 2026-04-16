@@ -34,10 +34,10 @@ const STEPS = [
   {
     id: 4,
     title: 'FETCH — ② 물체 집기',
-    description: '정지 → SmolVLA pick (TensorRT)',
+    description: '정지 → SmolVLA pick (LeRobot PyTorch)',
     state: 'MANIPULATING',
     color: '#c8ff00',
-    systems: ['SmolVLA TensorRT', 'Orin GPU'],
+    systems: ['SmolVLA LeRobot', 'Orin GPU'],
     activeParts: ['left_arm', 'right_arm', 'torso'],
     robotPos: 85,
   },

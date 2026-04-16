@@ -38,7 +38,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라 캡처). USB Hub A(센서)+Hub B(제어) 경유',
+        'Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch 비동기 추론), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라 캡처). USB Hub A(센서)+Hub B(제어) 경유',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
@@ -62,7 +62,7 @@ export const COMPONENTS = {
       cpu: 'Intel Alder Lake N95 (4C/4T, up to 3.4GHz)',
       memory: '16GB DDR4',
       storage: '500GB SSD',
-      tdp: '15W',
+      tdp: '15-20W',
       power: '12V (DC-DC #1 from Battery 2)',
       os: 'Ubuntu 22.04 + xanmod RT 커널',
       interfaces: 'USB 3.0, Ethernet, HDMI',
@@ -286,7 +286,7 @@ export const COMPONENTS = {
   // 통신 인터페이스
   // ===========================================================================
   can_usb: {
-    name: 'CAN-USB 어댑터',
+    name: 'USB-CAN 어댑터',
     category: 'communication',
     specs: {
       type: 'USB ↔ CAN 2.0B 변환기',
@@ -687,7 +687,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        '물리 비상정지. Battery 1+2 양극 NC 차단. 누르면 전체 전원 동시 차단',
+        '물리 비상정지. Battery 1 양극 NC 차단 (Battery 2 유지, Orin 로그 보존)',
       parts: ['torso'],
       quantity: 1,
       spares: 1,

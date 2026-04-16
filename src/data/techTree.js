@@ -62,7 +62,7 @@ export const TECH_TREE = {
       label: 'BHL 기어박스 + 다리 구조물 프린트 시작',
       week: 0,
       track: 'B',
-      members: [],
+      members: ['delta2'],
       parts: ['left_leg', 'right_leg'],
       status: 'locked',
       dependencies: [],
@@ -109,7 +109,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: '배터리 소비 전류 계산 (Orin 25W + NUC 15W + SO-ARM + BHL BLDC -> 30분 가능 확인)',
+      description: '배터리 소비 전류 계산 (Orin 15W + NUC 15W + SO-ARM + BHL BLDC -> 30분 가능 확인)',
     },
     {
       id: 'w0_weight_estimate',
@@ -206,7 +206,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w0_state_machine_eval',
-      label: '상태 머신 프레임워크 선정',
+      label: '오케스트레이터 프레임워크 선정',
       week: 0,
       track: 'A',
       members: ['epsilon1'],
@@ -215,7 +215,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: '상태별 프로세스-리소스 매핑표 초안 + smach/FlexBE 평가 -> 상태 머신 프레임워크 선정',
+      description: '상태별 프로세스-리소스 매핑표 초안 + Python asyncio FSM 프레임워크 선정 (오케스트레이터)',
     },
 
     // Day 4
@@ -259,8 +259,8 @@ export const TECH_TREE = {
       description: 'IsaacLab 체크포인트 결과 정리 + Week 1 직립 테스트 계획 수립',
     },
     {
-      id: 'w0_newton_simtoreal_study',
-      label: 'Newton sim-to-real 절차 파악',
+      id: 'w0_bhl_simtoreal_study',
+      label: 'BHL sim-to-real 절차 파악',
       week: 0,
       track: 'B',
       members: ['delta2'],
@@ -269,7 +269,7 @@ export const TECH_TREE = {
       dependencies: ['w0_bhl_lowlevel_reading'],
       isGate: false,
       isCheckpoint: false,
-      description: 'Newton 기반 sim-to-real 절차 파악 (BHL 문서) + BHL lowlevel 코드 리딩 계속',
+      description: 'BHL sim-to-real 절차 파악 (BHL 문서) + BHL lowlevel 코드 리딩 계속',
     },
     {
       id: 'w0_fall_detection_research',
@@ -291,13 +291,13 @@ export const TECH_TREE = {
       label: '심천 부품 조달',
       week: 0,
       track: 'both',
-      members: [],
+      members: ['delta1'],
       parts: [],
       status: 'locked',
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: 'MAD 모터 수령 + 화창베이 일괄 구매 (CAN-USB, 베어링 등) + 배터리 1(6S)+2(4S) + LiPo 알람',
+      description: 'MAD 모터 수령 + 화창베이 일괄 구매 (USB-CAN, 베어링 등) + 배터리 1(6S)+2(4S) + LiPo 알람',
     },
 
     // =========================================================================
@@ -315,7 +315,7 @@ export const TECH_TREE = {
       dependencies: ['w0_soarm_assembly', 'w0_weight_estimate', 'w0_state_machine_eval', 'w0_battery_calc'],
       isGate: false,
       isCheckpoint: true,
-      description: '인터페이스 + 리소스 할당, 상체 무게 적산값 공유, 배터리 배치, 상태 머신 프레임워크, 전원 시퀀싱, BusLinker Board 버스 분배, 카메라 마운트 위치/각도 확정',
+      description: '인터페이스 + 리소스 할당, 상체 무게 적산값 공유, 배터리 배치, 오케스트레이터 프레임워크, 전원 시퀀싱, BusLinker Board 버스 분배, 카메라 마운트 위치/각도 확정',
     },
 
     // Track A
@@ -386,7 +386,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w1_orin_setup',
-      label: 'Orin JetPack + TensorRT + 카메라 드라이버 셋업',
+      label: 'Orin JetPack + LeRobot + 카메라 드라이버 셋업',
       week: 1,
       track: 'A',
       members: ['epsilon1'],
@@ -395,7 +395,7 @@ export const TECH_TREE = {
       dependencies: ['w0_kr_parts_order'],
       isGate: false,
       isCheckpoint: false,
-      description: 'Orin JetPack + TensorRT + 카메라 드라이버 초기 셋업',
+      description: 'Orin JetPack + LeRobot + 카메라 드라이버 초기 셋업',
     },
     {
       id: 'w1_echo_cancel_test',
@@ -412,7 +412,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w1_state_machine_design',
-      label: '상태 머신 설계 확정',
+      label: '오케스트레이터 설계 확정',
       week: 1,
       track: 'A',
       members: ['epsilon1'],
@@ -421,7 +421,7 @@ export const TECH_TREE = {
       dependencies: ['w0_state_machine_eval', 'w1_kickoff_meeting'],
       isGate: false,
       isCheckpoint: false,
-      description: '상태 머신 설계 확정 + SmolVLA 수집 기준 문서 (delta1 합의)',
+      description: '오케스트레이터 설계 확정 + SmolVLA 수집 기준 문서 (delta1 합의)',
     },
     {
       id: 'w1_head_order',
@@ -491,17 +491,17 @@ export const TECH_TREE = {
       description: 'DC-DC 3개(12V NUC, 12V 팔서보, 5V USB) 조립/배선 + 전원 시퀀싱 문서화',
     },
     {
-      id: 'w1_newton_rl_setup',
-      label: 'Newton Walking RL 환경 셋업',
+      id: 'w1_walking_rl_setup',
+      label: 'Walking RL 환경 셋업 (PhysX CPU)',
       week: 1,
       track: 'B',
       members: ['delta2'],
       parts: ['left_leg', 'right_leg'],
       status: 'locked',
-      dependencies: ['w0_newton_simtoreal_study'],
+      dependencies: ['w0_bhl_simtoreal_study'],
       isGate: false,
       isCheckpoint: false,
-      description: 'Newton Walking RL 환경 셋업 (Isaac Lab + Newton 백엔드 확인) + Orin↔NUC Ethernet UDP 통신 확인',
+      description: 'Walking RL 환경 셋업 (Isaac Lab 2.1.0 + PhysX CPU 모드) + Orin↔NUC Ethernet UDP 통신 확인',
     },
     {
       id: 'w1_isaaclab_custom_upper',
@@ -556,8 +556,8 @@ export const TECH_TREE = {
       description: 'SmolVLA DGX Stage 1 시작 (LeRobot Hub 공개 데이터, 백그라운드 학습)',
     },
     {
-      id: 'w1_smolvla_tensorrt_script',
-      label: 'SmolVLA TensorRT 변환 스크립트 작성',
+      id: 'w1_smolvla_lerobot_pipeline',
+      label: 'SmolVLA LeRobot 추론 파이프라인 셋업',
       week: 1,
       track: 'both',
       members: ['epsilon1'],
@@ -566,7 +566,7 @@ export const TECH_TREE = {
       dependencies: ['w1_orin_setup'],
       isGate: false,
       isCheckpoint: false,
-      description: 'SmolVLA TensorRT 변환 스크립트 직접 작성',
+      description: 'SmolVLA LeRobot 추론 파이프라인 셋업 (Orin PyTorch 환경)',
     },
     {
       id: 'w1_urdf_export_script',
@@ -641,7 +641,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w2_state_machine_v1_start',
-      label: '상태 머신 v1 구현 시작',
+      label: '오케스트레이터 v1 구현 시작',
       week: 2,
       track: 'A',
       members: ['epsilon1'],
@@ -650,7 +650,7 @@ export const TECH_TREE = {
       dependencies: ['w1_state_machine_design'],
       isGate: false,
       isCheckpoint: false,
-      description: '상태 머신 v1 구현 시작 + SmolVLA Stage 1 모니터링 + 에코 캔슬링 후속 완료',
+      description: '오케스트레이터 v1 구현 시작 (Python asyncio) + SmolVLA Stage 1 모니터링 + 에코 캔슬링 후속 완료',
     },
     {
       id: 'w2_fall_detection_bench',
@@ -806,17 +806,17 @@ export const TECH_TREE = {
       description: 'Walking RL 결과 검토 + 보상 함수 조정',
     },
     {
-      id: 'w3_tensorrt_deploy',
-      label: 'TensorRT 변환 + Orin 배포 + 정합성 검증',
+      id: 'w3_lerobot_deploy',
+      label: 'LeRobot 추론 + Orin 배포 + 정합성 검증',
       week: 3,
       track: 'A',
       members: ['epsilon1'],
       parts: ['torso'],
       status: 'locked',
-      dependencies: ['w1_smolvla_tensorrt_script', 'w1_smolvla_stage1_start'],
+      dependencies: ['w1_smolvla_lerobot_pipeline', 'w1_smolvla_stage1_start'],
       isGate: false,
       isCheckpoint: false,
-      description: 'TensorRT 변환 + Orin 배포 + 정합성 검증 (delta3이 넘긴 Stage 1 모델)',
+      description: 'LeRobot 추론 파이프라인 + Orin 배포 + 정합성 검증 (delta3이 넘긴 Stage 1 모델)',
     },
     {
       id: 'w3_gpu_profiling',
@@ -826,14 +826,14 @@ export const TECH_TREE = {
       members: ['epsilon1'],
       parts: ['torso'],
       status: 'locked',
-      dependencies: ['w3_tensorrt_deploy'],
+      dependencies: ['w3_lerobot_deploy'],
       isGate: false,
       isCheckpoint: false,
-      description: 'GPU 프로파일링 (SmolVLA Hz 실측 -> 5Hz+: 진행 / 2~5Hz: UX 보완 / 2Hz-: delta3 다운사이즈) + ablation 실험 설계',
+      description: 'GPU 프로파일링 (SmolVLA Hz 실측 → 5Hz↑: 진행 / 2~5Hz: UX 보완 / 2Hz↓: delta3 다운사이즈) + ablation 실험 설계',
     },
     {
       id: 'w3_state_machine_v1_complete',
-      label: '상태 머신 v1 완성',
+      label: '오케스트레이터 v1 완성',
       week: 3,
       track: 'A',
       members: ['epsilon1'],
@@ -842,22 +842,22 @@ export const TECH_TREE = {
       dependencies: ['w2_state_machine_v1_start'],
       isGate: false,
       isCheckpoint: false,
-      description: '상태 머신 v1 완성',
+      description: '오케스트레이터 v1 완성',
     },
 
     // Track B
     {
-      id: 'w3_newton_rl_verify',
-      label: 'Newton 기반 Walking RL 검증',
+      id: 'w3_physx_rl_progress',
+      label: 'PhysX CPU Walking RL 학습 진행',
       week: 3,
       track: 'B',
       members: ['delta2'],
       parts: ['left_leg', 'right_leg'],
       status: 'locked',
-      dependencies: ['w2_walking_rl_start', 'w1_newton_rl_setup'],
+      dependencies: ['w2_walking_rl_start', 'w1_walking_rl_setup'],
       isGate: false,
       isCheckpoint: false,
-      description: 'Walking RL 모니터링 + Newton 기반 Walking RL 검증 (sim-to-real 준비) + 공중 지그 3D프린트',
+      description: 'Walking RL 모니터링 + PhysX CPU Walking RL 학습 진행 (sim-to-real 준비) + 공중 지그 3D프린트',
     },
     // Phase 1 Gate
     {
@@ -873,14 +873,14 @@ export const TECH_TREE = {
         'w2_walking_rl_start',
         'w2_torso_assembly',
         'w3_collect_570',
-        'w3_tensorrt_deploy',
+        'w3_lerobot_deploy',
         'w2_fall_detection_bench',
-        'w3_newton_rl_verify',
+        'w3_physx_rl_progress',
         'w1_nuc_rt_kernel',
       ],
       isGate: true,
       isCheckpoint: false,
-      description: 'Phase 1 게이트: 토르소 완성, SmolVLA v1 동작, 낙상 감지 검증, Newton Walking RL 검증 완료, 수집 600개',
+      description: 'Phase 1 게이트: 토르소 완성, SmolVLA v1 동작, Walking RL 학습 진행 중 (PhysX CPU), NUC 준비, 수집 600개',
     },
 
     // =========================================================================
@@ -1145,7 +1145,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w5_fetch_sequencer_complete',
-      label: '상태 머신 + FETCH 시퀀서 완성',
+      label: '오케스트레이터 + FETCH 시퀀서 완성',
       week: 5,
       track: 'A',
       members: ['epsilon1'],
@@ -1154,7 +1154,7 @@ export const TECH_TREE = {
       dependencies: ['w4_cloud_stt_llm', 'w3_state_machine_v1_complete'],
       isGate: false,
       isCheckpoint: false,
-      description: '상태 머신 + FETCH 시퀀서 완성 + 카메라 공유 (/camera/image_raw)',
+      description: '오케스트레이터 + FETCH 시퀀서 완성 + 카메라 공유 (/camera/image_raw)',
     },
 
     // Track B (공중 보행)
@@ -1365,7 +1365,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w7_smolvla_v2_data',
-      label: 'SmolVLA v2 데이터 정제 + TensorRT v2 배포',
+      label: 'SmolVLA v2 데이터 정제 + LeRobot v2 배포',
       week: 7,
       track: 'A',
       members: ['epsilon1'],
@@ -1374,7 +1374,7 @@ export const TECH_TREE = {
       dependencies: ['w5_optimal_data_combo', 'w6_fetch_logic_test'],
       isGate: false,
       isCheckpoint: false,
-      description: 'SmolVLA v2 데이터 정제 -> delta3 전달 + TensorRT v2 Orin 배포 (delta3 학습 완료 모델)',
+      description: 'SmolVLA v2 데이터 정제 → delta3 전달 + LeRobot v2 Orin 배포 (delta3 학습 완료 모델)',
     },
     {
       id: 'w7_survival_scenario_final',

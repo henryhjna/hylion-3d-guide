@@ -42,7 +42,7 @@ export const MEMBERS = {
           'BHL 액추에이터 3개 시험 조립 → δ2에게 직접 시범 후 인계',
         ],
         dependencies: {
-          receives: ['δ2: 상체 무게 적산값', 'ε1: 상태 머신 프레임워크 선정 결과'],
+          receives: ['δ2: 상체 무게 적산값', 'ε1: 오케스트레이터 프레임워크 선정 결과'],
           gives: [
             '카메라 위치·각도 확정 → ε1 (Week 1)',
             '직접 시범 → δ2 (Week 1 말)',
@@ -194,12 +194,12 @@ export const MEMBERS = {
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
-          '배터리 소비 전류 계산 (배터리 1: 6S→다리 ESC 24V / 배터리 2: 4S→Orin+DC-DC×3 → 30분 가능 확인)',
+          '배터리 소비 전류 계산 (배터리 1: 6S 22.2V→다리 ESC / 배터리 2: 4S 14.8V→Orin+DC-DC×3 → 30분 가능 확인)',
           '스펙시트 기반 상체 무게 적산 (Week 2 직립 테스트 결과와 대조 예정)',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           'BHL 문서 정독 + lowlevel 코드 리딩 (개인 노트북에서, NUC는 Week 1 도착)',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
-          'Newton 기반 sim-to-real 절차 파악 (BHL 문서) + BHL lowlevel 코드 리딩 계속',
+          'BHL sim-to-real 절차 파악 (BHL 문서) + BHL lowlevel 코드 리딩 계속',
         ],
         dependencies: {
           receives: [],
@@ -216,7 +216,7 @@ export const MEMBERS = {
           'NUC OS 설치 + xanmod RT 커널 + CAN 드라이버 세팅',
           'BHL lowlevel C 빌드 + 숙달 (코드 리딩, 더미 CAN 루프)',
           'DC-DC ×3 조립·배선 + LiPo 알람 장착 + 전원 시퀀싱 문서화',
-          'Newton Walking RL 환경 셋업 (Isaac Lab + Newton 백엔드 확인)',
+          'Walking RL 환경 셋업 (Isaac Lab 2.1.0 + PhysX CPU 모드)',
           'Orin↔NUC Ethernet UDP 통신 확인',
           'IsaacLab 환경 직접 실행 (δ3 인계 후)',
         ],
@@ -243,15 +243,15 @@ export const MEMBERS = {
         },
       },
       3: {
-        focus: 'Walking RL 모니터링 + Newton 검증',
+        focus: 'Walking RL 모니터링 + PhysX CPU RL 진행',
         tasks: [
-          'Walking RL 모니터링 + Newton 기반 Walking RL 검증 (sim-to-real 준비)',
+          'Walking RL 모니터링 + PhysX CPU Walking RL 학습 진행 (sim-to-real 준비)',
           '공중 지그 3D프린트',
-          'SOC 20% 안전 자세 로직',
+          '배터리 저전압 안전 자세 로직 (Battery 2: 14.0V 컷오프)',
         ],
         dependencies: {
           receives: [],
-          gives: ['Newton Walking RL 검증 결과 → δ3 (Week 3)'],
+          gives: ['PhysX CPU Walking RL 학습 결과 → δ3 (Week 3)'],
         },
       },
       4: {
@@ -284,7 +284,7 @@ export const MEMBERS = {
         tasks: [
           '더미 웨이트 제작 (스펙시트 기반, 100g 단위 조절 가능)',
           '지면 보행 첫 시도',
-          'ONNX → TensorRT 변환 (NUC C runtime)',
+          'ONNX Runtime C API 배포 (NUC)',
           '250Hz CAN 루프 검증',
           'gap 데이터 → ε2 분석, δ3 재학습 판단',
         ],
@@ -365,7 +365,7 @@ export const MEMBERS = {
     identity: 'AI 인프라 오너',
     track: 'A+B',
     color: '#c8ff00',
-    parts: [],
+    parts: ['left_leg', 'right_leg'],
     weeklyTasks: {
       0: {
         focus: 'SO-ARM 커리큘럼 + IsaacLab 환경 로드',
@@ -377,7 +377,7 @@ export const MEMBERS = {
           'BHL 액추에이터 파라미터 문서화 + UDP 메시지 포맷 작성',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
           'IsaacLab 체크포인트 결과 정리 + Week 1 직립 테스트 계획 수립',
-          'DGX Spark PhysX GPU 제약 확인 + Isaac Lab 3.0 마이그레이션 착수',
+          'DGX Spark PhysX GPU 제약 확인 + PhysX CPU 모드 훈련 속도 측정',
           'AMASS 라이선스 신청 (승인까지 수일, 즉시 진행)',
           'DGX 스케줄 달력 작성 (Walking RL 밤 / SmolVLA 낮)',
         ],
@@ -439,7 +439,7 @@ export const MEMBERS = {
             'δ1: 실패 패턴 피드백 (Week 3)',
           ],
           gives: [
-            'SmolVLA Stage 1 모델 → ε1 TensorRT 변환 (Week 3)',
+            'SmolVLA Stage 1 모델 → ε1 LeRobot Orin 배포 (Week 3)',
             'SmolVLA 중간 모델 → δ1 실행 (Week 3)',
           ],
         },
@@ -498,7 +498,7 @@ export const MEMBERS = {
           ],
           gives: [
             'Walking RL 최종본 → δ2 (Week 7)',
-            'SmolVLA v2 학습 완료 모델 → ε1 TensorRT 배포 (Week 7)',
+            'SmolVLA v2 학습 완료 모델 → ε1 Orin 배포 (Week 7)',
             '시나리오 B/C 최종 확정 → ε1 (Week 7)',
           ],
         },
@@ -552,7 +552,7 @@ export const MEMBERS = {
     identity: '배포·통합 오너',
     track: 'A (리드)',
     color: '#4466ff',
-    parts: ['torso'],
+    parts: ['torso', 'left_arm', 'right_arm'],
     weeklyTasks: {
       0: {
         focus: 'SO-ARM 커리큘럼 + LLM 파이프라인 테스트',
@@ -563,26 +563,26 @@ export const MEMBERS = {
           'JSON 액션 스키마 작성',
           '[공통] Leader-follower 텔레오퍼레이션 + 카메라',
           '상태별 프로세스-리소스 매핑표 작성',
-          'smach/FlexBE 평가 → 상태 머신 프레임워크 선정',
+          'Python asyncio FSM 프레임워크 선정 (오케스트레이터)',
           '[공통] 데이터 수집 → 모방학습 → 자율 동작 → 종합 미션',
           'SmolVLA 수집 조건 합의 (δ1과) + LeRobot 수집 파이프라인 세팅',
         ],
         dependencies: {
           receives: [],
-          gives: ['상태 머신 프레임워크 선정 결과 → 전체 (Week 1 합의)'],
+          gives: ['오케스트레이터 프레임워크 선정 결과 → 전체 (Week 1 합의)'],
         },
       },
       1: {
-        focus: 'Orin 셋업 + 상태 머신 설계 + SmolVLA TensorRT',
+        focus: 'Orin 셋업 + 오케스트레이터 설계 + SmolVLA LeRobot',
         tasks: [
           '[전체 합의] 인터페이스 + 리소스 할당',
-          '[전체 합의] 상태 머신 프레임워크 선정 결과 공유',
-          'Orin JetPack + TensorRT + 카메라 드라이버 초기 셋업',
+          '[전체 합의] 오케스트레이터 프레임워크 선정 결과 공유',
+          'Orin JetPack + LeRobot + 카메라 드라이버 초기 셋업',
           '에코 캔슬링 테스트 (→ AEC 필요 여부)',
-          '상태 머신 설계 확정',
+          '오케스트레이터 설계 확정',
           'SmolVLA 수집 기준 문서 (δ1 합의)',
           'Orin USB 오디오 + 스피커 테스트',
-          'SmolVLA TensorRT 변환 스크립트 직접 작성 (Track B 지원)',
+          'SmolVLA LeRobot 추론 파이프라인 셋업 (Orin PyTorch 환경)',
         ],
         dependencies: {
           receives: ['δ1: 카메라 위치·각도 확정 (Week 1)'],
@@ -590,11 +590,11 @@ export const MEMBERS = {
         },
       },
       2: {
-        focus: 'SmolVLA Stage 1 모니터링 + 상태 머신 v1',
+        focus: 'SmolVLA Stage 1 모니터링 + 오케스트레이터 v1',
         tasks: [
           'SmolVLA Stage 1 모니터링 (δ3 DGX 실행 중)',
           '에코 캔슬링 후속 완료',
-          '상태 머신 v1 구현 시작',
+          '오케스트레이터 v1 구현 시작 (Python asyncio)',
         ],
         dependencies: {
           receives: ['δ3: SmolVLA Stage 1 학습 상태'],
@@ -602,18 +602,18 @@ export const MEMBERS = {
         },
       },
       3: {
-        focus: 'TensorRT 변환 + Orin 배포 + GPU 프로파일링',
+        focus: 'LeRobot 추론 + Orin 배포 + GPU 프로파일링',
         tasks: [
-          'TensorRT 변환 + Orin 배포 + 정합성 검증 (δ3이 넘긴 Stage 1 모델)',
-          'GPU 프로파일링 (SmolVLA Hz 실측 → 5Hz↑: 진행 / 2~5Hz: UX 보완 / 2Hz↓: δ3 다운사이즈)',
+          'LeRobot 추론 파이프라인 + Orin 배포 + 정합성 검증 (δ3이 넘긴 Stage 1 모델)',
+          'GPU 프로파일링 (SmolVLA Hz 실측 → 5Hz↑: 진행 / 2~5Hz: UX 보완 / 2Hz↓: d3 다운사이즈)',
           'ablation 실험 설계 (δ3에 학습 요청할 조합 정리)',
-          '상태 머신 v1 완성',
+          '오케스트레이터 v1 완성',
         ],
         dependencies: {
           receives: ['δ3: SmolVLA Stage 1 완료 모델 (Week 3)'],
           gives: [
             'ablation 실험 설계 조합 → δ3 (Week 3~4)',
-            'TensorRT 정합성 검증 결과 → δ3 (Week 3)',
+            'LeRobot 정합성 검증 결과 → δ3 (Week 3)',
           ],
         },
       },
@@ -633,12 +633,12 @@ export const MEMBERS = {
         },
       },
       5: {
-        focus: '최적 데이터 조합 확정 + 서바이벌 모드 + 상태 머신 완성',
+        focus: '최적 데이터 조합 확정 + 서바이벌 모드 + 오케스트레이터 완성',
         tasks: [
           'ablation → 최적 데이터 조합 확정 (δ3 학습 결과 기반)',
-          '★ Orin TensorRT 추론 레이턴시 측정 (SmolVLA vision encoder + action expert 분리 변환)',
+          '★ Orin PyTorch 추론 레이턴시 측정 (SmolVLA LeRobot 비동기 추론)',
           '서바이벌 모드 엔진 완성 (경량 로컬 STT + 로컬 TTS on Orin, ε2 키워드 사전 연동)',
-          '상태 머신 + FETCH 시퀀서 완성',
+          '오케스트레이터 + FETCH 시퀀서 완성',
           '★ 파서 구현 + 대화 파이프라인 통합 테스트 (JSON 스키마 기반)',
           '카메라 공유 (/camera/image_raw)',
         ],
@@ -665,10 +665,10 @@ export const MEMBERS = {
         },
       },
       7: {
-        focus: 'SmolVLA v2 데이터 정제 + TensorRT v2 배포 + 서바이벌 시나리오 확정',
+        focus: 'SmolVLA v2 데이터 정제 + LeRobot v2 배포 + 서바이벌 시나리오 확정',
         tasks: [
           'SmolVLA v2 데이터 정제 → δ3 전달',
-          'TensorRT v2 Orin 배포 (δ3 학습 완료 모델)',
+          'LeRobot v2 Orin 배포 (δ3 학습 완료 모델)',
           '서바이벌 시나리오 확정 (ε2 키워드 사전 + δ3 시나리오 B/C 통합)',
           '드레스 리허설 (상체 트랙)',
         ],
@@ -741,7 +741,7 @@ export const MEMBERS = {
         focus: 'SO-ARM 커리큘럼 + 부품 주문',
         tasks: [
           '[공통] SO-ARM 조립 + STS3215 서보 장착 + ID 설정 + 캘리브레이션',
-          '한국 부품 온라인 주문 (Orin, NUC, 카메라 ×2(머리+손목), ESC×12, 알루미늄 프로파일)',
+          '한국 부품 온라인 주문 (Orin, NUC, 카메라 ×3(좌 그리퍼+우 그리퍼+외부), ESC×12, 알루미늄 프로파일)',
           '머리 외주 사양 논의 (레퍼런스+스케치 준비, δ1과 공동)',
           '[공통] SO-ARM URDF 검증 (LeRobot 커리큘럼)',
           'BHL URDF 파일 구조 파악 (문서 수준, Week 1에서 본격 셋업)',

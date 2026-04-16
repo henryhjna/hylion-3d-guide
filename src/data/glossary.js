@@ -28,8 +28,8 @@ export const GLOSSARY = {
   },
   "CAN 버스": {
     full: "Controller Area Network Bus",
-    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 CAN-USB 어댑터 2개로 2개 CAN 버스 (다리당 1)를 구성하여 12개 액추에이터를 1Mbps, 250Hz로 제어한다.",
-    related: ["NUC", "CAN-USB"],
+    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 USB-CAN 어댑터 2개로 2개 CAN 버스 (다리당 1)를 구성하여 12개 액추에이터를 1Mbps로 제어한다. NUC의 ONNX 정책 루프가 250Hz 주기로 CAN 명령을 구동한다.",
+    related: ["NUC", "USB-CAN"],
   },
   "DOF": {
     full: "Degrees of Freedom (자유도)",
@@ -66,8 +66,8 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   "SmolVLA": {
     full: "Small Vision-Language-Action Model",
-    definition: "HuggingFace의 경량 VLA 모델 (450M 파라미터). 카메라 이미지와 언어 명령을 입력받아 로봇 관절 동작을 직접 출력한다. 하이리온에서는 LeRobot 프레임워크(PyTorch) 기반으로 물체 집기(pick-place)에 사용하며, Orin에서 TensorRT 변환 후 비동기 추론한다.",
-    related: ["VLA", "LeRobot", "TensorRT", "파인튜닝"],
+    definition: "HuggingFace의 경량 VLA 모델 (450M 파라미터). 카메라 이미지와 언어 명령을 입력받아 로봇 관절 동작을 직접 출력한다. LeRobot 프레임워크(PyTorch) 기반으로 물체 집기(pick-place)에 사용하며, Orin에서 PyTorch 비동기 추론한다.",
+    related: ["VLA", "LeRobot", "파인튜닝"],
     links: [{ label: "SmolVLA 블로그", url: "https://huggingface.co/blog/smolvla" }],
   },
   "VLA": {
@@ -76,7 +76,7 @@ export const GLOSSARY = {
     related: ["SmolVLA"],
   },
   "TensorRT": {
-    definition: "NVIDIA의 딥러닝 추론 최적화 엔진. SmolVLA 모델을 TensorRT로 변환하여 Orin에서 실시간 추론 속도(5Hz 이상 목표)를 확보한다.",
+    definition: "NVIDIA의 딥러닝 추론 최적화 엔진. 하이리온 프로젝트에서는 v13에서 삭제되어 사용하지 않는다 (LeRobot PyTorch 비동기 추론으로 대체).",
     related: ["Orin", "SmolVLA", "CUDA"],
     links: [{ label: "TensorRT 공식", url: "https://developer.nvidia.com/tensorrt" }],
   },
@@ -86,8 +86,8 @@ export const GLOSSARY = {
     links: [{ label: "IsaacLab GitHub", url: "https://github.com/isaac-sim/IsaacLab" }],
   },
   "Newton": {
-    definition: "Isaac Lab 3.0 beta(develop 브랜치)에서 제공되는 대안 물리 백엔드. DGX Spark(SM 12.1 Blackwell)에서 PhysX GPU가 지원되지 않으므로, GPU 가속 RL 훈련을 위해 Newton을 사용한다. BHL의 공식 스택은 Isaac Lab 2.1.0 + PhysX이므로 Newton 사용을 위해 Isaac Lab 3.0 마이그레이션이 필요하다. 첫 실행 시 JIT 컴파일에 약 1시간 소요 (~42커널, ~436MB 캐시).",
-    related: ["IsaacLab", "Walking RL", "sim-to-real", "PhysX"],
+    definition: "Isaac Lab 3.0의 대안 물리 백엔드. BHL 코드와 호환되지 않아 하이리온 프로젝트에서는 사용하지 않는다. BHL 공식 스택(Isaac Lab 2.1.0 + PhysX)을 그대로 사용한다.",
+    related: ["IsaacLab", "Walking RL", "sim-to-real"],
   },
   "sim-to-real": {
     definition: "시뮬레이션에서 학습한 정책(policy)을 실제 로봇에 적용하는 전이 기법. 시뮬레이션과 현실의 차이(gap)를 줄이는 것이 핵심 과제이다.",
@@ -150,7 +150,7 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   "Orin": {
     full: "NVIDIA Jetson Orin Nano Super",
-    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드. Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Local LLM fallback(Qwen 2.5 0.5B Q4, Ollama), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라). TDP 25W.",
+    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드. Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Local LLM fallback(Qwen 2.5 0.5B Q4, Ollama), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라). 15W 모드 (9-20V 직결).",
     related: ["JetPack", "TensorRT", "CUDA"],
     links: [{ label: "Jetson Orin 공식", url: "https://developer.nvidia.com/embedded/jetson-orin" }],
   },
@@ -161,7 +161,7 @@ export const GLOSSARY = {
   },
   "CUDA": {
     full: "Compute Unified Device Architecture",
-    definition: "NVIDIA GPU에서 범용 병렬 연산을 수행하기 위한 플랫폼 및 프로그래밍 모델. TensorRT, SmolVLA 추론 등 모든 GPU 연산의 기반이다.",
+    definition: "NVIDIA GPU에서 범용 병렬 연산을 수행하기 위한 플랫폼 및 프로그래밍 모델. SmolVLA PyTorch 추론 등 Orin의 모든 GPU 연산 기반이다.",
     related: ["cuDNN", "TensorRT", "Orin"],
   },
   "cuDNN": {
@@ -223,6 +223,14 @@ export const GLOSSARY = {
     definition: "NVIDIA의 고성능 AI 학습 서버. SmolVLA 파인튜닝과 Walking RL 학습을 DGX에서 수행한 뒤, 학습 완료 모델을 Orin/NUC로 배포한다.",
     related: ["SmolVLA", "Walking RL"],
   },
+  "오케스트레이터": {
+    definition: "Python FSM(asyncio) 기반 상태 전환 관리자. IDLE/TALKING/WALKING/MANIPULATING/FETCH/EMERGENCY 6개 상태를 관리하며, FETCH 시퀀서와 NUC 피드백 수신을 담당한다. Orin에서 실행.",
+    related: ["FETCH", "Orin"],
+  },
+  "FETCH": {
+    definition: "오케스트레이터가 구동하는 복합 시퀀스 상태. 6단계(FW1 전진→FS1 정지→FM1 SmolVLA pick→FW2 복귀→FS2 정지→FM2 precoded handover)를 순차 실행한 뒤 IDLE로 복귀한다.",
+    related: ["오케스트레이터", "SmolVLA"],
+  },
 
   // ──────────────────────────────────────────────
   // Communication
@@ -248,17 +256,22 @@ export const GLOSSARY = {
     definition: "직렬 통신의 초당 심볼 전송 속도(bps). STS3215 서보는 1Mbps(1,000,000bps)로 설정하여 고속 통신을 수행한다.",
     related: ["TTL"],
   },
-  "CAN-USB": {
-    definition: "CAN 버스와 USB를 변환하는 어댑터. BHL 다리 제어에서 NUC와 모터 드라이버(ESC) 간 CAN 통신 인터페이스로 사용한다. 하이리온은 2개 사용.",
+  "USB-CAN": {
+    definition: "USB와 CAN 버스를 변환하는 어댑터. BHL 다리 제어에서 NUC와 모터 드라이버(ESC) 간 CAN 통신 인터페이스로 사용한다. 하이리온은 2개 사용 (다리당 1개).",
     related: ["CAN 버스", "NUC"],
   },
 
   // ──────────────────────────────────────────────
   // Audio / Vision
   // ──────────────────────────────────────────────
+  "머리 카메라": {
+    full: "Head Camera (external view)",
+    definition: "로봇 머리에 장착하는 USB 카메라. SmolVLA의 외부 시점(external view) 입력으로 사용된다. 손목 카메라 2개(좌·우 그리퍼)와 합쳐 총 3대 카메라 체계를 구성한다.",
+    related: ["SmolVLA", "손목 카메라"],
+  },
   "손목 카메라": {
     full: "Wrist Camera (hand-eye view)",
-    definition: "SO-ARM 그리퍼 부근에 장착하는 USB 카메라. SmolVLA 매니퓰레이션 추론의 입력으로 사용된다. 머리 카메라(대화용)와 용도가 구분되며, Week 1에서 위치·각도를 확정한 후 변경하지 않는다.",
+    definition: "SO-ARM 그리퍼 부근에 장착하는 USB 카메라(좌·우 각 1개, 총 2개). SmolVLA 매니퓰레이션 추론의 입력으로 사용된다. 머리 카메라(외부 시점)와 용도가 구분되며, Week 1에서 위치·각도를 확정한 후 변경하지 않는다.",
     related: ["SmolVLA", "머리 카메라"],
   },
   "lip sync": {
@@ -270,10 +283,19 @@ export const GLOSSARY = {
     definition: "음성을 텍스트로 변환하는 기술. 하이리온에서는 Whisper를 Orin에서 로컬 실행한다. 항상 로컬이므로 네트워크 불필요.",
     related: ["TTS", "LLM", "Whisper"],
   },
+  "Whisper": {
+    definition: "OpenAI의 음성 인식(STT) 모델. Orin에서 로컬 실행하며, VAD(음성 활동 감지) 기능으로 IDLE→TALKING 전환을 트리거한다.",
+    related: ["STT", "Orin", "VAD"],
+  },
   "TTS": {
     full: "Text-to-Speech (음성 합성)",
     definition: "텍스트를 음성으로 변환하는 기술. 하이리온에서는 Piper TTS를 Orin에서 로컬 실행한다. ALSA 또는 PulseAudio로 PCM 출력.",
     related: ["STT", "lip sync", "Piper TTS"],
+  },
+  "Piper TTS": {
+    definition: "경량 로컬 음성 합성 엔진. Orin에서 실행하며, 텍스트를 PCM 오디오로 변환하여 USB Speaker로 출력한다.",
+    related: ["TTS", "Orin", "lip sync"],
+    links: [{ label: "Piper GitHub", url: "https://github.com/rhasspy/piper" }],
   },
   "LLM": {
     full: "Large Language Model (대규모 언어 모델)",
@@ -419,7 +441,12 @@ export const GLOSSARY = {
   "ESC": {
     full: "Electronic Speed Controller",
     definition: "BLDC 모터의 속도와 방향을 제어하는 전자 장치. BHL은 B-G431B-ESC1(STM32G431CB) 12개를 사용하며, Recoil-Motor-Controller-BESC 펌웨어(C언어)로 FOC+PD 위치 제어+CAN 프로토콜+AS5600 I2C 드라이버를 구동한다.",
-    related: ["BLDC", "CAN 버스"],
+    related: ["BLDC", "CAN 버스", "FOC"],
+  },
+  "FOC": {
+    full: "Field-Oriented Control (자기장 지향 제어)",
+    definition: "BLDC 모터의 3상 전류를 Clarke/Park 변환으로 d-q 좌표계로 변환하여 PI 전류 제어를 수행하는 알고리즘. ESC(B-G431B-ESC1)에서 수 kHz 주기로 실행된다.",
+    related: ["ESC", "BLDC", "PID"],
   },
   "CoM": {
     full: "Center of Mass (질량 중심)",

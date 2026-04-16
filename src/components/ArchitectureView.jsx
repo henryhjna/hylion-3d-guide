@@ -199,7 +199,7 @@ export default function ArchitectureView() {
           <div className="space-y-2.5 text-sm">
             <ResourceRow label="Orin GPU" value={resources.orin_gpu} active={resources.orin_gpu !== '없음' && resources.orin_gpu !== '비어있음'} />
             <ResourceRow label="Orin CPU" value={resources.orin_cpu} active={resources.orin_cpu !== '로그 유지'} />
-            <ResourceRow label="NUC" value={resources.nuc} active={resources.nuc !== '대기' && resources.nuc !== '정지' && resources.nuc !== '전원 차단'} />
+            <ResourceRow label="NUC" value={resources.nuc} active={resources.nuc !== '대기' && !resources.nuc.includes('정지') && resources.nuc !== '전원 차단'} />
             <ResourceRow label="네트워크" value={resources.network} active={resources.network !== '없음'} />
           </div>
         </div>
@@ -273,7 +273,7 @@ export default function ArchitectureView() {
         </div>
         <div className="mt-1 p-3 rounded bg-[#ff004410] border border-[#ff004420] text-sm">
           <span className="text-[#ff0044] font-bold">비상정지:</span>
-          <span className="text-[#e0e8ff] ml-1">배터리 1+2 NC 동시 차단</span>
+          <span className="text-[#e0e8ff] ml-1">배터리 1 NC 차단 (Battery 2 유지, Orin 로그 보존)</span>
         </div>
       </div>
 

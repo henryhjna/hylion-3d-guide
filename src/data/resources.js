@@ -62,7 +62,7 @@ export const RESOURCES = {
     label: "IsaacLab GitHub 리포지토리",
     url: "https://github.com/isaac-sim/IsaacLab",
     category: "AI",
-    tags: ["IsaacLab", "시뮬레이션", "USD", "Walking RL", "NVIDIA", "Newton"],
+    tags: ["IsaacLab", "시뮬레이션", "USD", "Walking RL", "NVIDIA"],
   },
   "feetech_sts3215": {
     label: "Feetech STS3215 서보",

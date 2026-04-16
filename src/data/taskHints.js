@@ -124,11 +124,11 @@ export const TASK_HINTS = {
   },
 
   w0_battery_calc: {
-    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 25W, NUC 15W, SO-ARM STS3215 x12, BHL BLDC x10)의 소비전류를 합산하여 배터리 1(6S 4000mAh)/배터리 2(4S 8000mAh) 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
+    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 15W, NUC 15W, SO-ARM STS3215 x12, BHL BLDC x12)의 소비전류를 합산하여 배터리 1(6S 4000mAh)/배터리 2(4S 8000mAh) 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
     steps: [
-      "각 보드/모터 스펙시트에서 정격 소비전력 추출 (Orin 25W, NUC 15W 등)",
+      "각 보드/모터 스펙시트에서 정격 소비전력 추출 (Orin 15W, NUC 15W 등)",
       "SO-ARM STS3215 x12개 (양팔 12) 피크/평균 전류 계산",
-      "BHL BLDC x10개 (MAD M6C12 x6 + 5010 x4) 보행 시 평균 전류 추정",
+      "BHL BLDC x12개 (MAD M6C12 x8 + 5010 x4) 보행 시 평균 전류 추정",
       "배터리 1(다리 ESC 직결 24V) / 배터리 2(Orin 14.8V + DC-DC → NUC 12V, 서보 12V, USB 5V) 각각의 용량(Wh) 대비 소비전력으로 구동 시간 산출",
       "30분 구동 가능 여부 판정 — 부족 시 배터리 용량 업그레이드 또는 사용 패턴 조정 제안",
     ],
@@ -208,9 +208,9 @@ export const TASK_HINTS = {
   },
 
   w0_bhl_actuator_doc: {
-    summary: "δ3 전용 과제. BHL 액추에이터(MAD M6C12 150KV x6, 5010 110KV x4)의 파라미터를 문서화하면 IsaacLab 시뮬에서의 모터 모델링 정확도가 올라간다. UDP 메시지 리스트 초안은 Week 1 합의 미팅(기획서 5.6절)에서 인터페이스 확정의 기초 자료가 된다.",
+    summary: "δ3 전용 과제. BHL 액추에이터(MAD M6C12 150KV x8, 5010 110KV x4)의 파라미터를 문서화하면 IsaacLab 시뮬에서의 모터 모델링 정확도가 올라간다. UDP 메시지 리스트 초안은 Week 1 합의 미팅(기획서 5.6절)에서 인터페이스 확정의 기초 자료가 된다.",
     steps: [
-      "MAD M6C12 (150KV, 6개 — 고관절/무릎) 스펙 정리: KV, 최대 토크, 연속 전류",
+      "MAD M6C12 (150KV, 8개 — 고관절/무릎) 스펙 정리: KV, 최대 토크, 연속 전류",
       "MAD 5010 (110KV, 4개 — 발목) 스펙 정리: KV, 최대 토크, 연속 전류",
       "사이클로이드 기어박스 기어비 확인 (BHL 문서에서 추출)",
       "ESC (B-G431B-ESC1) 제어 파라미터 정리 — CAN 프로토콜, 제어 주기(250Hz)",
@@ -260,16 +260,15 @@ export const TASK_HINTS = {
     summary: "ε1 전용 과제 (Day 3). 시연 시나리오의 6개 상태(IDLE/TALKING/MANIPULATING/WALKING/FETCH/EMERGENCY, 기획서 5.1절)를 관리할 프레임워크를 선정한다. 특히 FETCH 상태의 서브스텝 시퀀스(WALKING→MANIPULATING→WALKING→handover)를 표현할 수 있어야 한다. 선정 결과는 Week 1 합의 미팅에서 전체 공유한다.",
     steps: [
       "기획서 5.2절 상태별 프로세스-리소스 매핑표를 참고하여 초안 작성 (Orin GPU/CPU, NUC 할당)",
-      "smach 설치 + 예제 실행 — 계층적 상태 머신, 동시 실행 컨테이너 지원 확인",
-      "FlexBE 설치 + 예제 실행 — GUI 기반 행동 트리 편집기, 런타임 수정 기능 확인",
+      "Python asyncio FSM 프레임워크 평가 — 계층적 상태 관리, 동시 실행 컨테이너 지원 확인",
+      "asyncio 기반 오케스트레이터 구현 패턴 조사 — 코루틴 기반 상태 전환, 디버깅 편의성 확인",
       "비교 기준: FETCH 서브스텝 표현력, 통신 단순성, 디버깅 편의성, 비상정지 전환 용이성",
       "프레임워크 최종 선정 + 선정 근거 문서화",
       "Week 1 합의 미팅 발표 자료 준비 (기획서 5.6절 인터페이스 명세와 연계)",
     ],
     resources: [
-      { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
-      { label: "smach GitHub", url: "https://github.com/ros/executive_smach" },
-      { label: "FlexBE", url: "https://github.com/FlexBE" },
+      { label: "기획서 5.1절 (오케스트레이터)", type: "internal", section: "5.1" },
+      { label: "Python asyncio 공식 문서", url: "https://docs.python.org/3/library/asyncio.html" },
     ],
     components: ["orin_nano_super"],
     estimatedHours: 4,
@@ -326,12 +325,12 @@ export const TASK_HINTS = {
     estimatedHours: 2,
   },
 
-  w0_newton_simtoreal_study: {
-    summary: "δ2 전용 과제 (Day 4). Newton sim-to-real(Newton 기반)은 시뮬에서 학습한 Walking RL policy를 실제 NUC에서 실행하기 전 중간 검증 단계다(기획서 8절). Week 3에서 본격 Newton sim-to-real 검증을 실행하므로, BHL 문서에서 절차와 변환 스크립트 구조를 사전 파악한다.",
+  w0_bhl_simtoreal_study: {
+    summary: "δ2 전용 과제 (Day 4). BHL sim-to-real은 시뮬에서 학습한 Walking RL policy를 실제 NUC에서 실행하기 전 중간 검증 단계다(기획서 8절). Week 3에서 본격 sim-to-real 검증을 실행하므로, BHL 문서에서 절차와 변환 스크립트 구조를 사전 파악한다.",
     steps: [
-      "BHL 문서에서 Newton sim-to-real 관련 섹션 정독 — Newton 기반 변환 절차",
+      "BHL 문서에서 sim-to-real 관련 섹션 정독 — PhysX CPU 기반 변환 절차",
       "MuJoCo XML 모델 구조 확인 — URDF와의 차이점 파악",
-      "Newton sim-to-real 변환 스크립트(있을 경우) 코드 리딩",
+      "BHL sim-to-real 변환 스크립트(있을 경우) 코드 리딩",
       "IsaacLab policy 출력 → MuJoCo 입력 인터페이스 매핑 이해",
       "lowlevel C 코드 리딩 계속 — policy 실행 파트와 CAN 통신 파트 집중",
     ],
@@ -362,11 +361,11 @@ export const TASK_HINTS = {
   w0_shenzhen_procurement: {
     summary: "별도 진행 과제. 심천 현지에서 BHL 핵심 부품(MAD BLDC 모터, LiPo 배터리)과 전자부품을 일괄 조달한다. 이 부품들이 Week 1까지 도착해야 δ2의 전원 조립, δ1의 액추에이터 시험 조립, ε2의 낙상 감지 구현이 가능하다. 기획서 9.1절 조달 채널, 9.2절 예산 참조.",
     steps: [
-      "출발 전: MAD Components에 사전 연락 — M6C12 150KV x6, 5010 110KV x4 재고 확인 및 수령 일정 조율",
+      "출발 전: MAD Components에 사전 연락 — M6C12 150KV x8, 5010 110KV x4 재고 확인 및 수령 일정 조율",
       "출발 전: BHL BOM 최신 릴리즈 확인 + 전체 부품 리스트를 한국 조달분과 교차 대조",
       "출발 전: 화창베이 구매 리스트 준비 — 부품명 + 중국어 명칭 + 수량 + 예상 가격",
       "현지: MAD 모터 수령 + 외관/축 상태 검수",
-      "현지: 화창베이 일괄 구매 — BNO085 IMU, Arduino, CAN-USB x2, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, 환기팬, 배선재",
+      "현지: 화창베이 일괄 구매 — BNO085 IMU, Arduino, USB-CAN x2, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, 환기팬, 배선재",
       "현지: 배터리 1(6S LiPo 4000mAh 22.2V) + 배터리 2(4S LiPo 8000mAh 14.8V) + LiPo 저전압 알람 구매 — 배터리 사양이 기획서 7.5절 요구와 일치하는지 확인",
     ],
     resources: [
@@ -382,10 +381,10 @@ export const TASK_HINTS = {
   // =======================================================================
 
   w1_kickoff_meeting: {
-    summary: "[공통] Week 1 주 초 전체 합의 미팅. Week 0에서 각자 준비한 결과물(δ2 무게 적산, ε1 상태 머신 프레임워크, δ3 UDP 메시지 초안, ε1 JSON 스키마)을 모아 프로젝트의 핵심 인터페이스와 리소스 할당을 확정한다. 기획서 5.6절에 따르면 Week 1 이후 인터페이스 변경 시 전체 공지 필수이므로, 이 미팅이 설계 동결 시점이다.",
+    summary: "[공통] Week 1 주 초 전체 합의 미팅. Week 0에서 각자 준비한 결과물(δ2 무게 적산, ε1 오케스트레이터 프레임워크, δ3 UDP 메시지 초안, ε1 JSON 스키마)을 모아 프로젝트의 핵심 인터페이스와 리소스 할당을 확정한다. 기획서 5.6절에 따르면 Week 1 이후 인터페이스 변경 시 전체 공지 필수이므로, 이 미팅이 설계 동결 시점이다.",
     steps: [
       "δ2: 상체 무게 적산값 발표 — Week 2 직립 테스트 결과와 대조 예정임을 공유",
-      "ε1: Week 0에서 선정한 상태 머신 프레임워크(smach 또는 FlexBE) 발표 + 선정 근거",
+      "ε1: Week 0에서 선정한 오케스트레이터 프레임워크(Python asyncio FSM) 발표 + 선정 근거",
       "δ3: UDP 메시지 리스트 초안 발표 — UDP 보행 명령 (vx vy wz), UDP 보행 상태 등 (기획서 5.3절)",
       "배터리 배치 방향 합의 — 토르소 최하단 vs hip (직립 테스트 결과로 최종 결정 예정)",
       "전원 시퀀싱 확정 — 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브 (기획서 7.7절)",
@@ -484,9 +483,9 @@ export const TASK_HINTS = {
   },
 
   w1_orin_setup: {
-    summary: "ε1 전용 과제. Orin Nano Super는 시연 당일 SmolVLA 추론(TensorRT), 상태 머신, TTS, SO-ARM 제어를 모두 담당하는 메인 보드다(기획서 5.3절). Week 3에 TensorRT 변환/배포가 예정되어 있으므로, 이 시점에 기본 셋업을 완료해야 한다.",
+    summary: "ε1 전용 과제. Orin Nano Super는 시연 당일 SmolVLA 추론(LeRobot PyTorch), 오케스트레이터, TTS, SO-ARM 제어를 모두 담당하는 메인 보드다(기획서 5.3절). Week 3에 LeRobot 배포가 예정되어 있으므로, 이 시점에 기본 셋업을 완료해야 한다.",
     steps: [
-      "JetPack SDK 설치 — L4T + CUDA + cuDNN + TensorRT (Orin Nano Super용 버전 확인)",
+      "JetPack SDK 설치 — L4T + CUDA + cuDNN + PyTorch (Orin Nano Super용 버전 확인)",
       "Ethernet UDP 통신 설정 + 기본 메시지 송수신 테스트",
       "카메라 드라이버(v4l2/USB) 설정 + 이미지 스트리밍 확인",
       "BusLinker Board x2 USB 연결 확인 — SO-ARM SDK 설치 + 서보 통신 테스트",
@@ -517,16 +516,16 @@ export const TASK_HINTS = {
   },
 
   w1_state_machine_design: {
-    summary: "ε1 전용 과제. Week 0에서 선정한 프레임워크로 상태 머신의 상세 설계를 확정한다. 6개 상태 + FETCH 서브스텝(기획서 5.1절)의 전환 규칙, 각 상태에서의 프로세스-리소스 할당(기획서 5.2절)을 구체화한다. 동시에 SmolVLA 수집 기준 문서를 δ1과 합의하여 Week 2 수집 시작에 대비한다.",
+    summary: "ε1 전용 과제. Week 0에서 선정한 프레임워크로 오케스트레이터의 상세 설계를 확정한다. 6개 상태 + FETCH 서브스텝(기획서 5.1절)의 전환 규칙, 각 상태에서의 프로세스-리소스 할당(기획서 5.2절)을 구체화한다. 동시에 SmolVLA 수집 기준 문서를 δ1과 합의하여 Week 2 수집 시작에 대비한다.",
     steps: [
-      "상태 전환 다이어그램 작성 — 6개 상태 + FETCH 서브스텝 5단계 (기획서 5.1절 기반)",
+      "상태 전환 다이어그램 작성 — 6개 상태 + FETCH 서브스텝 6단계 (기획서 5.1절 기반, FW1/FS1/FM1/FW2/FS2/FM2)",
       "각 상태별 활성 프로세스 + 리소스 할당 명세 (기획서 5.2절 매핑표 기반)",
       "비상정지(EMERGENCY) 전환 로직 설계 — 어느 상태에서든 즉시 전환, NUC 낙상 감지 트리거 수신",
       "SmolVLA 수집 기준 문서를 δ1과 합의 — 카메라 위치, 에피소드 길이, 성공 판정 기준",
-      "상태 머신 설계 문서 완성 → Week 2 구현 시작 준비",
+      "오케스트레이터 설계 문서 완성 → Week 2 구현 시작 준비",
     ],
     resources: [
-      { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
+      { label: "기획서 5.1절 (오케스트레이터)", type: "internal", section: "5.1" },
       { label: "기획서 5.2절 (상태별 프로세스-리소스)", type: "internal", section: "5.2" },
     ],
     components: ["orin_nano_super"],
@@ -565,12 +564,12 @@ export const TASK_HINTS = {
   },
 
   w1_nuc_rt_kernel: {
-    summary: "δ2 전용 과제. NUC(BeeLink N95)는 BHL 다리의 lowlevel 제어를 담당하며, 12개 액추에이터를 CAN 버스 250Hz로 구동하려면 RT(실시간) 커널이 필수다(기획서 5.3절, 7.1절). xanmod RT 커널로 실시간성을 확보하고, CAN-USB 드라이버를 활성화하여 Week 1 후반 lowlevel C 빌드의 기반을 준비한다.",
+    summary: "δ2 전용 과제. NUC(BeeLink N95)는 BHL 다리의 lowlevel 제어를 담당하며, 12개 액추에이터를 CAN 버스 250Hz로 구동하려면 RT(실시간) 커널이 필수다(기획서 5.3절, 7.1절). xanmod RT 커널로 실시간성을 확보하고, USB-CAN 드라이버를 활성화하여 Week 1 후반 lowlevel C 빌드의 기반을 준비한다.",
     steps: [
       "Ubuntu 22.04 클린 설치 (BeeLink N95 BIOS 설정 확인)",
       "xanmod RT 커널 빌드 또는 사전 빌드 패키지 설치",
       "RT 커널 부팅 확인 + uname -r로 커널 버전 검증",
-      "CAN-USB x2 드라이버 활성화 + socketcan 설정 (ip link set can0 type can bitrate 1000000)",
+      "USB-CAN x2 드라이버 활성화 + socketcan 설정 (ip link set can0 type can bitrate 1000000)",
       "실시간성 latency 테스트 — cyclictest로 worst-case latency 측정 (목표: <1ms)",
       "Ethernet UDP 통신 설정 (Orin과의 직결 통신 준비)",
     ],
@@ -600,7 +599,7 @@ export const TASK_HINTS = {
   },
 
   w1_power_assembly: {
-    summary: "δ2 전용 과제. 기획서 7.5절(배터리 배치)과 7.7절(전원 시퀀싱)에 따라 전원 분배 시스템을 조립한다. 배터리 2(4S 14.8V)에서 Orin(14.8V 직결) + DC-DC#1→NUC(12V) + DC-DC#2→서보(12V) + DC-DC#3→USB Hub(5V)를 분배하고, 배터리 1(6S 22.2V)은 다리 ESC 직결이다. NC 비상정지로 배터리 1+2를 동시 차단한다.",
+    summary: "δ2 전용 과제. 기획서 7.5절(배터리 배치)과 7.7절(전원 시퀀싱)에 따라 전원 분배 시스템을 조립한다. 배터리 2(4S 14.8V)에서 Orin(14.8V 직결) + DC-DC#1→NUC(12V) + DC-DC#2→서보(12V) + DC-DC#3→USB Hub(5V)를 분배하고, 배터리 1(6S 22.2V)은 다리 ESC 직결이다. NC 비상정지로 배터리 1을 차단한다 (Battery 2 유지, Orin 로그 보존).",
     steps: [
       "배터리 2(4S 14.8V) → Orin 14.8V 직결 배선 + DC-DC#1(12V NUC), DC-DC#2(12V 서보), DC-DC#3(5V USB Hub) 셋업",
       "LiPo 저전압 알람을 배터리 1, 배터리 2 각각에 연결",
@@ -617,11 +616,11 @@ export const TASK_HINTS = {
     estimatedHours: 5,
   },
 
-  w1_newton_rl_setup: {
-    summary: "δ2 전용 과제. Week 0에서 문서 수준으로 파악한 Newton sim-to-real 절차를 실제로 셋업한다. IsaacLab에서 학습한 policy를 MuJoCo에서 실행하여 전이 품질을 검증하는 환경이다(기획서 8절). 동시에 Orin↔NUC 간 Ethernet UDP 통신(보행 명령, 보행 상태)을 확인한다.",
+  w1_walking_rl_setup: {
+    summary: "δ2 전용 과제. Week 0에서 문서 수준으로 파악한 BHL sim-to-real 절차를 실제로 셋업한다. IsaacLab에서 학습한 policy를 PhysX CPU 모드에서 실행하여 전이 품질을 검증하는 환경이다(기획서 8절). 동시에 Orin↔NUC 간 Ethernet UDP 통신(보행 명령, 보행 상태)을 확인한다.",
     steps: [
       "MuJoCo 설치 + BHL MuJoCo 모델(MJCF) 로드 확인",
-      "Newton 기반 변환 파이프라인 실행 테스트",
+      "PhysX CPU 기반 변환 파이프라인 실행 테스트",
       "Orin↔NUC Ethernet 직결 설정 — 고정 IP 할당, ping 확인",
       "Ethernet UDP 통신 테스트 — UDP 보행 명령 (vx vy wz)(Orin→NUC), UDP 보행 상태(NUC→Orin) 송수신",
       "통신 지연 측정 — UDP 라운드트립 latency 확인",
@@ -691,7 +690,7 @@ export const TASK_HINTS = {
       "Stage 1 학습 하이퍼파라미터 설정 — lr, batch size, epoch 수",
       "DGX Spark에서 백그라운드 학습 시작 (Walking RL과 GPU 시간 분배)",
       "학습 모니터링 — loss 곡선, 중간 체크포인트 저장",
-      "Stage 1 완료 후 ε1에 모델 전달 (Week 3 TensorRT 변환용)",
+      "Stage 1 완료 후 ε1에 모델 전달 (Week 3 LeRobot Orin 배포용)",
     ],
     resources: [
       { label: "기획서 4.3절 (2-Stage 파인튜닝)", type: "internal", section: "4.3" },
@@ -702,17 +701,17 @@ export const TASK_HINTS = {
     estimatedHours: 12,
   },
 
-  w1_smolvla_tensorrt_script: {
-    summary: "ε1 전용 과제 (Track B 지원). SmolVLA PyTorch 모델을 Orin에서 실시간 추론하려면 TensorRT 변환이 필수다. Week 3에 δ3가 Stage 1 학습을 완료하면 이 스크립트로 즉시 변환→Orin 배포→정합성 검증을 진행해야 하므로, 변환 스크립트를 선행 작성한다(기획서 5.3절 컴퓨팅 분배).",
+  w1_smolvla_lerobot_pipeline: {
+    summary: "ε1 전용 과제 (Track B 지원). SmolVLA를 Orin에서 LeRobot PyTorch로 실시간 추론하기 위한 파이프라인을 구축한다. Week 3에 δ3가 Stage 1 학습을 완료하면 이 파이프라인으로 즉시 Orin 배포→정합성 검증을 진행해야 하므로, 추론 파이프라인을 선행 작성한다(기획서 5.3절 컴퓨팅 분배).",
     steps: [
       "SmolVLA 모델 아키텍처 분석 — 입력/출력 텐서 형태, 동적 축 확인",
-      "PyTorch → ONNX export 스크립트 작성 (dynamic axes 설정)",
-      "ONNX → TensorRT 엔진 빌드 스크립트 작성 (FP16, Orin 타겟)",
-      "더미 입력으로 PyTorch vs TensorRT 추론 결과 정합성 테스트 코드 작성",
-      "Orin에서 TensorRT 추론 벤치마크 — Hz 측정 (목표: 5Hz 이상, 기획서 GPU 프로파일링 대비)",
+      "LeRobot 추론 파이프라인 구축 — Orin PyTorch 환경 설정",
+      "LeRobot 모델 로드 + 카메라 입력 연결 스크립트 작성",
+      "더미 입력으로 DGX vs Orin 추론 결과 정합성 테스트 코드 작성",
+      "Orin에서 LeRobot PyTorch 추론 벤치마크 — Hz 측정 (목표: 5Hz 이상, 기획서 GPU 프로파일링 대비)",
     ],
     resources: [
-      { label: "TensorRT 문서", url: "https://developer.nvidia.com/tensorrt" },
+      { label: "LeRobot 문서", url: "https://github.com/huggingface/lerobot" },
     ],
     components: ["orin_nano_super"],
     estimatedHours: 6,
@@ -809,15 +808,15 @@ export const TASK_HINTS = {
   },
 
   w2_state_machine_v1_start: {
-    summary: "Week 3 완성 목표인 상태 머신 v1의 골격을 이번 주에 잡아야 한다. IDLE·TALKING·MANIPULATING 기본 상태 전환 구조를 구현하면서, 병행하여 δ3이 DGX에서 진행 중인 SmolVLA Stage 1 학습을 모니터링한다.",
+    summary: "Week 3 완성 목표인 오케스트레이터 v1의 골격을 이번 주에 잡아야 한다. IDLE·TALKING·MANIPULATING 기본 상태 전환 구조를 구현하면서, 병행하여 δ3이 DGX에서 진행 중인 SmolVLA Stage 1 학습을 모니터링한다.",
     steps: [
-      "Week 0에서 선정한 상태 머신 프레임워크(smach/FlexBE)로 IDLE↔TALKING↔MANIPULATING 골격 구현",
+      "Week 0에서 선정한 오케스트레이터 프레임워크(Python asyncio)로 IDLE↔TALKING↔MANIPULATING 골격 구현",
       "기획서 5.1절 전환 규칙 반영 — MANIPULATING 중 대화 요청은 완료 후 TALKING 전환",
       "SmolVLA Stage 1 DGX 학습 로그 모니터링 (loss 추이, 수렴 여부)",
       "에코 캔슬링 후속 완료 — AEC 필요 여부 최종 결론",
     ],
     resources: [
-      { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
+      { label: "기획서 5.1절 (오케스트레이터)", type: "internal", section: "5.1" },
     ],
     components: ["orin_nano_super"],
     estimatedHours: 8,
@@ -843,7 +842,7 @@ export const TASK_HINTS = {
     steps: [
       "중립·기쁨·놀람 3종의 감정 표현 패턴 정의",
       "각 감정에 대응하는 입 서보(SG90급) 동작 매핑",
-      "상태 전환 트리거 인터페이스 설계 (상태 머신에서 감정 전환 호출)",
+      "상태 전환 트리거 인터페이스 설계 (오케스트레이터에서 감정 전환 호출)",
       "평가 스크립트 완성 — 각 감정 전환 정상 동작·응답 시간 자동 측정",
     ],
     resources: [
@@ -870,9 +869,9 @@ export const TASK_HINTS = {
   },
 
   w2_emergency_stop: {
-    summary: "배터리 1+2 NC(Normally Closed) 물리 비상정지 스위치를 달고, NUC 소프트웨어 낙상 감지(BNO085 → 토크 해제)를 연계하는 비상정지 체계를 완성한다. NC 비상정지로 배터리 1+2를 동시 차단한다.",
+    summary: "배터리 1 NC(Normally Closed) 물리 비상정지 스위치를 달고, NUC 소프트웨어 낙상 감지(BNO085 → 토크 해제)를 연계하는 비상정지 체계를 완성한다. NC 비상정지로 배터리 1을 차단한다 (Battery 2 유지, Orin 로그 보존).",
     steps: [
-      "배터리 1+2 NC 비상정지 스위치 배선",
+      "배터리 1 NC 비상정지 스위치 배선 (Battery 1 양극 직렬)",
       "NUC 낙상 감지 → 모터 토크 해제 소프트웨어 연동 확인",
       "물리 비상정지 버튼 + NUC 소프트 토크 해제 이중 동작 확인",
       "A 라인(Orin/NUC)은 차단되지 않고 로그가 유지되는지 확인",
@@ -889,7 +888,7 @@ export const TASK_HINTS = {
     steps: [
       "기어박스 12세트 서포트 제거 (얇은 벽면 파손 주의)",
       "베어링 시트 리밍 — 내경을 베어링 외경에 맞춰 정밀 가공",
-      "모터 마운트 구멍 치수 검수 (M6C12 6개, 5010 4개 각각 확인)",
+      "모터 마운트 구멍 치수 검수 (M6C12 8개, 5010 4개 각각 확인)",
       "히트인서트 삽입 (나사 체결부)",
       "공중 지그 설계 — 다리를 매달고 보행 테스트할 구조물 CAD",
     ],
@@ -918,12 +917,12 @@ export const TASK_HINTS = {
   },
 
   w2_imu_structure: {
-    summary: "낙상 감지용 BNO085 IMU(Arduino USB → NUC)와 Walking RL policy 입력용 IMU는 역할과 샘플레이트가 다르므로 별도 구조로 분리해야 한다. 낙상 감지 IMU는 NUC 소프트웨어에서 임계치를 판단하여 토크 해제를 트리거하고, policy용 IMU는 CAN 버스를 통해 250Hz policy 루프에 공급된다.",
+    summary: "BNO085 IMU 1개(Arduino USB → NUC)가 몸체 자세 데이터를 NUC에 공급하며, 낙상 감지와 Walking RL policy 입력에 모두 사용된다. 낙상 감지 시 NUC 소프트웨어가 임계치를 판단하여 토크 해제를 트리거한다. policy 루프(250Hz)에는 IMU 데이터와 함께 AS5600 인코더 관절 피드백(CAN 경유)이 공급된다.",
     steps: [
-      "낙상 감지용 BNO085 IMU 배치 위치 확정 (토르소 중심부, 진동 최소 지점)",
-      "NUC용 policy IMU 배치 위치 확정 (hip 근처, policy 입력에 적합한 위치)",
-      "두 IMU 간 연결 경로 분리 확인 (BNO085: Arduino USB → NUC, policy IMU: CAN 버스)",
-      "각 IMU의 샘플레이트·필터 설정 문서화",
+      "BNO085 IMU 배치 위치 확정 (토르소 중심부, 진동 최소 지점)",
+      "Arduino USB → NUC 연결 경로 확인 (USB Serial, IMU 데이터 전송)",
+      "낙상 감지 임계치 설계 (기울기·각속도 threshold → 토크 해제 트리거)",
+      "IMU 샘플레이트·필터 설정 문서화",
     ],
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
@@ -1000,26 +999,26 @@ export const TASK_HINTS = {
     estimatedHours: 4,
   },
 
-  w3_tensorrt_deploy: {
-    summary: "δ3가 DGX에서 학습한 Stage 1 모델을 TensorRT로 변환하여 Orin에 배포한다. GPU 프로파일링(다음 태스크)의 전제 조건이며, PyTorch 원본 대비 TensorRT 추론 결과의 정합성을 반드시 검증해야 한다.",
+  w3_lerobot_deploy: {
+    summary: "δ3가 DGX에서 학습한 Stage 1 모델을 LeRobot PyTorch로 Orin에 배포한다. GPU 프로파일링(다음 태스크)의 전제 조건이며, DGX 원본 대비 Orin 추론 결과의 정합성을 반드시 검증해야 한다.",
     steps: [
-      "Stage 1 모델(PyTorch) → ONNX 변환 (opset 버전 호환 확인)",
-      "ONNX → TensorRT 엔진 빌드 (FP16, Orin GPU 아키텍처 타겟)",
-      "Orin에 TensorRT 엔진 배포 + 카메라 입력 연결",
-      "PyTorch vs TensorRT 추론 결과 정합성 검증 — 동일 입력에 대해 출력 차이 ≤ 허용 범위",
-      "ε1이 Week 1에서 작성한 TensorRT 변환 스크립트 활용",
+      "Stage 1 모델(PyTorch) 체크포인트를 Orin으로 전송",
+      "LeRobot PyTorch 추론 환경 구축 (Orin JetPack PyTorch)",
+      "Orin에 LeRobot 모델 배포 + 카메라 입력 연결",
+      "DGX vs Orin 추론 결과 정합성 검증 — 동일 입력에 대해 출력 차이 ≤ 허용 범위",
+      "ε1이 Week 1에서 작성한 LeRobot 추론 파이프라인 활용",
     ],
     resources: [
-      { label: "TensorRT 문서", url: "https://developer.nvidia.com/tensorrt" },
+      { label: "LeRobot 문서", url: "https://github.com/huggingface/lerobot" },
     ],
     components: ["orin_nano_super", "dgx_spark"],
     estimatedHours: 6,
   },
 
   w3_gpu_profiling: {
-    summary: "Orin에서 SmolVLA TensorRT 모델의 실제 추론 주파수를 측정한다. 5Hz 이상이면 정상 진행, 2~5Hz이면 UX 보완(동작 사이 자연스러운 대기 모션 삽입), 2Hz 미만이면 δ3에게 모델 다운사이즈를 요청해야 한다.",
+    summary: "Orin에서 SmolVLA LeRobot 모델의 실제 추론 주파수를 측정한다. 5Hz 이상이면 정상 진행, 2~5Hz이면 UX 보완(동작 사이 자연스러운 대기 모션 삽입), 2Hz 미만이면 δ3에게 모델 다운사이즈를 요청해야 한다.",
     steps: [
-      "TensorRT 엔진 로드 + 카메라 스트림 연결 상태에서 추론 루프 실행",
+      "LeRobot PyTorch 모델 로드 + 카메라 스트림 연결 상태에서 추론 루프 실행",
       "100회 추론의 평균 Hz 및 p95 레이턴시 측정",
       "다른 CPU 태스크와 동시 실행 시 GPU 간섭 여부 확인",
       "결과에 따라 분기: 5Hz+→진행 / 2~5Hz→UX 보완 설계 / 2Hz-→δ3에 다운사이즈 요청",
@@ -1032,7 +1031,7 @@ export const TASK_HINTS = {
   },
 
   w3_state_machine_v1_complete: {
-    summary: "Week 2에서 시작한 상태 머신 v1을 완성하여 IDLE↔TALKING↔MANIPULATING 기본 전환이 정상 동작해야 한다. 기획서 5.1절 전환 규칙과 5.2절 리소스 매핑을 충실히 반영하며, FETCH·EMERGENCY는 Week 5~6에서 추가한다.",
+    summary: "Week 2에서 시작한 오케스트레이터 v1을 완성하여 IDLE↔TALKING↔MANIPULATING 기본 전환이 정상 동작해야 한다. 기획서 5.1절 전환 규칙과 5.2절 리소스 매핑을 충실히 반영하며, FETCH·EMERGENCY는 Week 5~6에서 추가한다.",
     steps: [
       "IDLE → TALKING 전환: 마이크 입력 감지 시 대화 파이프라인 활성화",
       "TALKING → MANIPULATING 전환: LLM이 pick 액션 추출 시 SmolVLA 실행",
@@ -1041,14 +1040,14 @@ export const TASK_HINTS = {
       "상태별 리소스 매핑 검증 — GPU(SmolVLA), CPU, 네트워크(클라우드 API) 동시 사용 시 충돌 없음 확인",
     ],
     resources: [
-      { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
+      { label: "기획서 5.1절 (오케스트레이터)", type: "internal", section: "5.1" },
     ],
     components: ["orin_nano_super"],
     estimatedHours: 6,
   },
 
-  w3_newton_rl_verify: {
-    summary: "IsaacLab에서 학습한 Walking RL policy를 MuJoCo로 전이(Newton sim-to-real)하여 시뮬레이터 간 동작 차이를 검증한다. 이 검증이 통과해야 Week 5 공중 보행(Sim2real) 시 예상치 못한 동작 차이를 줄일 수 있다. 동시에 공중 지그를 3D프린트한다.",
+  w3_physx_rl_progress: {
+    summary: "IsaacLab에서 학습한 Walking RL policy를 MuJoCo로 전이(PhysX CPU sim-to-real)하여 시뮬레이터 간 동작 차이를 검증한다. 이 검증이 통과해야 Week 5 공중 보행(Sim2real) 시 예상치 못한 동작 차이를 줄일 수 있다. 동시에 공중 지그를 3D프린트한다.",
     steps: [
       "IsaacLab 학습 policy를 MuJoCo 환경에서 로드",
       "동일 초기 상태에서 두 시뮬의 관절 궤적 비교 (각도·토크 차이 분석)",
@@ -1069,9 +1068,9 @@ export const TASK_HINTS = {
       "토르소 + SO-ARM 완성 (11단계 조립 완료)",
       "카메라·물체·그립 확정 (Week 1 실측 기반)",
       "수집 600개 완료 (시연 조건 60%+ 확인)",
-      "SmolVLA v1 동작 + TensorRT 정합성 확인",
+      "SmolVLA v1 동작 + LeRobot 정합성 확인",
       "낙상 감지 토크 해제 동작 확인",
-      "Newton sim-to-real(Newton 기반) 완료 + NUC 준비",
+      "PhysX CPU sim-to-real 완료 + NUC 준비",
     ],
     resources: [
       { label: "기획서 10절 (게이트 조건 — Phase 1)", type: "internal", section: "10" },
@@ -1193,13 +1192,13 @@ export const TASK_HINTS = {
   },
 
   w4_cloud_stt_llm: {
-    summary: "클라우드 LLM 연동 — LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
+    summary: "클라우드 LLM 연동 — LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑥)의 골격을 구현한다.",
     steps: [
       "클라우드 LLM 연동 — Whisper STT 텍스트 → 클라우드 LLM → 의도 분류",
       "LLM 프롬프트에 fetch 태스크 타입 추가 — \"컵 가져와\" → {action: \"fetch\", target: \"starbucks_cup\"}",
-      "FETCH 시퀀서 구현: ①WALKING(테이블 방향, T1초) → ②MANIPULATING(SmolVLA pick) → ③WALKING(홈 방향, 180°+T2초) → ④MANIPULATING(handover) → ⑤IDLE",
+      "FETCH 시퀀서 구현: ①WALKING(전진 T1초) → ②정지(NUC stable) → ③MANIPULATING(SmolVLA pick) → ④WALKING(복귀 T2초) → ⑤정지(NUC stable) → ⑥MANIPULATING(handover) → IDLE",
       "기획서 4.4절 언어→동작 연결 로직: LLM이 물체 종류 추출 → SmolVLA에 target_object 전달",
-      "Week 5에서 상태 머신과 완전 통합 + 카메라 공유 토픽 설정",
+      "Week 5에서 오케스트레이터와 완전 통합 + 카메라 공유 토픽 설정",
     ],
     resources: [
       { label: "기획서 5.2절 (리소스 매핑)", type: "internal", section: "5.2" },
@@ -1211,10 +1210,10 @@ export const TASK_HINTS = {
   },
 
   w4_actuator_10_assembly: {
-    summary: "BHL 하반신의 핵심 공정으로, 6DOF × 2다리 = 12개 액추에이터를 모두 조립한다. Week 2에서 후가공 완료된 사이클로이드 기어박스에 BLDC 모터(MAD M6C12 ×6 + 5010 ×4)를 결합하고, ESC를 솔더링한다.",
+    summary: "BHL 하반신의 핵심 공정으로, 6DOF × 2다리 = 12개 액추에이터를 모두 조립한다. Week 2에서 후가공 완료된 사이클로이드 기어박스에 BLDC 모터(MAD M6C12 ×8 + 5010 ×4)를 결합하고, ESC를 솔더링한다.",
     steps: [
       "기어박스 12개 최종 점검 — 리밍·베어링 시트·히트인서트 상태 확인",
-      "BLDC 모터 결합: hip/knee용 M6C12(150KV) ×6 + ankle용 5010(110KV) ×4",
+      "BLDC 모터 결합: hip/knee용 M6C12(150KV) ×8 + ankle용 5010(110KV) ×4",
       "ESC(B-G431B-ESC1) 12개 솔더링 + 모터 3상 연결",
       "개별 동작 테스트 — CAN 명령으로 각 액추에이터 회전 확인",
       "조립 기준서(δ1 Week 1 작성) 참조하여 토크·그리스 적용",
@@ -1233,7 +1232,7 @@ export const TASK_HINTS = {
       "3D프린트 다리 구조물에 액추에이터 12개 순서대로 장착 (hip→knee→ankle)",
       "각 관절 가동 범위가 URDF 정의와 일치하는지 확인",
       "배터리 1(6S LiPo) ESC 직결 연결 → 전원 공급 확인",
-      "CAN 버스 배선(CAN-USB ×2, 2버스 1Mbps) 연결",
+      "CAN 버스 배선(USB-CAN ×2, 2버스 1Mbps) 연결",
       "다리 단독 전원 인가 후 모든 관절 동작 테스트",
     ],
     resources: [
@@ -1329,7 +1328,7 @@ export const TASK_HINTS = {
     steps: [
       "ablation 조합별 물체 3종 검증 성공률 최종 비교",
       "최적 조합 확정 — 성공률·일반화 성능·학습 시간 종합 판단",
-      "최적 모델 체크포인트를 ε1에 전달 (TensorRT v2 변환용)",
+      "최적 모델 체크포인트를 ε1에 전달 (LeRobot v2 Orin 배포용)",
       "학습 설정(lr, batch, epoch, 데이터 비율) 문서화",
     ],
     resources: [
@@ -1340,13 +1339,13 @@ export const TASK_HINTS = {
   },
 
   w5_scenario_bc_design: {
-    summary: "보행이 불안정할 경우를 대비하여 시나리오 B(제자리 pick-place + 별도 보행 시연)와 C(받침대 고정 + 제자리 pick-place)의 구조와 전환 조건을 정의한다. ε1의 상태 머신에 A→B, A→C 전환 로직을 반영할 수 있도록 명확히 기술한다.",
+    summary: "보행이 불안정할 경우를 대비하여 시나리오 B(제자리 pick-place + 별도 보행 시연)와 C(받침대 고정 + 제자리 pick-place)의 구조와 전환 조건을 정의한다. ε1의 오케스트레이터에 A→B, A→C 전환 로직을 반영할 수 있도록 명확히 기술한다.",
     steps: [
       "시나리오 B 구조 정의 — 보행 없이 제자리에서 pick-place 수행 + 별도 보행 시연",
       "시나리오 C 구조 정의 — 받침대에 고정하여 보행 완전 생략, 제자리 pick-place만",
       "A→B 전환 조건 정의 (예: 보행 중 낙상 2회 이상, NUC jitter 과다 등)",
       "A→C 전환 조건 정의 (예: 다리 하드웨어 고장, 보행 policy 실패 등)",
-      "ε1에 전달하여 상태 머신에 전환 로직 반영",
+      "ε1에 전달하여 오케스트레이터에 전환 로직 반영",
     ],
     resources: [
       { label: "기획서 3절 (시연 시나리오 레벨)", type: "internal", section: "3" },
@@ -1389,11 +1388,11 @@ export const TASK_HINTS = {
   },
 
   w5_fetch_sequencer_complete: {
-    summary: "Week 4에서 골격을 잡은 FETCH 시퀀서를 상태 머신과 완전 통합하고, SmolVLA가 카메라(/camera/image_raw)를 사용하는 토픽 설정을 완료한다. 이것으로 IDLE↔TALKING↔MANIPULATING↔WALKING↔FETCH 전체 전환이 가능해진다.",
+    summary: "Week 4에서 골격을 잡은 FETCH 시퀀서를 오케스트레이터와 완전 통합하고, SmolVLA가 카메라(/camera/image_raw)를 사용하는 토픽 설정을 완료한다. 이것으로 IDLE↔TALKING↔MANIPULATING↔WALKING↔FETCH 전체 전환이 가능해진다.",
     steps: [
-      "FETCH 시퀀서를 상태 머신에 통합 — TALKING에서 fetch 명령 시 FETCH 진입",
+      "FETCH 시퀀서를 오케스트레이터에 통합 — TALKING에서 fetch 명령 시 FETCH 진입",
       "카메라 토픽(/camera/image_raw) 설정 — SmolVLA 구독",
-      "FETCH 서브스텝(①~⑤) 전환 자동화 테스트",
+      "FETCH 서브스텝(①~⑥) 전환 자동화 테스트",
       "타이머 T1, T2 초기값 설정 (시연 환경 레이아웃 기반)",
       "FETCH 중 비상정지 → EMERGENCY 즉시 전환 확인",
     ],
@@ -1405,12 +1404,12 @@ export const TASK_HINTS = {
   },
 
   w5_leg_complete: {
-    summary: "Week 4에서 시작한 다리 조립을 완성하고, NUC와 CAN-USB ×2를 실물 연결하여 2버스(1Mbps, 250Hz) 통신을 확인한다. 이것이 공중 보행 테스트의 전제 조건이다.",
+    summary: "Week 4에서 시작한 다리 조립을 완성하고, NUC와 USB-CAN ×2를 실물 연결하여 2버스(1Mbps, 250Hz) 통신을 확인한다. 이것이 공중 보행 테스트의 전제 조건이다.",
     steps: [
       "다리 프레임 + 액추에이터 12개 최종 조립 완료",
-      "NUC에 CAN-USB ×2 연결 (2개 CAN 버스 구성)",
+      "NUC에 USB-CAN ×2 연결 (2개 CAN 버스 구성)",
       "NUC xanmod RT 커널에서 CAN 통신 테스트 (250Hz 명령 주기 확인)",
-      "BHL lowlevel C 코드로 전체 10개 관절 동시 구동 확인",
+      "BHL lowlevel C 코드로 전체 12개 관절 동시 구동 확인",
       "배터리 1(6S LiPo) 전원으로 독립 구동 테스트",
     ],
     resources: [
@@ -1485,7 +1484,7 @@ export const TASK_HINTS = {
       "전체 파이프라인 10분 연속 크래시 없음 확인 — 메모리 누수/통신 지연 모니터링",
     ],
     resources: [
-      { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
+      { label: "기획서 5.1절 (오케스트레이터)", type: "internal", section: "5.1" },
       { label: "기획서 5.5절 (Fallback 계층)", type: "internal", section: "5.5" },
       { label: "기획서 5.2절 (상태별 프로세스-리소스 매핑)", type: "internal", section: "5.2" },
     ],
@@ -1497,11 +1496,13 @@ export const TASK_HINTS = {
     summary: "FETCH 시퀀서 로직 단독 테스트. 기획서 5.1절 타이머 기반 open-loop 구조에서 WALKING 서브스텝은 UDP 보행 명령 mock 송신으로 대체하고, SmolVLA pick(물체 잡기) + precoded handover(팔 뻗기 전달)는 실제 SO-ARM으로 수행한다. T1(테이블 방향), T2(홈 방향) 타이머 값을 임시 설정하고 서브스텝 간 자동 전환이 올바른지 검증한다.",
     steps: [
       "FETCH 진입 시 LLM이 target_object를 전달하는 인터페이스 확인",
-      "서브스텝 1: WALKING mock — UDP 보행 명령 (vx vy wz) 전진 명령 송신 (타이머 T1초)",
-      "서브스텝 2: 정지 → MANIPULATING — SmolVLA pick 실행 (target_object 전달)",
-      "서브스텝 3: WALKING mock — 180도 회전 + 전진 (타이머 T2초)",
-      "서브스텝 4: 정지 → MANIPULATING — precoded handover (팔 뻗기)",
-      "서브스텝 5: IDLE 복귀 확인",
+      "서브스텝 1 (FW1): WALKING mock — UDP 보행 명령 (vx vy wz) 전진 (타이머 T1초)",
+      "서브스텝 2 (FS1): 정지 — NUC stable 확인",
+      "서브스텝 3 (FM1): MANIPULATING — SmolVLA pick 실행 (target_object 전달)",
+      "서브스텝 4 (FW2): WALKING mock — 180도 회전 + 전진 (타이머 T2초)",
+      "서브스텝 5 (FS2): 정지 — NUC stable 확인",
+      "서브스텝 6 (FM2): MANIPULATING — precoded handover (팔 뻗기)",
+      "IDLE 복귀 확인",
       "3개 물체(컵, 텀블러, 인형)에 대해 연속 FETCH 반복 테스트",
     ],
     resources: [
@@ -1652,12 +1653,12 @@ export const TASK_HINTS = {
   },
 
   w7_smolvla_v2_data: {
-    summary: "SmolVLA v2용 데이터 정제(epsilon1) + delta3에 전달하여 DGX 학습 트리거 + 학습 완료 모델을 TensorRT v2로 Orin에 배포. v1 대비 ablation 결과에서 선별된 최적 데이터 조합을 사용하며, 실패 에피소드 제거, 메타데이터 필터링, 증강 비율 조정을 거친 정제 데이터셋이다.",
+    summary: "SmolVLA v2용 데이터 정제(epsilon1) + delta3에 전달하여 DGX 학습 트리거 + 학습 완료 모델을 LeRobot PyTorch v2로 Orin에 배포. v1 대비 ablation 결과에서 선별된 최적 데이터 조합을 사용하며, 실패 에피소드 제거, 메타데이터 필터링, 증강 비율 조정을 거친 정제 데이터셋이다.",
     steps: [
       "v1 평가 리포트에서 실패 유형별 에피소드 식별 + 제거",
       "ablation 최적 조합에 맞춰 데이터셋 재구성 (시연 조건 비율 60%+ 유지)",
       "정제된 v2 데이터셋을 delta3 DGX 서버에 전달",
-      "delta3 학습 완료 후 모델 수신 → ONNX → TensorRT FP16 변환",
+      "delta3 학습 완료 후 모델 수신 → LeRobot PyTorch Orin 배포",
       "Orin에 v2 모델 배포 + v1 대비 추론 Hz/정합성 비교 검증",
     ],
     resources: [
@@ -1673,7 +1674,7 @@ export const TASK_HINTS = {
       "epsilon2 키워드 사전 최종본 수신 (동의어 매핑 + 사전 Q&A 30개)",
       "delta3 시나리오 B/C 설계 문서 수신 (전환 조건, 레이아웃 변경 사항)",
       "통합 시나리오 문서 작성 — 정상 흐름(A) + 보행 실패(B/C) + 네트워크 장애(서바이벌)",
-      "상태 머신에 시나리오 B/C 전환 로직 반영 (epsilon1 구현)",
+      "오케스트레이터에 시나리오 B/C 전환 로직 반영 (epsilon1 구현)",
       "전체 fallback 체인 시뮬레이션 테스트",
     ],
     resources: [
@@ -1685,9 +1686,9 @@ export const TASK_HINTS = {
   },
 
   w7_smolvla_v2_eval: {
-    summary: "SmolVLA v2 모델을 Orin TensorRT에서 실행하여 3개 물체(컵, 텀블러, 인형)에 대한 실물 pick 성공률을 측정하고, v1 대비 개선 여부를 정량 평가한다. 동시에 감정 표현 시스템(lip sync + 감정 표현)에 대해 5인 사용자 테스트를 실시하여 감정 인식률과 자연스러움을 평가한다.",
+    summary: "SmolVLA v2 모델을 Orin LeRobot PyTorch에서 실행하여 3개 물체(컵, 텀블러, 인형)에 대한 실물 pick 성공률을 측정하고, v1 대비 개선 여부를 정량 평가한다. 동시에 감정 표현 시스템(lip sync + 감정 표현)에 대해 5인 사용자 테스트를 실시하여 감정 인식률과 자연스러움을 평가한다.",
     steps: [
-      "SmolVLA v2 TensorRT 모델 Orin 로드 + 추론 Hz 확인",
+      "SmolVLA v2 LeRobot PyTorch 모델 Orin 로드 + 추론 Hz 확인",
       "물체별 pick 테스트: 컵 20회, 텀블러 20회, 인형 20회 → 성공률 산출",
       "v1 대비 성공률 비교표 작성 + 실패 유형 분류 (접근 실패/그립 실패/리프트 실패)",
       "감정 표현 5인 테스트 — 각 감정(중립/기쁨/놀람/슬픔/분노) 표출 후 인식률 측정",
@@ -1776,7 +1777,7 @@ export const TASK_HINTS = {
       "ablation 최적 하이퍼파라미터 설정 (lr, batch, Stage 1 공개 데이터 비율)",
       "DGX 학습 실행 (Walking RL 재학습과 GPU 시간 분배 조율)",
       "학습 loss/성공률 모니터링 + 체크포인트 저장",
-      "학습 완료 모델을 epsilon1에 전달 (TensorRT 변환 + Orin 배포용)",
+      "학습 완료 모델을 epsilon1에 전달 (LeRobot Orin 배포용)",
     ],
     resources: [
       { label: "기획서 4.3절 (2-Stage 파인튜닝)", type: "internal", section: "4.3" },
@@ -1790,8 +1791,8 @@ export const TASK_HINTS = {
     steps: [
       "Walking RL 최종 학습 결과 검토 (reward curve, 보행 안정성 지표)",
       "최종 policy 파일을 delta2 NUC에 배포 + 동작 확인",
-      "시나리오 B/C 최종 확정 — 전환 조건, 레이아웃 변경, 상태 머신 분기점 명시",
-      "epsilon1에 시나리오 B/C 문서 + 상태 머신 전환 조건 전달",
+      "시나리오 B/C 최종 확정 — 전환 조건, 레이아웃 변경, 오케스트레이터 분기점 명시",
+      "epsilon1에 시나리오 B/C 문서 + 오케스트레이터 전환 조건 전달",
       "더미 보행 안정성 기준 시나리오 레벨 예비 판정 (A/B/C)",
     ],
     resources: [
@@ -1803,9 +1804,9 @@ export const TASK_HINTS = {
   },
 
   w7_sim2real_report: {
-    summary: "epsilon2와 delta3이 공동으로 sim-to-real 파이프라인 전체를 심층 분석한다. IsaacLab 학습→Newton sim-to-real(MuJoCo)→공중 보행→더미 지면 보행→(예비) 실체 보행까지의 각 단계별 gap을 정리하고, DR 파라미터 효과, 관절 응답 지연, 마찰 부정합 등 핵심 gap 요인을 리포트로 문서화한다. 이 리포트는 Phase 3 게이트 자료이자 Week 8 합체 시 참조 문서가 된다.",
+    summary: "epsilon2와 delta3이 공동으로 sim-to-real 파이프라인 전체를 심층 분석한다. IsaacLab 학습→PhysX CPU sim-to-real(MuJoCo)→공중 보행→더미 지면 보행→(예비) 실체 보행까지의 각 단계별 gap을 정리하고, DR 파라미터 효과, 관절 응답 지연, 마찰 부정합 등 핵심 gap 요인을 리포트로 문서화한다. 이 리포트는 Phase 3 게이트 자료이자 Week 8 합체 시 참조 문서가 된다.",
     steps: [
-      "각 단계별 gap 데이터 수집 정리 (시뮬→Newton sim-to-real→공중→지면)",
+      "각 단계별 gap 데이터 수집 정리 (시뮬→PhysX CPU sim-to-real→공중→지면)",
       "DR 파라미터(mass, 마찰, 관절 강성) 효과 정량 분석",
       "관절 응답 지연(시뮬 명령 vs 실측) 분석 + 개선 여부 추적",
       "마찰 부정합 분석 (시뮬 마찰 vs 실제 바닥 마찰)",
@@ -1819,10 +1820,10 @@ export const TASK_HINTS = {
   },
 
   w7_phase3_gate: {
-    summary: "Phase 3 게이트 통과 판정. 5개 조건을 모두 충족해야 Week 8 합체에 진입한다: (1) 머리 전자부품 8단계 통합 완료(또는 목업 기능 검증), (2) SmolVLA v2 Orin TensorRT 배포 완료, (3) Walking RL 최종본 + 더미 보행 안정(30분 전원 테스트 통과), (4) 실측값이 무게 예산 이하, (5) 외장 완성(머리 도장+바디 커버+발 커버) + sim-to-real 리포트 완성.",
+    summary: "Phase 3 게이트 통과 판정. 5개 조건을 모두 충족해야 Week 8 합체에 진입한다: (1) 머리 전자부품 8단계 통합 완료(또는 목업 기능 검증), (2) SmolVLA v2 Orin LeRobot PyTorch 배포 완료, (3) Walking RL 최종본 + 더미 보행 안정(30분 전원 테스트 통과), (4) 실측값이 무게 예산 이하, (5) 외장 완성(머리 도장+바디 커버+발 커버) + sim-to-real 리포트 완성.",
     steps: [
       "머리 통합 확인: 8단계 완료 + 계량 700g 이하 (또는 목업 기능 동등 검증)",
-      "SmolVLA v2 확인: Orin TensorRT 배포 + 물체별 pick 성공률 v1 이상",
+      "SmolVLA v2 확인: Orin LeRobot PyTorch 배포 + 물체별 pick 성공률 v1 이상",
       "Walking RL 확인: 최종본 NUC 배포 + 더미 보행 안정 (직립+전진+정지)",
       "무게 확인: 상반신 실측 총 질량이 무게 예산 이하",
       "외장 확인: 머리 도장 + 바디 커버 + 발 커버 상태 양호",
@@ -1859,7 +1860,7 @@ export const TASK_HINTS = {
   },
 
   w8_power_integration: {
-    summary: "상하체 결합에 맞춰 2개 배터리 전원을 통합 배선한다. 배터리 2(4S 14.8V → Orin 직결 + DC-DC#1→NUC 12V + DC-DC#2→서보 12V + DC-DC#3→USB Hub 5V, 토르소), 배터리 1(6S 22.2V → ESC 직결, 다리 프레임). NC 비상정지로 배터리 1+2를 동시 차단한다. 전원 시퀀싱(배터리 2→부팅→DC-DC 활성→배터리 1→캘리브)을 실물에서 처음 통합 검증한다.",
+    summary: "상하체 결합에 맞춰 2개 배터리 전원을 통합 배선한다. 배터리 2(4S 14.8V → Orin 직결 + DC-DC#1→NUC 12V + DC-DC#2→서보 12V + DC-DC#3→USB Hub 5V, 토르소), 배터리 1(6S 22.2V → ESC 직결, 다리 프레임). NC 비상정지로 배터리 1을 차단한다 (Battery 2 유지, Orin 로그 보존). 전원 시퀀싱(배터리 2→부팅→DC-DC 활성→배터리 1→캘리브)을 실물에서 처음 통합 검증한다.",
     steps: [
       "배터리 2: Orin 14.8V 직결 + DC-DC#1→NUC(12V) + DC-DC#2→서보(12V) + DC-DC#3→USB Hub(5V) 배선 확인",
       "배터리 1: 다리 ESC 직결 24V 배선 확인 (다리 프레임 내부)",
