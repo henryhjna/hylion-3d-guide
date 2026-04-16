@@ -59,7 +59,7 @@ export const STATE_RESOURCES = {
     label: 'TALKING',
     color: '#00f0ff',
     orin_gpu: '없음',
-    orin_cpu: 'STT(Whisper)+Piper TTS+LED',
+    orin_cpu: 'STT(Whisper)+Piper TTS',
     nuc: '대기',
     network: '클라우드 LLM (Gemini Flash / GPT-4o mini)',
   },
@@ -87,14 +87,6 @@ export const STATE_RESOURCES = {
     nuc: 'Walking (전환)',
     network: '클라우드 API',
   },
-  LOW_BATTERY: {
-    label: 'LOW_BATTERY',
-    color: '#ff6600',
-    orin_gpu: '없음',
-    orin_cpu: '안전 자세',
-    nuc: '정지',
-    network: '대화만',
-  },
   EMERGENCY: {
     label: 'EMERGENCY',
     color: '#ff0044',
@@ -106,24 +98,16 @@ export const STATE_RESOURCES = {
 };
 
 export const STATE_TRANSITIONS = [
-  { from: 'IDLE', to: 'TALKING', trigger: '음성 감지' },
-  { from: 'IDLE', to: 'WALKING', trigger: '보행 명령' },
-  { from: 'TALKING', to: 'FETCH', trigger: 'fetch 명령' },
-  { from: 'TALKING', to: 'IDLE', trigger: '대화 종료' },
-  { from: 'TALKING', to: 'MANIPULATING', trigger: '조작 명령' },
-  { from: 'FETCH', to: 'WALKING', trigger: '이동 시작' },
-  { from: 'FETCH', to: 'MANIPULATING', trigger: '조작 시작' },
-  { from: 'FETCH', to: 'IDLE', trigger: '시퀀스 완료' },
+  { from: 'IDLE', to: 'TALKING', trigger: 'VAD 음성 감지' },
+  { from: 'TALKING', to: 'IDLE', trigger: '침묵 감지' },
+  { from: 'TALKING', to: 'WALKING', trigger: 'walk 명령 (대화 유지)' },
+  { from: 'TALKING', to: 'MANIPULATING', trigger: 'LLM arm 명령' },
+  { from: 'TALKING', to: 'FETCH', trigger: 'LLM fetch 명령' },
+  { from: 'WALKING', to: 'IDLE', trigger: '타이머/정지 명령' },
+  { from: 'WALKING', to: 'TALKING', trigger: 'VAD 음성 감지 (보행 유지)' },
   { from: 'MANIPULATING', to: 'IDLE', trigger: '완료' },
-  { from: 'MANIPULATING', to: 'TALKING', trigger: '완료+대화' },
-  { from: 'WALKING', to: 'IDLE', trigger: '정지 명령' },
-  { from: '*', to: 'EMERGENCY', trigger: '비상' },
-  { from: '*', to: 'LOW_BATTERY', trigger: 'SOC ≤20%' },
-  // 실패 경로
-  { from: 'MANIPULATING', to: 'IDLE', trigger: 'SmolVLA pick 실패 (재시도 한도 초과)', isFailure: true },
-  { from: 'FETCH', to: 'IDLE', trigger: 'stable 대기 타임아웃', isFailure: true },
-  { from: 'WALKING', to: 'MANIPULATING', trigger: '팔 안전 자세 복귀 후 전환', isFailure: false, note: '전환 시 팔 먼저 복귀' },
-  { from: 'TALKING', to: 'TALKING', trigger: '클라우드 API 장애 → 로컬 폴백 전환', isFailure: true },
+  { from: 'FETCH', to: 'IDLE', trigger: '시퀀스 완료' },
+  { from: '*', to: 'EMERGENCY', trigger: 'NUC 통신 두절 또는 E-stop' },
 ];
 
 export const POWER_SYSTEM = [

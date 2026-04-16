@@ -56,7 +56,7 @@ export const TIMELINE = [
     highlightParts: ['head', 'left_leg', 'right_leg'],
     gates: [],
     key: 'SmolVLA ablation (δ3 DGX), FETCH 시퀀서 구현 (ε1)',
-    extra: '클라우드 STT+LLM 연동 (ε1)',
+    extra: '클라우드 LLM 연동 (ε1)',
   },
   {
     week: 5,

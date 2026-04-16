@@ -228,7 +228,7 @@ export const TASK_HINTS = {
     steps: [
       "BHL GitHub 클론 후 lowlevel C 코드 디렉토리 구조 파악",
       "메인 제어 루프 분석 — 센서 읽기 → policy 출력 적용 → CAN 쓰기 사이클",
-      "CAN 통신 프로토콜 이해 — 4개 버스 구성, 모터 ID 매핑, 메시지 포맷",
+      "CAN 통신 프로토콜 이해 — 2개 CAN 버스 구성, 모터 ID 매핑, 메시지 포맷",
       "policy 입출력 인터페이스 확인 — 관절 각도/속도 입력, 토크/위치 명령 출력",
       "안전 관련 코드 확인 — 토크 리밋, 소프트 리밋, 에러 핸들링",
     ],
@@ -1208,9 +1208,9 @@ export const TASK_HINTS = {
   },
 
   w4_cloud_stt_llm: {
-    summary: "클라우드 STT + LLM을 스트리밍으로 연동하고, LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
+    summary: "클라우드 LLM 연동 — LLM 프롬프트에 fetch 태스크 타입을 추가하여 \"컵 가져와\"류 명령을 인식한다. 동시에 FETCH 시퀀서(기획서 5.1절 서브스텝 ①~⑤)의 골격을 구현한다.",
     steps: [
-      "클라우드 STT 스트리밍 연동 — 마이크 입력 → 클라우드 STT → 텍스트",
+      "클라우드 LLM 연동 — Whisper STT 텍스트 → 클라우드 LLM → 의도 분류",
       "LLM 프롬프트에 fetch 태스크 타입 추가 — \"컵 가져와\" → {action: \"fetch\", target: \"starbucks_cup\"}",
       "FETCH 시퀀서 구현: ①WALKING(테이블 방향, T1초) → ②MANIPULATING(SmolVLA pick) → ③WALKING(홈 방향, 180°+T2초) → ④MANIPULATING(handover) → ⑤IDLE",
       "기획서 4.4절 언어→동작 연결 로직: LLM이 물체 종류 추출 → SmolVLA에 target_object 전달",
@@ -1248,7 +1248,7 @@ export const TASK_HINTS = {
       "3D프린트 다리 구조물에 액추에이터 10개 순서대로 장착 (hip→knee→ankle)",
       "각 관절 가동 범위가 URDF 정의와 일치하는지 확인",
       "배터리 1(6S LiPo) ESC 직결 연결 → 전원 공급 확인",
-      "CAN 버스 배선(CAN-USB ×2, 4버스 1Mbps) 연결",
+      "CAN 버스 배선(CAN-USB ×2, 2버스 1Mbps) 연결",
       "다리 단독 전원 인가 후 모든 관절 동작 테스트",
     ],
     resources: [
@@ -1420,10 +1420,10 @@ export const TASK_HINTS = {
   },
 
   w5_leg_complete: {
-    summary: "Week 4에서 시작한 다리 조립을 완성하고, NUC와 CAN-USB ×2를 실물 연결하여 4버스(1Mbps, 250Hz) 통신을 확인한다. 이것이 공중 보행 테스트의 전제 조건이다.",
+    summary: "Week 4에서 시작한 다리 조립을 완성하고, NUC와 CAN-USB ×2를 실물 연결하여 2버스(1Mbps, 250Hz) 통신을 확인한다. 이것이 공중 보행 테스트의 전제 조건이다.",
     steps: [
       "다리 프레임 + 액추에이터 10개 최종 조립 완료",
-      "NUC에 CAN-USB ×2 연결 (4개 CAN 버스 구성)",
+      "NUC에 CAN-USB ×2 연결 (2개 CAN 버스 구성)",
       "NUC xanmod RT 커널에서 CAN 통신 테스트 (250Hz 명령 주기 확인)",
       "BHL lowlevel C 코드로 전체 10개 관절 동시 구동 확인",
       "배터리 1(6S LiPo) 전원으로 독립 구동 테스트",

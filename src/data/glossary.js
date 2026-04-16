@@ -28,7 +28,7 @@ export const GLOSSARY = {
   },
   "CAN 버스": {
     full: "Controller Area Network Bus",
-    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 CAN-USB 어댑터 2개로 4개 CAN 버스를 구성하여 10개 액추에이터를 1Mbps, 250Hz로 제어한다.",
+    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 CAN-USB 어댑터 2개로 2개 CAN 버스 (다리당 1)를 구성하여 10개 액추에이터를 1Mbps, 250Hz로 제어한다.",
     related: ["NUC", "CAN-USB"],
   },
   "DOF": {
@@ -323,7 +323,7 @@ export const GLOSSARY = {
   },
   "벅 컨버터": {
     full: "Buck Converter",
-    definition: "입력 전압보다 낮은 출력 전압을 만드는 DC-DC 변환기. 배터리 전압을 5V/12V/19V로 강압하여 각 부품에 공급한다.",
+    definition: "입력 전압보다 낮은 출력 전압을 만드는 DC-DC 변환기. 배터리 전압을 5V/12V로 강압하여 각 부품에 공급한다.",
     related: ["DC-DC"],
   },
 

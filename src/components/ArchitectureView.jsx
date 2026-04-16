@@ -273,7 +273,7 @@ export default function ArchitectureView() {
         </div>
         <div className="mt-1 p-3 rounded bg-[#ff004410] border border-[#ff004420] text-sm">
           <span className="text-[#ff0044] font-bold">비상정지:</span>
-          <span className="text-[#e0e8ff] ml-1">배터리 1 NC 차단 (배터리 2 유지 → Orin 로그 보존)</span>
+          <span className="text-[#e0e8ff] ml-1">배터리 1+2 NC 동시 차단</span>
         </div>
       </div>
 
