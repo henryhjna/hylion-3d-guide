@@ -180,7 +180,7 @@ export const GLOSSARY = {
   },
   "NUC": {
     full: "Next Unit of Computing (BeeLink N95)",
-    definition: "초소형 PC. C언어 메인 컨트롤러로 Walking RL policy(ONNX Runtime C API, MLP 25Hz, Isaac Gym 모델) 실행, SocketCAN으로 USB-CAN ×2 제어, Arduino USB Serial로 BNO085 IMU 수신. UDP Server(udp_joystick.py 호환)로 Orin에서 보행 명령 수신. xanmod RT 커널.",
+    definition: "초소형 PC. C언어 메인 컨트롤러로 Walking RL policy(ONNX Runtime C API, MLP 250Hz, Isaac Gym 모델) 실행, SocketCAN으로 USB-CAN ×2 제어, Arduino USB Serial로 BNO085 IMU 수신. UDP Server(udp_joystick.py 호환)로 Orin에서 보행 명령 수신. xanmod RT 커널.",
     related: ["xanmod", "RT 커널", "CAN 버스"],
   },
   "xanmod": {

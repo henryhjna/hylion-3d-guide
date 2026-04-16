@@ -9,7 +9,8 @@ export const SIGNAL_FLOW_CHAINS = [
       { id: 'S0', label: 'User', detail: '음성 명령' },
       { id: 'S1', label: 'USB Mic', detail: 'PCM 오디오', wire: 'USB' },
       { id: 'S3a', label: 'STT', detail: 'Whisper, local', wire: '텍스트', host: 'Orin' },
-      { id: 'S3b', label: 'Cloud LLM', detail: 'Gemini Flash / GPT-4o mini, 응답+명령 분류', wire: '응답 텍스트', host: 'Orin' },
+      { id: 'S3b', label: 'Cloud LLM', detail: 'Gemini Flash / GPT-4o mini, 응답+명령 분류', wire: 'intent + 응답', host: 'Orin' },
+      { id: 'S3f', label: '오케스트레이터', detail: 'Python FSM, 상태 전환 + FETCH 시퀀서', wire: '응답 텍스트', host: 'Orin' },
       { id: 'S3c', label: 'TTS', detail: 'Piper TTS, local', wire: 'USB 오디오', host: 'Orin' },
       { id: 'M1', label: 'USB Speaker', detail: '음성 출력' },
     ],
@@ -20,7 +21,7 @@ export const SIGNAL_FLOW_CHAINS = [
     label: '팔 조작 (SmolVLA)',
     color: '#c8ff00',
     steps: [
-      { id: 'S3b_arm', label: 'LLM 명령 분류', detail: '팔 명령', host: 'Orin' },
+      { id: 'S3f_arm', label: '오케스트레이터', detail: '팔 명령 라우팅', host: 'Orin' },
       { id: 'S3e', label: 'VLA (SmolVLA)', detail: 'SmolVLA 450M, LeRobot/PyTorch, 비동기 추론', wire: 'USB Serial ×2', host: 'Orin' },
       { id: 'A1', label: 'BusLinker ×2', detail: 'USB Serial 어댑터, 팔당 1개', wire: 'TTL Bus' },
       { id: 'A2', label: 'STS3215 ×12', detail: '30kg 토크, 인코더 내장', wire: '출력축' },
@@ -35,7 +36,7 @@ export const SIGNAL_FLOW_CHAINS = [
     color: '#ff00aa',
     steps: [
       { id: 'S3d', label: '명령 매핑', detail: '명령 테이블 → vx vy wz', wire: 'Ethernet UDP', host: 'Orin' },
-      { id: 'L1', label: 'NUC (N95)', detail: 'ONNX Runtime C API, MLP 25Hz, Isaac Gym 모델', wire: 'USB 목표 각도', host: 'NUC' },
+      { id: 'L1', label: 'NUC (N95)', detail: 'ONNX Runtime C API, MLP 250Hz, Isaac Gym 모델', wire: 'USB 목표 각도', host: 'NUC' },
       { id: 'L2', label: 'USB-CAN ×2', detail: '다리당 1개', wire: 'CAN 2.0' },
       { id: 'L3', label: 'CAN Bus ×2', detail: '1Mbps, 다리당 1', wire: 'CAN ID 매칭' },
       { id: 'L4', label: 'ESC ×12', detail: 'B-G431B, FOC 수kHz', wire: '3-phase PWM' },
@@ -43,7 +44,7 @@ export const SIGNAL_FLOW_CHAINS = [
       { id: 'L6', label: '기어박스 ×12', detail: '사이클로이드, 3D프린트', wire: '저속 고토크' },
       { id: 'L7', label: 'Leg Joint ×12', detail: '6DOF × 2다리' },
     ],
-    feedback: 'AS5600 인코더(I2C→ESC→CAN→NUC) + BNO085 IMU(Arduino USB→NUC)',
+    feedback: 'AS5600 인코더(I2C→ESC→CAN→NUC) + BNO085 IMU(Arduino USB→NUC) + NUC→Orin UDP(보행 상태+IMU stable)',
   },
 ];
 
@@ -116,7 +117,7 @@ export const SOFTWARE_STACK = [
     label: 'NUC N95 (Ubuntu)',
     color: '#4466ff',
     groups: [
-      { name: '메인 (C)', items: ['UDP Server (udp_joystick.py 호환)', 'ONNX Runtime C API — MLP 25Hz', 'SocketCAN — CAN 프레임 송수신', 'USB Serial — Arduino IMU 수신'] },
+      { name: '메인 (C)', items: ['UDP Server (udp_joystick.py 호환)', 'ONNX Runtime C API — MLP 250Hz', 'SocketCAN — CAN 프레임 송수신', 'USB Serial — Arduino IMU 수신'] },
       { name: '유틸 (Python)', items: ['calibrate_joints.py'] },
     ],
   },

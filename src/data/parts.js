@@ -163,7 +163,7 @@ export const PARTS = {
       { label: '모터', value: 'MAD M6C12 ×4 + MAD 5010 ×2' },
       { label: '드라이버', value: 'B-G431B-ESC1 ×6 (STM32 FOC 수kHz)' },
       { label: '통신', value: 'CAN 버스 ×1, 1Mbps' },
-      { label: '제어', value: 'NUC + RL Policy MLP via ONNX, 25Hz' },
+      { label: '제어', value: 'NUC + RL Policy MLP via ONNX, 250Hz' },
       { label: '특성', value: '백드라이버블 — 전원 차단 시 안전' },
     ],
     walkingRL: {
@@ -191,7 +191,7 @@ export const PARTS = {
       { label: '모터', value: 'MAD M6C12 ×4 + MAD 5010 ×2' },
       { label: '드라이버', value: 'B-G431B-ESC1 ×6 (STM32 FOC 수kHz)' },
       { label: '통신', value: 'CAN 버스 ×1, 1Mbps' },
-      { label: '제어', value: 'NUC + RL Policy MLP via ONNX, 25Hz' },
+      { label: '제어', value: 'NUC + RL Policy MLP via ONNX, 250Hz' },
       { label: '특성', value: '백드라이버블 — 전원 차단 시 안전' },
     ],
     walkingRL: {

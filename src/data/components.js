@@ -70,7 +70,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'Walking RL policy (ONNX Runtime C API, MLP 25Hz, Isaac Gym 모델), SocketCAN으로 USB-CAN ×2 제어, Arduino USB Serial로 BNO085 IMU 수신. UDP Server로 Orin에서 보행 명령 수신 (udp_joystick.py 호환)',
+        'Walking RL policy (ONNX Runtime C API, MLP 250Hz, Isaac Gym 모델), SocketCAN으로 USB-CAN ×2 제어, Arduino USB Serial로 BNO085 IMU 수신. UDP Server로 Orin에서 보행 명령 수신 (udp_joystick.py 호환)',
       parts: ['torso'],
       quantity: 1,
       spares: 0,

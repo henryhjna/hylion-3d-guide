@@ -38,7 +38,7 @@ export const COMPUTING_NODES = [
     color: '#4466ff',
     position: { x: 200, y: 0 },
     tasks: [
-      'Walking RL policy (ONNX Runtime C API, MLP, 25Hz, Isaac Gym 모델)',
+      'Walking RL policy (ONNX Runtime C API, MLP, 250Hz, Isaac Gym 모델)',
       'SocketCAN → USB-CAN ×2 → CAN 버스 2개, ESC 12개',
       'BNO085 IMU (Arduino USB Serial 경유)',
       'UDP Server — Orin에서 vx vy wz 수신 (udp_joystick.py 호환)',
