@@ -50,7 +50,7 @@ export const TIMELINE = [
   {
     week: 4,
     title: '머리/외장 전환 + 물리 진입',
-    trackA: '머리 표면 마감 시작, 바디 커버 패턴 (δ1→머리, ε2→외장+lip sync+목PID)',
+    trackA: '머리 표면 마감 시작, 바디 커버 패턴 (δ1→머리, ε2→외장+lip sync)',
     trackB: '액추에이터 10개 조립 + 다리 조립 시작 (δ2), 토르소+팔 부분 실측 (전체는 W5)',
     highlight: '머리 + 양다리(물리)',
     highlightParts: ['head', 'left_leg', 'right_leg'],
@@ -62,11 +62,11 @@ export const TIMELINE = [
     week: 5,
     title: '공중 보행',
     star: true,
-    trackA: '머리 도장+LED 디퓨저, 바디 커버 완성, lip sync+목PID 완성 (δ1, ε2)',
+    trackA: '머리 도장, 바디 커버 완성, lip sync 완성 (δ1, ε2)',
     trackB: '공중 지그 보행 테스트 (δ2)',
     highlight: '머리(도장) + 양다리(공중보행) + 전체(서바이벌)',
     highlightParts: ['head', 'left_leg', 'right_leg'],
-    gates: ['Phase 2 — TTFT<500ms, 시선추적+표정5종, 공중보행, ablation', 'Orin TensorRT 레이턴시 측정'],
+    gates: ['Phase 2 — TTFT<500ms, lip sync+감정표현, 공중보행, ablation', 'Orin TensorRT 레이턴시 측정'],
     key: '서바이벌 모드 엔진 완성 (ε1), 시나리오 B/C 설계 (δ3)',
   },
   {

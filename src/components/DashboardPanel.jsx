@@ -7,7 +7,7 @@ import { HANDOFFS } from '../data/handoffs';
 /* ── Gate definitions ─────────────────────────────────────────── */
 const GATES = {
   3: { name: 'Phase 1', items: ['토르소 완성', 'SmolVLA v1 동작', '낙상 감지 검증', 'Newton Walking RL 검증 완료', '수집 600개'] },
-  5: { name: 'Phase 2', items: ['TTFT<500ms', '시선추적+표정5종', '공중보행', 'ablation', '머리+바디'] },
+  5: { name: 'Phase 2', items: ['TTFT<500ms', 'lip sync+감정표현', '공중보행', 'ablation', '머리+바디'] },
   7: { name: 'Phase 3', items: ['머리 통합', 'SmolVLA v2', 'Walking RL 최종', '외장 완성'] },
   8: { name: '합류', items: ['상하체 결합', '실체 보행', '낙상 감지 검증', '풀 시나리오 1차'] },
   9: { name: '리허설 1차', items: ['시나리오 전체 통과', '서바이벌 전환', '비상정지', '10보+회전', '5분 낙상 없음'] },

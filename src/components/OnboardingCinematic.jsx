@@ -19,7 +19,7 @@ const SECTIONS = [
     duration: 5000,
     cameraPreset: 'head',
     title: '하이리온 캐릭터 머리',
-    subtitle: '시선 추적, 감정 표현, 음성 대화',
+    subtitle: 'lip sync, 음성 대화, SmolVLA 카메라',
     effect: 'led-blink',
   },
   {

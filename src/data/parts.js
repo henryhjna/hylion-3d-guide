@@ -41,10 +41,8 @@ export const PARTS = {
       { label: '무게 게이트', value: '≤700g' },
       { label: '외주 스티로폼', value: '≤300g' },
       { label: '내부 전자부품', value: '≤400g' },
-      { label: '카메라', value: '1개 (외부 USB — MediaPipe + VLA external view)' },
-      { label: 'LED 눈', value: '2개 (NeoPixel) — 감정 5종' },
+      { label: '카메라', value: '1개 (외부 USB — SmolVLA external view)' },
       { label: '입 서보', value: 'SG90급 1개 — lip sync (Jetson GPIO 5V PWM)' },
-      { label: '목 서보', value: 'XL430 ×2 (토르소 상단) — 시선 추적 PID' },
     ],
     manufacturingPaths: [
       { label: '경로 A (기본)', desc: '스티로폼 CNC 외주 → 사포 → 서피서 → 도장' },
@@ -76,7 +74,6 @@ export const PARTS = {
       'Orin Nano Super + 방열판',
       'USB Hub A + USB Hub B',
       'SO-ARM ×2 어깨 마운트',
-      '상단: 목 서보 마운트',
     ],
     assemblySteps: [
       '프레임 조립',
@@ -87,7 +84,6 @@ export const PARTS = {
       'USB Hub A + USB Hub B',
       '환기팬 + 배기구/흡기구',
       'SO-ARM ×2 어깨 마운트',
-      '목 서보 XL430 ×2',
       '스피커 + 마이크',
       'Orin↔NUC Ethernet',
       '케이블 정리 + 간섭 확인',

@@ -31,15 +31,6 @@ export const GLOSSARY = {
     definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 CAN-USB 어댑터 2개로 4개 CAN 버스를 구성하여 10개 액추에이터를 1Mbps, 250Hz로 제어한다.",
     related: ["NUC", "CAN-USB"],
   },
-  "Dynamixel": {
-    definition: "ROBOTIS 사의 스마트 서보 액추에이터 시리즈. 하이리온은 목에 XL430 2개를 사용하며, U2D2를 통해 Protocol 2.0으로 통신한다. SO-ARM은 STS3215(Feetech)을 사용하며 Dynamixel이 아니다.",
-    related: ["Protocol 2.0", "U2D2", "SO-ARM"],
-    links: [{ label: "Dynamixel 공식", url: "https://emanual.robotis.com/docs/en/dxl/" }],
-  },
-  "Protocol 2.0": {
-    definition: "Dynamixel 서보의 통신 프로토콜 버전 2. 1Mbps 기준으로 8개 서보 sync read/write를 약 5ms 이내에 처리하여 200Hz 제어가 가능하다.",
-    related: ["Dynamixel", "U2D2", "보레이트"],
-  },
   "DOF": {
     full: "Degrees of Freedom (자유도)",
     definition: "로봇 관절이 독립적으로 움직일 수 있는 축의 수. BHL 다리는 5DOF x 2 = 10DOF, SO-ARM은 6DOF x 2 = 12DOF이다.",
@@ -159,7 +150,7 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   "Orin": {
     full: "NVIDIA Jetson Orin Nano Super",
-    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드. Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Local LLM fallback(Qwen 2.5 0.5B Q4, Ollama), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), MediaPipe(CPU), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라). TDP 25W.",
+    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드. Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Local LLM fallback(Qwen 2.5 0.5B Q4, Ollama), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라). TDP 25W.",
     related: ["JetPack", "TensorRT", "CUDA"],
     links: [{ label: "Jetson Orin 공식", url: "https://developer.nvidia.com/embedded/jetson-orin" }],
   },
@@ -194,8 +185,8 @@ export const GLOSSARY = {
   },
   "GPIO": {
     full: "General Purpose Input/Output",
-    definition: "범용 디지털 입출력 핀. Orin에서 LED 눈(NeoPixel)을 제어하는 데 사용한다.",
-    related: ["PWM", "NeoPixel"],
+    definition: "범용 디지털 입출력 핀. Orin에서 입 서보(SG90) PWM 제어에 사용한다.",
+    related: ["PWM"],
   },
   "PWM": {
     full: "Pulse Width Modulation",
@@ -241,26 +232,21 @@ export const GLOSSARY = {
     related: ["NUC", "Orin"],
   },
   "USB-C": {
-    definition: "범용 직렬 버스(USB) Type-C 커넥터. 카메라, U2D2, 오디오 장치 등을 Orin에 연결하는 데 사용한다.",
+    definition: "범용 직렬 버스(USB) Type-C 커넥터. 카메라, 오디오 장치 등을 Orin에 연결하는 데 사용한다.",
   },
   "TTL": {
     full: "Transistor-Transistor Logic",
-    definition: "디지털 신호 전압 규격(0V/5V 또는 0V/3.3V). Dynamixel 서보의 기본 통신 전기 규격이며, U2D2가 USB-TTL 변환을 담당한다.",
-    related: ["RS-485", "U2D2", "Dynamixel"],
+    definition: "디지털 신호 전압 규격(0V/5V 또는 0V/3.3V). STS3215 서보의 기본 통신 전기 규격이며, BusLinker가 USB-TTL 변환을 담당한다.",
+    related: ["RS-485"],
   },
   "RS-485": {
-    definition: "장거리 차동 신호 직렬 통신 규격. TTL보다 노이즈에 강하고 전송 거리가 길어, 다수의 Dynamixel을 데이지체인 연결할 때 사용할 수 있다.",
-    related: ["TTL", "U2D2"],
-  },
-  "U2D2": {
-    definition: "ROBOTIS의 USB-Dynamixel 통신 변환 어댑터. USB를 TTL/RS-485로 변환하여 PC/Orin에서 Dynamixel 서보를 제어한다. 하이리온은 U2D2 2개로 좌팔(6개)과 우팔+목(8개)을 분리 운용한다.",
-    related: ["Dynamixel", "TTL", "RS-485", "Protocol 2.0"],
-    links: [{ label: "U2D2 매뉴얼", url: "https://emanual.robotis.com/docs/en/parts/interface/u2d2/" }],
+    definition: "장거리 차동 신호 직렬 통신 규격. TTL보다 노이즈에 강하고 전송 거리가 길어, 다수의 서보를 데이지체인 연결할 때 사용할 수 있다.",
+    related: ["TTL"],
   },
   "보레이트": {
     full: "Baud Rate",
-    definition: "직렬 통신의 초당 심볼 전송 속도(bps). Dynamixel Protocol 2.0은 1Mbps(1,000,000bps)로 설정하여 고속 sync read/write를 수행한다.",
-    related: ["Protocol 2.0", "Dynamixel"],
+    definition: "직렬 통신의 초당 심볼 전송 속도(bps). STS3215 서보는 1Mbps(1,000,000bps)로 설정하여 고속 통신을 수행한다.",
+    related: ["TTL"],
   },
   "CAN-USB": {
     definition: "CAN 버스와 USB를 변환하는 어댑터. BHL 다리 제어에서 NUC와 모터 드라이버(ESC) 간 CAN 통신 인터페이스로 사용한다. 하이리온은 2개 사용.",
@@ -272,26 +258,12 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   "손목 카메라": {
     full: "Wrist Camera (hand-eye view)",
-    definition: "SO-ARM 그리퍼 부근에 장착하는 USB 카메라. SmolVLA 매니퓰레이션 추론의 입력으로 사용된다. 머리 카메라(시선 추적/대화용)와 용도가 구분되며, Week 1에서 위치·각도를 확정한 후 변경하지 않는다.",
-    related: ["SmolVLA", "MediaPipe", "머리 카메라"],
-  },
-  "MediaPipe": {
-    definition: "Google의 실시간 비전 AI 프레임워크. 얼굴 감지, 손 추적 등을 제공하며, 하이리온에서는 CPU 모드로 관객 얼굴을 감지하여 목 서보 PID 시선 추적에 활용한다.",
-    related: ["블렌드셰이프", "lip sync"],
-    links: [{ label: "MediaPipe 공식", url: "https://ai.google.dev/edge/mediapipe/solutions/guide" }],
-  },
-  "블렌드셰이프": {
-    full: "Blend Shape",
-    definition: "3D 모델의 표정이나 형상 변형을 미리 정의한 변형 가중치 세트. MediaPipe Face Mesh가 출력하는 블렌드셰이프 값으로 로봇의 LED 감정 표현을 매핑한다.",
-    related: ["MediaPipe"],
+    definition: "SO-ARM 그리퍼 부근에 장착하는 USB 카메라. SmolVLA 매니퓰레이션 추론의 입력으로 사용된다. 머리 카메라(대화용)와 용도가 구분되며, Week 1에서 위치·각도를 확정한 후 변경하지 않는다.",
+    related: ["SmolVLA", "머리 카메라"],
   },
   "lip sync": {
     definition: "TTS 재생 중 입 서보(SG90)를 open, 묵음 시 close하는 단순 동작. 정밀 립싱크가 아닌 open/close 방식. 선택적으로 오디오 볼륨 threshold 기반으로 자연스럽게 구현 가능.",
-    related: ["TTS", "MediaPipe"],
-  },
-  "NeoPixel": {
-    definition: "Adafruit의 주소 지정 가능 RGB LED 제품군(WS2812B 기반). 하이리온의 눈 LED에 사용하며, Orin GPIO로 제어하여 감정별 색상·패턴을 표현한다.",
-    related: ["GPIO"],
+    related: ["TTS"],
   },
   "STT": {
     full: "Speech-to-Text (음성 인식)",
@@ -310,7 +282,7 @@ export const GLOSSARY = {
   },
   "VAD": {
     full: "Voice Activity Detection (음성 활동 감지)",
-    definition: "오디오 스트림에서 사람의 음성이 있는 구간만 감지하는 기술. LED 감정 표현 중 비활성화하여 불필요한 음성 인식 트리거를 방지한다.",
+    definition: "오디오 스트림에서 사람의 음성이 있는 구간만 감지하는 기술. TTS 재생 중 비활성화하여 불필요한 음성 인식 트리거를 방지한다.",
     related: ["STT"],
   },
   "에코 캔슬링": {
@@ -397,12 +369,12 @@ export const GLOSSARY = {
   },
   "FPS": {
     full: "Frames Per Second",
-    definition: "초당 처리/렌더링되는 프레임 수. SmolVLA 추론 속도(5Hz 이상 목표)나 MediaPipe 처리 속도(IDLE 시 10fps)를 나타낸다.",
+    definition: "초당 처리/렌더링되는 프레임 수. SmolVLA 추론 속도(5Hz 이상 목표)를 나타낸다.",
     related: ["Hz", "throughput"],
   },
   "Hz": {
     full: "Hertz (헤르츠)",
-    definition: "초당 반복 횟수의 단위. BHL CAN 제어 루프 250Hz, SmolVLA 추론 5Hz, Dynamixel 제어 200Hz 등 시스템 각 부분의 제어 주기를 나타낸다.",
+    definition: "초당 반복 횟수의 단위. BHL CAN 제어 루프 250Hz, SmolVLA 추론 5Hz 등 시스템 각 부분의 제어 주기를 나타낸다.",
     related: ["FPS"],
   },
   "draco": {
@@ -426,7 +398,7 @@ export const GLOSSARY = {
   "SO-ARM": {
     full: "SO-ARM101",
     definition: "TheRobotStudio의 오픈소스 6DOF 로봇 팔. 하이리온은 SO-ARM101 2개(좌우)를 상체에 장착하여 물체 집기(pick-place)와 제스처를 수행한다.",
-    related: ["Dynamixel", "그리퍼"],
+    related: ["그리퍼"],
     links: [{ label: "SO-ARM101 GitHub", url: "https://github.com/TheRobotStudio/SO-ARM100" }],
   },
   "BHL": {
@@ -456,8 +428,7 @@ export const GLOSSARY = {
   },
   "PID": {
     full: "Proportional-Integral-Derivative (비례-적분-미분 제어)",
-    definition: "가장 널리 쓰이는 피드백 제어 알고리즘. 목 서보에서 MediaPipe가 감지한 얼굴 위치와 현재 목 각도의 오차를 PID로 보정하여 시선을 추적한다. 오버슈트 5도 미만 목표.",
-    related: ["MediaPipe"],
+    definition: "가장 널리 쓰이는 피드백 제어 알고리즘. 목표값과 현재값의 오차를 비례·적분·미분 항으로 보정하여 정밀한 위치/속도 제어를 수행한다.",
   },
   "HOVER": {
     definition: "NVlabs의 오픈소스 humanoid locomotion 프레임워크. reward 함수, 도메인 랜덤화, sim2sim MuJoCo 파이프라인을 제공한다. BHL Walking RL에서 reward 구조를 이식하여 사용.",

@@ -490,19 +490,6 @@ function InternalComponents({ modelHeight }) {
         {label('카메라', 'text-pink-400')}
       </Html>
 
-      {/* LED Eyes ×2 — eye level */}
-      <mesh position={[-0.05 * s, 0.65 * s, 0.10 * s]}>
-        <sphereGeometry args={[0.012 * s, 8, 8]} />
-        <meshStandardMaterial color="#00f0ff" emissive="#00f0ff" emissiveIntensity={0.8} />
-      </mesh>
-      <mesh position={[0.05 * s, 0.65 * s, 0.10 * s]}>
-        <sphereGeometry args={[0.012 * s, 8, 8]} />
-        <meshStandardMaterial color="#00f0ff" emissive="#00f0ff" emissiveIntensity={0.8} />
-      </mesh>
-      <Html position={[0, 0.68 * s, 0.10 * s]} center distanceFactor={3}>
-        {label('LED 눈 ×2', 'text-cyan-400')}
-      </Html>
-
       {/* SG90 lip servo — mouth area */}
       <mesh position={[0, 0.53 * s, 0.08 * s]}>
         <boxGeometry args={[0.02 * s, 0.012 * s, 0.012 * s]} />
@@ -510,19 +497,6 @@ function InternalComponents({ modelHeight }) {
       </mesh>
       <Html position={[0, 0.55 * s, 0.10 * s]} center distanceFactor={3}>
         {label('입 서보', 'text-orange-400')}
-      </Html>
-
-      {/* ── TORSO TOP: Neck servos (y≈0.37) ── */}
-      <mesh position={[-0.015 * s, 0.38 * s, 0]}>
-        <cylinderGeometry args={[0.008 * s, 0.008 * s, 0.02 * s, 8]} />
-        <meshStandardMaterial color="#aa44ff" emissive="#aa44ff" emissiveIntensity={0.5} />
-      </mesh>
-      <mesh position={[0.015 * s, 0.38 * s, 0]}>
-        <cylinderGeometry args={[0.008 * s, 0.008 * s, 0.02 * s, 8]} />
-        <meshStandardMaterial color="#aa44ff" emissive="#aa44ff" emissiveIntensity={0.5} />
-      </mesh>
-      <Html position={[0, 0.40 * s, 0]} center distanceFactor={3}>
-        {label('목 XL430 ×2', 'text-purple-400')}
       </Html>
 
       {/* ── TORSO INTERNALS (y=0.27~0.37) ── */}

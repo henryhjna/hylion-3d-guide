@@ -38,7 +38,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), MediaPipe(CPU), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라 캡처). USB Hub A(센서)+Hub B(제어) 경유',
+        'Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch/TensorRT), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라 캡처). USB Hub A(센서)+Hub B(제어) 경유',
       parts: ['torso'],
       quantity: 1,
       spares: 0,
@@ -184,38 +184,6 @@ export const COMPONENTS = {
   // ===========================================================================
   // 서보 모터
   // ===========================================================================
-  xl430_w250_t: {
-    name: 'Dynamixel XL430-W250-T',
-    category: 'motor_servo',
-    specs: {
-      type: 'Smart Servo (Dynamixel Protocol 2.0)',
-      stall_torque: '1.0 N·m (12V)',
-      no_load_speed: '57 RPM (12V)',
-      resolution: '4096 (0.088°)',
-      voltage: '6.5~12V',
-      communication: 'TTL (데이지체인)',
-      weight: '57.2g',
-      feedback: '위치, 속도, 전류, 온도',
-    },
-    usage: {
-      description:
-        '목(neck) pan/tilt 서보. 토르소 상단에 배치되며, MediaPipe 얼굴 인식 → PID 제어로 시선 추적 수행. U2D2에 연결 (Dynamixel Protocol 2.0, ID 13~14)',
-      parts: ['torso'],
-      quantity: 2,
-      spares: 0,
-      owner: '상윤',
-    },
-    procurement: {
-      channel: '한국',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [
-      { label: 'Dynamixel XL430', url: 'https://www.robotis.com/shop/item.php?it_id=902-0135-000' },
-    ],
-    location3D: { part: 'torso', position: 'top', internalId: 'neck_servo' },
-  },
-
   so_arm_servo: {
     name: 'SO-ARM101 서보 (STS3215)',
     category: 'motor_servo',
@@ -314,66 +282,9 @@ export const COMPONENTS = {
     location3D: { part: 'left_leg', position: 'actuator_internal', internalId: 'esc' },
   },
 
-  motor_control_board_waveshare: {
-    name: 'Waveshare Motor Control Board',
-    category: 'motor_driver',
-    specs: {
-      type: 'Servo/Motor Control HAT',
-      channels: '16-channel PWM',
-      communication: 'I2C',
-      voltage: '3.3~5V logic',
-    },
-    usage: {
-      description:
-        '서보/모터 다채널 PWM 제어 보조. SG90급 입 서보 등 PWM 서보 제어 확장용',
-      parts: ['torso'],
-      quantity: 1,
-      spares: 0,
-      owner: '성래',
-    },
-    procurement: {
-      channel: '한국',
-      status: 'pending',
-      estimatedArrival: 'Week 1',
-    },
-    links: [
-      { label: 'Waveshare', url: 'https://www.waveshare.com/' },
-    ],
-    location3D: { part: 'torso', position: 'upper_mid', internalId: 'motor_ctrl' },
-  },
-
   // ===========================================================================
   // 통신 인터페이스
   // ===========================================================================
-  u2d2: {
-    name: 'ROBOTIS U2D2',
-    category: 'communication',
-    specs: {
-      type: 'USB ↔ Dynamixel TTL/RS485 변환기',
-      protocol: 'Dynamixel Protocol 2.0',
-      baudrate: '최대 4.5Mbps (1Mbps 사용)',
-      interface: 'USB 2.0',
-      connector: 'JST 3-pin (TTL)',
-    },
-    usage: {
-      description:
-        '목 XL430 Dynamixel ×2 통신 (Protocol 2.0, 1Mbps). Orin USB 연결',
-      parts: ['torso'],
-      quantity: 1,
-      spares: 0,
-      owner: '성래',
-    },
-    procurement: {
-      channel: '한국',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [
-      { label: 'ROBOTIS U2D2', url: 'https://www.robotis.com/shop/item.php?it_id=902-0132-000' },
-    ],
-    location3D: { part: 'torso', position: 'upper_mid', internalId: 'u2d2' },
-  },
-
   can_usb: {
     name: 'CAN-USB 어댑터',
     category: 'communication',
@@ -471,7 +382,7 @@ export const COMPONENTS = {
     },
     usage: {
       description:
-        'MediaPipe 시선 추적 + 얼굴 인식 + SmolVLA external view (3대 카메라 중 외부). 머리 내부 정면 장착',
+        'SmolVLA external view (3대 카메라 중 외부). 머리 내부 정면 장착',
       parts: ['head'],
       quantity: 1,
       spares: 0,
@@ -622,35 +533,6 @@ export const COMPONENTS = {
     },
     links: [],
     location3D: { part: 'torso', position: 'upper_front', internalId: 'speaker' },
-  },
-
-  neopixel_led: {
-    name: 'NeoPixel LED (WS2812B)',
-    category: 'io_device',
-    specs: {
-      type: 'Addressable RGB LED',
-      voltage: '5V',
-      communication: '단선 직렬 (Orin GPIO)',
-      colors: '16.7M (24-bit RGB)',
-      brightness: '~20mA per color per LED',
-    },
-    usage: {
-      description:
-        '머리 눈 LED. 감정 5종 표현 (중립/기쁨/놀람/슬픔/분노). 반투명 디퓨저(아크릴/실리콘) 뒤에 장착. Orin GPIO로 직접 제어. Week 5에서 5종 확장',
-      parts: ['head'],
-      quantity: 2,
-      spares: 2,
-      owner: '상윤',
-    },
-    procurement: {
-      channel: '심천',
-      status: 'confirmed',
-      estimatedArrival: 'Week 0',
-    },
-    links: [
-      { label: 'NeoPixel Guide', url: 'https://learn.adafruit.com/adafruit-neopixel-uberguide' },
-    ],
-    location3D: { part: 'head', position: 'eyes', internalId: 'led_eyes' },
   },
 
   usb_hub_a: {
@@ -1142,31 +1024,6 @@ export const COMPONENTS = {
     location3D: null,
   },
 
-  led_diffuser: {
-    name: 'LED 눈 디퓨저',
-    category: 'printed',
-    specs: {
-      type: '반투명 아크릴 또는 실리콘 몰드',
-      purpose: 'NeoPixel LED 빛을 균일하게 확산하여 눈 표현',
-      manufacturing: '레이저 커팅 또는 실리콘 성형',
-    },
-    usage: {
-      description:
-        '머리 눈 부분에 NeoPixel LED 앞에 장착. 빛을 부드럽게 확산하여 캐릭터 눈 표현. Week 5에서 δ1 제작',
-      parts: ['head'],
-      quantity: 2,
-      spares: 1,
-      owner: '인혁',
-    },
-    procurement: {
-      channel: '3D프린트',
-      status: 'pending',
-      estimatedArrival: 'Week 5',
-    },
-    links: [],
-    location3D: { part: 'head', position: 'eyes', internalId: 'diffuser' },
-  },
-
   foot_cover: {
     name: '발 커버',
     category: 'printed',
@@ -1204,12 +1061,12 @@ export const COMPONENTS = {
       height: '~25cm',
       process: 'ε2 3D 모델링(Blender/Fusion360) → STL → 외주 CNC 절삭',
       surface_finish: '사포(#200→#400) → 서피서 2회 → 수성 도료 도장',
-      openings: '카메라 개구부, LED 눈 개구부, 입 서보 개구부, 배선 통로(목)',
+      openings: '카메라 개구부, 입 서보 개구부, 배선 통로(목)',
       plan_b: '외주 납기 지연 시 스티로폼 수작업 (열선 커터 + 칼 + 사포)',
     },
     usage: {
       description:
-        '하이리온 캐릭터 머리 외형. 내부에 카메라, NeoPixel LED ×2, SG90급 입 서보 장착. 전체 머리 무게 ≤700g(외주 ≤300g + 전자부품 ≤400g). Week 1 발주 → Week 5~6 도착 목표',
+        '하이리온 캐릭터 머리 외형. 내부에 카메라, SG90급 입 서보 장착. 전체 머리 무게 ≤700g(외주 ≤300g + 전자부품 ≤400g). Week 1 발주 → Week 5~6 도착 목표',
       parts: ['head'],
       quantity: 1,
       spares: 0,

@@ -7,21 +7,20 @@ export const TASK_HINTS = {
   // =======================================================================
 
   w0_soarm_assembly: {
-    summary: "Week 0 Day 1 전원 공통 과제. SO-ARM을 직접 조립하며 로봇 하드웨어 감각을 익히는 첫 단계로, 이후 텔레오퍼레이션(Day 3)과 모방학습(Day 4)의 물리적 기반이 된다. 기획서 5.7절에 따라 서보 버스 분배(Waveshare Board: 좌팔 6 / 우팔 6, U2D2: 목 2)를 고려해 ID를 할당한다.",
+    summary: "Week 0 Day 1 전원 공통 과제. SO-ARM을 직접 조립하며 로봇 하드웨어 감각을 익히는 첫 단계로, 이후 텔레오퍼레이션(Day 3)과 모방학습(Day 4)의 물리적 기반이 된다. 기획서 5.7절에 따라 서보 버스 분배(BusLinker Board: 좌팔 6 / 우팔 6)를 고려해 ID를 할당한다.",
     steps: [
       "SO-ARM 키트 구성품 확인 — 서보 6개, 프레임 파트, 나사류 누락 체크",
-      "서보모터(XL430) 6개를 프레임에 순서대로 조립 (어깨→팔꿈치→손목→그리퍼)",
-      "U2D2 연결 후 Dynamixel Wizard2로 ID 할당 (좌팔 1~6, 우팔 7~12, 기획서 5.7절 참조)",
+      "STS3215 서보 6개를 프레임에 순서대로 조립 (어깨→팔꿈치→손목→그리퍼)",
+      "BusLinker Board 연결 후 ID 할당 (좌팔 1~6, 우팔 7~12, 기획서 5.7절 참조)",
       "각 관절 캘리브레이션 — 중립 위치에서 position offset 설정",
       "전체 6축 동시 구동 테스트 (토크 ON/OFF, 각 관절 범위 확인)",
       "δ1은 조립 과정을 기록하여 조립 기준서 초안에 활용",
     ],
     resources: [
       { label: "SO-ARM101 공식 GitHub", url: "https://github.com/TheRobotStudio/SO-ARM100" },
-      { label: "Dynamixel Wizard2", url: "https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/" },
       { label: "기획서 7.2절 (토르소/SO-ARM)", type: "internal", section: "7.2" },
     ],
-    components: ["xl430", "u2d2"],
+    components: ["sts3215", "buslinker_controller"],
     estimatedHours: 4,
   },
 
@@ -37,23 +36,22 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 6.2절 (협업 구조)", type: "internal", section: "6.2" },
     ],
-    components: ["xl430"],
+    components: ["sts3215"],
     estimatedHours: 2,
   },
 
   w0_head_spec_discuss: {
-    summary: "δ1+ε2 공동 과제. 하이리온 캐릭터 머리의 외주 CNC 사양을 준비하기 위한 첫 논의로, ε2는 외형 디자인(레퍼런스+스케치)을, δ1은 내부에 들어갈 전자부품(카메라, LED 눈, 입 서보) 치수를 공유한다. 기획서 7.3절에 따르면 충돌 시 내부 공간 확보 우선(기능 > 외형)이 원칙이다.",
+    summary: "δ1+ε2 공동 과제. 하이리온 캐릭터 머리의 외주 CNC 사양을 준비하기 위한 첫 논의로, ε2는 외형 디자인(레퍼런스+스케치)을, δ1은 내부에 들어갈 전자부품(카메라, 입 서보) 치수를 공유한다. 기획서 7.3절에 따르면 충돌 시 내부 공간 확보 우선(기능 > 외형)이 원칙이다.",
     steps: [
       "ε2: 하이리온 캐릭터 레퍼런스 이미지 수집 + 외형 스케치 준비",
-      "δ1: 내부 전자부품 치수 정리 — 카메라(USB), LED 눈(NeoPixel) 2개, 입 서보(SG90급) 1개",
-      "카메라 렌즈 위치와 LED 눈 개구부 크기 합의 (시야각 확보 vs 디자인)",
+      "δ1: 내부 전자부품 치수 정리 — 카메라(USB), 입 서보(SG90급) 1개",
+      "카메라 렌즈 위치 합의 (시야각 확보 vs 디자인)",
       "머리 무게 제약 확인 — 외주 조형물 ≤300g + 내부 전자부품 ≤400g = 총 ≤700g (기획서 7.3절)",
-      "목 서보(XL430 x2)는 토르소 상단에 배치됨을 확인 (머리 무게 미포함)",
     ],
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo", "xl430"],
+    components: ["head_camera", "wrist_camera", "sg90_servo"],
     estimatedHours: 2,
   },
 
@@ -63,14 +61,13 @@ export const TASK_HINTS = {
       "기획서 9.1절 조달 채널 기반으로 한국 구매 부품 리스트 최종 확인",
       "Orin Nano Super + carrier board 주문 (ε1이 Week 1에 JetPack 셋업 예정)",
       "NUC (BeeLink N95) 주문 (δ2가 Week 1에 RT 커널 설치 예정)",
-      "XL430 x2 (목 서보 여분) + U2D2 x2 주문",
       "USB 카메라 + ESC(B-G431B-ESC1) x12 + 2020 알루미늄 프로파일 주문",
       "배송 추적 설정 — Week 1 월요일까지 도착 여부 확인, 미도착 시 대안 채널 탐색",
     ],
     resources: [
       { label: "기획서 9.1절 (조달 채널)", type: "internal", section: "9.1" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "u2d2", "head_camera", "wrist_camera", "esc_b_g431b"],
+    components: ["orin_nano_super", "nuc", "head_camera", "wrist_camera", "esc_b_g431b"],
     estimatedHours: 2,
   },
 
@@ -103,7 +100,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "IsaacLab URDF Import", url: "https://isaac-sim.github.io/IsaacLab/main/index.html" },
     ],
-    components: ["xl430"],
+    components: ["sts3215"],
     estimatedHours: 4,
   },
 
@@ -127,10 +124,10 @@ export const TASK_HINTS = {
   },
 
   w0_battery_calc: {
-    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 25W, NUC 15W, SO-ARM STS3215 x12 + 목 XL430 x2, BHL BLDC x10)의 소비전류를 합산하여 배터리 1(6S 4000mAh)/배터리 2(4S 8000mAh) 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
+    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 25W, NUC 15W, SO-ARM STS3215 x12, BHL BLDC x10)의 소비전류를 합산하여 배터리 1(6S 4000mAh)/배터리 2(4S 8000mAh) 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
     steps: [
       "각 보드/모터 스펙시트에서 정격 소비전력 추출 (Orin 25W, NUC 15W 등)",
-      "SO-ARM XL430 x14개 (양팔 12 + 목 2) 피크/평균 전류 계산",
+      "SO-ARM STS3215 x12개 (양팔 12) 피크/평균 전류 계산",
       "BHL BLDC x10개 (MAD M6C12 x6 + 5010 x4) 보행 시 평균 전류 추정",
       "배터리 1(다리 ESC 직결 24V) / 배터리 2(Orin 14.8V + DC-DC → NUC 12V, 서보 12V, USB 5V) 각각의 용량(Wh) 대비 소비전력으로 구동 시간 산출",
       "30분 구동 가능 여부 판정 — 부족 시 배터리 용량 업그레이드 또는 사용 패턴 조정 제안",
@@ -138,7 +135,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.5절 (배터리 배치)", type: "internal", section: "7.5" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "mad_m6c12", "battery_1", "battery_2"],
+    components: ["orin_nano_super", "nuc", "sts3215", "mad_m6c12", "battery_1", "battery_2"],
     estimatedHours: 2,
   },
 
@@ -147,15 +144,15 @@ export const TASK_HINTS = {
     steps: [
       "Orin Nano Super + carrier board 무게 확인 (스펙시트 기반)",
       "NUC (BeeLink N95) 무게 확인",
-      "SO-ARM x2 (서보 x12 + 프레임) + 목 XL430 x2 무게 합산",
-      "배터리 1 + 배터리 2 + 카메라 + 스피커 + 마이크 + LED 등 부품별 무게 적산",
+      "SO-ARM x2 (STS3215 서보 x12 + 프레임) 무게 합산",
+      "배터리 1 + 배터리 2 + 카메라 + 스피커 + 마이크 등 부품별 무게 적산",
       "토르소 프레임(2020 알루미늄 프로파일 + 3D프린트 브래킷) 무게 추정",
       "총합 산출 + δ3의 파라메트릭 직립 테스트 조합(3/4/5/6kg) 중 해당 구간 확인",
     ],
     resources: [
       { label: "기획서 7.4절 (무게 예산)", type: "internal", section: "7.4" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "head_camera", "wrist_camera", "battery_1", "battery_2"],
+    components: ["orin_nano_super", "nuc", "sts3215", "head_camera", "wrist_camera", "battery_1", "battery_2"],
     estimatedHours: 2,
   },
 
@@ -206,7 +203,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 텔레오퍼레이션 가이드", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["xl430", "u2d2", "head_camera", "wrist_camera"],
+    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 4,
   },
 
@@ -246,8 +243,8 @@ export const TASK_HINTS = {
     summary: "δ1+ε2 공동 과제 (Day 3). Day 1 논의를 바탕으로 머리 외주 사양서를 최종 마무리한다. ε2는 Week 0~1에 하이리온 3D 모델링(Blender/Fusion360)을 진행하여 STL을 준비하고, Week 1에 외주 발주하므로 이 사양서가 모델링의 구속 조건이 된다. 기획서 7.3절 참조.",
     steps: [
       "외형 치수 확정 — 높이 ~25cm, 폭, 깊이, 전체 비례",
-      "내부 전자부품 배치 도면 마무리 — 카메라(정면 USB) + LED 눈(NeoPixel x2) + 입 서보(SG90급)",
-      "개구부 위치/크기 확정 — 카메라 렌즈 홀, LED 디퓨저 영역, 입 서보 가동 범위",
+      "내부 전자부품 배치 도면 마무리 — 카메라(정면 USB) + 입 서보(SG90급)",
+      "개구부 위치/크기 확정 — 카메라 렌즈 홀, 입 서보 가동 범위",
       "무게 제약 명시 — 외주 조형물 ≤300g (스티로폼 CNC 기준)",
       "배선 경로 확인 — 모든 배선은 목 내부를 통해 토르소로 내려감 (기획서 7.3절)",
       "사양서 문서화 완료 → ε2의 3D 모델링 작업 시작 가능 상태 확인",
@@ -255,7 +252,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo"],
+    components: ["head_camera", "wrist_camera", "sg90_servo"],
     estimatedHours: 3,
   },
 
@@ -291,7 +288,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 프레임워크", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["xl430", "u2d2", "head_camera", "wrist_camera"],
+    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 4,
   },
 
@@ -369,7 +366,7 @@ export const TASK_HINTS = {
       "출발 전: BHL BOM 최신 릴리즈 확인 + 전체 부품 리스트를 한국 조달분과 교차 대조",
       "출발 전: 화창베이 구매 리스트 준비 — 부품명 + 중국어 명칭 + 수량 + 예상 가격",
       "현지: MAD 모터 수령 + 외관/축 상태 검수",
-      "현지: 화창베이 일괄 구매 — BNO085 IMU, Arduino, CAN-USB x2, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, LED, 환기팬, 배선재",
+      "현지: 화창베이 일괄 구매 — BNO085 IMU, Arduino, CAN-USB x2, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, 환기팬, 배선재",
       "현지: 배터리 1(6S LiPo 4000mAh 22.2V) + 배터리 2(4S LiPo 8000mAh 14.8V) + LiPo 저전압 알람 구매 — 배터리 사양이 기획서 7.5절 요구와 일치하는지 확인",
     ],
     resources: [
@@ -392,12 +389,12 @@ export const TASK_HINTS = {
       "δ3: UDP 메시지 리스트 초안 발표 — UDP 보행 명령 (vx vy wz), UDP 보행 상태 등 (기획서 5.3절)",
       "배터리 배치 방향 합의 — 토르소 최하단 vs hip (직립 테스트 결과로 최종 결정 예정)",
       "전원 시퀀싱 확정 — 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브 (기획서 7.7절)",
-      "U2D2 버스 분배 확정 — #1: 좌팔 6개(ID 1~6), #2: 우팔 6개+목 2개(ID 7~14) (기획서 5.7절)",
+      "BusLinker Board 버스 분배 확정 — #1: 좌팔 6개(ID 1~6), #2: 우팔 6개(ID 7~12) (기획서 5.7절)",
       "카메라 마운트 위치/각도 확정 — 이후 변경 금지, 수집/추론 동일 조건 보장 (기획서 7.2절)",
     ],
     resources: [
       { label: "기획서 5.6절 (인터페이스 명세)", type: "internal", section: "5.6" },
-      { label: "기획서 5.7절 (U2D2 버스 분배)", type: "internal", section: "5.7" },
+      { label: "기획서 5.7절 (BusLinker Board 버스 분배)", type: "internal", section: "5.7" },
     ],
     components: [],
     estimatedHours: 3,
@@ -415,7 +412,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
     ],
-    components: ["xl430", "head_camera", "wrist_camera"],
+    components: ["sts3215", "head_camera", "wrist_camera"],
     estimatedHours: 2,
   },
 
@@ -431,7 +428,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.10절 (그리퍼 검증)", type: "internal", section: "7.10" },
     ],
-    components: ["xl430"],
+    components: ["sts3215"],
     estimatedHours: 2,
   },
 
@@ -447,7 +444,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 텔레오퍼레이션", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["xl430", "u2d2", "head_camera", "wrist_camera"],
+    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 3,
   },
 
@@ -487,12 +484,12 @@ export const TASK_HINTS = {
   },
 
   w1_orin_setup: {
-    summary: "ε1 전용 과제. Orin Nano Super는 시연 당일 SmolVLA 추론(TensorRT), MediaPipe, 상태 머신, TTS, LED, SO-ARM 제어를 모두 담당하는 메인 보드다(기획서 5.3절). Week 3에 TensorRT 변환/배포가 예정되어 있으므로, 이 시점에 기본 셋업을 완료해야 한다.",
+    summary: "ε1 전용 과제. Orin Nano Super는 시연 당일 SmolVLA 추론(TensorRT), 상태 머신, TTS, SO-ARM 제어를 모두 담당하는 메인 보드다(기획서 5.3절). Week 3에 TensorRT 변환/배포가 예정되어 있으므로, 이 시점에 기본 셋업을 완료해야 한다.",
     steps: [
       "JetPack SDK 설치 — L4T + CUDA + cuDNN + TensorRT (Orin Nano Super용 버전 확인)",
       "Ethernet UDP 통신 설정 + 기본 메시지 송수신 테스트",
       "카메라 드라이버(v4l2/USB) 설정 + 이미지 스트리밍 확인",
-      "U2D2 x2 USB 연결 확인 — Dynamixel SDK 설치 + 서보 통신 테스트",
+      "BusLinker Board x2 USB 연결 확인 — SO-ARM SDK 설치 + 서보 통신 테스트",
       "Orin USB 오디오(스피커 + 마이크) 장치 인식 확인",
       "기본 시스템 벤치마크 — GPU 사용률, 메모리, 열 상태 모니터링 셋업",
     ],
@@ -766,8 +763,7 @@ export const TASK_HINTS = {
       "④ NUC(BeeLink N95) 마운트 (δ1) → δ2가 전원·Ethernet·USB 연결",
       "⑤ Orin + carrier + 방열판 장착 (δ1) → ε1이 전원·USB 연결",
       "⑥ 40mm 환기팬 + 배기구(상단)/흡기구(하단) 설치 (δ1)",
-      "⑦ SO-ARM ×2 어깨 마운트 (δ1) → ε1이 Waveshare Board USB 연결",
-      "⑧ 목 서보 XL430 ×2 장착 (δ1) → ε1이 U2D2 데이지체인 연결",
+      "⑦ SO-ARM ×2 어깨 마운트 (δ1) → ε1이 BusLinker Board USB 연결",
       "⑨ 스피커 + 마이크 장착 (δ1) → ε1이 Orin USB 오디오 연결",
       "⑩ Orin↔NUC Ethernet 직결 (δ2)",
       "⑪ 케이블 정리 + 간섭 확인 (δ1) — SO-ARM 마운트 후 휘어짐 점검 포함",
@@ -775,7 +771,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.2절 (토르소 조립 순서)", type: "internal", section: "7.2" },
     ],
-    components: ["aluminum_profile_2020", "orin_nano_super", "nuc", "xl430", "battery_2", "dc_dc_converter", "speaker", "microphone"],
+    components: ["aluminum_profile_2020", "orin_nano_super", "nuc", "sts3215", "battery_2", "dc_dc_converter", "speaker", "microphone"],
     estimatedHours: 10,
   },
 
@@ -793,22 +789,22 @@ export const TASK_HINTS = {
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
       { label: "기획서 4.2절 (수집 전략)", type: "internal", section: "4.2" },
     ],
-    components: ["xl430", "u2d2", "head_camera", "wrist_camera"],
+    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 8,
   },
 
   w2_head_mockup: {
-    summary: "Week 7 전자부품 통합 전에 무게·공간 배치를 사전 검증하기 위한 간이 목업이다. 스티로폼 블록에 카메라·LED·입 서보를 임시 배치하고, 합산 700g 이하인지 확인하여 직립 테스트 mass 데이터에 반영한다.",
+    summary: "Week 7 전자부품 통합 전에 무게·공간 배치를 사전 검증하기 위한 간이 목업이다. 스티로폼 블록에 카메라·입 서보를 임시 배치하고, 합산 700g 이하인지 확인하여 직립 테스트 mass 데이터에 반영한다.",
     steps: [
       "스티로폼 블록을 머리 크기(~25cm)로 절삭",
-      "카메라(USB) 1개, LED 눈(NeoPixel) 2개, 입 서보(SG90급) 1개를 내부에 임시 배치",
+      "카메라(USB) 1개, 입 서보(SG90급) 1개를 내부에 임시 배치",
       "배선 경로(목 내부 → 토르소) 간섭 확인",
       "전체 계량하여 700g(외주 셸 ≤300g + 전자부품 ≤400g) 이하 확인",
     ],
     resources: [
       { label: "기획서 7.3절 (머리 제작 타임라인)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo"],
+    components: ["head_camera", "wrist_camera", "sg90_servo"],
     estimatedHours: 4,
   },
 
@@ -843,9 +839,9 @@ export const TASK_HINTS = {
   },
 
   w2_emotion_v1: {
-    summary: "하이리온의 캐릭터 표현 기초가 되는 감정 상태 머신 v1을 구현한다. Week 5에서 5종으로 확장할 예정이므로, 이번 주에는 중립·기쁨·놀람 3종의 LED 패턴과 입 서보 동작을 먼저 구현하고 평가 스크립트를 완성한다.",
+    summary: "하이리온의 캐릭터 표현 기초가 되는 감정 상태 머신 v1을 구현한다. Week 5에서 확장할 예정이므로, 이번 주에는 중립·기쁨·놀람 3종의 입 서보 동작을 먼저 구현하고 평가 스크립트를 완성한다.",
     steps: [
-      "중립·기쁨·놀람 3종의 NeoPixel LED 패턴(색상·밝기·애니메이션) 정의",
+      "중립·기쁨·놀람 3종의 감정 표현 패턴 정의",
       "각 감정에 대응하는 입 서보(SG90급) 동작 매핑",
       "상태 전환 트리거 인터페이스 설계 (상태 머신에서 감정 전환 호출)",
       "평가 스크립트 완성 — 각 감정 전환 정상 동작·응답 시간 자동 측정",
@@ -853,7 +849,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 6.1절 (epsilon2 역할)", type: "internal", section: "6.1" },
     ],
-    components: ["neopixel_led", "sg90_servo"],
+    components: ["sg90_servo"],
     estimatedHours: 5,
   },
 
@@ -970,7 +966,7 @@ export const TASK_HINTS = {
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
       { label: "기획서 4.2절 (수집 전략)", type: "internal", section: "4.2" },
     ],
-    components: ["xl430", "u2d2", "head_camera", "wrist_camera"],
+    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 40,
   },
 
@@ -1025,7 +1021,7 @@ export const TASK_HINTS = {
     steps: [
       "TensorRT 엔진 로드 + 카메라 스트림 연결 상태에서 추론 루프 실행",
       "100회 추론의 평균 Hz 및 p95 레이턴시 측정",
-      "MediaPipe(CPU, 2~3fps)와 동시 실행 시 GPU 간섭 여부 확인",
+      "다른 CPU 태스크와 동시 실행 시 GPU 간섭 여부 확인",
       "결과에 따라 분기: 5Hz+→진행 / 2~5Hz→UX 보완 설계 / 2Hz-→δ3에 다운사이즈 요청",
     ],
     resources: [
@@ -1042,7 +1038,7 @@ export const TASK_HINTS = {
       "TALKING → MANIPULATING 전환: LLM이 pick 액션 추출 시 SmolVLA 실행",
       "MANIPULATING → TALKING: SmolVLA 동작 완료 후 대화 복귀",
       "MANIPULATING 중 대화 요청 → 큐잉 후 완료 시 처리 (기획서 5.1절)",
-      "상태별 리소스 매핑 검증 — GPU(SmolVLA), CPU(MediaPipe), 네트워크(클라우드 API) 동시 사용 시 충돌 없음 확인",
+      "상태별 리소스 매핑 검증 — GPU(SmolVLA), CPU, 네트워크(클라우드 API) 동시 사용 시 충돌 없음 확인",
     ],
     resources: [
       { label: "기획서 5.1절 (상태 머신)", type: "internal", section: "5.1" },
@@ -1166,21 +1162,6 @@ export const TASK_HINTS = {
     estimatedHours: 6,
   },
 
-  w4_neck_pid_start: {
-    summary: "MediaPipe 얼굴 감지로 관객의 얼굴 위치를 추적하고, XL430 목 서보 2개(pan/tilt)를 PID 제어하여 하이리온이 관객을 바라보는 시선 추적을 시작한다. Week 5에서 오버슈트 <5°로 튜닝을 완성한다.",
-    steps: [
-      "MediaPipe 얼굴 감지를 CPU 모드로 Orin에서 실행 (기획서 5.2절: GPU는 SmolVLA 전용)",
-      "얼굴 중심 좌표 → 목 pan/tilt 목표 각도 변환 로직 구현",
-      "XL430 ×2에 PID 제어 적용 (Kp, Ki, Kd 초기값 설정)",
-      "기본 추적 동작 확인 — 얼굴 이동 시 목이 따라가는지 테스트",
-    ],
-    resources: [
-      { label: "MediaPipe 얼굴 감지", url: "https://developers.google.com/mediapipe/solutions/vision/face_detector" },
-    ],
-    components: ["xl430", "head_camera", "wrist_camera", "orin_nano_super"],
-    estimatedHours: 6,
-  },
-
   w4_smolvla_ablation: {
     summary: "ε1이 설계한 ablation 조합(데이터 비율, 학습률, 물체별 가중치 등)을 δ3가 DGX에서 일괄 학습 실행한다. 각 조합의 결과를 비교하여 Week 5에서 최적 데이터 조합을 확정하는 근거를 마련한다.",
     steps: [
@@ -1282,18 +1263,17 @@ export const TASK_HINTS = {
   // =======================================================================
 
   w5_head_paint: {
-    summary: "Week 4에서 서피서 처리가 완료된 머리에 수성 도료를 도장하고, LED 눈 디퓨저를 제작한다. Phase 2 게이트의 \"머리 도장 완료\" 조건을 충족하기 위한 필수 작업이며, 건조 시간(24~48시간)을 고려하여 주 초에 시작해야 한다.",
+    summary: "Week 4에서 서피서 처리가 완료된 머리에 수성 도료를 도장한다. Phase 2 게이트의 \"머리 도장 완료\" 조건을 충족하기 위한 필수 작업이며, 건조 시간(24~48시간)을 고려하여 주 초에 시작해야 한다.",
     steps: [
       "서피서 표면 상태 점검 (기포·크랙 있으면 추가 사포 처리)",
       "수성 도료 1차 도장 + 건조 (최소 24시간)",
       "필요 시 2차 도장 + 건조",
-      "LED 눈 디퓨저 제작 — 반투명 아크릴 절삭 또는 실리콘 몰드 캐스팅",
       "외장 디테일 점검 (색상 균일성, 표면 결함)",
     ],
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["neopixel_led"],
+    components: [],
     estimatedHours: 6,
   },
 
@@ -1314,18 +1294,17 @@ export const TASK_HINTS = {
   },
 
   w5_emotion_5types: {
-    summary: "Week 2에서 구현한 3종(중립·기쁨·놀람) 감정을 5종(+슬픔·분노)으로 확장하고, lip sync와 PID 목 제어를 최종 완성한다. 클라우드 API 연결 장애 시 클라우드 API 폴백도 추가하며, VAD 비활성화로 TTS 자체 음성이 STT에 피드백되는 문제를 방지한다.",
+    summary: "Week 2에서 구현한 3종(중립·기쁨·놀람) 감정 표현을 확장하고, lip sync를 최종 완성한다. 클라우드 API 연결 장애 시 클라우드 API 폴백도 추가하며, VAD 비활성화로 TTS 자체 음성이 STT에 피드백되는 문제를 방지한다.",
     steps: [
-      "슬픔·분노 LED 패턴 추가 구현 (총 5종: 중립/기쁨/놀람/슬픔/분노)",
+      "슬픔·분노 감정 표현 패턴 추가 구현",
       "클라우드 API 폴백 로직 추가 — 클라우드 API 장애 시 자동 전환",
       "VAD 비활성화 처리 — TTS 재생 중 STT 입력 차단",
       "lip sync 최종 완성 — 음량→서보 매핑 미세 조정, 지연 보정",
-      "PID 목 제어 완성 — 오버슈트 5° 이하로 Kp/Ki/Kd 튜닝",
     ],
     resources: [
       { label: "기획서 6.1절 (epsilon2 역할)", type: "internal", section: "6.1" },
     ],
-    components: ["neopixel_led", "sg90_servo", "xl430", "head_camera", "wrist_camera"],
+    components: ["sg90_servo", "head_camera", "wrist_camera"],
     estimatedHours: 10,
   },
 
@@ -1425,10 +1404,10 @@ export const TASK_HINTS = {
   },
 
   w5_fetch_sequencer_complete: {
-    summary: "Week 4에서 골격을 잡은 FETCH 시퀀서를 상태 머신과 완전 통합하고, SmolVLA·MediaPipe가 동일 카메라(/camera/image_raw)를 공유하는 토픽 설정을 완료한다. 이것으로 IDLE↔TALKING↔MANIPULATING↔WALKING↔FETCH 전체 전환이 가능해진다.",
+    summary: "Week 4에서 골격을 잡은 FETCH 시퀀서를 상태 머신과 완전 통합하고, SmolVLA가 카메라(/camera/image_raw)를 사용하는 토픽 설정을 완료한다. 이것으로 IDLE↔TALKING↔MANIPULATING↔WALKING↔FETCH 전체 전환이 가능해진다.",
     steps: [
       "FETCH 시퀀서를 상태 머신에 통합 — TALKING에서 fetch 명령 시 FETCH 진입",
-      "카메라 공유 토픽(/camera/image_raw) 설정 — SmolVLA·MediaPipe 동시 구독",
+      "카메라 토픽(/camera/image_raw) 설정 — SmolVLA 구독",
       "FETCH 서브스텝(①~⑤) 전환 자동화 테스트",
       "타이머 T1, T2 초기값 설정 (시연 환경 레이아웃 기반)",
       "FETCH 중 비상정지 → EMERGENCY 즉시 전환 확인",
@@ -1492,7 +1471,7 @@ export const TASK_HINTS = {
     summary: "Phase 2는 Week 5 말에 통과해야 하는 두 번째 게이트이다. 상체(대화+캐릭터 표현)와 하체(공중 보행) 모두 기본 동작이 검증되어야 하며, 이 게이트 통과 후 Week 6부터 양 트랙 마일스톤(상반신 통합, 지면 보행)에 진입한다.",
     steps: [
       "대화 TTFT(Time To First Token) <500ms 확인",
-      "시선 추적 + 표정 5종(중립/기쁨/놀람/슬픔/분노) 동작 확인",
+      "lip sync + 감정 표현 동작 확인",
       "서바이벌 모드 10분 크래시 없음 확인",
       "공중 보행 성공 + NUC CAN 통신 안정 확인",
       "SmolVLA ablation 완료 + 최적 조합 확정",
@@ -1545,23 +1524,22 @@ export const TASK_HINTS = {
       { label: "기획서 5.1절 (FETCH 서브스텝)", type: "internal", section: "5.1" },
       { label: "기획서 3절 (시연 시나리오 — fetch 흐름)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "xl430"],
+    components: ["orin_nano_super", "sts3215"],
     estimatedHours: 6,
   },
 
   w6_head_prefit: {
-    summary: "머리 외주 CNC 조형물이 도착한 경우, 내부에 전자부품(카메라 1개, NeoPixel LED 눈 2개)을 임시 장착하여 피팅 간섭 여부를 확인한다. 미도착 시 Week 4~5에 만든 수작업 목업으로 계속 진행. delta1이 상반신 통합(epsilon1 주도) 과정에서 물리적 지원(케이블 정리, 토르소 개폐 등)을 병행한다.",
+    summary: "머리 외주 CNC 조형물이 도착한 경우, 내부에 전자부품(카메라 1개, 입 서보 1개)을 임시 장착하여 피팅 간섭 여부를 확인한다. 미도착 시 Week 4~5에 만든 수작업 목업으로 계속 진행. delta1이 상반신 통합(epsilon1 주도) 과정에서 물리적 지원(케이블 정리, 토르소 개폐 등)을 병행한다.",
     steps: [
       "외주 조형물 개봉 및 외관 검수 (크기, 개구부 위치, 표면 상태)",
       "카메라 모듈 임시 장착 — 정면 개구부 정렬, USB 케이블 경로 확인",
-      "NeoPixel LED 눈 2개 임시 장착 — 디퓨저 맞춤, 발광 균일도 확인",
-      "내부 공간 간섭 점검 (카메라+LED+입서보 동시 수납 가능 여부)",
+      "내부 공간 간섭 점검 (카메라+입서보 동시 수납 가능 여부)",
       "미도착 시: 목업 상태 유지, Week 7 전자부품 통합 계획 재확인",
     ],
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led"],
+    components: ["head_camera", "wrist_camera", "sg90_servo"],
     estimatedHours: 4,
   },
 
@@ -1656,21 +1634,20 @@ export const TASK_HINTS = {
   },
 
   w7_head_electronics_integrate: {
-    summary: "머리 전자부품 8단계 통합 — Week 7의 핵심 하드웨어 작업. 외주 CNC 조형물(또는 수작업 목업)에 카메라, LED 눈, 입 서보를 순차 장착하고, 모든 배선을 목 내부 경로로 집약하여 토르소에 결합한다. 최종 계량 게이트는 700g 이하이며, 초과 시 디퓨저 소재 변경이나 배선 단축으로 경량화한다. 플랜 B: 외주 미도착 시 Week 4~5 도장 완료 목업으로 동일 8단계를 진행한다.",
+    summary: "머리 전자부품 통합 — Week 7의 핵심 하드웨어 작업. 외주 CNC 조형물(또는 수작업 목업)에 카메라, 입 서보를 순차 장착하고, 모든 배선을 목 내부 경로로 집약하여 토르소에 결합한다. 최종 계량 게이트는 700g 이하이며, 초과 시 배선 단축으로 경량화한다. 플랜 B: 외주 미도착 시 Week 4~5 도장 완료 목업으로 동일 과정을 진행한다.",
     steps: [
       "1단계 피팅: 외주 조형물(또는 목업)의 개구부에 전자부품 더미 배치 → 공간 간섭 최종 확인",
       "2단계 카메라: USB 카메라를 정면 개구부에 고정 — 화각이 SO-ARM 작업 공간을 커버하는지 확인",
-      "3단계 LED+디퓨저: NeoPixel LED 눈 2개 + 반투명 디퓨저(아크릴/실리콘) 장착 — 균일 발광 확인",
-      "4단계 입 서보: SG90급을 입 개구부에 장착 — lip sync 동작 범위(개폐 각도) 확인",
-      "5단계 배선 집약: 카메라 USB + LED 신호선 + 서보 PWM + 전원을 목 내부 경로로 통합 번들링",
-      "6단계 토르소 결합: 머리를 목 서보(XL430 x2) 위에 장착 — 고정 나사 체결, 흔들림 없는지 확인",
-      "7단계 계량: 전체(머리 조형물+전자부품) 700g 이하 확인 — 초과 시 디퓨저 소재 변경/배선 단축",
-      "8단계 감정 전체 테스트: 5종 감정(중립/기쁨/놀람/슬픔/분노) LED 패턴 + lip sync + 목 PID 시선 추적 통합 동작 검증",
+      "3단계 입 서보: SG90급을 입 개구부에 장착 — lip sync 동작 범위(개폐 각도) 확인",
+      "4단계 배선 집약: 카메라 USB + 서보 PWM + 전원을 목 내부 경로로 통합 번들링",
+      "5단계 토르소 결합: 머리를 토르소 상단에 장착 — 고정 나사 체결, 흔들림 없는지 확인",
+      "6단계 계량: 전체(머리 조형물+전자부품) 700g 이하 확인 — 초과 시 배선 단축",
+      "7단계 감정 전체 테스트: 감정 표현 + lip sync 통합 동작 검증",
     ],
     resources: [
       { label: "기획서 7.3절 (머리 제작)", type: "internal", section: "7.3" },
     ],
-    components: ["head_camera", "wrist_camera", "neopixel_led", "sg90_servo", "xl430"],
+    components: ["head_camera", "wrist_camera", "sg90_servo"],
     estimatedHours: 8,
   },
 
@@ -1724,7 +1701,7 @@ export const TASK_HINTS = {
   },
 
   w7_smolvla_v2_eval: {
-    summary: "SmolVLA v2 모델을 Orin TensorRT에서 실행하여 3개 물체(컵, 텀블러, 인형)에 대한 실물 pick 성공률을 측정하고, v1 대비 개선 여부를 정량 평가한다. 동시에 감정 표현 시스템(LED 5종 + lip sync + 목 PID)에 대해 5인 사용자 테스트를 실시하여 감정 인식률과 자연스러움을 평가한다.",
+    summary: "SmolVLA v2 모델을 Orin TensorRT에서 실행하여 3개 물체(컵, 텀블러, 인형)에 대한 실물 pick 성공률을 측정하고, v1 대비 개선 여부를 정량 평가한다. 동시에 감정 표현 시스템(lip sync + 감정 표현)에 대해 5인 사용자 테스트를 실시하여 감정 인식률과 자연스러움을 평가한다.",
     steps: [
       "SmolVLA v2 TensorRT 모델 Orin 로드 + 추론 Hz 확인",
       "물체별 pick 테스트: 컵 20회, 텀블러 20회, 인형 20회 → 성공률 산출",
@@ -1736,14 +1713,14 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
     ],
-    components: ["orin_nano_super", "xl430"],
+    components: ["orin_nano_super", "sg90_servo"],
     estimatedHours: 5,
   },
 
   w7_exterior_final_check: {
     summary: "Phase 3 게이트 전 외장 전체 최종 점검. 머리(도장 상태+디퓨저 발광), 바디(천 커버 피팅+벨크로+환기구), 다리(발 커버 고정+마찰면)를 전수 확인하고, 파손이나 변색이 있으면 보정한다. Week 9 운송 시 파손 위험 부위(머리 돌출부, 바디 커버 모서리)에 보호 조치를 미리 계획한다.",
     steps: [
-      "머리: 도장 표면 상태(긁힘, 변색) + LED 디퓨저 발광 균일도 재확인",
+      "머리: 도장 표면 상태(긁힘, 변색) 재확인",
       "바디: 천 커버 피팅 상태 + 벨크로 접착력 + 환기구 메쉬 개방 상태",
       "다리: 발 커버 고정 상태 + 바닥면 마찰 소재 상태",
       "파손/변색 부위 보정 (터치업 도장, 천 커버 재봉 등)",
@@ -1986,10 +1963,9 @@ export const TASK_HINTS = {
   },
 
   w8_full_scenario_v1: {
-    summary: "시연 시나리오(기획서 3절) 전체 흐름을 실체 로봇으로 처음 실행하는 핵심 테스트. 관객 접근→시선 추적→인사→대화→FETCH(걸어가서 집고 돌아와서 전달)→자유 보행+대화까지의 전체 시퀀스를 통합 검증한다. 이 테스트 결과로 시나리오 레벨 A/B/C를 1차 판정하며, 실패 구간을 식별하여 Week 9 안정화 작업의 우선순위를 결정한다.",
+    summary: "시연 시나리오(기획서 3절) 전체 흐름을 실체 로봇으로 처음 실행하는 핵심 테스트. 인사→대화→FETCH(걸어가서 집고 돌아와서 전달)→자유 보행+대화까지의 전체 시퀀스를 통합 검증한다. 이 테스트 결과로 시나리오 레벨 A/B/C를 1차 판정하며, 실패 구간을 식별하여 Week 9 안정화 작업의 우선순위를 결정한다.",
     steps: [
-      "1. 시선 추적: MediaPipe 얼굴 감지 → XL430 목 PID → 관객 바라보기",
-      "2. 인사: '안녕하세요' TTS + 손 흔들기(precoded) + happy LED + lip sync",
+      "1. 인사: '안녕하세요' TTS + 손 흔들기(precoded) + lip sync",
       "3. 대화: 관객 '저 빨간 컵 줄 수 있어?' → 클라우드 API STT→LLM→fetch 트리거",
       "4. FETCH 서브스텝1: WALKING 테이블 방향 (T1초) → 정지",
       "5. FETCH 서브스텝2: MANIPULATING SmolVLA pick (target: starbucks_cup)",
@@ -2002,7 +1978,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "head_camera", "wrist_camera", "neopixel_led", "speaker", "microphone"],
+    components: ["orin_nano_super", "nuc", "sts3215", "head_camera", "wrist_camera", "sg90_servo", "speaker", "microphone"],
     estimatedHours: 8,
   },
 
@@ -2049,7 +2025,7 @@ export const TASK_HINTS = {
     steps: [
       "5GHz 핫스팟 latency 측정: 클라우드 API STT→LLM→TTS 라운드트립 500ms 이내 확인 — epsilon1 (초과 시 서바이벌 모드 전환 계획)",
       "바닥 재질 마찰 확인: 현장 바닥에서 보행 테스트 → 미끄러짐 발생 시 delta3 policy 마찰 보정 — delta2",
-      "MediaPipe 조명 테스트: 현장 조명에서 얼굴 감지 정상 동작 확인 — epsilon2",
+      "현장 조명 확인 — epsilon2",
       "전원 콘센트 위치 확인: 충전/대기 위치 결정 — delta2",
       "로봇 분리 운반 → 현장 조립 10분 이내 리허설: 퀵릴리즈 결합+전원 시퀀싱+BHL 캘리브 — delta1",
       "시연 레이아웃 마커 배치: 관객 위치↔로봇 홈(~1.5m)↔물체 테이블(~1.5m) 고정 — epsilon1",
@@ -2110,7 +2086,7 @@ export const TASK_HINTS = {
   },
 
   w10_final_presentation: {
-    summary: "최종 발표. 최종 필수 조건(시나리오 C 이상)을 충족해야 한다: (1) 시선 추적+인사+대화+집기 동작 정상, (2) 낙상 감지 토크 해제 정상, (3) 비상정지 정상, (4) 리허설 2회+ 완료. 역할별 포지션은 Week 9과 동일하며, epsilon1이 현장에서 시나리오 레벨(A/B/C)을 실시간 판단하여 필요 시 B/C로 전환한다. 전원 개인 작업 없이 발표에만 집중한다.",
+    summary: "최종 발표. 최종 필수 조건(시나리오 C 이상)을 충족해야 한다: (1) 인사+대화+집기 동작 정상, (2) 낙상 감지 토크 해제 정상, (3) 비상정지 정상, (4) 리허설 2회+ 완료. 역할별 포지션은 Week 9과 동일하며, epsilon1이 현장에서 시나리오 레벨(A/B/C)을 실시간 판단하여 필요 시 B/C로 전환한다. 전원 개인 작업 없이 발표에만 집중한다.",
     steps: [
       "발표 30분 전: 로봇 조립(delta1) + 전원 투입(delta2) + 시스템 기동(epsilon1) + 외장 점검(epsilon2)",
       "발표 직전: 배터리 SOC 확인 + 네트워크 latency 확인 + 서바이벌 모드 대기 상태 확인",
@@ -2122,16 +2098,16 @@ export const TASK_HINTS = {
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
       { label: "기획서 10절 (최종 필수)", type: "internal", section: "10" },
     ],
-    components: ["orin_nano_super", "nuc", "xl430", "head_camera", "wrist_camera", "neopixel_led", "speaker", "microphone"],
+    components: ["orin_nano_super", "nuc", "sts3215", "head_camera", "wrist_camera", "sg90_servo", "speaker", "microphone"],
     estimatedHours: 4,
   },
 
   w10_scenario_level_a: {
-    summary: "시나리오 레벨 A (풀 시나리오) 판정 기준. 시연 흐름 1~4 전체를 수행한다: 시선 추적→인사→대화→FETCH 시퀀스(걸어가서 집고 돌아와서 전달)→자유 보행+대화. 보행은 10보 이상이어야 하며, FETCH 시퀀스(WALKING→pick→WALKING→handover)가 최소 1회 성공해야 한다. 레벨 A 달성은 보행+fetch 시퀀스 모두 성공을 의미하며, 프로젝트의 최고 목표이다.",
+    summary: "시나리오 레벨 A (풀 시나리오) 판정 기준. 시연 흐름 전체를 수행한다: 인사→대화→FETCH 시퀀스(걸어가서 집고 돌아와서 전달)→자유 보행+대화. 보행은 10보 이상이어야 하며, FETCH 시퀀스(WALKING→pick→WALKING→handover)가 최소 1회 성공해야 한다. 레벨 A 달성은 보행+fetch 시퀀스 모두 성공을 의미하며, 프로젝트의 최고 목표이다.",
     steps: [
       "판정 조건 1: FETCH 시퀀스 1회 이상 성공 (걸어서 테이블→pick→복귀→handover)",
       "판정 조건 2: 보행 10보 이상 (직진+회전 포함)",
-      "판정 조건 3: 시선 추적+인사+대화 정상 동작",
+      "판정 조건 3: 인사+대화 정상 동작",
       "판정 조건 4: 자유 보행 중 대화 가능",
       "미달 시: 레벨 B로 전환 (epsilon1 판단)",
     ],
@@ -2143,13 +2119,13 @@ export const TASK_HINTS = {
   },
 
   w10_scenario_level_b: {
-    summary: "시나리오 레벨 B (보행 미달 시 대안) 판정 기준. 시연 흐름 1~3만 수행하되 보행을 제외한다: 시선 추적→인사→대화→제자리 pick-place(물체를 팔 닿는 테이블 위에 배치). 보행은 별도로 짧게 시연(제자리 걸음 또는 수 보 전진)하여 보행 능력은 있되 FETCH 연계는 안정적이지 않음을 보여준다. 레벨 A에서 보행 연계 실패 시 epsilon1이 실시간으로 B로 전환한다.",
+    summary: "시나리오 레벨 B (보행 미달 시 대안) 판정 기준. 시연 흐름 중 보행을 제외한다: 인사→대화→제자리 pick-place(물체를 팔 닿는 테이블 위에 배치). 보행은 별도로 짧게 시연(제자리 걸음 또는 수 보 전진)하여 보행 능력은 있되 FETCH 연계는 안정적이지 않음을 보여준다. 레벨 A에서 보행 연계 실패 시 epsilon1이 실시간으로 B로 전환한다.",
     steps: [
       "레이아웃 변경: 물체 테이블을 로봇 팔 닿는 거리로 이동",
-      "시연 흐름 1~3 실행: 시선→인사→대화→제자리 SmolVLA pick→handover",
+      "시연 흐름 실행: 인사→대화→제자리 SmolVLA pick→handover",
       "별도 보행 시연: 제자리 걸음 또는 전진 3~5보 (FETCH와 분리)",
       "전환 판단: 레벨 A 시도 중 보행 실패 → epsilon1이 레이아웃 변경 지시 → B 진입",
-      "레벨 B에서도 시선 추적+인사+대화+집기가 정상이어야 함",
+      "레벨 B에서도 인사+대화+집기가 정상이어야 함",
     ],
     resources: [
       { label: "기획서 3절 (시연 시나리오 레벨 B)", type: "internal", section: "3" },
@@ -2159,13 +2135,13 @@ export const TASK_HINTS = {
   },
 
   w10_scenario_level_c: {
-    summary: "시나리오 레벨 C (보행 전체 실패 시 최소 시연) 판정 기준. 로봇을 받침대에 고정하여 보행 없이 시연한다: 시선 추적→인사→대화→제자리 pick-place. 보행 기능을 완전히 포기하는 대신 상체 기능(시선/인사/대화/조작/감정표현)의 완성도를 극대화한다. 이것이 최종 필수 조건(시나리오 C 이상)의 최소 기준이며, 이 레벨조차 달성하지 못하면 발표 조건 미충족이다.",
+    summary: "시나리오 레벨 C (보행 전체 실패 시 최소 시연) 판정 기준. 로봇을 받침대에 고정하여 보행 없이 시연한다: 인사→대화→제자리 pick-place. 보행 기능을 완전히 포기하는 대신 상체 기능(인사/대화/조작/감정표현)의 완성도를 극대화한다. 이것이 최종 필수 조건(시나리오 C 이상)의 최소 기준이며, 이 레벨조차 달성하지 못하면 발표 조건 미충족이다.",
     steps: [
       "받침대 준비: BHL 다리를 고정할 수 있는 받침대/지그 마련",
       "로봇 받침대 고정 + 전원 시퀀싱 (배터리 1 투입 불필요할 수 있음)",
-      "시연 흐름 1~3 실행: 시선→인사→대화→제자리 SmolVLA pick→handover",
-      "상체 기능 완성도 극대화: 감정 5종, lip sync, 시선 추적 자연스러움",
-      "최종 필수 조건 확인: 시선+인사+대화+집기+낙상 감지 정상+비상정지 정상",
+      "시연 흐름 실행: 인사→대화→제자리 SmolVLA pick→handover",
+      "상체 기능 완성도 극대화: 감정 표현, lip sync 자연스러움",
+      "최종 필수 조건 확인: 인사+대화+집기+낙상 감지 정상+비상정지 정상",
     ],
     resources: [
       { label: "기획서 3절 (시연 시나리오 레벨 C)", type: "internal", section: "3" },

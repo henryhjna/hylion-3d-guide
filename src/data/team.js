@@ -71,8 +71,7 @@ export const TEAM = {
     parts: ['head'],
     responsibilities: [
       '평가·sim-to-real 분석',
-      '감정 표현·LED',
-      'lip sync·목 PID',
+      'lip sync',
       '키워드 사전',
       'Week 3 수집',
     ],

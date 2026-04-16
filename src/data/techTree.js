@@ -55,7 +55,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: '한국 부품 온라인 주문 (Orin, NUC, XL430x2, U2D2x2, 카메라, ESCx12, 알루미늄 프로파일)',
+      description: '한국 부품 온라인 주문 (Orin, NUC, 카메라, ESCx12, 알루미늄 프로파일)',
     },
     {
       id: 'w0_3dprint_start',
@@ -315,7 +315,7 @@ export const TECH_TREE = {
       dependencies: ['w0_soarm_assembly', 'w0_weight_estimate', 'w0_state_machine_eval', 'w0_battery_calc'],
       isGate: false,
       isCheckpoint: true,
-      description: '인터페이스 + 리소스 할당, 상체 무게 적산값 공유, 배터리 배치, 상태 머신 프레임워크, 전원 시퀀싱, U2D2 버스 분배, 카메라 마운트 위치/각도 확정',
+      description: '인터페이스 + 리소스 할당, 상체 무게 적산값 공유, 배터리 배치, 상태 머신 프레임워크, 전원 시퀀싱, BusLinker Board 버스 분배, 카메라 마운트 위치/각도 확정',
     },
 
     // Track A
@@ -955,19 +955,6 @@ export const TECH_TREE = {
       description: 'lip sync 구현 (오픈소스, epsilon1이 TTS 오디오 타이밍 제공 -> epsilon2가 입 서보 동기)',
     },
     {
-      id: 'w4_neck_pid_start',
-      label: '목 서보 PID 시선 추적 시작',
-      week: 4,
-      track: 'A',
-      members: ['epsilon2'],
-      parts: ['head'],
-      status: 'locked',
-      dependencies: ['w2_emotion_v1'],
-      isGate: false,
-      isCheckpoint: false,
-      description: '목 서보 PID 시선 추적 시작 (MediaPipe 얼굴 -> XL430 목 PID)',
-    },
-    {
       id: 'w4_smolvla_ablation',
       label: 'SmolVLA ablation 학습 DGX 실행',
       week: 4,
@@ -1055,7 +1042,7 @@ export const TECH_TREE = {
     // Track A
     {
       id: 'w5_head_paint',
-      label: '머리 수성 도료 도장 + LED 눈 디퓨저',
+      label: '머리 수성 도료 도장',
       week: 5,
       track: 'A',
       members: ['delta1'],
@@ -1064,7 +1051,7 @@ export const TECH_TREE = {
       dependencies: ['w4_head_surface_finish'],
       isGate: false,
       isCheckpoint: false,
-      description: '머리 수성 도료 도장 + 건조 + LED 눈 디퓨저 제작 (반투명 아크릴/실리콘) + 외장 디테일 점검',
+      description: '머리 수성 도료 도장 + 건조 + 외장 디테일 점검',
     },
     {
       id: 'w5_body_cover_complete',
@@ -1081,16 +1068,16 @@ export const TECH_TREE = {
     },
     {
       id: 'w5_emotion_5types',
-      label: 'LED 감정 5종 확장 + 클라우드 API 폴백',
+      label: '감정 표현 확장 + 클라우드 API 폴백',
       week: 5,
       track: 'A',
       members: ['epsilon2'],
       parts: ['head'],
       status: 'locked',
-      dependencies: ['w2_emotion_v1', 'w4_lip_sync', 'w4_neck_pid_start'],
+      dependencies: ['w2_emotion_v1', 'w4_lip_sync'],
       isGate: false,
       isCheckpoint: false,
-      description: 'LED 감정 5종 확장 + 클라우드 API 폴백 + VAD 비활성화 + lip sync 완성 + PID 목 제어 완성 (오버슈트 <5도)',
+      description: '감정 표현 확장 + 클라우드 API 폴백 + VAD 비활성화 + lip sync 완성',
     },
     {
       id: 'w5_survival_keywords',
@@ -1244,7 +1231,7 @@ export const TECH_TREE = {
       ],
       isGate: true,
       isCheckpoint: false,
-      description: 'Phase 2 게이트: 대화 TTFT <500ms, 시선 추적/표정 5종, 서바이벌 10분 크래시 없음, 공중 보행 성공 + NUC 안정, ablation 완료, 머리 도장 완료 + 바디 커버 완성',
+      description: 'Phase 2 게이트: 대화 TTFT <500ms, lip sync+감정 표현, 서바이벌 10분 크래시 없음, 공중 보행 성공 + NUC 안정, ablation 완료, 머리 도장 완료 + 바디 커버 완성',
     },
 
     // =========================================================================
@@ -1289,7 +1276,7 @@ export const TECH_TREE = {
       dependencies: ['w5_head_paint', 'w1_head_order'],
       isGate: false,
       isCheckpoint: false,
-      description: '머리 외주 도착 시: 전자부품 pre-fit 테스트 (카메라/LED 피팅 확인) + 상반신 통합 물리 지원',
+      description: '머리 외주 도착 시: 전자부품 pre-fit 테스트 (카메라/입서보 피팅 확인) + 상반신 통합 물리 지원',
     },
     {
       id: 'w6_exterior_check',
@@ -1375,7 +1362,7 @@ export const TECH_TREE = {
       dependencies: ['w6_head_prefit'],
       isGate: false,
       isCheckpoint: false,
-      description: '머리 전자부품 통합 (외주 도착 시): 피팅->카메라->LED+디퓨저->입 서보->배선 집약->토르소 결합->계량 <=700g->감정 전체 테스트. 플랜 B: 미도착 시 목업 유지',
+      description: '머리 전자부품 통합 (외주 도착 시): 피팅->카메라->입 서보->배선 집약->토르소 결합->계량 <=700g->감정 전체 테스트. 플랜 B: 미도착 시 목업 유지',
     },
     {
       id: 'w7_foot_cover',
@@ -1696,7 +1683,7 @@ export const TECH_TREE = {
       dependencies: ['w8_merge_gate'],
       isGate: false,
       isCheckpoint: false,
-      description: '답사: 5GHz 핫스팟 latency (500ms 이내), 바닥 재질 마찰, MediaPipe 조명 테스트, 전원 콘센트 위치, 로봇 분리 운반->현장 조립 (10분 이내), 시연 레이아웃 마커 배치, FETCH 타이머 현장 보정, 현장 보행 테스트, 외장 상태 확인',
+      description: '답사: 5GHz 핫스팟 latency (500ms 이내), 바닥 재질 마찰, 전원 콘센트 위치, 로봇 분리 운반->현장 조립 (10분 이내), 시연 레이아웃 마커 배치, FETCH 타이머 현장 보정, 현장 보행 테스트, 외장 상태 확인',
     },
     {
       id: 'w9_rehearsal_1',

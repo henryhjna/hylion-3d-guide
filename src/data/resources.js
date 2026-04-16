@@ -22,37 +22,13 @@ export const RESOURCES = {
   },
 
   // ──────────────────────────────────────────────
-  // 상체 (SO-ARM101 STS3215 + 목 XL430)
+  // 상체 (SO-ARM101 STS3215)
   // ──────────────────────────────────────────────
   "so_arm_github": {
     label: "SO-ARM101 GitHub 리포지토리",
     url: "https://github.com/TheRobotStudio/SO-ARM100",
     category: "상체",
     tags: ["SO-ARM", "로봇 팔", "오픈소스", "6DOF", "조립"],
-  },
-  "dynamixel_docs": {
-    label: "Dynamixel e-Manual",
-    url: "https://emanual.robotis.com/docs/en/dxl/",
-    category: "상체",
-    tags: ["Dynamixel", "서보", "XL430", "Protocol 2.0", "ROBOTIS"],
-  },
-  "dynamixel_xl430": {
-    label: "Dynamixel XL430-W250 매뉴얼",
-    url: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/",
-    category: "상체",
-    tags: ["XL430", "서보", "스펙시트", "목 서보"],
-  },
-  "u2d2_manual": {
-    label: "U2D2 통신 어댑터 매뉴얼",
-    url: "https://emanual.robotis.com/docs/en/parts/interface/u2d2/",
-    category: "상체",
-    tags: ["U2D2", "USB", "TTL", "RS-485", "Dynamixel"],
-  },
-  "dynamixel_sdk": {
-    label: "Dynamixel SDK GitHub",
-    url: "https://github.com/ROBOTIS-GIT/DynamixelSDK",
-    category: "소프트웨어",
-    tags: ["Dynamixel", "SDK", "Protocol 2.0", "Python", "C"],
   },
 
   // ──────────────────────────────────────────────
@@ -152,22 +128,6 @@ export const RESOURCES = {
   },
 
   // ──────────────────────────────────────────────
-  // 비전 (MediaPipe)
-  // ──────────────────────────────────────────────
-  "mediapipe_guide": {
-    label: "MediaPipe Solutions 가이드",
-    url: "https://ai.google.dev/edge/mediapipe/solutions/guide",
-    category: "비전",
-    tags: ["MediaPipe", "얼굴 감지", "시선 추적", "CPU"],
-  },
-  "mediapipe_github": {
-    label: "MediaPipe GitHub 리포지토리",
-    url: "https://github.com/google-ai-edge/mediapipe",
-    category: "비전",
-    tags: ["MediaPipe", "GitHub", "비전 AI", "블렌드셰이프"],
-  },
-
-  // ──────────────────────────────────────────────
   // 소프트웨어
   // ──────────────────────────────────────────────
   "urdf_wiki": {
@@ -175,12 +135,6 @@ export const RESOURCES = {
     url: "https://wiki.ros.org/urdf/Tutorials",
     category: "소프트웨어",
     tags: ["URDF", "로봇 모델", "ROS", "시뮬레이션"],
-  },
-  "neopixel_guide": {
-    label: "Adafruit NeoPixel 가이드",
-    url: "https://learn.adafruit.com/adafruit-neopixel-uberguide",
-    category: "소프트웨어",
-    tags: ["NeoPixel", "LED", "WS2812B", "GPIO"],
   },
 
   // ──────────────────────────────────────────────
