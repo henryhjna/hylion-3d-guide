@@ -199,7 +199,7 @@ export default function ArchitectureView() {
           <div className="space-y-2.5 text-sm">
             <ResourceRow label="Orin GPU" value={resources.orin_gpu} active={resources.orin_gpu !== '없음' && resources.orin_gpu !== '비어있음'} />
             <ResourceRow label="Orin CPU" value={resources.orin_cpu} active={resources.orin_cpu !== '로그 유지'} />
-            <ResourceRow label="NUC" value={resources.nuc} active={resources.nuc !== '대기' && !resources.nuc.includes('정지') && resources.nuc !== '전원 차단'} />
+            <ResourceRow label="NUC" value={resources.nuc} active={resources.nuc !== '대기' && !resources.nuc.includes('정지')} />
             <ResourceRow label="네트워크" value={resources.network} active={resources.network !== '없음'} />
           </div>
         </div>

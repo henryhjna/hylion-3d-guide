@@ -20,7 +20,7 @@ export const TASK_HINTS = {
       { label: "SO-ARM101 공식 GitHub", url: "https://github.com/TheRobotStudio/SO-ARM100" },
       { label: "기획서 7.2절 (토르소/SO-ARM)", type: "internal", section: "7.2" },
     ],
-    components: ["sts3215", "buslinker_controller"],
+    components: ["so_arm_servo", "buslinker_controller"],
     estimatedHours: 4,
   },
 
@@ -36,7 +36,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 6.2절 (협업 구조)", type: "internal", section: "6.2" },
     ],
-    components: ["sts3215"],
+    components: ["so_arm_servo"],
     estimatedHours: 2,
   },
 
@@ -67,7 +67,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 9.1절 (조달 채널)", type: "internal", section: "9.1" },
     ],
-    components: ["orin_nano_super", "nuc", "head_camera", "wrist_camera", "esc_b_g431b"],
+    components: ["orin_nano_super", "nuc_beelink_n95", "head_camera", "wrist_camera", "b_g431b_esc1"],
     estimatedHours: 2,
   },
 
@@ -84,7 +84,7 @@ export const TASK_HINTS = {
       { label: "BHL 공식 GitHub", url: "https://github.com/Berkeley-Humanoid/Berkeley-Humanoid-Lite" },
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
     ],
-    components: ["mad_m6c12", "mad_5010"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv"],
     estimatedHours: 8,
   },
 
@@ -100,7 +100,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "IsaacLab URDF Import", url: "https://isaac-sim.github.io/IsaacLab/main/index.html" },
     ],
-    components: ["sts3215"],
+    components: ["so_arm_servo"],
     estimatedHours: 4,
   },
 
@@ -135,7 +135,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.5절 (배터리 배치)", type: "internal", section: "7.5" },
     ],
-    components: ["orin_nano_super", "nuc", "sts3215", "mad_m6c12", "battery_1", "battery_2"],
+    components: ["orin_nano_super", "nuc_beelink_n95", "so_arm_servo", "mad_m6c12_150kv", "battery_1", "battery_2"],
     estimatedHours: 2,
   },
 
@@ -152,7 +152,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.4절 (무게 예산)", type: "internal", section: "7.4" },
     ],
-    components: ["orin_nano_super", "nuc", "sts3215", "head_camera", "wrist_camera", "battery_1", "battery_2"],
+    components: ["orin_nano_super", "nuc_beelink_n95", "so_arm_servo", "head_camera", "wrist_camera", "battery_1", "battery_2"],
     estimatedHours: 2,
   },
 
@@ -203,7 +203,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 텔레오퍼레이션 가이드", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
+    components: ["so_arm_servo", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 4,
   },
 
@@ -219,7 +219,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
     ],
-    components: ["mad_m6c12", "mad_5010", "esc_b_g431b"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv", "b_g431b_esc1"],
     estimatedHours: 3,
   },
 
@@ -235,7 +235,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "BHL GitHub", url: "https://github.com/Berkeley-Humanoid/Berkeley-Humanoid-Lite" },
     ],
-    components: ["nuc"],
+    components: ["nuc_beelink_n95"],
     estimatedHours: 4,
   },
 
@@ -287,7 +287,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 프레임워크", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
+    components: ["so_arm_servo", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 4,
   },
 
@@ -372,7 +372,7 @@ export const TASK_HINTS = {
       { label: "기획서 9.1절 (조달 채널)", type: "internal", section: "9.1" },
       { label: "기획서 9.2절 (예산)", type: "internal", section: "9.2" },
     ],
-    components: ["mad_m6c12", "mad_5010", "bno085_imu", "arduino_imu_bridge", "can_usb", "battery_1", "battery_2"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv", "bno085_imu", "arduino_imu_bridge", "can_usb", "battery_1", "battery_2"],
     estimatedHours: 16,
   },
 
@@ -411,7 +411,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
     ],
-    components: ["sts3215", "head_camera", "wrist_camera"],
+    components: ["so_arm_servo", "head_camera", "wrist_camera"],
     estimatedHours: 2,
   },
 
@@ -427,7 +427,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.10절 (그리퍼 검증)", type: "internal", section: "7.10" },
     ],
-    components: ["sts3215"],
+    components: ["so_arm_servo"],
     estimatedHours: 2,
   },
 
@@ -443,7 +443,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "LeRobot 텔레오퍼레이션", url: "https://github.com/huggingface/lerobot" },
     ],
-    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
+    components: ["so_arm_servo", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 3,
   },
 
@@ -478,7 +478,7 @@ export const TASK_HINTS = {
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
       { label: "기획서 6.2절 (협업 구조 — 조립 노트 인계)", type: "internal", section: "6.2" },
     ],
-    components: ["mad_m6c12", "mad_5010", "esc_b_g431b"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv", "b_g431b_esc1"],
     estimatedHours: 6,
   },
 
@@ -577,7 +577,7 @@ export const TASK_HINTS = {
       { label: "xanmod 커널", url: "https://xanmod.org/" },
       { label: "기획서 5.3절 (NUC 역할)", type: "internal", section: "5.3" },
     ],
-    components: ["nuc", "can_usb"],
+    components: ["nuc_beelink_n95", "can_usb"],
     estimatedHours: 6,
   },
 
@@ -594,7 +594,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "BHL GitHub", url: "https://github.com/Berkeley-Humanoid/Berkeley-Humanoid-Lite" },
     ],
-    components: ["nuc", "can_usb"],
+    components: ["nuc_beelink_n95", "can_usb"],
     estimatedHours: 6,
   },
 
@@ -604,7 +604,7 @@ export const TASK_HINTS = {
       "배터리 2(4S 14.8V) → Orin 14.8V 직결 배선 + DC-DC#1(12V NUC), DC-DC#2(12V 서보), DC-DC#3(5V USB Hub) 셋업",
       "LiPo 저전압 알람을 배터리 1, 배터리 2 각각에 연결",
       "DC-DC 벅 컨버터 셋업 — DC-DC#1→12V(NUC), DC-DC#2→12V(서보), DC-DC#3→5V(USB Hub) 출력 조정",
-      "NC 비상정지 회로 배선 — 배터리 1+2 NC 차단 스위치 (기획서 7.5절)",
+      "NC 비상정지 회로 배선 — 배터리 1 NC 차단 스위치 (Battery 2 유지, 기획서 7.5절)",
       "전원 시퀀싱 절차 문서화 — 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브",
       "전원 투입/차단 테스트 — 멀티미터로 각 단계 전압 확인",
     ],
@@ -628,7 +628,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "MuJoCo 공식 문서", url: "https://mujoco.readthedocs.io/" },
     ],
-    components: ["nuc", "orin_nano_super"],
+    components: ["nuc_beelink_n95", "orin_nano_super"],
     estimatedHours: 4,
   },
 
@@ -745,7 +745,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.8절 (안전 — 보행)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
     estimatedHours: 6,
   },
 
@@ -770,7 +770,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.2절 (토르소 조립 순서)", type: "internal", section: "7.2" },
     ],
-    components: ["aluminum_profile_2020", "orin_nano_super", "nuc", "sts3215", "battery_2", "dc_dc_converter", "speaker", "microphone"],
+    components: ["aluminum_profile_2020", "orin_nano_super", "nuc_beelink_n95", "so_arm_servo", "battery_2", "dc_dc_converter", "speaker", "microphone"],
     estimatedHours: 10,
   },
 
@@ -788,7 +788,7 @@ export const TASK_HINTS = {
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
       { label: "기획서 4.2절 (수집 전략)", type: "internal", section: "4.2" },
     ],
-    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
+    components: ["so_arm_servo", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 8,
   },
 
@@ -833,7 +833,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
     estimatedHours: 3,
   },
 
@@ -879,7 +879,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.5절 (배터리 — 비상정지)", type: "internal", section: "7.5" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "emergency_stop_switch"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nc_emergency_stop"],
     estimatedHours: 4,
   },
 
@@ -895,7 +895,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
     ],
-    components: ["mad_m6c12", "mad_5010"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv"],
     estimatedHours: 8,
   },
 
@@ -927,7 +927,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
     estimatedHours: 3,
   },
 
@@ -965,7 +965,7 @@ export const TASK_HINTS = {
       { label: "기획서 4.1절 (물체 및 수집 조건)", type: "internal", section: "4.1" },
       { label: "기획서 4.2절 (수집 전략)", type: "internal", section: "4.2" },
     ],
-    components: ["sts3215", "buslinker_controller", "head_camera", "wrist_camera"],
+    components: ["so_arm_servo", "buslinker_controller", "head_camera", "wrist_camera"],
     estimatedHours: 40,
   },
 
@@ -1057,7 +1057,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 8절 (Sim->Real)", type: "internal", section: "8" },
     ],
-    components: ["nuc"],
+    components: ["nuc_beelink_n95"],
     estimatedHours: 8,
   },
 
@@ -1222,7 +1222,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.1절 (BHL 하반신 — 액추에이터)", type: "internal", section: "7.1" },
     ],
-    components: ["mad_m6c12", "mad_5010", "esc_b_g431b"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv", "b_g431b_esc1"],
     estimatedHours: 16,
   },
 
@@ -1238,7 +1238,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
     ],
-    components: ["mad_m6c12", "mad_5010", "esc_b_g431b", "battery_1"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv", "b_g431b_esc1", "battery_1"],
     estimatedHours: 8,
   },
 
@@ -1415,7 +1415,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.1절 (BHL 하반신)", type: "internal", section: "7.1" },
     ],
-    components: ["nuc", "can_usb", "mad_m6c12", "mad_5010", "esc_b_g431b"],
+    components: ["nuc_beelink_n95", "can_usb", "mad_m6c12_150kv", "mad_5010_110kv", "b_g431b_esc1"],
     estimatedHours: 8,
   },
 
@@ -1432,7 +1432,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 8절 (Sim->Real — 공중 보행)", type: "internal", section: "8" },
     ],
-    components: ["nuc", "can_usb", "mad_m6c12", "mad_5010", "esc_b_g431b"],
+    components: ["nuc_beelink_n95", "can_usb", "mad_m6c12_150kv", "mad_5010_110kv", "b_g431b_esc1"],
     estimatedHours: 6,
   },
 
@@ -1509,7 +1509,7 @@ export const TASK_HINTS = {
       { label: "기획서 5.1절 (FETCH 서브스텝)", type: "internal", section: "5.1" },
       { label: "기획서 3절 (시연 시나리오 — fetch 흐름)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "sts3215"],
+    components: ["orin_nano_super", "so_arm_servo"],
     estimatedHours: 6,
   },
 
@@ -1575,7 +1575,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 8절 (Sim->Real — 지면 보행)", type: "internal", section: "8" },
     ],
-    components: ["nuc", "can_usb", "mad_m6c12", "mad_5010", "esc_b_g431b"],
+    components: ["nuc_beelink_n95", "can_usb", "mad_m6c12_150kv", "mad_5010_110kv", "b_g431b_esc1"],
     estimatedHours: 6,
   },
 
@@ -1731,7 +1731,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 8절 (Sim->Real)", type: "internal", section: "8" },
     ],
-    components: ["nuc", "battery_1"],
+    components: ["nuc_beelink_n95", "battery_1"],
     estimatedHours: 8,
   },
 
@@ -1739,7 +1739,7 @@ export const TASK_HINTS = {
     summary: "delta2가 전원/안전 오너로서 비상 매뉴얼을 작성한다. 전원 투입 순서(배터리 2 ON→Orin/NUC 부팅→DC-DC 활성→배터리 1 ON→BHL 캘리브), 비상정지 후 복구 절차, NUC 낙상 감지 토크 해제 동작 확인법, 재시작 절차를 포함한다. Week 9 리허설에서 전원이 이 매뉴얼을 숙지하고, 각자 역할(delta2: 전원 투입/차단, delta1: 물리 안전 등)에 따라 집행한다.",
     steps: [
       "전원 투입 시퀀싱 문서화: 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브",
-      "비상정지 절차: 배터리 1+2 NC 차단 → 전체 시스템 안전 정지",
+      "비상정지 절차: 배터리 1 NC 차단 (Battery 2 유지, Orin 로그 보존) → 다리 모터 안전 정지",
       "비상정지 후 복구: 원인 확인 → 안전 자세 → 배터리 2 재투입 → 배터리 1 재투입 → IDLE 복귀",
       "NUC 낙상 감지 토크 해제 동작 확인법 (BNO085 기울임 각도 임계값, 반응 시간)",
       "재시작 절차: 전원 완전 차단 → 30초 대기 → 투입 시퀀싱 재실행",
@@ -1749,7 +1749,7 @@ export const TASK_HINTS = {
       { label: "기획서 7.7절 (전원 시퀀싱)", type: "internal", section: "7.7" },
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "emergency_stop_switch"],
+    components: ["bno085_imu", "nc_emergency_stop"],
     estimatedHours: 4,
   },
 
@@ -1799,7 +1799,7 @@ export const TASK_HINTS = {
       { label: "기획서 8절 (Sim->Real)", type: "internal", section: "8" },
       { label: "기획서 3절 (시연 시나리오 레벨)", type: "internal", section: "3" },
     ],
-    components: ["dgx_spark", "nuc"],
+    components: ["dgx_spark", "nuc_beelink_n95"],
     estimatedHours: 4,
   },
 
@@ -1866,7 +1866,7 @@ export const TASK_HINTS = {
       "배터리 1: 다리 ESC 직결 24V 배선 확인 (다리 프레임 내부)",
       "LiPo 저전압 알람 연결 상태 확인 (배터리 1, 배터리 2 각각)",
       "USB Hub A(센서: 마이크+카메라) / Hub B(제어: 스피커+BusLinker) 배선 확인",
-      "NC 비상정지 회로 연결: 배터리 1+2 NC 차단",
+      "NC 비상정지 회로 연결: 배터리 1 NC 차단 (Battery 2 유지)",
       "전원 시퀀싱 실물 테스트: 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브",
       "전체 시스템 동시 전원 ON 상태에서 전압/전류 안정성 확인",
     ],
@@ -1892,7 +1892,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 8절 (Sim->Real — 실체 장착)", type: "internal", section: "8" },
     ],
-    components: ["nuc", "can_usb", "mad_m6c12", "mad_5010"],
+    components: ["nuc_beelink_n95", "can_usb", "mad_m6c12_150kv", "mad_5010_110kv"],
     estimatedHours: 6,
   },
 
@@ -1925,7 +1925,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc"],
+    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
     estimatedHours: 3,
   },
 
@@ -1943,7 +1943,7 @@ export const TASK_HINTS = {
       { label: "기획서 5.1절 (FETCH 서브스텝 — 타이머)", type: "internal", section: "5.1" },
       { label: "기획서 3절 (시연 환경 레이아웃)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "nuc"],
+    components: ["orin_nano_super", "nuc_beelink_n95"],
     estimatedHours: 6,
   },
 
@@ -1963,7 +1963,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "nuc", "sts3215", "head_camera", "wrist_camera", "sg90_servo", "speaker", "microphone"],
+    components: ["orin_nano_super", "nuc_beelink_n95", "so_arm_servo", "head_camera", "wrist_camera", "sg90_servo", "speaker", "microphone"],
     estimatedHours: 8,
   },
 
@@ -2001,7 +2001,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "nuc"],
+    components: ["orin_nano_super", "nuc_beelink_n95"],
     estimatedHours: 20,
   },
 
@@ -2044,7 +2044,7 @@ export const TASK_HINTS = {
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
       { label: "기획서 10절 (게이트 조건)", type: "internal", section: "10" },
     ],
-    components: ["orin_nano_super", "nuc"],
+    components: ["orin_nano_super", "nuc_beelink_n95"],
     estimatedHours: 8,
   },
 
@@ -2066,7 +2066,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
     ],
-    components: ["orin_nano_super", "nuc"],
+    components: ["orin_nano_super", "nuc_beelink_n95"],
     estimatedHours: 6,
   },
 
@@ -2083,7 +2083,7 @@ export const TASK_HINTS = {
       { label: "기획서 3절 (시연 시나리오)", type: "internal", section: "3" },
       { label: "기획서 10절 (최종 필수)", type: "internal", section: "10" },
     ],
-    components: ["orin_nano_super", "nuc", "sts3215", "head_camera", "wrist_camera", "sg90_servo", "speaker", "microphone"],
+    components: ["orin_nano_super", "nuc_beelink_n95", "so_arm_servo", "head_camera", "wrist_camera", "sg90_servo", "speaker", "microphone"],
     estimatedHours: 4,
   },
 
