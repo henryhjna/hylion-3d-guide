@@ -23,15 +23,18 @@ export const MEMBERS = {
         },
       },
       'W-5': {
-        focus: 'SO-ARM 양팔 조립 + 토르소 마운트',
+        focus: 'SO-ARM 양팔 조립 + 무게 적산 + 카메라 calib',
         tasks: [
           'SO-ARM 2팔 조립 (STS3215 ×6, BusLinker #2)',
           '토르소 양팔 어깨 마운트 + 캘리브레이션',
           '양팔 텔레옵 동시 동작 검증',
+          '상체 무게 적산 (양팔 조립 직후) → 승민/희승 전달',
+          '카메라 calibration (intrinsic, 상윤과 — 손목×2 + 외부)',
+          'NUC RT 커널 + CAN 드라이버 셋업 (승민과)',
         ],
         dependencies: {
-          receives: ['승민: 조립 보조'],
-          gives: ['상윤: 양팔 수집 환경', '성래: LeRobot ServoControl 양팔 제어'],
+          receives: ['승민: 조립 보조 + RT 커널 작업'],
+          gives: ['상윤: 양팔 수집 환경 + 카메라 calib', '성래: LeRobot ServoControl 양팔 제어', '승민/희승: 상체 무게 적산값'],
         },
       },
       'W-4': {
@@ -96,24 +99,30 @@ export const MEMBERS = {
         dependencies: { receives: [], gives: [] },
       },
       'W-5': {
-        focus: '인혁 보조 — 2팔 조립 + 손목 카메라 배선',
+        focus: '인혁 보조 — 2팔 조립 + RT 커널 + 무게 시뮬 반영',
         tasks: [
           'SO-ARM 2팔 조립 보조 (인혁과)',
           '손목 카메라 USB 배선',
+          'NUC RT 커널 + CAN 드라이버 셋업 (인혁과, 메인)',
+          '상체 무게 적산값 받아서 시뮬 반영 (희승과)',
         ],
-        dependencies: { receives: [], gives: [] },
+        dependencies: {
+          receives: ['인혁: 상체 무게 적산값'],
+          gives: ['희승: 시뮬 반영용 적산값'],
+        },
       },
       'W-4': {
-        focus: '하체 복귀 — BHL 다리 조립 + 전원/안전',
+        focus: '하체 복귀 — BHL 다리 조립 + 전원/안전 + 공연장 일정',
         tasks: [
           'BHL 다리 조립 (희승과)',
           '전원 회로 (배터리 1+2, DC-DC, 비상정지)',
           'NUC↔CAN 연결',
           '낙상 감지 BNO085 벤치 테스트',
+          '공연장 예약/답사 일정 확정 (희승 도움)',
         ],
         dependencies: {
           receives: ['희승: 다리 RL 학습 결과 + 다리 부품'],
-          gives: ['희승: 다리 HW 완성', '성래: NUC UDP 서버 동작'],
+          gives: ['희승: 다리 HW 완성', '성래: NUC UDP 서버 동작', '전원: 공연장 답사 일정'],
         },
       },
       'W-3': {
@@ -173,23 +182,26 @@ export const MEMBERS = {
         dependencies: { receives: [], gives: [] },
       },
       'W-5': {
-        focus: 'Walking RL 학습 + BHL 다리 조립 시작',
+        focus: 'Walking RL 학습 + 다리 조립 시작 + 무게 시뮬 반영 + 백업 절차',
         tasks: [
           'Walking RL 학습 계속',
           'BHL 다리 조립 시작 (모터 도착 시, 액추에이터 12개)',
           '기어박스 후가공',
+          '상체 무게 적산값 시뮬 반영 (승민과, IsaacLab URDF 업데이트)',
+          '데이터/모델 백업 절차 정의 (Walking RL 체크포인트, 상윤+성래에게 디테일 공유)',
         ],
         dependencies: {
-          receives: ['모터 입고'],
-          gives: [],
+          receives: ['모터 입고', '인혁: 상체 무게 적산값'],
+          gives: ['상윤+성래: 백업 디테일 (체크포인트 포맷)'],
         },
       },
       'W-4': {
-        focus: 'BHL 다리 완성 + 공중지그 보행 (W-4 게이트)',
+        focus: 'BHL 다리 완성 + 공중지그 보행 + 답사 일정',
         tasks: [
           'BHL 다리 완성',
           '공중 지그 보행 테스트',
           'Walking RL ONNX 배포 (NUC, 250Hz)',
+          '공연장 예약/답사 일정 도움 (승민과)',
         ],
         dependencies: {
           receives: ['승민: 전원 회로 + NUC↔CAN'],
@@ -260,14 +272,15 @@ export const MEMBERS = {
         },
       },
       'W-5': {
-        focus: 'MANIPULATING 상태 + LeRobot ServoControl',
+        focus: 'MANIPULATING 상태 + LeRobot ServoControl + 백업 정책',
         tasks: [
           'MANIPULATING 상태 로직',
           'LeRobot ServoControl 연동 (BusLinker #1+#2)',
           '클라우드 LLM STT/LLM/TTS 연동',
+          '데이터/모델 백업 정책 수립 (수집 데이터·체크포인트, 상윤과; 희승 디테일)',
         ],
         dependencies: {
-          receives: ['인혁: 양팔 LeRobot 제어 가능'],
+          receives: ['인혁: 양팔 LeRobot 제어 가능', '희승: 백업 디테일'],
           gives: [],
         },
       },
@@ -297,11 +310,12 @@ export const MEMBERS = {
         },
       },
       'W-2': {
-        focus: '네트워크 안정성 + 실외 검증',
+        focus: '네트워크 안정성 + 실외 검증 + 시나리오 sequence',
         tasks: [
           '5GHz 핫스팟 latency 검증',
           '서바이벌 모드 실외 검증',
           'FETCH 타이머 현장 보정',
+          '시연 시나리오 sequence (대본·큐시트, 상윤과)',
         ],
         dependencies: { receives: [], gives: [] },
       },
@@ -334,33 +348,38 @@ export const MEMBERS = {
     parts: ['head', 'left_arm', 'right_arm'],
     weeklyTasks: {
       'W-6': {
-        focus: 'SmolVLA Stage 1 학습 착수 (1팔 데이터)',
+        focus: 'SmolVLA Stage 1 학습 착수 + 머리 외주 follow-up',
         tasks: [
           'LeRobot Orin 환경 셋업',
           'SmolVLA Stage 1 학습 착수 (1팔 수집 데이터 + smolvla_base)',
           '평가 스크립트 작성',
+          '머리 외주 follow-up (납기·진척 컨택, 외주 gate 책임)',
         ],
-        dependencies: { receives: [], gives: [] },
+        dependencies: { receives: [], gives: ['전원: 머리 외주 진척 보고'] },
       },
       'W-5': {
-        focus: '양팔 수집 + Stage 2 파인튜닝',
+        focus: '양팔 수집 + Stage 2 + 카메라 calib + 백업 + 외주',
         tasks: [
           '양팔 수집 (스타벅스 컵·텀블러·인형)',
           'SmolVLA Stage 2 파인튜닝',
+          '카메라 calibration (intrinsic, 인혁과)',
+          '데이터/모델 백업 정책 (성래와 메인, 수집 데이터+SmolVLA 체크포인트)',
+          '머리 외주 follow-up + 입고 디데이 확정',
         ],
         dependencies: {
-          receives: ['인혁: 양팔 수집 환경'],
-          gives: [],
+          receives: ['인혁: 양팔 수집 환경 + 카메라 calib', '희승: 백업 디테일'],
+          gives: ['전원: 외주 입고 디데이'],
         },
       },
       'W-4': {
-        focus: 'SmolVLA v1 평가 + 감정 표현',
+        focus: 'SmolVLA v1 평가 + 감정 표현 + 외주 플랜B 판단',
         tasks: [
           'SmolVLA v1 실물 평가 (물체별 성공률, 실패 유형)',
           '추가 수집 보정',
           '감정 표현 v1 (중립/기쁨/놀람)',
+          '머리 외주 follow-up + 플랜B trigger 판단 (미입고 시 인혁 W-4 도장 플랜B 발동)',
         ],
-        dependencies: { receives: [], gives: [] },
+        dependencies: { receives: [], gives: ['인혁: 외주 입고/플랜B 결정'] },
       },
       'W-3': {
         focus: 'lip sync + SmolVLA v2 평가 + sim2real gap',
@@ -376,10 +395,11 @@ export const MEMBERS = {
         },
       },
       'W-2': {
-        focus: '키워드 사전 + 캐릭터 표현',
+        focus: '키워드 사전 + 캐릭터 표현 + 시나리오 sequence',
         tasks: [
           '키워드 사전 + 동의어 매핑 (서바이벌 모드)',
           '캐릭터 표현 조정 (감정/대화)',
+          '시연 시나리오 sequence (대본·큐시트, 성래와)',
         ],
         dependencies: { receives: [], gives: [] },
       },
