@@ -100,7 +100,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: '프레임→배터리2→DC-DC×3→NUC→Orin→USB Hub→환기→어깨 마운트→스피커→이더넷→케이블',
+      description: '프레임 + 배터리 + 컴퓨팅(NUC/Orin/DC-DC/USB Hub) + 환기 + 어깨 마운트',
     },
     {
       id: 'w6_mouth_hw',
@@ -113,7 +113,7 @@ export const TECH_TREE = {
       dependencies: [],
       isGate: false,
       isCheckpoint: false,
-      description: '입 서보 SG90 + 마운트 + Jetson GPIO 5V PWM 배선',
+      description: '입 서보 + 마운트 + Jetson GPIO 5V PWM 배선',
     },
     {
       id: 'w6_orchestrator_skeleton',
@@ -260,7 +260,7 @@ export const TECH_TREE = {
       dependencies: ['pre_bhl_print', 'pre_bhl_motors'],
       isGate: false,
       isCheckpoint: false,
-      description: '액추에이터 12개 조립 + 기어박스 후가공 (서포트/리밍/베어링)',
+      description: '액추에이터 12개 조립 + 기어박스 후가공',
     },
     {
       id: 'w5_gate',
@@ -424,7 +424,7 @@ export const TECH_TREE = {
       dependencies: ['pre_head_outsource'],
       isGate: false,
       isCheckpoint: false,
-      description: '머리 외주 수령 → 카메라+입서보+배선 8단계 통합 → 계량 ≤700g',
+      description: '머리 외주 수령 → 카메라+입서보+배선 통합',
     },
     {
       id: 'w3_body_assembly',
@@ -437,7 +437,7 @@ export const TECH_TREE = {
       dependencies: ['w3_head_integration', 'w4_aerial_walk', 'w4_exterior'],
       isGate: false,
       isCheckpoint: true,
-      description: '상하체 결합 + 관절 가동 범위 실측 (±5° 이상 시 URDF 수정)',
+      description: '상하체 결합 (퀵릴리즈)',
     },
     {
       id: 'w3_real_mass_walk',
