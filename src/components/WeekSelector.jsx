@@ -1,21 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { TIMELINE } from '../data/timeline';
+import { WEEK_KEYS, WEEK_LABELS, getCurrentWeekKey, getWeekData } from '../data/weekHelpers';
 
 const ACCENT = '#00f0ff';
-const WEEKS = Array.from({ length: 11 }, (_, i) => i); // 0-10
-
-function detectCurrentWeek() {
-  // Use same logic as App.jsx: project starts 2026-03-23
-  const projectStart = new Date('2026-03-23');
-  const now = new Date();
-  const diffDays = Math.floor((now - projectStart) / (1000 * 60 * 60 * 24));
-  return Math.max(0, Math.min(10, Math.floor(diffDays / 7)));
-}
 
 export default function WeekSelector({ currentWeek, onWeekChange, weekTitle }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
-  const autoWeek = useRef(detectCurrentWeek());
+  const autoWeek = useRef(getCurrentWeekKey());
 
   const handleClickOutside = useCallback((e) => {
     if (containerRef.current && !containerRef.current.contains(e.target)) {
@@ -36,10 +28,11 @@ export default function WeekSelector({ currentWeek, onWeekChange, weekTitle }) {
   };
 
   const getTitle = (w) => {
-    const weekData = TIMELINE?.find(t => t.week === w);
+    const weekData = getWeekData(w);
     return weekData?.title || '';
   };
 
+  const displayLabel = WEEK_LABELS[currentWeek] || currentWeek;
   const displayTitle = weekTitle || getTitle(currentWeek);
 
   return (
@@ -51,7 +44,7 @@ export default function WeekSelector({ currentWeek, onWeekChange, weekTitle }) {
         onMouseEnter={(e) => (e.currentTarget.style.borderColor = ACCENT)}
         onMouseLeave={(e) => (e.currentTarget.style.borderColor = `${ACCENT}66`)}
       >
-        <span className="text-white font-bold">Week {currentWeek}</span>
+        <span className="text-white font-bold">{displayLabel}</span>
         {displayTitle && (
           <span className="text-[#aaa] font-normal text-xs">{displayTitle}</span>
         )}
@@ -65,15 +58,16 @@ export default function WeekSelector({ currentWeek, onWeekChange, weekTitle }) {
       {/* Dropdown */}
       {open && (
         <div
-          className="absolute top-[calc(100%+6px)] left-0 min-w-[260px] max-h-[360px] overflow-y-auto z-50 bg-[rgba(8,10,18,0.95)] backdrop-blur-[14px] rounded-[10px] py-1.5 border border-[#00f0ff44] animate-[weekDropIn_120ms_ease-out_forwards]"
+          className="absolute top-[calc(100%+6px)] left-0 min-w-[300px] max-h-[360px] overflow-y-auto z-50 bg-[rgba(8,10,18,0.95)] backdrop-blur-[14px] rounded-[10px] py-1.5 border border-[#00f0ff44] animate-[weekDropIn_120ms_ease-out_forwards]"
           style={{
             boxShadow: `0 0 20px ${ACCENT}22, 0 8px 32px rgba(0,0,0,0.6)`,
           }}
         >
-          {WEEKS.map((w) => {
+          {WEEK_KEYS.map((w) => {
             const isActive = w === currentWeek;
             const isCurrent = w === autoWeek.current;
             const title = getTitle(w);
+            const weekData = getWeekData(w);
 
             return (
               <button
@@ -92,7 +86,8 @@ export default function WeekSelector({ currentWeek, onWeekChange, weekTitle }) {
                   if (!isActive) e.currentTarget.style.background = 'transparent';
                 }}
               >
-                <span className="font-bold min-w-[52px]">Week {w}</span>
+                <span className="font-bold min-w-[58px]">{WEEK_LABELS[w]}</span>
+                <span className="text-[10px] text-[#666] min-w-[58px]">{weekData?.date || ''}</span>
                 <span
                   className="flex-1 text-xs whitespace-nowrap overflow-hidden text-ellipsis"
                   style={{ color: isActive ? `${ACCENT}bb` : '#777' }}

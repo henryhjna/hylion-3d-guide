@@ -356,7 +356,7 @@ export default function RobotModel({
   const highlightedParts = useMemo(() => {
     const set = new Set();
     if (selectedWeek !== null && selectedWeek !== undefined) {
-      const weekData = TIMELINE.find(w => w.week === selectedWeek);
+      const weekData = TIMELINE.find(w => w.weekKey === selectedWeek);
       if (weekData) weekData.highlightParts.forEach(p => set.add(p));
     }
     return set;

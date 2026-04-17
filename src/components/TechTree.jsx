@@ -1,6 +1,11 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { TECH_TREE } from '../data/techTree';
 
+// 6주 카운트다운 모델 — pre + W-6..W-1 + final
+const TT_WEEKS = ['pre', 'W-6', 'W-5', 'W-4', 'W-3', 'W-2', 'W-1', 'final'];
+const TT_LABELS = { pre: 'Pre', 'W-6': 'W-6', 'W-5': 'W-5', 'W-4': 'W-4', 'W-3': 'W-3', 'W-2': 'W-2', 'W-1': 'W-1', final: '발표주' };
+const ttIdx = (w) => Math.max(0, TT_WEEKS.indexOf(w));
+
 // ── Layout constants ──────────────────────────────────────────────────────────
 const WEEK_WIDTH = 260;
 const NODE_W = 180;
@@ -156,7 +161,7 @@ function Tooltip({ node, x, y }) {
         {node.label}
       </text>
       <text x={tx + 12} y={ty + 38} fill={COLORS.dimText} fontSize={10} fontFamily="JetBrains Mono, monospace">
-        Week {node.week} | Track {node.track.toUpperCase()} | {node.status}
+        {TT_LABELS[node.week] || node.week} | Track {node.track.toUpperCase()} | {node.status}
       </text>
       {descLines.map((line, i) => (
         <text key={i} x={tx + 12} y={ty + 56 + i * lineHeight} fill="#b0b0c8" fontSize={10}
@@ -206,8 +211,8 @@ function computeCriticalPath(nodes) {
     });
   });
 
-  // Find terminal node
-  const terminal = 'w10_final_presentation';
+  // Find terminal node (final 발표)
+  const terminal = 'final_show';
   if (!nodeMap.has(terminal)) return new Set();
 
   // BFS backwards from terminal to find longest path of non-completed nodes
@@ -221,7 +226,7 @@ function computeCriticalPath(nodes) {
 
     const deps = node.dependencies.filter((d) => nodeMap.has(d));
     if (deps.length === 0) {
-      const res = { len: node.status !== 'completed' ? 1 : 0, path: [id] };
+      const res = { len: node.status !== 'done' ? 1 : 0, path: [id] };
       memo.set(id, res);
       return res;
     }
@@ -232,7 +237,7 @@ function computeCriticalPath(nodes) {
       if (sub.len > best.len) best = sub;
     }
 
-    const myWeight = node.status !== 'completed' ? 1 : 0;
+    const myWeight = node.status !== 'done' ? 1 : 0;
     const res = { len: best.len + myWeight, path: [...best.path, id] };
     memo.set(id, res);
     return res;
@@ -282,7 +287,7 @@ function collectDependencyChain(nodeId, nodes) {
 function computeLayout(nodes) {
   const SLOT = NODE_H + 16; // vertical spacing per node
 
-  // Group by week and track
+  // Group by week (string key) and track
   const weekBuckets = new Map();
   nodes.forEach((node) => {
     if (!weekBuckets.has(node.week)) weekBuckets.set(node.week, { A: [], B: [], both: [] });
@@ -303,10 +308,10 @@ function computeLayout(nodes) {
   const midY = TOP_PADDING + maxAbove + TRACK_GAP;
 
   const positions = new Map();
-  const maxWeek = Math.max(...nodes.map((n) => n.week));
+  const maxWeek = Math.max(...nodes.map((n) => ttIdx(n.week)));
 
   weekBuckets.forEach((tracks, week) => {
-    const x = LEFT_PADDING + week * WEEK_WIDTH + WEEK_WIDTH / 2;
+    const x = LEFT_PADDING + ttIdx(week) * WEEK_WIDTH + WEEK_WIDTH / 2;
 
     // Track A: above midY (bottom-aligned to midY - gap)
     tracks.A.forEach((id, i) => {
@@ -530,21 +535,21 @@ export default function TechTree({ teamFilter, trackFilter, selectedWeek, onNode
       >
         <g transform={`translate(${transform.x}, ${transform.y}) scale(${transform.scale})`}>
           {/* ── Week column separators ───────────────────────────────── */}
-          {Array.from({ length: maxWeek + 1 }, (_, w) => {
+          {TT_WEEKS.slice(0, maxWeek + 1).map((wKey, w) => {
             const x = LEFT_PADDING + w * WEEK_WIDTH;
             return (
-              <g key={`week-${w}`}>
+              <g key={`week-${wKey}`}>
                 <line x1={x} y1={0} x2={x} y2={svgHeight} stroke={COLORS.grid} strokeWidth={1} strokeDasharray="4 4" />
                 <text
                   x={x + WEEK_WIDTH / 2}
                   y={28}
                   textAnchor="middle"
-                  fill={selectedWeek === w ? '#ffffff' : COLORS.dimText}
+                  fill={selectedWeek === wKey ? '#ffffff' : COLORS.dimText}
                   fontSize={13}
                   fontFamily="Orbitron, sans-serif"
-                  fontWeight={selectedWeek === w ? 700 : 400}
+                  fontWeight={selectedWeek === wKey ? 700 : 400}
                 >
-                  Week {w}
+                  {TT_LABELS[wKey]}
                 </text>
               </g>
             );
@@ -594,9 +599,9 @@ export default function TechTree({ teamFilter, trackFilter, selectedWeek, onNode
               : COLORS[node.track] || COLORS.both;
             const dimmed = isNodeDimmed(node);
             const isSelected = selectedNodeId === node.id;
-            const isCompleted = node.status === 'completed';
+            const isCompleted = node.status === 'done';
             const isInProgress = node.status === 'in_progress';
-            const isLocked = node.status === 'locked';
+            const isLocked = node.status === 'pending';
             const isCritical = criticalPath.has(node.id) && !depChain;
 
             return (
@@ -699,7 +704,7 @@ export default function TechTree({ teamFilter, trackFilter, selectedWeek, onNode
                     fontFamily="JetBrains Mono, monospace"
                     style={{ pointerEvents: 'none' }}
                   >
-                    W{node.week} | {node.members?.length || 0} members
+                    {TT_LABELS[node.week] || node.week} | {node.members?.length || 0} members
                   </text>
                 )}
 

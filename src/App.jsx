@@ -16,23 +16,17 @@ import { useDocsSearch } from './hooks/useDocsSearch';
 import { useAICopilot } from './hooks/useAICopilot';
 import { MEMBERS } from './data/members';
 import { TIMELINE } from './data/timeline';
+import { getCurrentWeekKey, getWeekData } from './data/weekHelpers';
 
 const TechTree = lazy(() => import('./components/TechTree'));
 const OnboardingCinematic = lazy(() => import('./components/OnboardingCinematic'));
 
 const MODES = { WORK: 'work', EXPLORE: 'explore' };
 
-function getCurrentWeek() {
-  const projectStart = new Date('2026-03-23');
-  const now = new Date();
-  const diffDays = Math.floor((now - projectStart) / (1000 * 60 * 60 * 24));
-  return Math.max(0, Math.min(10, Math.floor(diffDays / 7)));
-}
-
 export default function App() {
   // Core state
   const [mode, setMode] = useState(MODES.WORK);
-  const [selectedWeek, setSelectedWeek] = useState(() => getCurrentWeek());
+  const [selectedWeek, setSelectedWeek] = useState(() => getCurrentWeekKey());
   const [selectedMember, setSelectedMember] = useState(() => localStorage.getItem('hylion_member') || null);
   const [selectedPart, setSelectedPart] = useState(null);
   const [hoveredPart, setHoveredPart] = useState(null);
@@ -107,7 +101,7 @@ export default function App() {
   }, [selectedMember]);
 
   const weekData = useMemo(() => {
-    return TIMELINE.find(w => w.week === selectedWeek);
+    return getWeekData(selectedWeek);
   }, [selectedWeek]);
 
   const weekTitle = weekData?.title || '';

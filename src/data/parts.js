@@ -1,3 +1,6 @@
+// HYlion Physical AI — 파트 데이터
+// 6주 카운트다운 모델 (W-6~W-1, final). 2026-04-17 기준 진척 반영.
+
 export const COLORS = {
   cyan: '#00f0ff',
   magenta: '#ff00aa',
@@ -10,6 +13,7 @@ export const COLORS = {
 export const PART_COLORS = {
   head: COLORS.cyan,
   torso: COLORS.cyan,
+  mouth: COLORS.green,
   left_arm: COLORS.cyan,
   right_arm: COLORS.cyan,
   left_leg: COLORS.magenta,
@@ -19,6 +23,7 @@ export const PART_COLORS = {
 export const CAMERA_PRESETS = {
   overview: { position: [0, 1.2, 3.5], target: [0, 0.5, 0] },
   head: { position: [0, 1.1, 1.0], target: [0, 0.9, 0] },
+  mouth: { position: [0, 0.95, 0.6], target: [0, 0.85, 0] },
   torso: { position: [0.8, 0.6, 1.2], target: [0, 0.5, 0] },
   left_arm: { position: [-1.2, 0.7, 1.0], target: [-0.3, 0.6, 0] },
   right_arm: { position: [1.2, 0.7, 1.0], target: [0.3, 0.6, 0] },
@@ -28,38 +33,71 @@ export const CAMERA_PRESETS = {
   xray: { position: [0, 0.5, 2.0], target: [0, 0.5, 0] },
 };
 
+// 진척 상태: 'done' | 'in_progress' | 'pending'
+// 2026-04-17 기준 스냅샷
+export const PART_PROGRESS = {
+  head: 'in_progress',         // 외주 제작 중 (W-3 입고 가정)
+  torso: 'pending',            // W-6 시작
+  mouth: 'pending',            // W-6 시작
+  left_arm: 'in_progress',     // 1팔 조립+텔레옵 수집 완료, SmolVLA 학습 미착수
+  right_arm: 'pending',        // W-5 조립
+  left_leg: 'in_progress',     // 3D 프린트 중, 모터 구매 중, Walking RL 학습 중
+  right_leg: 'in_progress',
+};
+
 export const PARTS = {
   head: {
     id: 'head',
     label: '머리 (Head)',
-    subtitle: '하이리온 캐릭터',
+    subtitle: '하이리온 캐릭터 (외주 제작 중)',
     color: COLORS.cyan,
     owners: ['인혁', '상윤'],
-    ownerRoles: { '인혁': '구조/마감', '상윤': '디자인/모델링' },
+    ownerRoles: { '인혁': '전자부품 통합/결합', '상윤': '디자인/외장 마감' },
     specs: [
       { label: '높이', value: '~25cm' },
       { label: '무게 게이트', value: '≤700g' },
       { label: '외주 스티로폼', value: '≤300g' },
       { label: '내부 전자부품', value: '≤400g' },
       { label: '카메라', value: '1개 (외부 USB — SmolVLA external view)' },
-      { label: '입 서보', value: 'SG90급 1개 — lip sync (Jetson GPIO 5V PWM)' },
+      { label: '입', value: 'mouth 파트 분리 — 입 서보 SG90, Jetson GPIO PWM' },
     ],
     manufacturingPaths: [
       { label: '경로 A (기본)', desc: '스티로폼 CNC 외주 → 사포 → 서피서 → 도장' },
       { label: '경로 B (플랜B)', desc: '수작업 열선+칼+퍼티 → 도장' },
     ],
-    timeline: 'Week 0 사양서 → Week 1 발주 → Week 2 목업 → Week 4~5 마감 → Week 7 전자부품 통합',
-    risks: ['외주 납기 지연 (Week 5~6 목표)'],
+    timeline: '외주 진행 중 → W-3 입고+전자부품 통합+상하체 결합 → W-2 외장 점검 → W-1 리허설',
+    risks: ['외주 납기 지연 시 W-3 sim2real 게이트 위험'],
     track: 'A',
-    weeks: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
+    weeks: ['W-3', 'W-2', 'W-1', 'final'],
+    progress: 'in_progress',
+  },
+  mouth: {
+    id: 'mouth',
+    label: '입 (Mouth)',
+    subtitle: 'lip sync + 감정 표현',
+    color: COLORS.green,
+    owners: ['인혁', '성래'],
+    ownerRoles: { '인혁': 'HW 조립/마운트', '성래': 'PWM 제어/오케스트레이터 연동' },
+    specs: [
+      { label: '서보', value: 'SG90급 1개' },
+      { label: '제어', value: 'Jetson GPIO 5V PWM (Orin)' },
+      { label: '구동', value: '입 힌지 1축 (위/아래)' },
+      { label: '용도', value: 'lip sync (TTS 동기) + 감정 표현 (놀람/기쁨 등)' },
+      { label: '소프트웨어', value: '오케스트레이터 IDLE/TALKING 상태에서 PWM 출력' },
+    ],
+    timeline: 'W-6 HW 완성 + PWM 제어 → W-5 텔레옵 동기 테스트 → W-3 lip sync 통합',
+    risks: ['머리 외주 입 힌지 마운트 호환성 (W-3 통합 시 검증)'],
+    track: 'A',
+    weeks: ['W-6', 'W-5', 'W-3', 'W-2', 'W-1', 'final'],
+    progress: 'pending',
   },
   torso: {
     id: 'torso',
     label: '토르소 (Torso)',
     subtitle: '알루미늄 프레임 + 컴퓨팅',
     color: COLORS.cyan,
-    owners: ['인혁', '성래'],
-    ownerRoles: { '인혁': '조립', '성래': '배포/통합' },
+    owners: ['인혁', '승민', '성래'],
+    ownerRoles: { '인혁': '조립 리드', '승민': '조립 보조 (W-6~W-5)', '성래': '배포/통합' },
     specs: [
       { label: '높이', value: '~25cm' },
       { label: '프레임', value: '2020 알루미늄 프로파일' },
@@ -88,18 +126,19 @@ export const PARTS = {
       'Orin↔NUC Ethernet',
       '케이블 정리 + 간섭 확인',
     ],
-    timeline: 'Week 1 CAD → Week 2 조립 → Week 6 상반신 통합 → Week 8 상하체 결합',
-    risks: [],
+    timeline: 'W-6 11단계 조립 완성 → W-5 양팔 마운트 → W-3 상하체 결합 + 머리 통합',
+    risks: ['W-6 미완 시 +arm/+leg 누적 통합 도미노 지연'],
     track: 'A',
-    weeks: [1, 2, 6, 8, 9, 10],
+    weeks: ['W-6', 'W-5', 'W-3', 'W-2', 'W-1', 'final'],
+    progress: 'pending',
   },
   left_arm: {
     id: 'left_arm',
     label: 'SO-ARM101 왼팔',
-    subtitle: '조작 시스템 (좌)',
+    subtitle: '조작 시스템 (좌) — 1팔 조립+수집 완료',
     color: COLORS.cyan,
-    owners: ['인혁', '성래'],
-    ownerRoles: { '인혁': '하드웨어', '성래': '제어/SmolVLA 배포' },
+    owners: ['인혁', '상윤', '성래'],
+    ownerRoles: { '인혁': 'HW (완료)', '상윤': 'SmolVLA 학습/평가', '성래': 'LeRobot 배포' },
     specs: [
       { label: '모델', value: 'SO-ARM101 6DOF' },
       { label: '서보', value: 'STS3215 ×6 (BusLinker Board #1)' },
@@ -109,18 +148,20 @@ export const PARTS = {
       { label: '그리퍼 jaw', value: '~5~6cm' },
       { label: '안전', value: '토크 60%, 속도 90°/s, 소프트 리미트' },
     ],
-    timeline: 'Week 0 커리큘럼 → Week 2~3 수집 → Week 4 ablation → Week 6 통합 → Week 7 v2',
+    progressNote: '✅ 조립 + 캘리브레이션 + 텔레옵 수집 완료. SmolVLA Stage 1 학습 W-6 착수.',
+    timeline: '완료 → W-6 SmolVLA Stage 1 → W-5 양팔 동시 텔레옵 → W-3 FETCH 통합',
     risks: [],
     track: 'A',
-    weeks: [0, 1, 2, 3, 4, 6, 7, 8, 9, 10],
+    weeks: ['W-6', 'W-5', 'W-3', 'W-2', 'W-1', 'final'],
+    progress: 'in_progress',
   },
   right_arm: {
     id: 'right_arm',
     label: 'SO-ARM101 오른팔',
-    subtitle: '조작 시스템 (우)',
+    subtitle: '조작 시스템 (우) — W-5 조립 예정',
     color: COLORS.cyan,
-    owners: ['인혁', '성래'],
-    ownerRoles: { '인혁': '하드웨어', '성래': '제어/SmolVLA 배포' },
+    owners: ['인혁', '상윤', '성래'],
+    ownerRoles: { '인혁': 'HW 조립', '상윤': 'SmolVLA 수집/학습', '성래': 'LeRobot 배포' },
     specs: [
       { label: '모델', value: 'SO-ARM101 6DOF' },
       { label: '서보', value: 'STS3215 ×6 (BusLinker Board #2)' },
@@ -138,21 +179,22 @@ export const PARTS = {
       ],
       totalEpisodes: 600,
       distribution: '물체당 200개 균등 (시연 조건 특화 비율 60% 이상)',
-      training: 'smolvla_base 로드 → Stage 2 자체 600 에피소드 파인튜닝',
+      training: 'smolvla_base 로드 → Stage 2 자체 600 에피소드 파인튜닝 (W-5~)',
       pipeline: 'LLM이 물체 추출 → SmolVLA에 전달',
     },
-    timeline: 'Week 0 커리큘럼 → Week 2~3 수집 → Week 4 ablation → Week 6 통합 → Week 7 v2',
-    risks: [],
+    timeline: 'W-5 조립 + 캘리브레이션 + 양팔 수집 시작 → W-4 SmolVLA Stage 2 → W-3 FETCH 통합',
+    risks: ['W-5 조립 지연 시 수집/학습 도미노'],
     track: 'A',
-    weeks: [0, 1, 2, 3, 4, 6, 7, 8, 9, 10],
+    weeks: ['W-5', 'W-4', 'W-3', 'W-2', 'W-1', 'final'],
+    progress: 'pending',
   },
   left_leg: {
     id: 'left_leg',
     label: 'BHL 왼다리',
-    subtitle: '이족보행 플랫폼 (좌)',
+    subtitle: '이족보행 플랫폼 (좌) — 프린트/RL 진행 중',
     color: COLORS.magenta,
-    owners: ['승민', '희승'],
-    ownerRoles: { '승민': '리드/조립', '희승': 'AI/RL' },
+    owners: ['희승', '승민'],
+    ownerRoles: { '희승': 'RL 학습/조립 리드', '승민': 'W-4 조립 합류 + 전원/안전' },
     specs: [
       { label: 'DOF', value: '6DOF' },
       { label: '액추에이터', value: '3D프린트 사이클로이드 기어박스 + BLDC' },
@@ -169,18 +211,20 @@ export const PARTS = {
       refMotion: 'BONES-SEED + AMASS',
     },
     safety: 'BNO085 IMU → NUC 낙상 감지 → 모터 토크 해제 (백드라이버블 → 안전 주저앉음)',
-    timeline: 'Week 0 시뮬 셋업 → Week 1~2 직립 테스트+RL 시작 → Week 3 PhysX CPU RL 진행 → Week 4~5 조립+공중보행 → Week 6 지면 → Week 8 실체 보행 → Week 9~10 안정화+발표',
-    risks: ['Sim-to-real gap', '탑헤비 직립 불가', 'Standing policy 부재'],
+    progressNote: '🟡 3D 프린트 진행 중, 모터 구매 중, Walking RL 학습 중 (희승)',
+    timeline: 'W-6 RL 학습 계속 → W-5 다리 조립 시작 → W-4 다리 완성 + 공중지그 → W-3 실체 mass 보행',
+    risks: ['모터 입고 지연', 'Sim-to-real gap', '탑헤비 직립 불가'],
     track: 'B',
-    weeks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    weeks: ['W-6', 'W-5', 'W-4', 'W-3', 'W-2', 'W-1', 'final'],
+    progress: 'in_progress',
   },
   right_leg: {
     id: 'right_leg',
     label: 'BHL 오른다리',
-    subtitle: '이족보행 플랫폼 (우)',
+    subtitle: '이족보행 플랫폼 (우) — 프린트/RL 진행 중',
     color: COLORS.magenta,
-    owners: ['승민', '희승'],
-    ownerRoles: { '승민': '리드/조립', '희승': 'AI/RL' },
+    owners: ['희승', '승민'],
+    ownerRoles: { '희승': 'RL 학습/조립 리드', '승민': 'W-4 조립 합류 + 전원/안전' },
     specs: [
       { label: 'DOF', value: '6DOF' },
       { label: '액추에이터', value: '3D프린트 사이클로이드 기어박스 + BLDC' },
@@ -197,9 +241,11 @@ export const PARTS = {
       refMotion: 'BONES-SEED + AMASS',
     },
     safety: 'BNO085 IMU → NUC 낙상 감지 → 모터 토크 해제 (백드라이버블 → 안전 주저앉음)',
-    timeline: 'Week 0 시뮬 셋업 → Week 1~2 직립 테스트+RL 시작 → Week 3 PhysX CPU RL 진행 → Week 4~5 조립+공중보행 → Week 6 지면 → Week 8 실체 보행 → Week 9~10 안정화+발표',
-    risks: ['Sim-to-real gap', '탑헤비 직립 불가', 'Standing policy 부재'],
+    progressNote: '🟡 3D 프린트 진행 중, 모터 구매 중, Walking RL 학습 중 (희승)',
+    timeline: 'W-6 RL 학습 계속 → W-5 다리 조립 시작 → W-4 다리 완성 + 공중지그 → W-3 실체 mass 보행',
+    risks: ['모터 입고 지연', 'Sim-to-real gap', '탑헤비 직립 불가'],
     track: 'B',
-    weeks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    weeks: ['W-6', 'W-5', 'W-4', 'W-3', 'W-2', 'W-1', 'final'],
+    progress: 'in_progress',
   },
 };

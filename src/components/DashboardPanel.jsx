@@ -3,62 +3,78 @@ import { TEAM } from '../data/team';
 import { TIMELINE } from '../data/timeline';
 import { TASK_HINTS } from '../data/taskHints';
 import { HANDOFFS } from '../data/handoffs';
+import { WEEK_KEYS, WEEK_LABELS, getWeekData, getNextWeekKey, getWeekProgress } from '../data/weekHelpers';
 
-/* ── Gate definitions ─────────────────────────────────────────── */
-const GATES = {
-  3: { name: 'Phase 1', items: ['토르소 완성', 'SmolVLA v1 동작', 'Walking RL 학습 진행 중 (PhysX CPU)', 'NUC 준비', '수집 600개'] },
-  5: { name: 'Phase 2', items: ['TTFT<500ms', 'lip sync+감정표현', '공중보행', 'ablation', '머리+바디'] },
-  7: { name: 'Phase 3', items: ['머리 통합', 'SmolVLA v2', 'Walking RL 최종', '외장 완성'] },
-  8: { name: '합류', items: ['상하체 결합', '실체 보행', '낙상 감지 검증', '풀 시나리오 1차'] },
-  9: { name: '리허설 1차', items: ['시나리오 전체 통과', '서바이벌 전환', '비상정지', '10보+회전', '5분 낙상 없음'] },
-  10: { name: '최종 필수', items: ['시나리오 C 이상', '낙상 감지 정상', '비상정지 정상', '리허설 2회+'] },
+/* ── Gate definitions (timeline.js의 gates 배열에서 자동 추출) ───── */
+const GATES = TIMELINE.reduce((acc, entry) => {
+  if (entry.gates && entry.gates.length > 0) {
+    acc[entry.weekKey] = {
+      name: entry.title,
+      items: entry.gates,
+    };
+  }
+  return acc;
+}, {});
+
+/* ── Week-based progress estimate (weekKey 기반) ───────────────── */
+// 누적 통합 모델: W-6 토르소+mouth → W-5 +arm → W-4 +leg → W-3 +머리 → W-2/W-1 sim2real
+const PROGRESS_MAP = {
+  'W-6': { head: 5, torso: 30, mouth: 30, arms: 50, legs: 25, integration: 0 },
+  'W-5': { head: 5, torso: 60, mouth: 60, arms: 75, legs: 35, integration: 10 },
+  'W-4': { head: 10, torso: 70, mouth: 70, arms: 80, legs: 70, integration: 30 },
+  'W-3': { head: 80, torso: 90, mouth: 90, arms: 90, legs: 85, integration: 70 },
+  'W-2': { head: 95, torso: 95, mouth: 95, arms: 95, legs: 90, integration: 85 },
+  'W-1': { head: 100, torso: 100, mouth: 100, arms: 100, legs: 95, integration: 95 },
+  'final': { head: 100, torso: 100, mouth: 100, arms: 100, legs: 100, integration: 100 },
 };
 
-/* ── Week-based progress estimate ─────────────────────────────── */
-const getProgress = (week) => ({
-  total: Math.min(100, Math.round((week / 10) * 100)),
-  head:        week < 2 ? 0 : week < 4 ? 20 : week < 5 ? 40 : week < 7 ? 65 : week < 8 ? 85 : 100,
-  torso:       week < 1 ? 0 : week < 2 ? 30 : week < 6 ? 70 : week < 8 ? 85 : 100,
-  arms:        week < 1 ? 0 : week < 3 ? 50 : week < 4 ? 80 : 100,
-  legs:        week < 2 ? 0 : week < 4 ? 20 : week < 5 ? 40 : week < 6 ? 50 : week < 7 ? 70 : week < 8 ? 85 : 100,
-  integration: week < 6 ? 0 : week < 8 ? 30 : week < 9 ? 60 : week < 10 ? 80 : 100,
-});
+const getProgress = (weekKey) => {
+  const p = PROGRESS_MAP[weekKey] || PROGRESS_MAP['W-6'];
+  return { total: getWeekProgress(weekKey), ...p };
+};
 
 /* ── Part display config ──────────────────────────────────────── */
 const PART_META = {
   head:        { label: '머리',   color: '#00f0ff' },
   torso:       { label: '토르소', color: '#00f0ff' },
+  mouth:       { label: '입',     color: '#00ff88' },
   arms:        { label: '양팔',   color: '#00f0ff' },
   legs:        { label: '다리',   color: '#ff00aa' },
   integration: { label: '통합',   color: '#c8ff00' },
 };
 
-/* ── Track highlights builder ─────────────────────────────────── */
-function getTrackHighlights(week) {
-  const entry = TIMELINE.find((t) => t.week === week);
-  if (!entry) return null;
-  return { trackA: entry.trackA, trackB: entry.trackB };
+/* ── Member-based highlights (TIMELINE.members에서 추출) ───────── */
+function getWeekHighlights(weekKey) {
+  const entry = getWeekData(weekKey);
+  if (!entry || !entry.members) return null;
+  return { focus: entry.focus, description: entry.description, members: entry.members };
 }
 
-/* ── Dependency flow (this week -> next week) ─────────────────── */
-function getDependencyFlow(week) {
-  const current = TIMELINE.find((t) => t.week === week);
-  const next = TIMELINE.find((t) => t.week === week + 1);
+/* ── Dependency flow (this week → next week) ──────────────────── */
+function getDependencyFlow(weekKey) {
+  const current = getWeekData(weekKey);
+  const nextKey = getNextWeekKey(weekKey);
+  const next = nextKey ? getWeekData(nextKey) : null;
   if (!current) return null;
   const items = [];
-  if (current.key) items.push({ label: `Week ${week} 핵심`, text: current.key });
-  if (current.extra) items.push({ label: `Week ${week} 추가`, text: current.extra });
-  if (next?.key) items.push({ label: `Week ${week + 1} 핵심`, text: next.key });
+  if (current.key) items.push({ label: `${WEEK_LABELS[weekKey]} 핵심`, text: current.key });
+  if (next?.key) items.push({ label: `${WEEK_LABELS[nextKey]} 핵심`, text: next.key });
   return items.length > 0 ? items : null;
 }
 
 /* ── Hint / Handoff matching helpers ──────────────────────────── */
-function findHintForTask(taskText, weekNum) {
+function findHintForTask(taskText, weekKey) {
   const taskLower = taskText.toLowerCase();
   let bestMatch = null;
   let bestScore = 0;
+  // 새 weekKey 형태 (w6_, w5_) + 옛 (w0_~w10_) 양쪽 시도
+  const weekIdx = WEEK_KEYS.indexOf(weekKey);
+  const candidatePrefixes = [
+    `${weekKey.toLowerCase().replace('-', '')}_`, // w6_, w5_
+    weekIdx >= 0 ? `w${weekIdx}_` : null,
+  ].filter(Boolean);
   for (const [id, hint] of Object.entries(TASK_HINTS)) {
-    if (!id.startsWith(`w${weekNum}_`)) continue;
+    if (!candidatePrefixes.some(p => id.startsWith(p))) continue;
     const words = hint.summary.toLowerCase().split(/\s+/);
     let score = 0;
     for (const word of words) {
@@ -79,9 +95,9 @@ function findHandoff(depText, memberId) {
 }
 
 /* ── Expandable task item ────────────────────────────────────── */
-function ExpandableTask({ task, index, weekNum, isChecked, onToggle, memberColor }) {
+function ExpandableTask({ task, weekKey, isChecked, onToggle, memberColor }) {
   const [expanded, setExpanded] = useState(false);
-  const hint = useMemo(() => findHintForTask(task, weekNum), [task, weekNum]);
+  const hint = useMemo(() => findHintForTask(task, weekKey), [task, weekKey]);
 
   return (
     <div className="mb-6">
@@ -188,11 +204,13 @@ export default function DashboardPanel({
   onPartClick,
 }) {
   const member = memberId ? TEAM[memberId] : null;
-  const weekNum = currentWeek ?? 0;
-  const gate = GATES[weekNum] || null;
-  const weekEntry = TIMELINE.find((t) => t.week === weekNum);
-  const weekTitle = weekTitleProp || weekEntry?.title || `Week ${weekNum}`;
-  const progress = useMemo(() => getProgress(weekNum), [weekNum]);
+  const weekKey = currentWeek || 'W-6';
+  const weekLabel = WEEK_LABELS[weekKey] || weekKey;
+  const gate = GATES[weekKey] || null;
+  const weekEntry = getWeekData(weekKey);
+  const weekTitle = weekTitleProp || weekEntry?.title || weekLabel;
+  const progress = useMemo(() => getProgress(weekKey), [weekKey]);
+  const nextKey = getNextWeekKey(weekKey);
 
   /* ── Checklist state (localStorage) ──────────────────────────── */
   const [checkedTasks, setCheckedTasks] = useState({});
@@ -216,26 +234,26 @@ export default function DashboardPanel({
 
   const toggleTask = useCallback((idx) => {
     if (!memberId) return;
-    const key = `w${weekNum}_t${idx}`;
+    const key = `${weekKey}_t${idx}`;
     setCheckedTasks((prev) => {
       const updated = { ...prev, [key]: !prev[key] };
       localStorage.setItem(`hylion_tasks_${memberId}`, JSON.stringify(updated));
       return updated;
     });
-  }, [memberId, weekNum]);
+  }, [memberId, weekKey]);
 
-  const isChecked = (idx) => !!checkedTasks[`w${weekNum}_t${idx}`];
+  const isChecked = (idx) => !!checkedTasks[`${weekKey}_t${idx}`];
 
   /* ── Dependency flow section state ───────────────────────────── */
   const [flowOpen, setFlowOpen] = useState(false);
 
   /* ── Derived data ────────────────────────────────────────────── */
-  const weekData = memberData?.weeklyTasks?.[weekNum];
-  const nextWeekData = memberData?.weeklyTasks?.[weekNum + 1];
+  const weekData = memberData?.weeklyTasks?.[weekKey];
+  const nextWeekData = nextKey ? memberData?.weeklyTasks?.[nextKey] : null;
   const completedCount = weekData?.tasks?.filter((_, i) => isChecked(i)).length || 0;
   const totalCount = weekData?.tasks?.length || 0;
-  const trackHighlights = useMemo(() => getTrackHighlights(weekNum), [weekNum]);
-  const depFlow = useMemo(() => getDependencyFlow(weekNum), [weekNum]);
+  const weekHighlights = useMemo(() => getWeekHighlights(weekKey), [weekKey]);
+  const depFlow = useMemo(() => getDependencyFlow(weekKey), [weekKey]);
 
   /* ── Member-specific dependency flow (from memberData) ───────── */
   const memberDepFlow = useMemo(() => {
@@ -333,17 +351,19 @@ export default function DashboardPanel({
       {/* ── Scrollable content ───────────────────────────────────── */}
       <div className="flex-1 overflow-y-auto flex flex-col gap-5" style={{ scrollbarGutter: 'stable', padding: '20px 24px 28px 24px' }}>
         {/* ── Gate card ───────────────────────────────────────────── */}
-        {gate && <GateCard gate={gate} weekNum={weekNum} checkedTasks={checkedTasks} memberId={memberId} onToggleGateItem={toggleKey} />}
+        {gate && <GateCard gate={gate} weekKey={weekKey} weekLabel={weekLabel} checkedTasks={checkedTasks} memberId={memberId} onToggleGateItem={toggleKey} />}
 
         {/* ── Member selected vs overall view ────────────────────── */}
         {member && memberData ? (
           <MemberView
             member={member}
             memberData={memberData}
-            weekNum={weekNum}
+            weekKey={weekKey}
+            weekLabel={weekLabel}
             weekTitle={weekTitle}
             weekData={weekData}
             nextWeekData={nextWeekData}
+            nextKey={nextKey}
             completedCount={completedCount}
             totalCount={totalCount}
             isChecked={isChecked}
@@ -355,10 +375,11 @@ export default function DashboardPanel({
           />
         ) : (
           <OverallView
-            weekNum={weekNum}
+            weekKey={weekKey}
+            weekLabel={weekLabel}
             weekTitle={weekTitle}
             progress={progress}
-            trackHighlights={trackHighlights}
+            weekHighlights={weekHighlights}
             depFlow={depFlow}
             flowOpen={flowOpen}
             setFlowOpen={setFlowOpen}
@@ -383,9 +404,9 @@ export default function DashboardPanel({
    ══════════════════════════════════════════════════════════════════ */
 
 /* ── Gate card ─────────────────────────────────────────────────── */
-function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
+function GateCard({ gate, weekKey, weekLabel, checkedTasks, memberId, onToggleGateItem }) {
   const completedGateItems = gate.items.filter((_, i) => {
-    const key = memberId ? `gate_${weekNum}_${i}` : `gate_all_${weekNum}_${i}`;
+    const key = memberId ? `gate_${weekKey}_${i}` : `gate_all_${weekKey}_${i}`;
     return !!checkedTasks[key];
   }).length;
 
@@ -409,12 +430,12 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
           {gate.name}
         </span>
         <span className="text-sm text-[#9aa0b8] ml-auto">
-          Week {weekNum} 말
+          {weekLabel} 말
         </span>
       </div>
       <div className="space-y-3">
         {gate.items.map((item, i) => {
-          const key = memberId ? `gate_${weekNum}_${i}` : `gate_all_${weekNum}_${i}`;
+          const key = memberId ? `gate_${weekKey}_${i}` : `gate_all_${weekKey}_${i}`;
           const checked = !!checkedTasks[key];
           return (
             <label key={i} className="flex items-center gap-4 text-sm cursor-pointer hover:bg-[#c8ff0008] rounded px-1 -mx-1">
@@ -441,10 +462,12 @@ function GateCard({ gate, weekNum, checkedTasks, memberId, onToggleGateItem }) {
 function MemberView({
   member,
   memberData,
-  weekNum,
+  weekKey,
+  weekLabel,
   weekTitle,
   weekData,
   nextWeekData,
+  nextKey,
   completedCount,
   totalCount,
   isChecked,
@@ -479,11 +502,11 @@ function MemberView({
       {/* Current week title + focus */}
       {weekData && (
         <div>
-          {/* ── Week header (큰 제목 — 위계: 가장 높음) ── */}
+          {/* ── Week header ── */}
           <div className="mb-6">
             <div className="flex items-baseline justify-between mb-5">
               <h3 className="text-xl font-bold tracking-wide" style={{ color: accentColor, textShadow: `0 0 20px ${accentColor}40` }}>
-                Week {weekNum}
+                {weekLabel}
               </h3>
               <span className="text-sm text-[#8890aa] font-mono">
                 {completedCount}/{totalCount}
@@ -491,7 +514,7 @@ function MemberView({
             </div>
             <p className="text-base text-[#c0c8e0] mb-6">{weekTitle}</p>
 
-            {/* Focus card (질감: 글래스 카드 + 글로우 보더) */}
+            {/* Focus card */}
             <div className="rounded-xl p-5" style={{ background: `linear-gradient(135deg, ${accentColor}0c, ${accentColor}04)`, border: `1px solid ${accentColor}30`, boxShadow: `0 0 30px ${accentColor}08` }}>
               <div className="text-xs text-[#9aa0b8] uppercase tracking-widest mb-6 font-mono">핵심 목표</div>
               <div className="text-lg font-bold leading-snug" style={{ color: accentColor, textShadow: `0 0 12px ${accentColor}30` }}>
@@ -500,7 +523,7 @@ function MemberView({
             </div>
           </div>
 
-          {/* ── Progress bar (질감: 네온 글로우) ── */}
+          {/* ── Progress bar ── */}
           <div className="mb-6">
             <div className="h-2.5 rounded-full bg-[#ffffff0a] border border-[#ffffff06] overflow-hidden">
               <div
@@ -514,15 +537,14 @@ function MemberView({
             </div>
           </div>
 
-          {/* ── Checklist (여유: 넉넉한 간격) ── */}
+          {/* ── Checklist ── */}
           <div className="text-xs text-[#9aa0b8] uppercase tracking-[0.2em] font-mono mb-5 pb-2 border-b border-[#ffffff08]">할 일</div>
           <div className="space-y-1.5">
             {weekData.tasks.map((task, i) => (
               <ExpandableTask
                 key={i}
                 task={task}
-                index={i}
-                weekNum={weekNum}
+                weekKey={weekKey}
                 isChecked={isChecked(i)}
                 onToggle={() => toggleTask(i)}
                 memberColor={accentColor}
@@ -547,7 +569,7 @@ function MemberView({
           className="p-5 rounded-lg bg-white/[0.02] border border-white/[0.05]"
         >
           <div className="text-sm text-[#9aa0b8] mb-6">
-            다음 주 미리보기 (Week {weekNum + 1})
+            다음 주 미리보기 ({WEEK_LABELS[nextKey]})
           </div>
           <div className="text-sm" style={{ color: accentColor }}>
             {nextWeekData.focus}
@@ -571,10 +593,11 @@ const PART_ID_MAP = { arms: 'left_arm', legs: 'left_leg', integration: 'torso' }
 
 /* ── Overall project view (no member) ──────────────────────────── */
 function OverallView({
-  weekNum,
+  weekKey,
+  weekLabel,
   weekTitle,
   progress,
-  trackHighlights,
+  weekHighlights,
   depFlow,
   flowOpen,
   setFlowOpen,
@@ -582,19 +605,18 @@ function OverallView({
 }) {
   return (
     <>
-      {/* Header */}
-      {/* Project header — 위계: 가장 높음 */}
+      {/* Project header */}
       <div style={{ marginBottom: 0 }}>
         <h2 className="text-2xl font-bold tracking-wider text-[#e0e8ff]" style={{ marginBottom: 4, textShadow: '0 0 20px rgba(224,232,255,0.15)' }}>
           전체 프로젝트
         </h2>
-        <div className="text-base text-[#9aa0b8]">HYlion Physical AI</div>
+        <div className="text-base text-[#9aa0b8]">HYlion Physical AI · 발표 2026-06-01</div>
       </div>
 
-      {/* Week title — 위계: 높음 */}
+      {/* Week title */}
       <div>
         <h3 className="text-xl font-bold tracking-wide text-[#00ff88]" style={{ marginBottom: 12, textShadow: '0 0 16px rgba(0,255,136,0.3)' }}>
-          Week {weekNum} — {weekTitle}
+          {weekLabel} — {weekTitle}
         </h3>
 
         {/* Overall progress */}
@@ -646,36 +668,33 @@ function OverallView({
         </div>
       </div>
 
-      {/* This week highlights by track */}
-      {trackHighlights && (
+      {/* This week highlights — by member */}
+      {weekHighlights && (
         <div className="space-y-3">
           <h4
             className="text-sm uppercase tracking-widest text-[#9aa0b8]"
           >
-            이번 주 하이라이트
+            이번 주 멤버별 담당
           </h4>
-
-          {trackHighlights.trackA && (
-            <div className="p-5 rounded-lg bg-[rgba(0,240,255,0.04)] border border-[rgba(0,240,255,0.12)]">
-              <div className="text-sm font-bold mb-6 text-[#00f0ff]">
-                Track A (상체)
-              </div>
-              <div className="text-sm text-[#e0e8ff] leading-relaxed">
-                {trackHighlights.trackA}
-              </div>
+          {weekHighlights.focus && (
+            <div className="text-sm text-[#e0e8ff] leading-relaxed mb-2">
+              {weekHighlights.focus}
             </div>
           )}
-
-          {trackHighlights.trackB && (
-            <div className="p-5 rounded-lg bg-[rgba(255,0,170,0.04)] border border-[rgba(255,0,170,0.12)]">
-              <div className="text-sm font-bold mb-6 text-[#ff00aa]">
-                Track B (하체)
+          {Object.entries(weekHighlights.members).map(([mid, mdata]) => {
+            const teamMember = TEAM[mid];
+            if (!teamMember || !mdata.items?.length) return null;
+            return (
+              <div key={mid} className="p-4 rounded-lg" style={{ background: teamMember.color + '08', border: `1px solid ${teamMember.color}20` }}>
+                <div className="text-sm font-bold mb-2" style={{ color: teamMember.color }}>
+                  {teamMember.name} {mdata.lead ? '(리드)' : ''}
+                </div>
+                <ul className="text-xs text-[#e0e8ff] leading-relaxed space-y-1">
+                  {mdata.items.map((it, i) => <li key={i}>• {it}</li>)}
+                </ul>
               </div>
-              <div className="text-sm text-[#e0e8ff] leading-relaxed">
-                {trackHighlights.trackB}
-              </div>
-            </div>
-          )}
+            );
+          })}
         </div>
       )}
 

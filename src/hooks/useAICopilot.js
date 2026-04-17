@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
+import { WEEK_LABELS, getWeekData } from '../data/weekHelpers';
 
 export function useAICopilot({ searchDocs, currentWeek, currentView, selectedPart, selectedMember }) {
   const [messages, setMessages] = useState([]);
@@ -17,12 +18,15 @@ export function useAICopilot({ searchDocs, currentWeek, currentView, selectedPar
   const buildSystemPrompt = useCallback((retrievedContext) => {
     const memberName = selectedMember ? (memberNames[selectedMember] || selectedMember) : '없음';
     const memberRole = selectedMember ? (memberRoles[selectedMember] || '') : '';
+    const weekLabel = currentWeek ? (WEEK_LABELS[currentWeek] || currentWeek) : '미정';
+    const weekTitle = currentWeek ? (getWeekData(currentWeek)?.title || '') : '';
 
     return `당신은 HYlion Physical AI 로봇 프로젝트의 AI 어시스턴트입니다.
-팀원 5명(인혁/δ1, 승민/δ2, 희승/δ3, 성래/ε1, 상윤/ε2)이 10주간 이족보행 로봇을 만듭니다.
+팀원 5명(인혁/δ1, 승민/δ2, 희승/δ3, 성래/ε1, 상윤/ε2)이 2026-06-01 최종발표를 향해 6주 카운트다운(W-6~W-1)으로 이족보행 로봇을 만듭니다.
+누적 통합 순서: torso+mouth(W-6) → +arm(W-5) → +bhl leg(W-4) → +머리/실내 sim2real(W-3) → 실외+공연장 sim2real(W-2) → 공연장 리허설(W-1) → 발표.
 
 ## 현재 컨텍스트
-- 현재 주차: Week ${currentWeek ?? '미정'}
+- 현재 주차: ${weekLabel}${weekTitle ? ' — ' + weekTitle : ''}
 - 선택된 뷰: ${currentView || '작업'}
 - 선택된 파트: ${selectedPart || '없음'}
 - 선택된 멤버: ${memberName}${memberRole ? ' (' + memberRole + ')' : ''}
@@ -47,10 +51,11 @@ ${retrievedContext || '(검색 결과 없음)'}
     if (!searchDocs) return '';
 
     // 검색 쿼리: 유저 메시지 + 현재 컨텍스트 키워드
+    const weekLabel = currentWeek ? (WEEK_LABELS[currentWeek] || currentWeek) : null;
     const contextKeywords = [
       selectedPart,
       selectedMember ? memberNames[selectedMember] : null,
-      currentWeek != null ? `Week ${currentWeek}` : null,
+      weekLabel,
     ].filter(Boolean).join(' ');
 
     const query = userMessage + ' ' + contextKeywords;

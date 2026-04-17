@@ -3,6 +3,7 @@ import { PARTS } from '../data/parts';
 import { TEAM } from '../data/team';
 import GlossaryText from './GlossaryText';
 import { COMPONENTS } from '../data/components';
+import { WEEK_LABELS } from '../data/weekHelpers';
 
 function getComponentsForPart(partId) {
   if (!COMPONENTS) return [];
@@ -54,7 +55,7 @@ export default function PartInfoPanel({ partId, onClose, onWeekSelect, onMemberS
             onClick={() => onWeekSelect?.(w)}
             className="tag bg-[#ffffff08] text-[#9aa0b8] border border-[#ffffff10] cursor-pointer hover:bg-[#00f0ff15] hover:text-[#00f0ff] hover:border-[#00f0ff30] transition-colors"
           >
-            W{w}
+            {WEEK_LABELS[w] || w}
           </span>
         ))}
       </div>
