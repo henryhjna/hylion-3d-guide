@@ -25,7 +25,7 @@
 | 항목 | 수량 | 비고 |
 |---|---|---|
 | 다리 자유도(DoF) | **12 DoF** (다리 2 × 6 DoF) | hip roll/yaw/pitch + knee pitch + ankle pitch/roll |
-| BESC 수 (B-G431B-ESC1) | **12개** (다리당 6) | BHL 원본 총 14개 중 다리 몫만 |
+| BESC 수 (B-G431B-ESC1) | **12개** (다리당 6) | BHL 원본은 22 DoF × 1 BESC = 22개. 하이리온은 다리 12개만 |
 | MAD M6C12 150KV (6512 액추에이터) | **8개** | 다리당 4 (hip roll/yaw/pitch + knee) |
 | MAD 5010 (5010 액추에이터) | **4개** | 다리당 2 (ankle pitch/roll) — KV variant는 발주 전 BHL BOM 최종 확인 |
 | AS5600 자기 엔코더 | **12개** | 관절당 1 |

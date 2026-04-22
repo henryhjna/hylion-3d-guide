@@ -440,7 +440,7 @@ export const GLOSSARY = {
   },
   "ESC": {
     full: "Electronic Speed Controller",
-    definition: "BLDC 모터의 속도와 방향을 제어하는 전자 장치. 하이리온은 B-G431B-ESC1(STM32G431CB + L6387 게이트 드라이버 + STL180N6F7 MOSFET) 12개를 사용하며, T-K-233의 Recoil-Motor-Controller-BESC 펌웨어(C언어, MIT)로 FOC 수kHz+PD 위치 제어+CAN 프로토콜+AS5600 I2C 드라이버를 구동한다. BHL은 이 보드+펌웨어 조합을 'BESC'로 부른다. STM32CubeIDE로 Run 4번 절차 플래시.",
+    definition: "BLDC 모터의 속도와 방향을 제어하는 전자 장치. 하이리온은 B-G431B-ESC1 **12개**를 사용 (관절당 1개). 각 보드 구성: STM32G431CB(170 MHz, 내장 OP-amp) + L6387 게이트드라이버 ×3(3상) + STL180N6F7 MOSFET ×6(하이·로우 3쌍) + 3-shunt 전류센싱 + FDCAN 온보드 트랜시버. T-K-233의 Recoil-Motor-Controller-BESC 펌웨어(C, MIT)로 FOC 수kHz + PD 위치 제어 + CAN 250Hz + AS5600 I2C 드라이버 구동. BHL은 이 보드+펌웨어 조합을 'BESC'로 부른다. STM32CubeIDE로 Run 4번 절차 플래시.",
     related: ["BLDC", "CAN 버스", "FOC"],
   },
   "FOC": {

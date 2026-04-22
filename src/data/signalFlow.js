@@ -39,7 +39,7 @@ export const SIGNAL_FLOW_CHAINS = [
       { id: 'L1', label: 'NUC (N95)', detail: 'ONNX Runtime C API, MLP policy 25Hz (CAN 제어 250Hz), IsaacLab 훈련 ONNX', wire: 'USB 목표 각도', host: 'NUC' },
       { id: 'L2', label: 'USB-CAN ×2', detail: '다리당 1개', wire: 'CAN 2.0' },
       { id: 'L3', label: 'CAN Bus ×2', detail: '1Mbps, 다리당 1', wire: 'CAN ID 매칭' },
-      { id: 'L4', label: 'BESC ×12', detail: 'B-G431B-ESC1 (STM32G431CB + L6387 + STL180N6F7), Recoil 펌웨어, FOC 수kHz + CAN 250Hz', wire: '3-phase PWM' },
+      { id: 'L4', label: 'BESC ×12', detail: 'B-G431B-ESC1 — 보드당 STM32G431CB + L6387 ×3 + STL180N6F7 ×6 + 3-shunt + FDCAN. Recoil 펌웨어, FOC 수kHz + CAN 250Hz', wire: '3-phase PWM' },
       { id: 'L5', label: 'BLDC ×12', detail: 'MAD M6C12 150KV ×8 (hip·knee) + 5010 ×4 (ankle), 극쌍 14 delta', wire: '고속 저토크' },
       { id: 'L6', label: '기어박스 ×12', detail: '사이클로이드 3D프린트, 감속비 15:1 (BHL 공식)', wire: '저속 고토크' },
       { id: 'L7', label: 'Leg Joint ×12', detail: '6DOF × 2다리' },

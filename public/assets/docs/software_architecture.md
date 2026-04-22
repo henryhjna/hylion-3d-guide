@@ -37,7 +37,7 @@ flowchart TD
         end
     end
 
-    subgraph ESC_FW ["B-G431B-ESC1 x12 - STM32G431CB\nRecoil-Motor-Controller-BESC, C 펌웨어"]
+    subgraph ESC_FW ["B-G431B-ESC1 (BESC) x12 — 보드당 STM32G431CB + L6387 ×3 + STL180N6F7 ×6\nRecoil-Motor-Controller-BESC, C 펌웨어"]
         SW_FOC["FOC 알고리즘, 수 kHz\nClarke, Park 변환\nPI 전류 제어"]
         SW_PD["PD 위치 제어기\n목표 각도 → 필요 토크 계산"]
         SW_CAN_RX["CAN 프로토콜 핸들러\n프레임 수신, ID 필터링"]

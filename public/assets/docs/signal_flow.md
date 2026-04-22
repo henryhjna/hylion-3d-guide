@@ -21,7 +21,7 @@ flowchart TD
         L1["L1. Intel N95 Mini PC\nRL Policy, MLP via ONNX\npolicy 25Hz + CAN 제어 250Hz\n(BHL 논문 기준)"]
         L2["L2. USB-CAN Adapter x2\nUSB를 CAN으로 변환\n다리당 1개"]
         L3["L3. CAN Bus x2\n2가닥 배선, 1Mbps\n다리당 1버스"]
-        L4["L4. B-G431B-ESC1 (BESC) x12\nSTM32G431CB + L6387 + STL180N6F7\nRecoil 펌웨어: FOC 수kHz, CAN 250Hz"]
+        L4["L4. B-G431B-ESC1 (BESC) x12\n보드당: STM32G431CB + L6387 ×3 + STL180N6F7 ×6\n3-shunt 전류센싱 + FDCAN 온보드 트랜시버\nRecoil 펌웨어: FOC 수kHz, CAN 250Hz"]
         L5["L5. BLDC Motor x12\nMAD M6C12 150KV x8 (hip·knee) + MAD 5010 x4 (ankle)\n극쌍 14, delta 와인딩"]
         L6["L6. Cycloidal Gearbox x12\n3D 프린트 감속기\n감속비 15:1 (BHL 공식)"]
         L7["L7. Leg Joint x12\nhip, knee, ankle 등"]
