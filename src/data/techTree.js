@@ -385,7 +385,7 @@ export const TECH_TREE = {
     },
     {
       id: 'w4_fall_detection',
-      label: '낙상 감지 BNO085 벤치',
+      label: '낙상 감지 IM10A 벤치',
       week: 'W-4',
       track: 'B',
       members: ['delta2', 'epsilon2'],
@@ -394,7 +394,7 @@ export const TECH_TREE = {
       dependencies: ['w4_power_circuit'],
       isGate: false,
       isCheckpoint: false,
-      description: 'BNO085 IMU → NUC 낙상 감지 → 모터 토크 해제',
+      description: 'IM10A IMU (USB 직결) → NUC 낙상 감지 → 모터 토크 해제',
     },
     {
       id: 'w4_aerial_walk',

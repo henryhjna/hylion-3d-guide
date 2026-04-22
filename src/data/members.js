@@ -117,7 +117,7 @@ export const MEMBERS = {
           'BHL 다리 조립 (희승과)',
           '전원 회로 (배터리 1+2, DC-DC, 비상정지)',
           'NUC↔CAN 연결',
-          '낙상 감지 BNO085 벤치 테스트',
+          '낙상 감지 IM10A 벤치 테스트 (USB 직결)',
           '공연장 예약/답사 일정 확정 (희승 도움)',
         ],
         dependencies: {
@@ -167,32 +167,40 @@ export const MEMBERS = {
 
   delta3: {
     name: '희승',
-    identity: 'AI 인프라 오너 — BHL Walking RL 전담',
+    identity: 'AI 인프라 오너 — BHL Walking RL 전담 + W-6/W-5 HW 합류',
     track: 'B (리드)',
     color: '#c8ff00',
-    parts: ['left_leg', 'right_leg'],
+    parts: ['left_leg', 'right_leg', 'torso'],
     weeklyTasks: {
       'W-6': {
-        focus: 'BHL Walking RL 학습 계속 (현재 진행 중)',
+        focus: 'Walking RL 자동 학습 + 토르소/mouth HW 합류 (인혁·승민과)',
         tasks: [
-          'Walking RL 학습 (HOVER reward 튜닝)',
+          'Walking RL 학습 자동 스케줄 (HOVER reward 튜닝 — DGX 야간 슬롯, 오토)',
           'AMASS retargeting 안정화',
           'IsaacLab 도메인 랜덤화 ±20%',
+          '⭐ 토르소 조립 참여 (인혁·승민과) — 프레임·배터리 슬롯·DC-DC·USB Hub',
+          'BHL 다리 3D 프린트 진척 체크 + 기어박스 후가공 사전 준비 (리밍, 히트인서트)',
+          'BHL 공식 액추에이터 조립 영상 선학습 (YouTube CHPVXL-SsSo) → W-5 조립 주도 대비',
         ],
-        dependencies: { receives: [], gives: [] },
+        dependencies: {
+          receives: ['인혁: 토르소 조립 순서 (리드)'],
+          gives: ['인혁·승민: HW 조립 공수 보강'],
+        },
       },
       'W-5': {
-        focus: 'Walking RL 학습 + 다리 조립 시작 + 무게 시뮬 반영 + 백업 절차',
+        focus: 'Walking RL 학습 + SO-ARM 조립 보조 + BHL 다리 조립 시작 + 무게 시뮬 반영 + 백업 절차',
         tasks: [
-          'Walking RL 학습 계속',
-          'BHL 다리 조립 시작 (모터 도착 시, 액추에이터 12개)',
-          '기어박스 후가공',
+          'Walking RL 학습 계속 (야간 오토)',
+          '⭐ SO-ARM 양팔 조립 보조 (인혁·승민과) — 오전 슬롯',
+          'BHL 다리 조립 시작 (모터 도착 시, 액추에이터 12개 본격 조립 — 오후 슬롯)',
+          '기어박스 후가공 (리밍, 베어링 시트, 히트인서트)',
+          'ESC 펌웨어 선 플래싱 (B-G431B-ESC1 ×12, STM32CubeIDE, CAN ID 1~12)',
           '상체 무게 적산값 시뮬 반영 (승민과, IsaacLab URDF 업데이트)',
           '데이터/모델 백업 절차 정의 (Walking RL 체크포인트, 상윤+성래에게 디테일 공유)',
         ],
         dependencies: {
           receives: ['모터 입고', '인혁: 상체 무게 적산값'],
-          gives: ['상윤+성래: 백업 디테일 (체크포인트 포맷)'],
+          gives: ['인혁·승민: SO-ARM 조립 공수 보강', '상윤+성래: 백업 디테일 (체크포인트 포맷)'],
         },
       },
       'W-4': {
@@ -200,7 +208,7 @@ export const MEMBERS = {
         tasks: [
           'BHL 다리 완성',
           '공중 지그 보행 테스트',
-          'Walking RL ONNX 배포 (NUC, 250Hz)',
+          'Walking RL ONNX 배포 (NUC, MLP policy 25Hz + CAN 제어 루프 250Hz)',
           '공연장 예약/답사 일정 도움 (승민과)',
         ],
         dependencies: {

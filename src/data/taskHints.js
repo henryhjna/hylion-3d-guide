@@ -124,9 +124,9 @@ export const TASK_HINTS = {
   },
 
   w0_battery_calc: {
-    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin 15W, NUC 15W, SO-ARM STS3215 x12, BHL BLDC x12)의 소비전류를 합산하여 배터리 1(6S 4000mAh)/배터리 2(4S 8000mAh) 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
+    summary: "δ2 전용 과제. 시연 당일 최소 30분 연속 구동이 필요하므로, 각 서브시스템(Orin Nano Super 25W MAXN 모드, NUC N95 15-20W, SO-ARM STS3215 Pro 12V x12 + Leader x12, BHL BLDC x12)의 소비전류를 합산하여 배터리 1(6S 4000mAh)/배터리 2(4S 8000mAh) 용량이 충분한지 사전 검증한다. 기획서 7.5절의 배터리 배치 계획과 7.7절 전원 시퀀싱의 기초 데이터가 된다.",
     steps: [
-      "각 보드/모터 스펙시트에서 정격 소비전력 추출 (Orin 15W, NUC 15W 등)",
+      "각 보드/모터 스펙시트에서 정격 소비전력 추출 (Orin Nano Super 25W MAXN, NUC N95 15-20W, STS3215 Pro 12V 순간 12A+ 등)",
       "SO-ARM STS3215 x12개 (양팔 12) 피크/평균 전류 계산",
       "BHL BLDC x12개 (MAD M6C12 x8 + 5010 x4) 보행 시 평균 전류 추정",
       "배터리 1(다리 ESC 직결 24V) / 배터리 2(Orin 14.8V + DC-DC → NUC 12V, 서보 12V, USB 5V) 각각의 용량(Wh) 대비 소비전력으로 구동 시간 산출",
@@ -343,9 +343,9 @@ export const TASK_HINTS = {
   },
 
   w0_fall_detection_research: {
-    summary: "ε2 전용 과제 (Day 4). 기획서 7.8절 보행 안전 설계에 따르면 BNO085 IMU가 Arduino를 통해 NUC에 자세 데이터를 전달하고, NUC 소프트웨어가 IMU 임계치를 판단하여 BHL 모터 토크를 해제한다. BHL 모터는 백드라이버블이므로 토크 해제 시 관절이 풀리며 안전하게 주저앉는다. Week 1에서 실제 구현을 하므로, 여기서는 임계값 설정에 필요한 사전 조사를 수행한다.",
+    summary: "ε2 전용 과제 (Day 4). 기획서 7.8절 보행 안전 설계에 따르면 IM10A IMU(BHL 공식 권장, USB 직결)가 NUC에 자세 데이터를 직접 전달하고, NUC 소프트웨어가 IMU 임계치를 판단하여 BHL 모터 토크를 해제한다. BHL 모터는 백드라이버블이므로 토크 해제 시 관절이 풀리며 안전하게 주저앉는다. Week 1에서 실제 구현을 하므로, 여기서는 임계값 설정에 필요한 사전 조사를 수행한다.",
     steps: [
-      "BNO085 IMU + Arduino USB 연결 방법 조사 — 라이브러리 선택, 데이터 포맷",
+      "IM10A IMU USB 직결 연결 확인 — 가상 COM 포트, 데이터 포맷, 드라이버/라이브러리",
       "낙상 감지 알고리즘 조사 — 기울기 각도 임계값, 가속도 스파이크 기반 방식 비교",
       "NUC에서 IMU 임계치 판단 → 모터 토크 해제 소프트웨어 설계 조사",
       "평가 지표 구상 — 낙상 감지 지연(ms), false positive 비율, 토크 해제 후 복구 절차",
@@ -354,7 +354,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge"],
+    components: ["im10a_imu"],
     estimatedHours: 3,
   },
 
@@ -365,14 +365,14 @@ export const TASK_HINTS = {
       "출발 전: BHL BOM 최신 릴리즈 확인 + 전체 부품 리스트를 한국 조달분과 교차 대조",
       "출발 전: 화창베이 구매 리스트 준비 — 부품명 + 중국어 명칭 + 수량 + 예상 가격",
       "현지: MAD 모터 수령 + 외관/축 상태 검수",
-      "현지: 화창베이 일괄 구매 — BNO085 IMU, Arduino, USB-CAN x2, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, 환기팬, 배선재",
+      "현지: 화창베이 일괄 구매 — IM10A IMU(USB 직결, BHL 권장), USB-CAN x2, 베어링, 히트인서트, DC-DC, 비상정지 스위치, 마이크, 스피커, 환기팬, 배선재",
       "현지: 배터리 1(6S LiPo 4000mAh 22.2V) + 배터리 2(4S LiPo 8000mAh 14.8V) + LiPo 저전압 알람 구매 — 배터리 사양이 기획서 7.5절 요구와 일치하는지 확인",
     ],
     resources: [
       { label: "기획서 9.1절 (조달 채널)", type: "internal", section: "9.1" },
       { label: "기획서 9.2절 (예산)", type: "internal", section: "9.2" },
     ],
-    components: ["mad_m6c12_150kv", "mad_5010_110kv", "bno085_imu", "arduino_imu_bridge", "can_usb", "battery_1", "battery_2"],
+    components: ["mad_m6c12_150kv", "mad_5010_110kv", "im10a_imu", "can_usb", "battery_1", "battery_2"],
     estimatedHours: 16,
   },
 
@@ -733,19 +733,19 @@ export const TASK_HINTS = {
   },
 
   w1_fall_detection_impl: {
-    summary: "ε2 전용 과제. 기획서 7.8절 보행 안전 설계의 핵심 구현. BNO085 IMU가 Arduino USB를 통해 NUC에 자세 데이터를 전달하고, NUC 소프트웨어가 IMU 임계치를 판단하여 BHL 모터 토크를 해제한다. BHL의 백드라이버블 특성 덕분에 토크 해제 시 관절이 풀리며 안전하게 주저앉는다(기획서 7.1절).",
+    summary: "ε2 전용 과제. 기획서 7.8절 보행 안전 설계의 핵심 구현. IM10A IMU가 USB 직결로 NUC에 자세 데이터를 전달하고, NUC 소프트웨어가 IMU 임계치를 판단하여 BHL 모터 토크를 해제한다. BHL의 백드라이버블 특성 덕분에 토크 해제 시 관절이 풀리며 안전하게 주저앉는다(기획서 7.1절).",
     steps: [
-      "BNO085 IMU + Arduino USB 연결 — Week 0 조사 결과 기반 배선",
-      "BNO085 캘리브레이션 — 수평 상태에서 offset 보정",
+      "IM10A IMU USB 직결 — NUC 가상 COM 포트 인식 확인, 데이터 스트림 파싱",
+      "IM10A 캘리브레이션 — 수평 상태에서 offset 보정",
       "낙상 감지 임계값 설정 — 기울기 각도(예: 45도 이상), 가속도 스파이크 기준",
-      "NUC 소프트웨어 구현 — BNO085 데이터 읽기 → 임계치 판단 → 모터 토크 해제 명령",
+      "NUC 소프트웨어 구현 — IM10A 데이터 읽기 → 임계치 판단 → 모터 토크 해제 명령",
       "토크 해제 테스트 — 보드 기울여서 토크 해제 동작 확인, 반응 지연 시간 측정",
       "IsaacLab 검증 루프 시작 — ε2로서 δ3가 인계한 환경의 기본 검증 수행",
     ],
     resources: [
       { label: "기획서 7.8절 (안전 — 보행)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
+    components: ["im10a_imu", "nuc_beelink_n95"],
     estimatedHours: 6,
   },
 
@@ -823,9 +823,9 @@ export const TASK_HINTS = {
   },
 
   w2_fall_detection_bench: {
-    summary: "Week 1에서 구현한 NUC 낙상 감지(BNO085 IMU → Arduino USB → NUC 임계치 판단 → 토크 해제) 시스템을 벤치에서 실제 기울여 동작을 검증한다. 이 테스트가 통과해야 Phase 1 게이트의 \"낙상 감지 동작\" 조건을 충족할 수 있다.",
+    summary: "Week 1에서 구현한 NUC 낙상 감지(IM10A IMU USB 직결 → NUC 임계치 판단 → 토크 해제) 시스템을 벤치에서 실제 기울여 동작을 검증한다. 이 테스트가 통과해야 Phase 1 게이트의 \"낙상 감지 동작\" 조건을 충족할 수 있다.",
     steps: [
-      "BNO085 기울임 임계값(예: 45°) 설정 후 NUC 토크 해제 트리거 확인",
+      "IM10A 기울임 임계값(예: 45°) 설정 후 NUC 토크 해제 트리거 확인",
       "토크 해제 시 BHL 모터가 실제로 풀리는지 확인",
       "토크 해제 후 BHL 관절이 백드라이버블하게 풀리는지 확인",
       "복구 절차 테스트 — 안전 자세 후 토크 재투입 → IDLE 복귀",
@@ -833,7 +833,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
+    components: ["im10a_imu", "nuc_beelink_n95"],
     estimatedHours: 3,
   },
 
@@ -869,7 +869,7 @@ export const TASK_HINTS = {
   },
 
   w2_emergency_stop: {
-    summary: "배터리 1 NC(Normally Closed) 물리 비상정지 스위치를 달고, NUC 소프트웨어 낙상 감지(BNO085 → 토크 해제)를 연계하는 비상정지 체계를 완성한다. NC 비상정지로 배터리 1을 차단한다 (Battery 2 유지, Orin 로그 보존).",
+    summary: "배터리 1 NC(Normally Closed) 물리 비상정지 스위치를 달고, NUC 소프트웨어 낙상 감지(IM10A → 토크 해제)를 연계하는 비상정지 체계를 완성한다. NC 비상정지로 배터리 1을 차단한다 (Battery 2 유지, Orin 로그 보존).",
     steps: [
       "배터리 1 NC 비상정지 스위치 배선 (Battery 1 양극 직렬)",
       "NUC 낙상 감지 → 모터 토크 해제 소프트웨어 연동 확인",
@@ -879,7 +879,7 @@ export const TASK_HINTS = {
     resources: [
       { label: "기획서 7.5절 (배터리 — 비상정지)", type: "internal", section: "7.5" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nc_emergency_stop"],
+    components: ["im10a_imu", "nc_emergency_stop"],
     estimatedHours: 4,
   },
 
@@ -917,17 +917,17 @@ export const TASK_HINTS = {
   },
 
   w2_imu_structure: {
-    summary: "BNO085 IMU 1개(Arduino USB → NUC)가 몸체 자세 데이터를 NUC에 공급하며, 낙상 감지와 Walking RL policy 입력에 모두 사용된다. 낙상 감지 시 NUC 소프트웨어가 임계치를 판단하여 토크 해제를 트리거한다. policy 루프(250Hz)에는 IMU 데이터와 함께 AS5600 인코더 관절 피드백(CAN 경유)이 공급된다.",
+    summary: "IM10A IMU 1개(USB 직결 → NUC, BHL 공식 권장)가 몸체 자세 데이터를 NUC에 공급하며, 낙상 감지와 Walking RL policy 입력에 모두 사용된다. 낙상 감지 시 NUC 소프트웨어가 임계치를 판단하여 토크 해제를 트리거한다. CAN 제어 루프(250Hz)와 IMU 샘플링(250Hz)은 MLP policy(25Hz — BHL 논문 기준) 입력에 피드된다.",
     steps: [
-      "BNO085 IMU 배치 위치 확정 (토르소 중심부, 진동 최소 지점)",
-      "Arduino USB → NUC 연결 경로 확인 (USB Serial, IMU 데이터 전송)",
+      "IM10A IMU 배치 위치 확정 (토르소 중심부, 진동 최소 지점)",
+      "USB 직결 경로 확인 (NUC USB 포트 → 가상 COM, 별도 브릿지 불필요)",
       "낙상 감지 임계치 설계 (기울기·각속도 threshold → 토크 해제 트리거)",
       "IMU 샘플레이트·필터 설정 문서화",
     ],
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
+    components: ["im10a_imu", "nuc_beelink_n95"],
     estimatedHours: 3,
   },
 
@@ -1741,7 +1741,7 @@ export const TASK_HINTS = {
       "전원 투입 시퀀싱 문서화: 배터리 2 ON → Orin/NUC 부팅 → DC-DC 활성 → 배터리 1 ON → BHL 캘리브",
       "비상정지 절차: 배터리 1 NC 차단 (Battery 2 유지, Orin 로그 보존) → 다리 모터 안전 정지",
       "비상정지 후 복구: 원인 확인 → 안전 자세 → 배터리 2 재투입 → 배터리 1 재투입 → IDLE 복귀",
-      "NUC 낙상 감지 토크 해제 동작 확인법 (BNO085 기울임 각도 임계값, 반응 시간)",
+      "NUC 낙상 감지 토크 해제 동작 확인법 (IM10A 기울임 각도 임계값, 반응 시간)",
       "재시작 절차: 전원 완전 차단 → 30초 대기 → 투입 시퀀싱 재실행",
       "역할별 비상 행동 지침 작성 (delta1: 물리 안전, delta2: 전원, epsilon1: 시스템, epsilon2: 기록)",
     ],
@@ -1749,7 +1749,7 @@ export const TASK_HINTS = {
       { label: "기획서 7.7절 (전원 시퀀싱)", type: "internal", section: "7.7" },
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "nc_emergency_stop"],
+    components: ["im10a_imu", "nc_emergency_stop"],
     estimatedHours: 4,
   },
 
@@ -1913,19 +1913,19 @@ export const TASK_HINTS = {
   },
 
   w8_fall_detect_real_verify: {
-    summary: "실체 상하체 결합 상태에서 NUC 낙상 감지(BNO085 → Arduino USB → NUC 임계치 → 토크 해제)를 실물 검증한다. 의도적으로 불안정 자세를 유발하여 BNO085 기울임 감지→NUC 임계치 판단→모터 토크 해제→BHL 관절 풀림(백드라이버블)→안전 주저앉음 시퀀스가 정상 동작하는지 확인한다. 동시에 epsilon2가 실체 vs 더미 상태에서의 sim-to-real 차이를 비교 분석한다.",
+    summary: "실체 상하체 결합 상태에서 NUC 낙상 감지(IM10A IMU USB 직결 → NUC 임계치 → 토크 해제)를 실물 검증한다. 의도적으로 불안정 자세를 유발하여 IM10A 기울임 감지→NUC 임계치 판단→모터 토크 해제→BHL 관절 풀림(백드라이버블)→안전 주저앉음 시퀀스가 정상 동작하는지 확인한다. 동시에 epsilon2가 실체 vs 더미 상태에서의 sim-to-real 차이를 비교 분석한다.",
     steps: [
-      "BNO085 IMU + Arduino USB → NUC 연결 상태 최종 확인",
+      "IM10A IMU USB 직결 → NUC 연결 상태 최종 확인",
       "정상 직립 상태에서 IMU 기준값 캘리브레이션",
       "의도적 불안정 유발 (보조자가 살짝 밀기) → 낙상 감지 트리거 확인",
       "토크 해제 → BHL 관절 풀림 → 안전 주저앉음 동작 확인",
-      "반응 시간 측정 (BNO085 임계치 초과 → 토크 해제 까지)",
+      "반응 시간 측정 (IM10A 임계치 초과 → 토크 해제 까지)",
       "epsilon2: 실체 vs 더미 sim-to-real 비교 (IMU 궤적, 관절 응답, 낙상 패턴)",
     ],
     resources: [
       { label: "기획서 7.8절 (안전)", type: "internal", section: "7.8" },
     ],
-    components: ["bno085_imu", "arduino_imu_bridge", "nuc_beelink_n95"],
+    components: ["im10a_imu", "nuc_beelink_n95"],
     estimatedHours: 3,
   },
 

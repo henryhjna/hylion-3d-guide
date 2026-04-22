@@ -200,7 +200,6 @@ export default function DashboardPanel({
   weekTitle: weekTitleProp,
   isCollapsed,
   onToggleCollapse,
-  onOpenTechTree,
   onPartClick,
 }) {
   const member = memberId ? TEAM[memberId] : null;
@@ -387,13 +386,6 @@ export default function DashboardPanel({
           />
         )}
 
-        {/* ── Tech tree button ───────────────────────────────────── */}
-        <button
-          onClick={onOpenTechTree}
-          className="w-full py-2.5 rounded-lg text-sm font-bold tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-[#c8ff00] bg-[rgba(200,255,0,0.06)] border border-[rgba(200,255,0,0.2)] hover:bg-[rgba(200,255,0,0.12)] hover:shadow-[0_0_12px_rgba(200,255,0,0.15)]"
-        >
-          {'\u25B8'} {'\u00A0'}전체 테크트리 보기
-        </button>
       </div>
     </div>
   );

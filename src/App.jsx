@@ -4,11 +4,9 @@ import Scene3D from './components/Scene3D';
 import DashboardPanel from './components/DashboardPanel';
 import FloatingPartCard from './components/FloatingPartCard';
 import PartInfoPanel from './components/PartInfoPanel';
-import ArchitectureView from './components/ArchitectureView';
-import ScenarioFlow from './components/ScenarioFlow';
-import ExploreToggles from './components/ExploreToggles';
 import DocsSearch from './components/DocsSearch';
 import DocsReader from './components/DocsReader';
+import BHLReferences from './components/BHLReferences';
 import AICopilot from './components/AICopilot';
 import SettingsModal from './components/SettingsModal';
 import Loading3D from './components/Loading3D';
@@ -18,7 +16,6 @@ import { MEMBERS } from './data/members';
 import { TIMELINE } from './data/timeline';
 import { getCurrentWeekKey, getWeekData } from './data/weekHelpers';
 
-const TechTree = lazy(() => import('./components/TechTree'));
 const OnboardingCinematic = lazy(() => import('./components/OnboardingCinematic'));
 
 const MODES = { WORK: 'work', EXPLORE: 'explore' };
@@ -32,9 +29,7 @@ export default function App() {
   const [hoveredPart, setHoveredPart] = useState(null);
   const [floatingCard, setFloatingCard] = useState(null); // { partId, x, y }
 
-  // Explore mode toggles
-  const [xrayMode, setXrayMode] = useState(false);
-  const [scenarioMode, setScenarioMode] = useState(false);
+  // Model loading
   const [modelLoading, setModelLoading] = useState(true);
 
   // Dashboard
@@ -44,8 +39,8 @@ export default function App() {
   const [showDocsSearch, setShowDocsSearch] = useState(false);
   const [showDocsReader, setShowDocsReader] = useState(false);
   const [docsInitialDoc, setDocsInitialDoc] = useState(null);
+  const [showBHL, setShowBHL] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showTechTree, setShowTechTree] = useState(false);
   const [copilotPrefill, setCopilotPrefill] = useState('');
   const [showIntro, setShowIntro] = useState(() => !localStorage.getItem('hylion_intro_seen'));
 
@@ -77,13 +72,12 @@ export default function App() {
       const mod = e.metaKey || e.ctrlKey;
       if (mod && e.key === 'k') { e.preventDefault(); setShowDocsSearch(s => !s); }
       if (mod && e.key === 'b') { e.preventDefault(); setShowDocsReader(s => !s); }
-      if (mod && e.key === 't') { e.preventDefault(); setShowTechTree(s => !s); }
       if (mod && e.key === '1') { e.preventDefault(); setMode(MODES.WORK); }
       if (mod && e.key === '2') { e.preventDefault(); setMode(MODES.EXPLORE); }
       if (e.key === '[' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) { setDashCollapsed(c => !c); }
       if (e.key === 'Escape') {
         if (showDocsSearch) setShowDocsSearch(false);
-        else if (showTechTree) setShowTechTree(false);
+        else if (showBHL) setShowBHL(false);
         else if (showDocsReader) setShowDocsReader(false);
         else if (showSettings) setShowSettings(false);
         else if (floatingCard) setFloatingCard(null);
@@ -92,7 +86,7 @@ export default function App() {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [showDocsSearch, showTechTree, showDocsReader, showSettings, floatingCard, selectedPart, mode]);
+  }, [showDocsSearch, showBHL, showDocsReader, showSettings, floatingCard, selectedPart, mode]);
 
   // Derived data
   const memberData = useMemo(() => {
@@ -138,10 +132,6 @@ export default function App() {
     setMode(newMode);
     setSelectedPart(null);
     setFloatingCard(null);
-    if (newMode === MODES.WORK) {
-      setXrayMode(false);
-      setScenarioMode(false);
-    }
   }, []);
 
   const handleSearchResult = useCallback((entry) => {
@@ -185,6 +175,7 @@ export default function App() {
         onOpenDocs={() => { setDocsInitialDoc('plan'); setShowDocsReader(true); }}
         onOpenDgx={() => { setDocsInitialDoc('dgx'); setShowDocsReader(true); }}
         onOpenDiagrams={() => { setDocsInitialDoc('signal_flow'); setShowDocsReader(true); }}
+        onOpenBHL={() => setShowBHL(true)}
         onOpenSettings={() => setShowSettings(true)}
       />
 
@@ -205,7 +196,7 @@ export default function App() {
             onPartClick={handlePartClick}
             onPartHover={handlePartHover}
             onBackground={handleBackgroundClick}
-            xrayMode={xrayMode}
+            xrayMode={false}
             selectedWeek={selectedWeek}
             teamFilter={selectedMember}
             trackFilter={null}
@@ -223,7 +214,6 @@ export default function App() {
             weekTitle={weekTitle}
             isCollapsed={dashCollapsed}
             onToggleCollapse={() => setDashCollapsed(c => !c)}
-            onOpenTechTree={() => setShowTechTree(true)}
             onPartClick={(partId) => handleExploreFromCard(partId)}
           />
         )}
@@ -250,20 +240,6 @@ export default function App() {
           </div>
         )}
 
-        {/* ── EXPLORE MODE: Floating toggles (z-15) ── */}
-        {isExploreMode && (
-          <ExploreToggles
-            xrayMode={xrayMode}
-            scenarioMode={scenarioMode}
-            onToggleXray={() => setXrayMode(x => !x)}
-            onToggleScenario={() => setScenarioMode(s => !s)}
-          />
-        )}
-
-        {/* ── EXPLORE MODE: Architecture overlay (when xray ON) ── */}
-        {isExploreMode && xrayMode && !selectedPart && <ArchitectureView />}
-
-        {/* ── EXPLORE MODE: Scenario overlay — 숨김 (추후 복원) ── */}
       </div>
 
       {/* ── Overlays — mode independent ── */}
@@ -289,30 +265,8 @@ export default function App() {
         onAskCopilot={handleAskCopilotFromDocs}
       />
 
-      {/* TechTree fullscreen modal (z-40) */}
-      {showTechTree && (
-        <div className="fixed inset-0 z-40" onClick={() => setShowTechTree(false)}>
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-          <div className="absolute inset-4" style={{ zIndex: 41 }} onClick={e => e.stopPropagation()}>
-            <div className="relative w-full h-full glass-panel overflow-hidden">
-              <button
-                onClick={() => setShowTechTree(false)}
-                className="absolute top-3 right-3 z-50 w-8 h-8 rounded-lg bg-[#ffffff10] hover:bg-[#ffffff20] flex items-center justify-center text-[#6a7090] hover:text-[#e0e8ff] text-sm"
-              >
-                ✕
-              </button>
-              <Suspense fallback={<div className="flex items-center justify-center h-full text-[#6a7090]">테크트리 로딩 중...</div>}>
-                <TechTree
-                  teamFilter={selectedMember}
-                  trackFilter={null}
-                  selectedWeek={selectedWeek}
-                  onNodeClick={() => {}}
-                />
-              </Suspense>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* BHL 참고 자료 모달 (z-45) */}
+      <BHLReferences isOpen={showBHL} onClose={() => setShowBHL(false)} />
 
       {/* Docs reader modal (z-50) */}
       <DocsReader

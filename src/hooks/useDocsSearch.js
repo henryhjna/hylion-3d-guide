@@ -5,7 +5,8 @@ import { RESOURCES } from '../data/resources';
 
 const DOC_FILES = [
   { id: 'plan', name: '기획서 v13', path: `${import.meta.env.BASE_URL}assets/docs/기획서_v13.md` },
-  { id: 'guide', name: '실행가이드 v13', path: `${import.meta.env.BASE_URL}assets/docs/실행가이드_v13.md` },
+  { id: 'guide', name: '실행가이드 v14', path: `${import.meta.env.BASE_URL}assets/docs/실행가이드_v14.md` },
+  { id: 'bhl_guide', name: 'BHL 하체 가이드', path: `${import.meta.env.BASE_URL}assets/docs/bhl_하체_가이드.md` },
   { id: 'dgx', name: 'DGX Spark 가이드', path: `${import.meta.env.BASE_URL}assets/docs/DGX_Spark_가이드.md` },
   { id: 'signal_flow', name: 'Signal Flow', path: `${import.meta.env.BASE_URL}assets/docs/signal_flow.md` },
   { id: 'signal_cables', name: 'Signal Cables', path: `${import.meta.env.BASE_URL}assets/docs/signal_cables.md` },

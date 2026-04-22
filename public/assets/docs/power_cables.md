@@ -15,9 +15,9 @@ flowchart TD
         DCDC_5V["DC-DC #3\n14.8V to 5V, 3A\nUSB Hub 전원"]
     end
 
-    subgraph LOAD_24V ["24V 직결 - 다리 ESC x12"]
-        ESC_L["좌다리 ESC x6\nB-G431B-ESC1\n전원 데이지 체인"]
-        ESC_R["우다리 ESC x6\nB-G431B-ESC1\n전원 데이지 체인"]
+    subgraph LOAD_24V ["6S LiPo 직결 (22.2V nom, ~24V 운용 — BHL 기준) - 다리 BESC x12"]
+        ESC_L["좌다리 BESC x6\nB-G431B-ESC1\n전원 데이지 체인 (CAN ID 1/3/5/7/11/13)"]
+        ESC_R["우다리 BESC x6\nB-G431B-ESC1\n전원 데이지 체인 (CAN ID 2/4/6/8/12/14)"]
     end
 
     subgraph MOTOR_L ["좌다리 모터 x6"]
@@ -29,7 +29,7 @@ flowchart TD
     end
 
     subgraph LOAD_14V ["14.8V 직결"]
-        JETSON["Jetson Orin Nano\n9-20V 허용, 15W max"]
+        JETSON["Jetson Orin Nano Super\n9-20V 허용\n25W MAXN SUPER 모드 운용"]
     end
 
     subgraph LOAD_12V_NUC ["12V - NUC 단독"]
@@ -50,8 +50,8 @@ flowchart TD
         MOUTH["Mouth Servo x1\nSG90급, 5V, 250mA"]
     end
 
-    BATT1 -->|"XT60, 24V"| ESC_L
-    BATT1 -->|"XT60 분기, 24V"| ESC_R
+    BATT1 -->|"XT60, 6S 직결 ~24V"| ESC_L
+    BATT1 -->|"XT60 분기, 6S 직결 ~24V"| ESC_R
     ESC_L -->|"3상 전력선 x6"| ML
     ESC_R -->|"3상 전력선 x6"| MR
 
@@ -72,16 +72,16 @@ flowchart TD
 
 ## 전원 요약
 
-### Battery 1 — 다리 전용 (6S LiPo 4000mAh, 22.2V)
+### Battery 1 — 다리 전용 (6S LiPo 4000mAh, 22.2V nom / 25.2V max, BHL 운용 "~24V")
 | 부하 | 전압 | 연결 | 비고 |
 |------|------|------|------|
-| ESC ×6 좌다리 | 24V 직결 | XT60 | 데이지 체인 |
-| ESC ×6 우다리 | 24V 직결 | XT60 분기 | 데이지 체인 |
+| BESC ×6 좌다리 | 6S 직결 (22.2~25.2V) | XT60 | 데이지 체인, CAN ID 1/3/5/7/11/13 |
+| BESC ×6 우다리 | 6S 직결 (22.2~25.2V) | XT60 분기 | 데이지 체인, CAN ID 2/4/6/8/12/14 |
 
 ### Battery 2 — 연산+팔+주변기기 (4S LiPo 8000mAh, 14.8V)
 | 부하 | 전압 | 변환 | 연결 |
 |------|------|------|------|
-| Jetson Orin | 14.8V 직결 | 없음 (9-20V 허용) | XT60 |
+| Jetson Orin Nano Super | 14.8V 직결 | 없음 (9-20V 허용, 25W MAXN 모드) | XT60 |
 | NUC N95 | 12V | DC-DC #1 (buck-boost, 3A) | DC 배럴잭 |
 | BusLinker ×2 (팔 서보) | 12V | DC-DC #2 (buck-boost, 15A) | DC 피그테일 |
 | USB Hub A + B | 5V | DC-DC #3 (3A) | DC 5V |

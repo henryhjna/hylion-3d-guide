@@ -29,7 +29,7 @@ export const TIMELINE = [
     members: {
       delta1: { lead: true, items: ['토르소 조립 (프레임·배터리·DC-DC·NUC·Orin·USB Hub·환기·어깨 마운트)', 'mouth HW (입 서보 + 마운트 + Jetson GPIO PWM 배선)'] },
       delta2: { items: ['인혁 보조 — 토르소 조립 + mouth 마운트'] },
-      delta3: { items: ['BHL Walking RL 학습 계속 (HOVER reward 튜닝, AMASS retargeting)'] },
+      delta3: { items: ['Walking RL 학습 자동 스케줄 (야간 오토 — HOVER reward 튜닝, AMASS retargeting)', '토르소 조립 참여 (인혁·승민과) — 3인 병렬', 'BHL 다리 프린트 진척 체크 + 기어박스 후가공 사전 준비', 'BHL 공식 액추에이터 조립 영상 선학습 → W-5 조립 주도 대비'] },
       epsilon1: { items: ['오케스트레이터 골격 (Python asyncio FSM)', 'IDLE/TALKING 상태 로직', '입 서보 PWM 제어 (mouth 연동)', 'JSON 액션 스키마'] },
       epsilon2: { items: ['LeRobot Orin 환경 셋업', 'SmolVLA Stage 1 학습 착수 (1팔 수집 데이터)', '평가 스크립트', '머리 외주 follow-up (외주 gate 책임)'] },
     },
@@ -50,7 +50,7 @@ export const TIMELINE = [
     members: {
       delta1: { lead: true, items: ['SO-ARM 2팔 조립 (STS3215×6, BusLinker #2)', '토르소 양팔 어깨 마운트 + 캘리브레이션', '상체 무게 적산 → 승민/희승 시뮬 반영', '카메라 calibration (intrinsic, 상윤과)', 'NUC RT 커널 + CAN 드라이버 셋업 (승민과)'] },
       delta2: { items: ['인혁 보조 — 2팔 조립 + 손목 카메라 배선', 'NUC RT 커널 셋업 (메인)', '무게 적산값 시뮬 반영 (희승과)'] },
-      delta3: { items: ['BHL Walking RL 학습 계속', 'BHL 다리 조립 시작 (모터 도착 시)', '무게 적산값 시뮬 반영 (URDF 업데이트)', '데이터/모델 백업 절차 정의 (RL 체크포인트)'] },
+      delta3: { items: ['Walking RL 학습 계속 (야간 오토)', 'SO-ARM 양팔 조립 보조 (인혁·승민과, 오전 슬롯)', 'BHL 다리 조립 시작 (모터 도착 시, 오후 슬롯)', '기어박스 후가공 (리밍, 히트인서트)', 'ESC 펌웨어 선 플래싱 (B-G431B-ESC1 ×12, STM32CubeIDE)', '무게 적산값 시뮬 반영 (URDF 업데이트)', '데이터/모델 백업 절차 정의 (RL 체크포인트)'] },
       epsilon1: { items: ['MANIPULATING 상태 로직', 'LeRobot ServoControl (BusLinker #1+#2)', '클라우드 LLM STT/LLM/TTS 연동', '데이터/모델 백업 정책 수립 (상윤과)'] },
       epsilon2: { items: ['양팔 수집 (스타벅스 컵·텀블러·인형)', 'SmolVLA Stage 2 파인튜닝', '카메라 calibration (인혁과)', '데이터/모델 백업 정책 (성래와)', '머리 외주 follow-up + 입고 디데이 확정'] },
     },
@@ -70,8 +70,8 @@ export const TIMELINE = [
     description: '승민이 하체 트랙으로 복귀해 희승과 함께 BHL 다리 완성. 전원 회로/낙상감지 통합. WALKING 상태와 FETCH 시퀀서 초안.',
     members: {
       delta1: { items: ['상체 외장/마감 (바디 천커버)'] },
-      delta2: { lead: true, items: ['BHL 다리 조립 합류 (희승과)', '전원 회로 (배터리 1+2, DC-DC, 비상정지)', 'NUC↔CAN 연결', '낙상 감지 BNO085 벤치', '공연장 예약/답사 일정 확정 (희승 도움)'] },
-      delta3: { lead: true, items: ['BHL 다리 완성', '공중 지그 보행 테스트', 'Walking RL ONNX 배포 (NUC, 250Hz)', '공연장 답사 일정 도움 (승민과)'] },
+      delta2: { lead: true, items: ['BHL 다리 조립 합류 (희승과)', '전원 회로 (배터리 1+2, DC-DC, 비상정지)', 'NUC↔CAN 연결', '낙상 감지 IM10A 벤치 (USB 직결)', '공연장 예약/답사 일정 확정 (희승 도움)'] },
+      delta3: { lead: true, items: ['BHL 다리 완성', '공중 지그 보행 테스트', 'Walking RL ONNX 배포 (NUC, MLP policy 25Hz + CAN 제어 루프 250Hz)', '공연장 답사 일정 도움 (승민과)'] },
       epsilon1: { items: ['WALKING 상태 로직', 'UDP vx/vy/wz 파이프 (Orin→NUC)', 'FETCH 시퀀서 초안'] },
       epsilon2: { items: ['SmolVLA v1 실물 평가', '추가 수집 보정', '감정 표현 v1 (중립/기쁨/놀람)', '머리 외주 follow-up + 플랜B trigger 판단'] },
     },

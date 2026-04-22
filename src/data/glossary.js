@@ -19,7 +19,7 @@ export const GLOSSARY = {
     related: ["MuJoCo", "URDF", "Sim2sim"],
   },
   "사이클로이드 기어박스": {
-    definition: "사이클로이드 곡선을 이용한 감속 기어 메커니즘. BHL 다리 액추에이터에 3D 프린트로 제작하여 사용하며, 높은 감속비와 백드라이버빌리티를 동시에 제공한다.",
+    definition: "사이클로이드 곡선을 이용한 감속 기어 메커니즘. BHL 다리 액추에이터에 3D 프린트로 제작하여 사용하며, 감속비 15:1(BHL 공식)로 높은 토크와 백드라이버빌리티를 동시에 제공한다. 6512 액추에이터는 6811ZZ 볼베어링 기준 설계, 입력 샤프트에 황동 육각 스탠드 임베딩.",
     related: ["백드라이버블", "BHL"],
   },
   "백드라이버블": {
@@ -28,7 +28,7 @@ export const GLOSSARY = {
   },
   "CAN 버스": {
     full: "Controller Area Network Bus",
-    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 USB-CAN 어댑터 2개로 2개 CAN 버스 (다리당 1)를 구성하여 12개 액추에이터를 1Mbps로 제어한다. NUC의 ONNX 정책 루프가 250Hz 주기로 CAN 명령을 구동한다.",
+    definition: "자동차·산업용 실시간 직렬 통신 프로토콜. BHL 다리는 USB-CAN 어댑터 2개로 2개 CAN 버스 (다리당 1)를 구성하여 12개 액추에이터를 1Mbps로 제어한다. NUC의 CAN 제어 루프가 250Hz로 ESC 통신·IMU 수신을 구동하고, ONNX MLP policy 자체는 25Hz로 동작한다 (BHL 논문 기준).",
     related: ["NUC", "USB-CAN"],
   },
   "DOF": {
@@ -150,7 +150,7 @@ export const GLOSSARY = {
   // ──────────────────────────────────────────────
   "Orin": {
     full: "NVIDIA Jetson Orin Nano Super",
-    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드. Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Local LLM fallback(Qwen 2.5 0.5B Q4, Ollama), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라). 15W 모드 (9-20V 직결).",
+    definition: "NVIDIA의 엣지 AI 컴퓨팅 보드 (Orin Nano Super 8GB, 67 SPARSE INT8 TOPS). Whisper STT(local), Cloud LLM API(Gemini Flash/GPT-4o mini), Local LLM fallback(Qwen 2.5 0.5B Q4, Ollama), Piper TTS(local), SmolVLA 450M(LeRobot/PyTorch), 명령 매핑(YAML), Jetson.GPIO(입 서보 PWM), OpenCV(카메라). 7W/15W/**25W** 모드 가능 — SmolVLA 추론 성능 최대화 위해 25W(MAXN SUPER) 모드 운용 (9-20V 직결).",
     related: ["JetPack", "TensorRT", "CUDA"],
     links: [{ label: "Jetson Orin 공식", url: "https://developer.nvidia.com/embedded/jetson-orin" }],
   },
@@ -171,7 +171,7 @@ export const GLOSSARY = {
   },
   "NUC": {
     full: "Next Unit of Computing (BeeLink N95)",
-    definition: "초소형 PC. C언어 메인 컨트롤러로 Walking RL policy(ONNX Runtime C API, MLP 250Hz, Isaac Gym 모델) 실행, SocketCAN으로 USB-CAN ×2 제어, Arduino USB Serial로 BNO085 IMU 수신. UDP Server(udp_joystick.py 호환)로 Orin에서 보행 명령 수신. xanmod RT 커널.",
+    definition: "초소형 PC. C언어 메인 컨트롤러로 Walking RL policy(ONNX Runtime C API, MLP policy 25Hz — BHL 논문 기준; IsaacLab에서 훈련한 ONNX) 실행, SocketCAN으로 USB-CAN ×2 제어 (CAN 버스 250Hz), IM10A IMU를 USB 직결로 수신 (250Hz). UDP Server(udp_joystick.py 호환)로 Orin에서 보행 명령 수신. xanmod RT 커널.",
     related: ["xanmod", "RT 커널", "CAN 버스"],
   },
   "xanmod": {
@@ -195,7 +195,7 @@ export const GLOSSARY = {
   },
   "I2C": {
     full: "Inter-Integrated Circuit",
-    definition: "2선식 직렬 통신 프로토콜. AS5600 인코더↔ESC, BNO085 IMU↔Arduino 등에 사용한다.",
+    definition: "2선식 직렬 통신 프로토콜. AS5600 인코더↔ESC 등에 사용한다. (IM10A IMU는 USB 직결이므로 I2C 브릿지 불필요)",
     related: ["SPI"],
   },
   "SPI": {
@@ -271,7 +271,7 @@ export const GLOSSARY = {
   },
   "손목 카메라": {
     full: "Wrist Camera (hand-eye view)",
-    definition: "SO-ARM 그리퍼 부근에 장착하는 USB 카메라(좌·우 각 1개, 총 2개). SmolVLA 매니퓰레이션 추론의 입력으로 사용된다. 머리 카메라(외부 시점)와 용도가 구분되며, Week 1에서 위치·각도를 확정한 후 변경하지 않는다.",
+    definition: "SO-ARM 그리퍼 부근에 장착하는 USB 카메라(좌·우 각 1개, 총 2개). SmolVLA 매니퓰레이션 추론의 입력으로 사용된다. 머리 카메라(외부 시점)와 용도가 구분되며, 수집 초기에 위치·각도를 확정한 후 수집-추론 동안 변경하지 않는다.",
     related: ["SmolVLA", "머리 카메라"],
   },
   "lip sync": {
@@ -309,7 +309,7 @@ export const GLOSSARY = {
   },
   "에코 캔슬링": {
     full: "Acoustic Echo Cancellation (AEC)",
-    definition: "스피커에서 나온 TTS 음성이 마이크에 재입력되는 것을 제거하는 기술. 로봇이 말하면서 동시에 듣기 위해 필요하며, Week 1에서 필요 여부를 테스트한다.",
+    definition: "스피커에서 나온 TTS 음성이 마이크에 재입력되는 것을 제거하는 기술. 로봇이 말하면서 동시에 듣기 위해 필요하며, W-6 오케스트레이터 TALKING 상태 구현 시 필요 여부를 테스트한다.",
     related: ["STT", "TTS"],
   },
 
@@ -357,7 +357,7 @@ export const GLOSSARY = {
     related: ["체크포인트", "크리티컬 패스"],
   },
   "체크포인트": {
-    definition: "프로젝트 내 중간 검증 시점. 예: Week 2 직립 체크포인트에서 IsaacLab 상부 mass 직립을 확인하고, 미달 시 배터리 재배치나 경량화를 결정한다.",
+    definition: "프로젝트 내 중간 검증 시점. 예: W-5 상체 무게 적산 + IsaacLab URDF 업데이트 시점에서 상부 mass 직립 안정성을 검증하고, 미달 시 배터리 재배치나 경량화를 결정한다.",
     related: ["게이트"],
   },
   "크리티컬 패스": {
@@ -366,7 +366,7 @@ export const GLOSSARY = {
     related: ["게이트", "듀얼 트랙"],
   },
   "듀얼 트랙": {
-    definition: "상체(Track A)와 하체(Track B)를 병렬로 개발하는 구조. 각 트랙에 리드가 있고, Week 8에 합류하여 상하체를 결합한다.",
+    definition: "상체(Track A)와 하체(Track B)를 병렬로 개발하는 구조. 각 트랙에 리드가 있고, W-3 시점에 머리 통합 + 상하체 결합(퀵릴리즈)으로 합류한다.",
     related: ["크리티컬 패스"],
   },
   "인수인계": {
@@ -396,7 +396,7 @@ export const GLOSSARY = {
   },
   "Hz": {
     full: "Hertz (헤르츠)",
-    definition: "초당 반복 횟수의 단위. BHL CAN 제어 루프 250Hz, SmolVLA 추론 5Hz 등 시스템 각 부분의 제어 주기를 나타낸다.",
+    definition: "초당 반복 횟수의 단위. BHL CAN 제어 루프 250Hz, Walking RL MLP policy 25Hz, SmolVLA 추론 5Hz 등 시스템 각 부분의 제어 주기를 나타낸다.",
     related: ["FPS"],
   },
   "draco": {
@@ -425,7 +425,7 @@ export const GLOSSARY = {
   },
   "BHL": {
     full: "Berkeley Humanoid Lite",
-    definition: "UC Berkeley HybridRobotics Lab의 오픈소스 이족보행 로봇 플랫폼. 6DOF x 2 다리, 사이클로이드 기어박스, CAN 통신 기반이며, 하이리온의 하반신으로 사용한다.",
+    definition: "UC Berkeley HybridRobotics Lab의 오픈소스 이족보행 로봇 플랫폼. BHL 원본은 팔 2×5 + 다리 2×6 = 22 DoF, M6C12 10 + 5010 12개, CAN 4버스, 약 16kg. 하이리온은 **팔을 SO-ARM101로 대체하고 토르소+다리 2×6=12 DoF만 BHL을 그대로 따름** (M6C12 8 + 5010 4 = 12 액추에이터, CAN 2버스, BESC 12개).",
     related: ["사이클로이드 기어박스", "Walking RL", "CAN 버스"],
     links: [
       { label: "BHL 공식 사이트", url: "https://lite.berkeley-humanoid.org" },
@@ -440,7 +440,7 @@ export const GLOSSARY = {
   },
   "ESC": {
     full: "Electronic Speed Controller",
-    definition: "BLDC 모터의 속도와 방향을 제어하는 전자 장치. BHL은 B-G431B-ESC1(STM32G431CB) 12개를 사용하며, Recoil-Motor-Controller-BESC 펌웨어(C언어)로 FOC+PD 위치 제어+CAN 프로토콜+AS5600 I2C 드라이버를 구동한다.",
+    definition: "BLDC 모터의 속도와 방향을 제어하는 전자 장치. 하이리온은 B-G431B-ESC1(STM32G431CB + L6387 게이트 드라이버 + STL180N6F7 MOSFET) 12개를 사용하며, T-K-233의 Recoil-Motor-Controller-BESC 펌웨어(C언어, MIT)로 FOC 수kHz+PD 위치 제어+CAN 프로토콜+AS5600 I2C 드라이버를 구동한다. BHL은 이 보드+펌웨어 조합을 'BESC'로 부른다. STM32CubeIDE로 Run 4번 절차 플래시.",
     related: ["BLDC", "CAN 버스", "FOC"],
   },
   "FOC": {

@@ -6,7 +6,7 @@ Orin과 NUC의 물리 포트별 연결 구성. USB Hub, CAN 데이지 체인, TT
 
 ```mermaid
 flowchart TD
-    subgraph JETSON_PORTS ["Jetson Orin Nano 포트"]
+    subgraph JETSON_PORTS ["Jetson Orin Nano Super 포트"]
         J_USB1["USB 포트 1"]
         J_USB2["USB 포트 2"]
         J_ETH["Ethernet 포트"]
@@ -40,8 +40,7 @@ flowchart TD
 
     USBCAN_L["L2a. USB-CAN 좌다리"]
     USBCAN_R["L2b. USB-CAN 우다리"]
-    ARD["LF3. Arduino"]
-    IMU["LF2. BNO085 IMU"]
+    IMU["LF2. IM10A IMU (USB 직결)"]
 
     subgraph CAN_LEFT ["좌다리 CAN 데이지 체인"]
         EL1["ESC #1"] --> EL2["#2"] --> EL3["#3"] --> EL4["#4"] --> EL5["#5"] --> EL6["#6"]
@@ -75,9 +74,7 @@ flowchart TD
 
     N_USB1 -->|USB| USBCAN_L
     N_USB2 -->|USB| USBCAN_R
-    N_USB3 -->|USB| ARD
-
-    IMU -->|I2C 4선| ARD
+    N_USB3 -->|USB 직결| IMU
 
     USBCAN_L -->|CAN_H + CAN_L 2선| EL1
     USBCAN_R -->|CAN_H + CAN_L 2선| ER1
@@ -88,7 +85,7 @@ flowchart TD
 
 ## 포트 배정 요약
 
-### Jetson Orin Nano (2 USB + 1 Ethernet + GPIO)
+### Jetson Orin Nano Super (USB 2개 + Ethernet + GPIO)
 | 포트 | 연결 대상 | 케이블 |
 |------|----------|--------|
 | USB 1 | USB Hub A (센서) | USB-A |
@@ -116,5 +113,5 @@ flowchart TD
 |------|----------|----------|
 | USB 1 | USB-CAN 좌다리 | → CAN 데이지 ESC #1~#6 |
 | USB 2 | USB-CAN 우다리 | → CAN 데이지 ESC #7~#12 |
-| USB 3 | Arduino | ← BNO085 IMU (I2C 4선) |
+| USB 3 | IM10A IMU | USB 직결 (BHL 공식 권장, 브릿지 불필요) |
 | Ethernet | Orin | UDP vx vy wz |

@@ -8,7 +8,7 @@ stateDiagram-v2
 
     IDLE : Whisper VAD 대기 / GPU 유휴 / 입 서보 닫힘
     TALKING : Whisper STT + LLM + Piper TTS / 입 서보 동작
-    WALKING : UDP vx vy wz / ONNX 250Hz + CAN / 대화 병행 가능
+    WALKING : UDP vx vy wz / ONNX policy 25Hz + CAN 제어 250Hz / 대화 병행 가능
     MANIPULATING : SmolVLA 450M / 카메라 x3 / 보행 불가
     EMERGENCY : Battery 1 차단 / 토크 해제 / Orin 로그 유지
 
@@ -57,7 +57,7 @@ stateDiagram-v2
 |------|------|------------|
 | IDLE | Whisper VAD 대기. GPU 유휴, 입 서보 닫힘 | Orin (대기), NUC lowlevel 대기 |
 | TALKING | Whisper STT + LLM + Piper TTS. 입 서보 동작 | Orin GPU (STT/TTS) |
-| WALKING | UDP로 NUC에 vx vy wz 전송. 대화 병행 가능 | NUC (ONNX 250Hz + CAN) |
+| WALKING | UDP로 NUC에 vx vy wz 전송. 대화 병행 가능 | NUC (ONNX MLP policy 25Hz + CAN 제어 루프 250Hz — BHL 논문 기준) |
 | MANIPULATING | SmolVLA 450M 추론. 카메라 ×3 활성. 보행 불가 | Orin GPU (SmolVLA), BusLinker ×2 |
 | FETCH 시퀀스 | 오케스트레이터가 WALKING/MANIPULATING을 순차 구동 | 전진→정지→pick→복귀→정지→handover |
 | EMERGENCY | Battery 1 차단, 모터 토크 해제, 안전 주저앉음 | Orin 로그 유지 (Battery 2) |

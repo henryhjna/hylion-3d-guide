@@ -22,10 +22,10 @@ export const SIGNAL_FLOW_CHAINS = [
     color: '#c8ff00',
     steps: [
       { id: 'S3f_arm', label: '오케스트레이터', detail: '팔 명령 라우팅', host: 'Orin' },
-      { id: 'S3e', label: 'VLA (SmolVLA)', detail: 'SmolVLA 450M, LeRobot/PyTorch, 비동기 추론', wire: 'USB Serial ×2', host: 'Orin' },
-      { id: 'A1', label: 'BusLinker ×2', detail: 'USB Serial 어댑터, 팔당 1개', wire: 'TTL Bus' },
-      { id: 'A2', label: 'STS3215 ×12', detail: '30kg 토크, 인코더 내장', wire: '출력축' },
-      { id: 'A3', label: 'Arm Joint ×12', detail: '6DOF × 2팔' },
+      { id: 'S3e', label: 'VLA (SmolVLA)', detail: 'SmolVLA 450M, LeRobot/PyTorch 비동기 GPU 추론 ~5 Hz 관절 액션', wire: 'USB Serial ×2', host: 'Orin' },
+      { id: 'A1', label: 'BusLinker ×2', detail: 'USB ↔ TTL Feetech SCServo 어댑터, Follower 팔당 1개 (Leader용 별도 ×2 필요)', wire: 'TTL Bus' },
+      { id: 'A2', label: 'STS3215 Pro 12V ×12', detail: 'stall 30 kg·cm, 12-bit 인코더, 1/345 기어비 (Follower)', wire: '출력축' },
+      { id: 'A3', label: 'Arm Joint ×12', detail: '6DOF × 2팔 (shoulder_pan/lift + elbow_flex + wrist_flex/roll + gripper)' },
     ],
     input: { id: 'S2', label: 'USB Camera ×3', detail: '좌그리퍼+우그리퍼+외부', target: 'S3e', wire: 'USB RGB ×3' },
     feedback: '서보 위치 피드백: STS3215 → TTL → BusLinker → USB → VLA',
@@ -36,15 +36,15 @@ export const SIGNAL_FLOW_CHAINS = [
     color: '#ff00aa',
     steps: [
       { id: 'S3d', label: '명령 매핑', detail: '명령 테이블 → vx vy wz', wire: 'Ethernet UDP', host: 'Orin' },
-      { id: 'L1', label: 'NUC (N95)', detail: 'ONNX Runtime C API, MLP 250Hz, Isaac Gym 모델', wire: 'USB 목표 각도', host: 'NUC' },
+      { id: 'L1', label: 'NUC (N95)', detail: 'ONNX Runtime C API, MLP policy 25Hz (CAN 제어 250Hz), IsaacLab 훈련 ONNX', wire: 'USB 목표 각도', host: 'NUC' },
       { id: 'L2', label: 'USB-CAN ×2', detail: '다리당 1개', wire: 'CAN 2.0' },
       { id: 'L3', label: 'CAN Bus ×2', detail: '1Mbps, 다리당 1', wire: 'CAN ID 매칭' },
-      { id: 'L4', label: 'ESC ×12', detail: 'B-G431B, FOC 수kHz', wire: '3-phase PWM' },
-      { id: 'L5', label: 'BLDC ×12', detail: 'M6C12×8+5010×4', wire: '고속 저토크' },
-      { id: 'L6', label: '기어박스 ×12', detail: '사이클로이드, 3D프린트', wire: '저속 고토크' },
+      { id: 'L4', label: 'BESC ×12', detail: 'B-G431B-ESC1 (STM32G431CB + L6387 + STL180N6F7), Recoil 펌웨어, FOC 수kHz + CAN 250Hz', wire: '3-phase PWM' },
+      { id: 'L5', label: 'BLDC ×12', detail: 'MAD M6C12 150KV ×8 (hip·knee) + 5010 ×4 (ankle), 극쌍 14 delta', wire: '고속 저토크' },
+      { id: 'L6', label: '기어박스 ×12', detail: '사이클로이드 3D프린트, 감속비 15:1 (BHL 공식)', wire: '저속 고토크' },
       { id: 'L7', label: 'Leg Joint ×12', detail: '6DOF × 2다리' },
     ],
-    feedback: 'AS5600 인코더(I2C→ESC→CAN→NUC) + BNO085 IMU(Arduino USB→NUC) + NUC→Orin UDP(보행 상태+IMU stable)',
+    feedback: 'AS5600 인코더(I2C→ESC→CAN→NUC) + IM10A IMU(USB 직결→NUC) + NUC→Orin UDP(보행 상태+IMU stable)',
   },
 ];
 
@@ -52,7 +52,7 @@ export const SIGNAL_FLOW_CHAINS = [
 export const CABLE_TOPOLOGY = [
   {
     id: 'orin',
-    label: 'Jetson Orin Nano',
+    label: 'Jetson Orin Nano Super',
     color: '#00f0ff',
     ports: [
       { port: 'USB 1', target: 'USB Hub A (센서)', devices: ['Mic', 'Camera ×3'], cable: 'USB-A' },
@@ -68,7 +68,7 @@ export const CABLE_TOPOLOGY = [
     ports: [
       { port: 'USB 1', target: 'USB-CAN 좌다리', detail: '→ ESC #1~#6 데이지', cable: 'USB' },
       { port: 'USB 2', target: 'USB-CAN 우다리', detail: '→ ESC #7~#12 데이지', cable: 'USB' },
-      { port: 'USB 3', target: 'Arduino', detail: '← BNO085 IMU (I2C 4선)', cable: 'USB' },
+      { port: 'USB 3', target: 'IM10A IMU', detail: 'USB 직결 (BHL 권장, 브릿지 불필요)', cable: 'USB' },
       { port: 'Ethernet', target: 'Orin', detail: 'UDP 수신', cable: 'CAT6' },
     ],
   },
@@ -82,8 +82,8 @@ export const POWER_TOPOLOGY = [
     spec: '6S LiPo 4000mAh, 22.2V',
     color: '#ff00aa',
     outputs: [
-      { target: 'ESC ×6 좌다리', voltage: '24V 직결', cable: 'XT60', detail: '데이지 체인' },
-      { target: 'ESC ×6 우다리', voltage: '24V 직결', cable: 'XT60 분기', detail: '데이지 체인' },
+      { target: 'ESC ×6 좌다리', voltage: '6S LiPo 직결 (22.2V nom, 25.2V max; BHL 운용 "~24V")', cable: 'XT60', detail: '데이지 체인' },
+      { target: 'ESC ×6 우다리', voltage: '6S LiPo 직결 (22.2V nom, 25.2V max)', cable: 'XT60 분기', detail: '데이지 체인' },
     ],
   },
   {
@@ -104,7 +104,7 @@ export const POWER_TOPOLOGY = [
 export const SOFTWARE_STACK = [
   {
     id: 'orin_sw',
-    label: 'Jetson Orin (JetPack Ubuntu)',
+    label: 'Jetson Orin Nano Super (JetPack Ubuntu, 25W MAXN)',
     color: '#00f0ff',
     groups: [
       { name: '입력', items: ['OpenCV — Camera ×3 캡처', 'Whisper — STT, local'] },
@@ -117,7 +117,7 @@ export const SOFTWARE_STACK = [
     label: 'NUC N95 (Ubuntu)',
     color: '#4466ff',
     groups: [
-      { name: '메인 (C)', items: ['UDP Server (udp_joystick.py 호환)', 'ONNX Runtime C API — MLP 250Hz', 'SocketCAN — CAN 프레임 송수신', 'USB Serial — Arduino IMU 수신'] },
+      { name: '메인 (C)', items: ['UDP Server (udp_joystick.py 호환)', 'ONNX Runtime C API — MLP policy 25Hz', 'SocketCAN — CAN 제어 루프 250Hz', 'USB Serial — IM10A IMU 직결 수신 (250Hz)'] },
       { name: '유틸 (Python)', items: ['calibrate_joints.py'] },
     ],
   },
@@ -127,14 +127,6 @@ export const SOFTWARE_STACK = [
     color: '#ff8800',
     groups: [
       { name: '펌웨어', items: ['FOC 수kHz (Clarke/Park/PI)', 'PD 위치 제어기', 'CAN 프로토콜 핸들러', 'I2C — AS5600 인코더'] },
-    ],
-  },
-  {
-    id: 'arduino_fw',
-    label: 'Arduino (IMU 브릿지)',
-    color: '#c8ff00',
-    groups: [
-      { name: '펌웨어', items: ['BNO085 I2C/SPI 드라이버', 'USB Serial → NUC'] },
     ],
   },
 ];

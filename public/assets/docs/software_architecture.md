@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart TD
-    subgraph JETSON_SW ["Jetson Orin Nano - JetPack Ubuntu"]
+    subgraph JETSON_SW ["Jetson Orin Nano Super (25W MAXN) - JetPack Ubuntu"]
         subgraph JETSON_INPUT ["입력 처리"]
             SW_CAM["OpenCV\nUSB Camera x3 캡처\nRGB 프레임 수집"]
             SW_WHISPER["Whisper, local\nSTT, 음성을 텍스트로"]
@@ -28,9 +28,9 @@ flowchart TD
     subgraph NUC_SW ["Intel N95 Mini PC - Ubuntu"]
         subgraph NUC_MAIN ["메인 컨트롤러, C"]
             SW_UDPSRV["UDP Server\n속도 명령 수신\nudp_joystick.py 호환"]
-            SW_ONNX["ONNX Runtime, C API\nMLP 정책 추론, 250Hz\nIsaac Gym에서 훈련된 모델"]
+            SW_ONNX["ONNX Runtime, C API\nMLP 정책 추론 25Hz (BHL 논문)\nCAN 제어 루프 250Hz로 액션 보내기\nIsaacLab에서 훈련한 ONNX"]
             SW_SOCKETCAN["SocketCAN, Linux\nUSB-CAN 인터페이스\nCAN 프레임 송수신"]
-            SW_IMUREAD["USB Serial 수신\nArduino에서 IMU 데이터 읽기"]
+            SW_IMUREAD["USB Serial 수신\nIM10A IMU 직결 데이터 읽기"]
         end
         subgraph NUC_UTIL ["유틸리티, Python"]
             SW_CALIB["calibrate_joints.py\n전원 투입 후 관절 영점 보정"]
@@ -42,11 +42,6 @@ flowchart TD
         SW_PD["PD 위치 제어기\n목표 각도 → 필요 토크 계산"]
         SW_CAN_RX["CAN 프로토콜 핸들러\n프레임 수신, ID 필터링"]
         SW_I2C["I2C 드라이버\nAS5600 인코더 읽기"]
-    end
-
-    subgraph ARDUINO_FW ["Arduino - IMU 브릿지"]
-        SW_IMU_DRV["BNO085 I2C 또는 SPI 드라이버\n각속도 + 중력 벡터 읽기"]
-        SW_IMU_SERIAL["USB Serial 출력\nIMU 데이터를 NUC로 전송"]
     end
 
     SW_WHISPER -->|텍스트| SW_LLM
@@ -78,9 +73,6 @@ flowchart TD
     SW_I2C -->|현재 축 각도| SW_PD
     SW_I2C -.->|위치, 속도| SW_CAN_RX
 
-    SW_IMU_DRV -->|센서 데이터| SW_IMU_SERIAL
-    SW_IMU_SERIAL -->|USB Serial| SW_IMUREAD
-
     SW_LEROBOT -.->|서보 피드백| SW_SMOLVLA
 
     classDef input fill:#0d2a28,stroke:#4ecdc4,stroke-width:1.5px,color:#e0ddd5
@@ -95,12 +87,11 @@ flowchart TD
     class SW_UDPSRV,SW_SOCKETCAN,SW_IMUREAD fw
     class SW_CALIB util
     class SW_FOC,SW_PD,SW_CAN_RX,SW_I2C fw
-    class SW_IMU_DRV,SW_IMU_SERIAL fw
 ```
 
 ## 소프트웨어 스택 요약
 
-### Jetson Orin Nano (JetPack Ubuntu)
+### Jetson Orin Nano Super (JetPack Ubuntu, 25W MAXN)
 | 모듈 | 구현 | 역할 |
 |------|------|------|
 | OpenCV | Python | USB Camera ×3 캡처 |
@@ -120,12 +111,12 @@ flowchart TD
 | 모듈 | 언어 | 역할 |
 |------|------|------|
 | UDP Server | C | Orin에서 vx vy wz 수신 |
-| ONNX Runtime | C API | MLP policy 추론, 250Hz |
+| ONNX Runtime | C API | MLP policy 추론 25Hz (BHL 논문; CAN 제어 루프는 250Hz) |
 | SocketCAN | C (Linux) | CAN 프레임 송수신 |
-| USB Serial | C | Arduino IMU 수신 |
+| USB Serial | C | IM10A IMU 직결 수신 |
 | calibrate_joints.py | Python | 관절 영점 보정 |
 
-### ESC ×12 (Recoil-BESC, C)
+### ESC ×12 (Recoil-BESC, C, 사이클로이드 감속비 15:1)
 | 모듈 | 역할 |
 |------|------|
 | FOC 수kHz | Clarke/Park/PI 전류 제어 |
@@ -133,8 +124,9 @@ flowchart TD
 | CAN 핸들러 | ID 필터링 |
 | I2C | AS5600 인코더 읽기 |
 
-### Arduino (IMU 브릿지)
-| 모듈 | 역할 |
+### IM10A IMU (USB 직결, BHL 공식 권장)
+| 항목 | 내용 |
 |------|------|
-| BNO085 드라이버 | I2C/SPI → 각속도+중력 |
-| USB Serial | NUC로 전송 |
+| 인터페이스 | USB 가상 COM → NUC 직결 |
+| 역할 | 몸체 각속도/중력 벡터 → Walking RL 입력 + 낙상 감지 |
+| 비고 | BNO085+Arduino 브릿지 대안, 납땜 불필요 (BHL docs 권장) |

@@ -13,6 +13,7 @@ export default function Navigation({
   onOpenDocs,
   onOpenDgx,
   onOpenDiagrams,
+  onOpenBHL,
   onOpenSettings,
 }) {
   return (
@@ -120,6 +121,15 @@ export default function Navigation({
           title="시스템 다이어그램 (Signal Flow, Cables, Power, Software, State Machine)"
         >
           ⚡ Diagrams
+        </button>
+
+        {/* BHL 참고 자료 — 신규, 눈에 띄게 */}
+        <button
+          onClick={onOpenBHL}
+          className="flex items-center gap-1 px-2 py-1.5 rounded-md text-sm text-[#ff00aa] hover:text-[#ff44cc] hover:bg-[#ff00aa15] transition-all font-medium border border-[#ff00aa30] hover:border-[#ff00aa60]"
+          title="BHL 공식 튜토리얼·CAD·YouTube·펌웨어 (하체 빌드 기준점)"
+        >
+          🔧 BHL 자료
         </button>
 
         {/* DGX Spark */}
